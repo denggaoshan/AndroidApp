@@ -74,6 +74,17 @@
                     android:layout_gravity="center"
                     android:layout_marginRight="-10dp" />
 
+                <WebView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/webView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/imageView3"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/imageView3"
+                    android:layout_toLeftOf="@+id/imageView3" />
+
             </RelativeLayout>
 
 
@@ -107,7 +118,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editText"
+                    android:id="@+id/account_RegText"
                     android:phoneNumber="false" />
 
                 <TextView

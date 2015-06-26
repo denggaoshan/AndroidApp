@@ -54,7 +54,6 @@
                 android:layout_marginTop="20px"
                 android:focusable="false" />
 
-
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,7 +68,6 @@
                 android:text="密码"
                 android:textSize="40px"
                 android:id="@+id/textView2" />
-
 
             <LinearLayout
                 android:orientation="horizontal"

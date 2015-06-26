@@ -13,14 +13,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
         android:layout_alignParentTop="true">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="注册"
+            android:textColor="#A8A8AA"
+            android:background="@null"
+            style="@style/Widget.AppCompat.Button.Borderless"
+
+            android:gravity="right" />
 
         <ImageView
             android:layout_width="194dp"
             android:layout_height="116dp"
             android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
 
             android:src="@drawable/logo" />
 
@@ -105,70 +119,18 @@
             </Button>
 
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:textSize="15dp"
-                    android:text="没有账号？"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center" />
-
-                <Button
-                    android:layout_width="40dp"
-                    android:layout_height="fill_parent"
-                    android:text="注册"
-                    android:background="@null"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:textSize="15dp"
-                    android:text="一个吧！"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center" />
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:textSize="15dp"
-                    android:text="不想注册？"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center" />
-
-                <Button
-                    android:layout_width="80dp"
-                    android:layout_height="fill_parent"
-                    android:text="游客登陆"
-                    android:background="@null"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp" />
-
-            </LinearLayout>
+                android:text="游客登陆"
+                android:textColor="#A8A8AA"
+                android:background="@null"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:textSize="20dp"
+                android:gravity="right"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
 
 
         </LinearLayout>

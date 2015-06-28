@@ -17,7 +17,8 @@
 
             android:id="@+id/head"
             android:paddingLeft="20dp"
-            android:paddingBottom="15dp">
+            android:paddingBottom="15dp"
+            android:background="#ffffff">
 
             <ImageView
                 android:layout_width="0dp"
@@ -35,19 +36,20 @@
                 android:gravity="center"
                 android:layout_weight="0.64" />
 
-            <TextView
+            <ImageView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:text="。。。"
-                android:id="@+id/textView10"
-                android:gravity="center"
-                android:layout_weight="0.126" />
+                android:id="@+id/imageView5"
+                android:src="@drawable/icon_ellipses"
+                android:layout_weight="0.126"
+                android:paddingRight="20dp" />
+
         </LinearLayout>
 
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="103dp"
             android:fadingEdge="none"
             android:id="@+id/navi"
             android:layout_below="@+id/head">
@@ -55,7 +57,8 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -66,14 +69,14 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/icon_activity"
-                        android:layout_weight="0.7" />
+                        android:layout_weight="0.8" />
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:text="全部"
                         android:gravity="center"
-                        android:layout_weight="0.3" />
+                        android:layout_weight="0.2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -85,14 +88,14 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/icon_activity"
-                        android:layout_weight="0.7" />
+                        android:layout_weight="0.8" />
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:text="全部"
                         android:gravity="center"
-                        android:layout_weight="0.3" />
+                        android:layout_weight="0.2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -104,14 +107,14 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/icon_activity"
-                        android:layout_weight="0.7" />
+                        android:layout_weight="0.8" />
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:text="全部"
                         android:gravity="center"
-                        android:layout_weight="0.3" />
+                        android:layout_weight="0.2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -123,14 +126,14 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/icon_activity"
-                        android:layout_weight="0.7" />
+                        android:layout_weight="0.8" />
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:text="全部"
                         android:gravity="center"
-                        android:layout_weight="0.3" />
+                        android:layout_weight="0.2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -142,14 +145,14 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/icon_activity"
-                        android:layout_weight="0.7" />
+                        android:layout_weight="0.8" />
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:text="全部"
                         android:gravity="center"
-                        android:layout_weight="0.3" />
+                        android:layout_weight="0.2" />
                 </LinearLayout>
 
 
@@ -164,7 +167,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/content"
             android:layout_below="@+id/navi"
-            android:layout_alignParentBottom="true">
+            android:scrollbars="none"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="-3dp">
+
 
             <LinearLayout
                 android:orientation="vertical"
@@ -174,223 +180,119 @@
 
                 <TextView
                     android:layout_width="fill_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:text="星期六，6月27日"
                     android:gravity="left|center"
-                    android:textSize="15dp"/>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_1"
-                    android:paddingTop="5dp"
-                    android:paddingLeft="5dp">
-
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.66">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="厦门相亲交友大聚会"
-                            android:layout_gravity="center_horizontal"
-                            android:gravity="left"
-                            android:paddingLeft="3dp"
-                            android:textSize="15dp" />
-
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/icon_time"
-                                android:padding="5dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="5/27 12:00"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="left|center"
-                                android:paddingLeft="10dp"
-                                android:textSize="15dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/icon_position"
-                                android:padding="5dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="中山路"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="left|center"
-                                android:paddingLeft="10dp"
-                                android:textSize="15dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/icon_people"
-                                android:padding="5dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="10 人"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="left|center"
-                                android:paddingLeft="10dp"
-                                android:textSize="15dp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/icon_user"
-                        android:layout_weight="0.33" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:text="星期日，6月28日"
-                    android:gravity="left|center"
                     android:textSize="15dp"
-                    android:background="#ffdcdcdc" />
+                    android:background="#e4e1e1"
+                    android:paddingLeft="10dp" />
 
+                <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_1"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp">
 
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_2"
-                    android:paddingTop="5dp"
-                    android:paddingLeft="5dp">
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.66">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="厦门相亲交友大聚会"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="left"
+                        android:paddingLeft="3dp"
+                        android:textSize="15dp"
+                        android:layout_weight="0.25" />
 
 
                     <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.66">
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.25">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/icon_time"
+                            android:padding="5dp" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="厦门相亲交友大聚会"
+                            android:layout_height="match_parent"
+                            android:text="5/27 12:00"
                             android:layout_gravity="center_horizontal"
-                            android:gravity="left"
-                            android:paddingLeft="3dp"
+                            android:gravity="left|center"
+                            android:paddingLeft="10dp"
                             android:textSize="15dp" />
-
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/icon_time"
-                                android:padding="5dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="5/27 12:00"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="left|center"
-                                android:paddingLeft="10dp"
-                                android:textSize="15dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/icon_position"
-                                android:padding="5dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="中山路"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="left|center"
-                                android:paddingLeft="10dp"
-                                android:textSize="15dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/icon_people"
-                                android:padding="5dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="10 人"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="left|center"
-                                android:paddingLeft="10dp"
-                                android:textSize="15dp" />
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/icon_user"
-                        android:layout_weight="0.33" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.25">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/icon_position"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="中山路"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="left|center"
+                            android:paddingLeft="10dp"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.25">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/icon_people"
+                            android:padding="5dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="10 人"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="left|center"
+                            android:paddingLeft="10dp"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/icon_user"
+                    android:layout_weight="0.33"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="40dp" />
+
+            </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -409,18 +311,20 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:text="厦门相亲交友大聚会"
                             android:layout_gravity="center_horizontal"
                             android:gravity="left"
                             android:paddingLeft="3dp"
-                            android:textSize="15dp" />
+                            android:textSize="15dp"
+                            android:layout_weight="0.25" />
 
 
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -442,7 +346,8 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -464,7 +369,8 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -487,12 +393,236 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="100dp"
                         android:src="@drawable/icon_user"
-                        android:layout_weight="0.33" />
+                        android:layout_weight="0.33"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="40dp" />
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:text="星期日，6月28日"
+                    android:gravity="left|center"
+                    android:textSize="15dp"
+                    android:background="#e4e1e1"
+                    android:paddingLeft="10dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_2"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp">
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.66">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:text="厦门相亲交友大聚会"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="left"
+                            android:paddingLeft="3dp"
+                            android:textSize="15dp"
+                            android:layout_weight="0.25" />
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_time"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="5/27 12:00"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_position"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="中山路"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_people"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="10 人"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_user"
+                        android:layout_weight="0.33"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="40dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_3"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp">
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.66">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:text="厦门相亲交友大聚会"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="left"
+                            android:paddingLeft="3dp"
+                            android:textSize="15dp"
+                            android:layout_weight="0.25" />
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_time"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="5/27 12:00"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_position"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="中山路"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_people"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="10 人"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_user"
+                        android:layout_weight="0.33"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="40dp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -511,18 +641,20 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:text="厦门相亲交友大聚会"
                             android:layout_gravity="center_horizontal"
                             android:gravity="left"
                             android:paddingLeft="3dp"
-                            android:textSize="15dp" />
+                            android:textSize="15dp"
+                            android:layout_weight="0.25" />
 
 
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -544,7 +676,8 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -566,7 +699,8 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -589,11 +723,121 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="100dp"
                         android:src="@drawable/icon_user"
-                        android:layout_weight="0.33" />
+                        android:layout_weight="0.33"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="40dp" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_2"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp">
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.66">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:text="厦门相亲交友大聚会"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="left"
+                            android:paddingLeft="3dp"
+                            android:textSize="15dp"
+                            android:layout_weight="0.25" />
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_time"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="5/27 12:00"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_position"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="中山路"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.25">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/icon_people"
+                                android:padding="5dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="10 人"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="left|center"
+                                android:paddingLeft="10dp"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_user"
+                        android:layout_weight="0.33"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="40dp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 

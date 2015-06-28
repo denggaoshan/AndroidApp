@@ -48,6 +48,7 @@
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:fadingEdge="none"
             android:id="@+id/navi"
             android:layout_below="@+id/head">
 
@@ -163,8 +164,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/content"
             android:layout_below="@+id/navi"
-            android:layout_alignParentBottom="true"
-            android:paddingLeft="10dp">
+            android:layout_alignParentBottom="true">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -177,13 +177,16 @@
                     android:layout_height="30dp"
                     android:text="星期六，6月27日"
                     android:gravity="left|center"
-                    android:textSize="20dp" />
+                    android:textSize="15dp"/>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp">
+                    android:background="@drawable/border_1"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp">
+
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -195,11 +198,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="厦门相亲交友大聚会"
-                            android:id="@+id/textView11"
                             android:layout_gravity="center_horizontal"
                             android:gravity="left"
                             android:paddingLeft="3dp"
-                            android:textSize="18dp" />
+                            android:textSize="15dp" />
 
 
                         <LinearLayout
@@ -283,13 +285,19 @@
                     android:layout_height="30dp"
                     android:text="星期日，6月28日"
                     android:gravity="left|center"
-                    android:textSize="20dp" />
+                    android:textSize="15dp"
+                    android:background="#ffdcdcdc" />
+
+
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp">
+                    android:background="@drawable/border_2"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp">
+
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -304,7 +312,7 @@
                             android:layout_gravity="center_horizontal"
                             android:gravity="left"
                             android:paddingLeft="3dp"
-                            android:textSize="18dp" />
+                            android:textSize="15dp" />
 
 
                         <LinearLayout
@@ -383,11 +391,15 @@
 
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp">
+                    android:background="@drawable/border_3"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp">
+
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -402,7 +414,7 @@
                             android:layout_gravity="center_horizontal"
                             android:gravity="left"
                             android:paddingLeft="3dp"
-                            android:textSize="18dp" />
+                            android:textSize="15dp" />
 
 
                         <LinearLayout
@@ -481,11 +493,15 @@
 
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp">
+                    android:background="@drawable/border_1"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp">
+
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -500,7 +516,7 @@
                             android:layout_gravity="center_horizontal"
                             android:gravity="left"
                             android:paddingLeft="3dp"
-                            android:textSize="18dp" />
+                            android:textSize="15dp" />
 
 
                         <LinearLayout
@@ -578,7 +594,6 @@
                         android:layout_weight="0.33" />
 
                 </LinearLayout>
-
 
             </LinearLayout>
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.protocol.HTTP;
 
@@ -18,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -25,7 +27,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
@@ -35,17 +36,42 @@ public class MainActivity extends ActionBarActivity {
     private String username;
     private String password;
 
+
     private void getInput(){
-        R.id.username
+        EditText us=(EditText) findViewById(R.id.username);
+        EditText pw=(EditText) findViewById(R.id.password);
+        username=us.getText().toString();
+        password=pw.getText().toString();
+    }
+
+    private String checkUser(String username,String password){
+        //提交用户名密码
+        if(username.equals("admin") && password.equals("123456")){
+            return "OK";
+        }
+        return "NO";
     }
 
     public void landing_Click(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MainActivity.this, TotalActivity.class);
-        MainActivity.this.startActivity(intent);
-        MainActivity.this.finish();
-    }
+        getInput();
 
+        if(!"OK".equals(PatternValid.validUsername(username))){
+            Toast.makeText(MainActivity.this, "用户名不合法", Toast.LENGTH_LONG).show();
+        }else if(!"OK".equals(PatternValid.validPassword(password))){
+            Toast.makeText(MainActivity.this, "密码不合法", Toast.LENGTH_LONG).show();
+        }else {
+            if( "OK".equals(checkUser(username, password))){
+                //登陆成功，切换到主页面
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, TotalActivity.class);
+                MainActivity.this.startActivity(intent);
+                MainActivity.this.finish();
+            }else{
+                Toast.makeText(MainActivity.this, "用户名或密码错误", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
 
     public void registered_Click(View v) {
                 Intent intent = new Intent();

@@ -28,6 +28,10 @@
             android:name=".TotalActivity"
             android:label="@string/title_activity_total" >
         </activity>
+        <activity
+            android:name=".UserManagerActivity"
+            android:label="@string/title_activity_user_manager" >
+        </activity>
     </application>
 
 </manifest>

@@ -112,9 +112,7 @@
                 android:textSize="50px"
                 android:textColorHighlight="#ffffffff"
                 android:onClick="landing_Click">
-
             </Button>
-
 
             <Button
                 android:layout_width="fill_parent"

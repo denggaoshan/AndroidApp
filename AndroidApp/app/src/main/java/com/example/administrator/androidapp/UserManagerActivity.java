@@ -5,18 +5,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class TotalActivity extends ActionBarActivity {
+
+public class UserManagerActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_total);
+        setContentView(R.layout.activity_user_manager);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_total, menu);
+        getMenuInflater().inflate(R.menu.menu_user_manager, menu);
         return true;
     }
 

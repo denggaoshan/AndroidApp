@@ -24,8 +24,9 @@
             android:textColor="#A8A8AA"
             android:background="@null"
             style="@style/Widget.AppCompat.Button.Borderless"
-
-            android:gravity="right" />
+            android:gravity="right"
+            android:id="@+id/registeredButton"
+            android:onClick="registered_Click" />
 
         <ImageView
             android:layout_width="194dp"
@@ -60,7 +61,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@null"
-                 />
+                android:singleLine="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,7 +86,7 @@
                     android:layout_height="fill_parent"
                     android:inputType="textPassword"
                     android:background="@null"
-                    />
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -109,7 +110,8 @@
                 android:background="#ff50d2c2"
                 android:textColor="#ffffffff"
                 android:textSize="50px"
-                android:textColorHighlight="#ffffffff" >
+                android:textColorHighlight="#ffffffff"
+                android:onClick="landing_Click">
 
             </Button>
 

@@ -33,7 +33,9 @@
                     android:layout_height="fill_parent"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:src="@drawable/icon_close" />
+                    android:src="@drawable/icon_close"
+                    android:onClick="back_Click"
+                    android:nestedScrollingEnabled="false" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -108,7 +110,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/account_RegText"
-                    android:phoneNumber="false" />
+                    android:phoneNumber="false"
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -121,7 +124,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:ems="10"
-                    android:id="@+id/password_RegTxt" />
+                    android:id="@+id/password_RegTxt"
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,7 +138,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:ems="10"
-                    android:id="@+id/repassword_RegTxt" />
+                    android:id="@+id/repassword_RegTxt"
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,7 +151,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/tell_RegTxt" />
+                    android:id="@+id/tell_RegTxt"
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -159,31 +165,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/email_RegTxt"
-                    />
+                    android:singleLine="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="邮箱"
-                    />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="邮箱"
-                    />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    />
             </LinearLayout>
         </ScrollView>
 
@@ -209,8 +192,5 @@
 
         </LinearLayout>
     </RelativeLayout>
-
-
-
 
 </LinearLayout>

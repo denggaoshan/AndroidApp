@@ -32,6 +32,13 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    private String username;
+    private String password;
+
+    private void getInput(){
+        R.id.username
+    }
+
     public void landing_Click(View v) {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, TotalActivity.class);

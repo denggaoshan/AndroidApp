@@ -1,9 +1,11 @@
 package com.example.administrator.androidapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class TotalActivity extends ActionBarActivity {
 
@@ -18,6 +20,13 @@ public class TotalActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_total, menu);
         return true;
+    }
+
+    public void edit_Click(View v) {
+        Intent intent = new Intent();
+        intent.setClass(TotalActivity.this, UserManagerActivity.class);
+        TotalActivity.this.startActivity(intent);
+        TotalActivity.this.finish();
     }
 
     @Override

@@ -24,7 +24,9 @@
                 android:layout_height="60dp"
                 android:id="@+id/imageView4"
                 android:src="@drawable/icon_user"
-                android:layout_weight="0.126" />
+                android:layout_weight="0.126"
+                android:onClick="edit_Click"
+                android:nestedScrollingEnabled="false" />
 
             <TextView
                 android:layout_width="0dp"

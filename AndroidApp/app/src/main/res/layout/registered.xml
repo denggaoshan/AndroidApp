@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:paddingLeft="16dp"
-    android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="10dp">
 
@@ -89,7 +88,8 @@
             android:layout_weight="0.4"
             android:layout_below="@id/imglayout"
             android:scrollbars="none"
-            android:paddingBottom="50dp">
+            android:paddingBottom="50dp"
+            android:id="@+id/content">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -159,6 +159,30 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/email_RegTxt"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="邮箱"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="邮箱"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
                     />
             </LinearLayout>
         </ScrollView>

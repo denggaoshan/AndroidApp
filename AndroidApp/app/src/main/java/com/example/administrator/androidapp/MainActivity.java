@@ -55,6 +55,15 @@ public class MainActivity extends ActionBarActivity {
     public void landing_Click(View v) {
         getInput();
 
+        if( "".equals(username) && "".equals(password)){
+            //登陆成功，切换到主页面
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this, TotalActivity.class);
+            MainActivity.this.startActivity(intent);
+            MainActivity.this.finish();
+            return;
+        }
+
         if(!"OK".equals(PatternValid.validUsername(username))){
             Toast.makeText(MainActivity.this, "用户名不合法", Toast.LENGTH_LONG).show();
         }else if(!"OK".equals(PatternValid.validPassword(password))){

@@ -95,7 +95,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:text="全部"
+                        android:text="户外"
                         android:gravity="center"
                         android:layout_weight="0.2" />
                 </LinearLayout>
@@ -114,7 +114,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:text="全部"
+                        android:text="运动"
                         android:gravity="center"
                         android:layout_weight="0.2" />
                 </LinearLayout>
@@ -133,7 +133,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:text="全部"
+                        android:text="吃喝"
                         android:gravity="center"
                         android:layout_weight="0.2" />
                 </LinearLayout>
@@ -152,7 +152,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:text="全部"
+                        android:text="讲座"
                         android:gravity="center"
                         android:layout_weight="0.2" />
                 </LinearLayout>

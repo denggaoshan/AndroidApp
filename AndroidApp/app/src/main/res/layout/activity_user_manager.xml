@@ -102,6 +102,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.3"
             android:padding="20dp"
+            android:onClick="running_Click"
+            android:id="@+id/running"
             android:background="#50d2c2">
 
             <ImageView
@@ -127,7 +129,9 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="0.3"
-            android:padding="20dp">
+            android:padding="20dp"
+            android:onClick="history_Click"
+            android:id="@+id/history">
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -150,7 +154,10 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="0.3"
-            android:padding="20dp">
+            android:padding="20dp"
+            android:onClick="applying_Click"
+            android:nestedScrollingEnabled="false"
+            android:id="@+id/applying">
 
             <ImageView
                 android:layout_width="fill_parent"

@@ -1,11 +1,14 @@
 package com.example.administrator.androidapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 
 public class UserManagerActivity extends ActionBarActivity {
@@ -28,6 +31,47 @@ public class UserManagerActivity extends ActionBarActivity {
         intent.setClass(UserManagerActivity.this, TotalActivity.class);
         UserManagerActivity.this.startActivity(intent);
         UserManagerActivity.this.finish();
+    }
+
+    int focus = 0;
+
+
+    public void running_Click(View v) {
+        if(focus!=0){
+            focus = 0 ;
+            LinearLayout rn=(LinearLayout) findViewById(R.id.running);
+            rn.setBackgroundColor(0xFF50d2c2);
+            LinearLayout hi=(LinearLayout) findViewById(R.id.history);
+            hi.setBackgroundColor(Color.WHITE);
+            LinearLayout ap=(LinearLayout) findViewById(R.id.applying);
+            ap.setBackgroundColor(Color.WHITE);
+        }
+    }
+
+    public void history_Click(View v) {
+        if(focus!=1){
+            focus = 1 ;
+            LinearLayout rn=(LinearLayout) findViewById(R.id.running);
+            rn.setBackgroundColor(Color.WHITE);
+            LinearLayout hi=(LinearLayout) findViewById(R.id.history);
+            hi.setBackgroundColor(0xFF50d2c2);
+            LinearLayout ap=(LinearLayout) findViewById(R.id.applying);
+            ap.setBackgroundColor(Color.WHITE);
+        }
+
+    }
+
+    public void applying_Click(View v) {
+        if(focus!=2){
+            focus = 2 ;
+            LinearLayout rn=(LinearLayout) findViewById(R.id.running);
+            rn.setBackgroundColor(Color.WHITE);
+            LinearLayout hi=(LinearLayout) findViewById(R.id.history);
+            hi.setBackgroundColor(Color.WHITE);
+            LinearLayout ap=(LinearLayout) findViewById(R.id.applying);
+            ap.setBackgroundColor(0xFF50d2c2);
+        }
+
     }
 
     @Override

@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-
 public class UserManagerActivity extends ActionBarActivity {
 
     @Override

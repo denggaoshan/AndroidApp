@@ -1,6 +1,5 @@
 package com.example.administrator.androidapp;
 
-import android.app.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,10 +73,13 @@ public class User {
 
 
             JSONArray jsonArray = allMsg.getJSONArray("activities");
-            activities = new Activity[jsonArray.length()];
-            for (int i = 0; i < jsonArray.length(); i++)
+            if (jsonArray.length() != 0)
             {
-                activities[i] = new Activity(jsonArray.getJSONObject(i));
+                activities = new Activity[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    activities[i] = new Activity(jsonArray.getJSONObject(i));
+                }
             }
         }
         catch (JSONException e)

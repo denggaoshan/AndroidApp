@@ -26,13 +26,12 @@ public class TotalActivity extends ActionBarActivity {
         setContentView(R.layout.activity_total);
 
         ListView vi=(ListView) findViewById(R.id.content);
-        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.activity, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
+        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_activity_total, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
         vi.setAdapter(adapter);
     }
 
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", "1234");
         map.put("time", "12:33");

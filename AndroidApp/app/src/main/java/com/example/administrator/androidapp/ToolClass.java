@@ -302,7 +302,7 @@ public class ToolClass {
      * @param newpassword 用户新密码
      * @return 返回用户信息map， 成功时map中"mess"->"updateerror" userid错误或密码错误
      */
-    public static Map<String, Object> updateuserpassword(String userid, String oldpassword, String newpassword)
+    public User updateuserpassword(String userid, String oldpassword, String newpassword)
     {
         String oldPassword_MD = convetToMD5(oldpassword);
         String newPassword_MD = convetToMD5(newpassword);
@@ -310,64 +310,21 @@ public class ToolClass {
                 + "&userid=" + userid + "&oldpassword=" + oldPassword_MD
                 + "&newpassword=" + newPassword_MD;
 
-        return parseJSONString_password_update(httpGet(getUrl));
+        return new User(httpGet(getUrl));
     }
 
-    /**
-     * 修改用户密码信息中json解析方法
-     * @param JSONString
-     * @return
-     */
-    private static Map<String, Object> parseJSONString_password_update(String JSONString)
-    {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try
-        {
-            JSONObject msg = new JSONObject(JSONString);
-            resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
-        }
-        catch (JSONException e)
-        {
-
-        }
-
-        return resultMap;
-    }
 
     /**
      * 获取用户发起的活动方法
      * @param userid 用户Id
      * @return 返回用户信息map， 成功时map中"mess"->"empty" userid错误或未发起活动
      */
-    public static Map<String, Object> getLaunchedActivity(String userid)
+    public User getLaunchedActivity(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"
                 + "&userid=" + userid;
 
-        return parseJSONString_launchedActivity(httpGet(getUrl));
-    }
-
-    /**
-     * 获取用户发起的活动 信息中json解析
-     * @param JSONString
-     * @return
-     */
-    private static Map<String, Object> parseJSONString_launchedActivity(String JSONString)
-    {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try
-        {
-            JSONObject msg = new JSONObject(JSONString);
-            resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("activities", jsonArrayToStringArray(msg.getJSONArray("activities")));
-        }
-        catch (JSONException e)
-        {
-
-        }
-
-        return resultMap;
+        return new User(httpGet(getUrl));
     }
 
     /**

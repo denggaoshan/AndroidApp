@@ -56,6 +56,34 @@ public class TotalActivity extends ActionBarActivity {
         map.put("attending", "tttttt");
         list.add(map);
 
+        map = new HashMap<String, Object>();
+        map.put("title", "1234");
+        map.put("time", "12:33");
+        map.put("position", "12:33");
+        map.put("attending", "zzzzzz");
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "1234");
+        map.put("time", "12:33");
+        map.put("position", "12:33");
+        map.put("attending", "zzzzzz");
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "1234");
+        map.put("time", "12:33");
+        map.put("position", "12:33");
+        map.put("attending", "zzzzzz");
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "1234");
+        map.put("time", "12:33");
+        map.put("position", "12:33");
+        map.put("attending", "zzzzzz");
+        list.add(map);
+
         return list;
     }
 

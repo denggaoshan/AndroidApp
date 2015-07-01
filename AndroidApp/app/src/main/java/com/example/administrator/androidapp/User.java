@@ -1,11 +1,12 @@
 package com.example.administrator.androidapp;
 
-<<<<<<< HEAD
 import android.app.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by admin on 2015/7/1.
@@ -33,9 +34,23 @@ public class User {
     private Activity[] activities;
     private String good;
 
-    private void getProperty(String data){
-        this.getClass();
 
+
+    private void getProperty(String data,JSONObject userMsg){
+        try {
+            Field  fs= this.getClass().getField(data);
+            fs.setAccessible(true);
+
+            String val = userMsg.getString(data);
+            fs.set(this,data);
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public User(String jsonString)
@@ -45,26 +60,18 @@ public class User {
             JSONObject allMsg = new JSONObject(jsonString);
             mess = allMsg.getString("mess");
 
+            String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
+                    "Constellation","Profession","LivePlace","Description","Phone",
+                    "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
+
             JSONObject userMsg = allMsg.getJSONObject("user");
-            UserID = userMsg.getString("UserID");
-            Account = userMsg.getString("Account");
-            Avatar = userMsg.getString("Avatar");
-            NickName = userMsg.getString("NickName");
-            Sex = userMsg.getString("Sex");
-            Age = userMsg.getString("Age");
-            Constellation = userMsg.getString("Constellation");
-            Profession = userMsg.getString("Profession");
-            LivePlace = userMsg.getString("LivePlace");
-            Description = userMsg.getString("Description");
-            Phone = userMsg.getString("Phone");
-            Mailbox = userMsg.getString("Mailbox");
-            IsCheckedMailbox = userMsg.getString("IsCheckedMailbox");
-            QQ = userMsg.getString("QQ");
-            WeiBo = userMsg.getString("WeiBo");
-            RoleID = userMsg.getString("RoleID");
-            RegisterTime = userMsg.getString("RegisterTime");
+
+            for(String val :tmp){
+                getProperty(val,userMsg);
+            }
 
             good = allMsg.getString("good");
+
 
             JSONArray jsonArray = allMsg.getJSONArray("activities");
             activities = new Activity[jsonArray.length()];
@@ -80,43 +87,3 @@ public class User {
 
     }
 }
-=======
-import java.util.Map;
-
-/**
- * Created by Administrator on 2015/7/1.
- */
-public class User {
-
-    public User(){
-    }
-
-    //用户的个人资料
-    private String userId;
-    private String account;
-    private String avator;
-    private String nickName;
-    private String sex;
-    private String age;
-    private String constellation;
-    private String profession;
-    private String livePlace;
-    private String description;
-    private String phone;
-    private String mailBox;
-    private String isCheckedMailbox;
-    private String qqNumber;
-    private String weiBo;
-    private String roleID;
-    private String registerTime;
-
-
-    //用户有关的活动
-    private String activityID;
-
-    public User(Map<String, Object> data){
-        Map<String,String> result = (Map<String,String> )data.get("user");
-
-    }
-}
->>>>>>> origin/develop

@@ -7,6 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.Map;
 
 
 public class RegisteredActivity extends ActionBarActivity {
@@ -17,6 +20,7 @@ public class RegisteredActivity extends ActionBarActivity {
         setContentView(R.layout.activity_registered);
     }
 
+    //返回登陆界面
     public void back_Click(View v) {
         Intent intent = new Intent();
         intent.setClass(RegisteredActivity.this, MainActivity.class);
@@ -28,7 +32,18 @@ public class RegisteredActivity extends ActionBarActivity {
     public void register_Click(View v){
 
         if("OK".equals(getInput())){
-            
+            Map<String,Object> ret = ToolClass.register(account,password,sex,phone,mailbox,avatar);
+
+            String tmp = (String)ret.get("mess");
+            if(tmp.equals("loginfail")){
+                //注册失败
+                Toast.makeText(this, "注册失败", Toast.LENGTH_LONG).show();
+                return;
+            }else{
+                //注册成功，转到登陆界面
+                Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 
@@ -61,25 +76,39 @@ public class RegisteredActivity extends ActionBarActivity {
     private String phone;
     private String mailbox;
 
-    public String getInput() {
+
+    private String getInput() {
 
         account = ((EditText) findViewById(R.id.account_RegText)).getText().toString();
         if(!"OK".equals(PatternValid.validUsername(account))){
             //用户名验证失败
+            Toast.makeText(this, "用户名格式不正确", Toast.LENGTH_LONG).show();
             return "ERROR";
         }
 
         password =((EditText) findViewById(R.id.password_RegTxt)).getText().toString();
+        if(!"OK".equals(PatternValid.validPassword(password))){
+            Toast.makeText(this, "密码格式不正确", Toast.LENGTH_LONG).show();
+        }
         String repassword = ((EditText) findViewById(R.id.repassword_RegTxt)).getText().toString();
        if(!repassword.equals(password)){
            //密码不一致
+           Toast.makeText(this, "两次输入的密码不一致", Toast.LENGTH_LONG).show();
            return "ERROR";
        }
+
 
         phone = ((EditText) findViewById(R.id.phone_RegTxt)).getText().toString();
         if(!"OK".equals(PatternValid.validPhone(account))){
             //验证手机格式失败
+            Toast.makeText(this, "手机号码格式不正确", Toast.LENGTH_LONG).show();
             return "ERROR";
+        }
+
+        if(findViewById(R.id.girl).isSelected()){
+            sex = "1";
+        }else{
+            sex = "0";
         }
 
         //头像 TO DO
@@ -88,6 +117,7 @@ public class RegisteredActivity extends ActionBarActivity {
         mailbox = ((EditText) findViewById(R.id.email_RegTxt)).getText().toString();
         if(!"OK".equals(PatternValid.validPhone(mailbox))){
             //验证邮箱格式失败
+            Toast.makeText(this, "邮箱格式不正确", Toast.LENGTH_LONG).show();
             return "ERROR";
         }
         return "OK";

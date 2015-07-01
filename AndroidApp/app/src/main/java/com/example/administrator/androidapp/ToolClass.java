@@ -248,31 +248,6 @@ public class ToolClass {
     }
 
     /**
-     * 登陆信息中json解析方法
-     * @param JSONString
-     * @return
-     */
-    private static Map<String, Object> parseJSONString_load(String JSONString)
-    {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try
-        {
-            JSONObject msg = new JSONObject(JSONString);
-            resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
-            resultMap.put("activities", jsonArrayToStringArray(msg.getJSONArray("activities")));
-
-            resultMap.put("good", msg.getString("good"));
-        }
-        catch (JSONException e)
-        {
-
-        }
-
-        return resultMap;
-    }
-
-    /**
      * 注册方法
      * @param account 用户账号
      * @param password 用户密码
@@ -282,39 +257,16 @@ public class ToolClass {
      * @param avatar 用户头像图片网络地址
      * @return 返回用户信息map，失败时map中"mess"->"registerfail" 账号已存在
      */
-    public static Map<String, Object> register(String account, String password, String sex, String phone, String mailBox, String avatar)
+    public User register(String account, String password, String sex, String phone, String mailBox, String avatar)
     {
         String pass_MD = MD5Deal.convetToMD5(password);
         String getUrl = MSGSERVERURL + "?" + "oper=register"
                 + "&account=" + account + "&password=" + pass_MD
                 + "&sex=" + sex + "&phone=" + phone + "&mailbox=" + mailBox + "&avatar=" + avatar;
 
-        return parseJSONString_register(httpGet(getUrl));
+        return new User(httpGet(getUrl));
     }
 
-    /**
-     * 注册信息中json解析方法
-     * @param JSONString
-     * @return
-     */
-    private static Map<String, Object> parseJSONString_register(String JSONString)
-    {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try
-        {
-            JSONObject msg = new JSONObject(JSONString);
-            resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
-            resultMap.put("activities", jsonArrayToStringArray(msg.getJSONArray("activities")));
-            resultMap.put("good", msg.getString("good"));
-        }
-        catch (JSONException e)
-        {
-
-        }
-
-        return resultMap;
-    }
 
     /**
      * 修改用户信息方法
@@ -329,7 +281,7 @@ public class ToolClass {
      * @param mailBox 用户邮箱
      * @return 返回用户信息map，失败时map中"mess"->"useriderror"  userid错误
      */
-    public static Map<String, Object> updateuserbaseinfo(String userid, String sex, String age, String constellation,
+    public User updateuserbaseinfo(String userid, String sex, String age, String constellation,
                                                          String profession, String liveplace, String description,
                                                          String phone, String mailBox)
     {
@@ -339,25 +291,9 @@ public class ToolClass {
                 + "&liveplace=" + liveplace + "&description=" + description
                 + "&phone=" + phone + "&mailBox=" + mailBox;
 
-        return parseJSONString_info_update(httpGet(getUrl));
+        return new User(httpGet(getUrl));
     }
 
-    private static Map<String, Object> parseJSONString_info_update(String JSONString)
-    {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try
-        {
-            JSONObject msg = new JSONObject(JSONString);
-            resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
-        }
-        catch (JSONException e)
-        {
-
-        }
-
-        return resultMap;
-    }
 
     /**
      * 修改用户密码方法

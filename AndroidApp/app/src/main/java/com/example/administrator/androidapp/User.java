@@ -115,7 +115,8 @@ public class User {
     private String activityID;
 
     public User(Map<String, Object> data){
-        String result = (String)data.get("user");
+        Map<String,String> result = (Map<String,String> )data.get("user");
+
     }
 }
 >>>>>>> origin/develop

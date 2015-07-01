@@ -6,4 +6,5 @@
     <string name="title_activity_registered">RegisteredActivity</string>
     <string name="title_activity_total">TotalActivity</string>
     <string name="title_activity_user_manager">UserManagerActivity</string>
+    <string name="title_activity_user_information">UserInformation</string>
 </resources>

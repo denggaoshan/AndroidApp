@@ -32,6 +32,10 @@
             android:name=".UserManagerActivity"
             android:label="@string/title_activity_user_manager" >
         </activity>
+        <activity
+            android:name=".UserInformation"
+            android:label="@string/title_activity_user_information" >
+        </activity>
     </application>
 
 </manifest>

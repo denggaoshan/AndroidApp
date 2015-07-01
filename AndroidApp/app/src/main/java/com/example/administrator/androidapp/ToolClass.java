@@ -184,7 +184,11 @@ public class ToolClass {
         return result;
     }
 
-
+    /**
+     * JSON ARRAY 转换成 Array<List> 方法
+     * @param array
+     * @return
+     */
     private static ArrayList<String> jsonArrayToStringArray(JSONArray array)
     {
         ArrayList<String> result = new ArrayList<String>();
@@ -203,21 +207,12 @@ public class ToolClass {
         return  result;
     }
 
-    /**
-     * 登陆方法
-     * @param account 用户账号
-     * @param password 用户密码
-     * @return 返回用户信息map 失败时map中“mess”->"loginfail" 账号密码不正确
-     */
-    public static Map<String, Object> load(String account, String password)
+
+    private static String httpGet(String url)
     {
         String resultStr = null;
 
-        String pass_MD = convetToMD5(password);
-        String getUrl = MSGSERVERURL + "?" + "oper=login"
-                + "&account=" + account + "&password=" + pass_MD;
-
-        HttpGet getMethod = new HttpGet(getUrl);
+        HttpGet getMethod = new HttpGet(url);
         HttpClient httpClient = new DefaultHttpClient();
         try
         {
@@ -234,7 +229,22 @@ public class ToolClass {
 
         }
 
-        return parseJSONString_load(resultStr);
+        return resultStr;
+    }
+
+    /**
+     * 登陆方法
+     * @param account 用户账号
+     * @param password 用户密码
+     * @return 返回用户信息map 失败时map中“mess”->"loginfail" 账号密码不正确
+     */
+    public User load(String account, String password)
+    {
+        String pass_MD = convetToMD5(password);
+        String getUrl = MSGSERVERURL + "?" + "oper=login"
+                + "&account=" + account + "&password=" + pass_MD;
+
+        return new User(httpGet(getUrl));
     }
 
     /**
@@ -251,6 +261,7 @@ public class ToolClass {
             resultMap.put("mess", msg.getString("mess"));
             resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
             resultMap.put("activities", jsonArrayToStringArray(msg.getJSONArray("activities")));
+
             resultMap.put("good", msg.getString("good"));
         }
         catch (JSONException e)
@@ -273,31 +284,12 @@ public class ToolClass {
      */
     public static Map<String, Object> register(String account, String password, String sex, String phone, String mailBox, String avatar)
     {
-        String resultStr = null;
-
         String pass_MD = MD5Deal.convetToMD5(password);
         String getUrl = MSGSERVERURL + "?" + "oper=register"
                 + "&account=" + account + "&password=" + pass_MD
                 + "&sex=" + sex + "&phone=" + phone + "&mailbox=" + mailBox + "&avatar=" + avatar;
 
-        HttpGet getMethod = new HttpGet(getUrl);
-        HttpClient httpClient = new DefaultHttpClient();
-        try
-        {
-            HttpResponse response = httpClient.execute(getMethod);
-            if (response.getStatusLine().getStatusCode() == 200)
-                resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
-        }
-        catch (ClientProtocolException e)
-        {
-
-        }
-        catch (IOException ee)
-        {
-
-        }
-
-        return parseJSONString_register(resultStr);
+        return parseJSONString_register(httpGet(getUrl));
     }
 
     /**
@@ -341,33 +333,13 @@ public class ToolClass {
                                                          String profession, String liveplace, String description,
                                                          String phone, String mailBox)
     {
-        String resultStr = null;
-
         String getUrl = MSGSERVERURL + "?" + "oper=updateuserbaseinfo"
                 + "&userid=" + userid + "&sex=" + sex + "&age=" + age
                 + "&constellation=" + constellation + "&profession=" + profession
                 + "&liveplace=" + liveplace + "&description=" + description
                 + "&phone=" + phone + "&mailBox=" + mailBox;
 
-        HttpGet getMethod = new HttpGet(getUrl);
-        HttpClient httpClient = new DefaultHttpClient();
-        try
-        {
-            HttpResponse response = httpClient.execute(getMethod);
-            if (response.getStatusLine().getStatusCode() == 200)
-                resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
-        }
-        catch (ClientProtocolException e)
-        {
-
-        }
-        catch (IOException ee)
-        {
-
-        }
-
-        return parseJSONString_info_update(resultStr);
-
+        return parseJSONString_info_update(httpGet(getUrl));
     }
 
     private static Map<String, Object> parseJSONString_info_update(String JSONString)
@@ -398,30 +370,11 @@ public class ToolClass {
     {
         String oldPassword_MD = convetToMD5(oldpassword);
         String newPassword_MD = convetToMD5(newpassword);
-        String resultStr = null;
-
         String getUrl = MSGSERVERURL + "?" + "oper=updateuserpassword"
                 + "&userid=" + userid + "&oldpassword=" + oldPassword_MD
                 + "&newpassword=" + newPassword_MD;
 
-        HttpGet getMethod = new HttpGet(getUrl);
-        HttpClient httpClient = new DefaultHttpClient();
-        try
-        {
-            HttpResponse response = httpClient.execute(getMethod);
-            if (response.getStatusLine().getStatusCode() == 200)
-                resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
-        }
-        catch (ClientProtocolException e)
-        {
-
-        }
-        catch (IOException ee)
-        {
-
-        }
-
-        return parseJSONString_info_updatepassword(resultStr);
+        return parseJSONString_password_update(httpGet(getUrl));
     }
 
     /**
@@ -429,7 +382,7 @@ public class ToolClass {
      * @param JSONString
      * @return
      */
-    private static Map<String, Object> parseJSONString_info_updatepassword(String JSONString)
+    private static Map<String, Object> parseJSONString_password_update(String JSONString)
     {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         try
@@ -446,41 +399,32 @@ public class ToolClass {
         return resultMap;
     }
 
-/*    private static Map<String, Object> getLaunchedActivity(String userid)
+    /**
+     * 获取用户发起的活动方法
+     * @param userid 用户Id
+     * @return 返回用户信息map， 成功时map中"mess"->"empty" userid错误或未发起活动
+     */
+    public static Map<String, Object> getLaunchedActivity(String userid)
     {
-        String resultStr = null;
-
         String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"
                 + "&userid=" + userid;
 
-        HttpGet getMethod = new HttpGet(getUrl);
-        HttpClient httpClient = new DefaultHttpClient();
-        try
-        {
-            HttpResponse response = httpClient.execute(getMethod);
-            if (response.getStatusLine().getStatusCode() == 200)
-                resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
-        }
-        catch (ClientProtocolException e)
-        {
-
-        }
-        catch (IOException ee)
-        {
-
-        }
-
-        return parseJSONString_info_launchedActivity(resultStr);
+        return parseJSONString_launchedActivity(httpGet(getUrl));
     }
 
-    private static Map<String, Object> parseJSONString_info_updatepassword(String JSONString)
+    /**
+     * 获取用户发起的活动 信息中json解析
+     * @param JSONString
+     * @return
+     */
+    private static Map<String, Object> parseJSONString_launchedActivity(String JSONString)
     {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         try
         {
             JSONObject msg = new JSONObject(JSONString);
             resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", msg.getJSONArray("user").toString());
+            resultMap.put("activities", jsonArrayToStringArray(msg.getJSONArray("activities")));
         }
         catch (JSONException e)
         {
@@ -488,5 +432,113 @@ public class ToolClass {
         }
 
         return resultMap;
-    }*/
+    }
+
+    /**
+     * 获取用户参与的活动方法
+     * @param userid 用户Id
+     * @return 返回用户信息map， 成功时map中"mess"->"empty" userid错误或未发起活动
+     */
+    public static Map<String, Object> getParticipatedActivity(String userid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getpartactivitybyuserid"
+                + "&userid=" + userid;
+
+        return parseJSONString_participatedActivity(httpGet(getUrl));
+    }
+
+    /**
+     * 获取用户参与的活动 信息中json解析
+     * @param JSONString
+     * @return
+     */
+    private static Map<String, Object> parseJSONString_participatedActivity(String JSONString)
+    {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try
+        {
+            JSONObject msg = new JSONObject(JSONString);
+            resultMap.put("mess", msg.getString("mess"));
+            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
+        }
+        catch (JSONException e)
+        {
+
+        }
+
+        return resultMap;
+    }
+
+    /**
+     * 获取用户申请的活动方法
+     * @param userid 用户Id
+     * @return 返回用户信息map， 成功时map中"mess"->"empty" userid错误或未发起活动
+     */
+    public static Map<String, Object> getApplicatedActivity(String userid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getappliactivitybyuserid"
+                + "&userid=" + userid;
+
+        return parseJSONString_applicatedActivity(httpGet(getUrl));
+    }
+
+    /**
+     * 获取用户参与的活动 信息中json解析
+     * @param JSONString
+     * @return
+     */
+    private static Map<String, Object> parseJSONString_applicatedActivity(String JSONString)
+    {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try
+        {
+            JSONObject msg = new JSONObject(JSONString);
+            resultMap.put("mess", msg.getString("mess"));
+            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
+        }
+        catch (JSONException e)
+        {
+
+        }
+
+        return resultMap;
+    }
+
+    /**
+     * 发起活动方法
+     * @param userid
+     * @param title
+     * @param content
+     * @param starttime
+     * @param endtime
+     * @param place
+     * @param type
+     * @return 返回map, 当map中的"mess"->"error" 异常
+     */
+    public static Map<String, Object> launchActivity(String userid, String title, String content,
+                                                     String starttime, String endtime, String place, String type)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getappliactivitybyuserid"
+                + "&userid=" + userid;
+
+        return parseJSONString_applicatedActivity(httpGet(getUrl));
+    }
+
+    private static Map<String, Object> parseJSONString_launchActivity(String JSONString)
+    {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try
+        {
+            JSONObject msg = new JSONObject(JSONString);
+            resultMap.put("mess", msg.getString("mess"));
+            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
+        }
+        catch (JSONException e)
+        {
+
+        }
+
+        return resultMap;
+    }
+
 }

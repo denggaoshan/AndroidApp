@@ -11,6 +11,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -182,6 +184,25 @@ public class ToolClass {
         return result;
     }
 
+
+    private static ArrayList<String> jsonArrayToStringArray(JSONArray array)
+    {
+        ArrayList<String> result = new ArrayList<String>();
+
+        try
+        {
+            for (int i = 0; i < array.length(); i++) {
+                result.add(array.getString(i));
+            }
+        }
+        catch (JSONException e)
+        {
+
+        }
+
+        return  result;
+    }
+
     /**
      * 登陆方法
      * @param account 用户账号
@@ -228,8 +249,8 @@ public class ToolClass {
         {
             JSONObject msg = new JSONObject(JSONString);
             resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", msg.getJSONArray("user").toString());
-            resultMap.put("activities", msg.getJSONArray("activities").toString());
+            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
+            resultMap.put("activities", jsonArrayToStringArray(msg.getJSONArray("activities")));
             resultMap.put("good", msg.getString("good"));
         }
         catch (JSONException e)
@@ -291,8 +312,8 @@ public class ToolClass {
         {
             JSONObject msg = new JSONObject(JSONString);
             resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", msg.getJSONArray("user").toString());
-            resultMap.put("activities", msg.getJSONArray("activities").toString());
+            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
+            resultMap.put("activities", jsonArrayToStringArray(msg.getJSONArray("activities")));
             resultMap.put("good", msg.getString("good"));
         }
         catch (JSONException e)
@@ -356,7 +377,7 @@ public class ToolClass {
         {
             JSONObject msg = new JSONObject(JSONString);
             resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", msg.getJSONArray("user").toString());
+            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
         }
         catch (JSONException e)
         {
@@ -366,7 +387,13 @@ public class ToolClass {
         return resultMap;
     }
 
-
+    /**
+     * 修改用户密码方法
+     * @param userid 用户Id
+     * @param oldpassword 用户原密码
+     * @param newpassword 用户新密码
+     * @return 返回用户信息map， 成功时map中"mess"->"updateerror" userid错误或密码错误
+     */
     public static Map<String, Object> updateuserpassword(String userid, String oldpassword, String newpassword)
     {
         String oldPassword_MD = convetToMD5(oldpassword);
@@ -397,6 +424,55 @@ public class ToolClass {
         return parseJSONString_info_updatepassword(resultStr);
     }
 
+    /**
+     * 修改用户密码信息中json解析方法
+     * @param JSONString
+     * @return
+     */
+    private static Map<String, Object> parseJSONString_info_updatepassword(String JSONString)
+    {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try
+        {
+            JSONObject msg = new JSONObject(JSONString);
+            resultMap.put("mess", msg.getString("mess"));
+            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
+        }
+        catch (JSONException e)
+        {
+
+        }
+
+        return resultMap;
+    }
+
+/*    private static Map<String, Object> getLaunchedActivity(String userid)
+    {
+        String resultStr = null;
+
+        String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"
+                + "&userid=" + userid;
+
+        HttpGet getMethod = new HttpGet(getUrl);
+        HttpClient httpClient = new DefaultHttpClient();
+        try
+        {
+            HttpResponse response = httpClient.execute(getMethod);
+            if (response.getStatusLine().getStatusCode() == 200)
+                resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
+        }
+        catch (ClientProtocolException e)
+        {
+
+        }
+        catch (IOException ee)
+        {
+
+        }
+
+        return parseJSONString_info_launchedActivity(resultStr);
+    }
+
     private static Map<String, Object> parseJSONString_info_updatepassword(String JSONString)
     {
         Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -412,6 +488,5 @@ public class ToolClass {
         }
 
         return resultMap;
-    }
-
+    }*/
 }

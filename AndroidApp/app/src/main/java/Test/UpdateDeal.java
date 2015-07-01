@@ -19,13 +19,17 @@ import java.util.Map;
 public class UpdateDeal {
 
     public static final String BASE_URL = "";
-    public static Map<String, Object> updateuserbaseinfo(String userid, String sex, String phone, String mailBox)
+    public static Map<String, Object> updateuserbaseinfo(String userid, String sex, String age, String constellation,
+                                                         String profession, String liveplace, String description,
+                                                         String phone, String mailBox)
     {
         String resultStr = null;
 
         String getUrl = BASE_URL + "?" + "oper=updateuserbaseinfo"
-                + "&userid=" + userid
-                + "&sex=" + sex + "&phone=" + phone + "&mailbox=" + mailBox;
+                + "&userid=" + userid + "&sex=" + sex + "&age=" + age
+                + "&constellation=" + constellation + "&profession=" + profession
+                + "&liveplace=" + liveplace + "&description=" + description
+                + "&phone=" + phone + "&mailBox=" + mailBox;
 
         HttpGet getMethod = new HttpGet(getUrl);
         HttpClient httpClient = new DefaultHttpClient();
@@ -44,11 +48,11 @@ public class UpdateDeal {
 
         }
 
-        return parseJSONString_info(resultStr);
+        return parseJSONString_info_update(resultStr);
 
     }
 
-    private static Map<String, Object> parseJSONString_info(String JSONString)
+    private static Map<String, Object> parseJSONString_info_update(String JSONString)
     {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         try

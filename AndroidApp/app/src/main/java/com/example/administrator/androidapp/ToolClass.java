@@ -26,6 +26,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import Test.MD5Deal;
 
@@ -185,7 +186,7 @@ public class ToolClass {
      * 登陆方法
      * @param account 用户账号
      * @param password 用户密码
-     * @return 返回用户信息map 失败时map中“mess”->"loginfail"
+     * @return 返回用户信息map 失败时map中“mess”->"loginfail" 账号密码不正确
      */
     public static Map<String, Object> load(String account, String password)
     {
@@ -247,7 +248,7 @@ public class ToolClass {
      * @param phone 用户手机号码
      * @param mailBox 用户邮箱
      * @param avatar 用户头像图片网络地址
-     * @return
+     * @return 返回用户信息map，失败时map中"mess"->"registerfail" 账号已存在
      */
     public static Map<String, Object> register(String account, String password, String sex, String phone, String mailBox, String avatar)
     {
@@ -301,4 +302,116 @@ public class ToolClass {
 
         return resultMap;
     }
+
+    /**
+     * 修改用户信息方法
+     * @param userid 用户id
+     * @param sex 用户性别 0男 1女
+     * @param age 用户年龄
+     * @param constellation 用户星座
+     * @param profession 用户职业
+     * @param liveplace 用户地址
+     * @param description 用户个人说明
+     * @param phone 用户手机号码
+     * @param mailBox 用户邮箱
+     * @return 返回用户信息map，失败时map中"mess"->"useriderror"  userid错误
+     */
+    public static Map<String, Object> updateuserbaseinfo(String userid, String sex, String age, String constellation,
+                                                         String profession, String liveplace, String description,
+                                                         String phone, String mailBox)
+    {
+        String resultStr = null;
+
+        String getUrl = MSGSERVERURL + "?" + "oper=updateuserbaseinfo"
+                + "&userid=" + userid + "&sex=" + sex + "&age=" + age
+                + "&constellation=" + constellation + "&profession=" + profession
+                + "&liveplace=" + liveplace + "&description=" + description
+                + "&phone=" + phone + "&mailBox=" + mailBox;
+
+        HttpGet getMethod = new HttpGet(getUrl);
+        HttpClient httpClient = new DefaultHttpClient();
+        try
+        {
+            HttpResponse response = httpClient.execute(getMethod);
+            if (response.getStatusLine().getStatusCode() == 200)
+                resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
+        }
+        catch (ClientProtocolException e)
+        {
+
+        }
+        catch (IOException ee)
+        {
+
+        }
+
+        return parseJSONString_info_update(resultStr);
+
+    }
+
+    private static Map<String, Object> parseJSONString_info_update(String JSONString)
+    {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try
+        {
+            JSONObject msg = new JSONObject(JSONString);
+            resultMap.put("mess", msg.getString("mess"));
+            resultMap.put("user", msg.getJSONArray("user").toString());
+        }
+        catch (JSONException e)
+        {
+
+        }
+
+        return resultMap;
+    }
+
+
+    public static Map<String, Object> updateuserpassword(String userid, String oldpassword, String newpassword)
+    {
+        String oldPassword_MD = convetToMD5(oldpassword);
+        String newPassword_MD = convetToMD5(newpassword);
+        String resultStr = null;
+
+        String getUrl = MSGSERVERURL + "?" + "oper=updateuserpassword"
+                + "&userid=" + userid + "&oldpassword=" + oldPassword_MD
+                + "&newpassword=" + newPassword_MD;
+
+        HttpGet getMethod = new HttpGet(getUrl);
+        HttpClient httpClient = new DefaultHttpClient();
+        try
+        {
+            HttpResponse response = httpClient.execute(getMethod);
+            if (response.getStatusLine().getStatusCode() == 200)
+                resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
+        }
+        catch (ClientProtocolException e)
+        {
+
+        }
+        catch (IOException ee)
+        {
+
+        }
+
+        return parseJSONString_info_updatepassword(resultStr);
+    }
+
+    private static Map<String, Object> parseJSONString_info_updatepassword(String JSONString)
+    {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try
+        {
+            JSONObject msg = new JSONObject(JSONString);
+            resultMap.put("mess", msg.getString("mess"));
+            resultMap.put("user", msg.getJSONArray("user").toString());
+        }
+        catch (JSONException e)
+        {
+
+        }
+
+        return resultMap;
+    }
+
 }

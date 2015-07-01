@@ -20,6 +20,8 @@ import java.util.Map;
 
 public class TotalActivity extends ActionBarActivity {
 
+    User currentUser;//存储当前的用户信息
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,7 @@ public class TotalActivity extends ActionBarActivity {
         ListView vi=(ListView) findViewById(R.id.content);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_activity_total, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
         vi.setAdapter(adapter);
+
     }
 
     private List<Map<String, Object>> getData() {

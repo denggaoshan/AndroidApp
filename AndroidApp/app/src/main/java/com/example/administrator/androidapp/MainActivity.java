@@ -31,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
-
     }
 
     private String username;
@@ -59,15 +58,6 @@ public class MainActivity extends ActionBarActivity {
     public void landing_Click(View v) {
         getInput();
 
-        //for test
-        if( "".equals(username) && "".equals(password)){
-            //登陆成功，切换到主页面
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, TotalActivity.class);
-            MainActivity.this.startActivity(intent);
-            MainActivity.this.finish();
-            return;
-        }
 
         if(!"OK".equals(PatternValid.validUsername(username))){
             Toast.makeText(MainActivity.this, "用户名不合法", Toast.LENGTH_LONG).show();
@@ -89,6 +79,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    //切换到注册界面
     public void registered_Click(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, RegisteredActivity.class);
@@ -111,7 +102,6 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

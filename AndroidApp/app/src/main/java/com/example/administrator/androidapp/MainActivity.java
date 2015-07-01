@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 
@@ -46,10 +47,14 @@ public class MainActivity extends ActionBarActivity {
 
     private String checkUser(String username,String password){
         //提交用户名密码
-        if(username.equals("admin") && password.equals("123456")){
-            return "OK";
+        Map<String,Object> ret =  ToolClass.load(username,password);
+
+        String info = (String)ret.get("mess");
+        if(info.equals("loginfail")){
+            //登陆失败
+            return "NO";
         }
-        return "NO";
+        return "OK";
     }
 
     public void landing_Click(View v) {

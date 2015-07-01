@@ -144,6 +144,30 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="性别"
+                    android:id="@+id/textView18" />
+
+                <RadioGroup
+                    android:id="@+id/gendergroup"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                    <RadioButton
+                        android:id="@+id/girl"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="女" />
+                    <RadioButton
+                        android:id="@+id/boy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="男" />
+                </RadioGroup>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="手机"
                     android:id="@+id/textView8" />
 
@@ -151,7 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/tell_RegTxt"
+                    android:id="@+id/phone_RegTxt"
                     android:singleLine="true" />
 
                 <TextView
@@ -188,7 +212,9 @@
                 android:background="#ff50d2c2"
                 android:textColor="#ffffffff"
                 android:textSize="50px"
-                android:textColorHighlight="#ffffffff" />
+                android:textColorHighlight="#ffffffff"
+                android:onClick="register_Click"
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
     </RelativeLayout>

@@ -37,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
     private String username;
     private String password;
 
-
     private void getInput(){
         EditText us=(EditText) findViewById(R.id.username);
         EditText pw=(EditText) findViewById(R.id.password);

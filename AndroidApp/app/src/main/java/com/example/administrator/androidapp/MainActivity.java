@@ -37,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
     private String username;
     private String password;
 
-
     private void getInput(){
         EditText us=(EditText) findViewById(R.id.username);
         EditText pw=(EditText) findViewById(R.id.password);
@@ -60,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
     public void landing_Click(View v) {
         getInput();
 
+        //for test
         if( "".equals(username) && "".equals(password)){
             //登陆成功，切换到主页面
             Intent intent = new Intent();
@@ -76,10 +76,12 @@ public class MainActivity extends ActionBarActivity {
         }else {
             if( "OK".equals(checkUser(username, password))){
                 //登陆成功，切换到主页面
+                Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, TotalActivity.class);
                 MainActivity.this.startActivity(intent);
                 MainActivity.this.finish();
+
             }else{
                 Toast.makeText(MainActivity.this, "用户名或密码错误", Toast.LENGTH_LONG).show();
             }

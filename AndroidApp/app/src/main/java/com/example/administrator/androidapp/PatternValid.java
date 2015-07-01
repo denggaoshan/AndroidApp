@@ -26,4 +26,16 @@ public class PatternValid {
         }
         return "OK";
     }
+
+
+    public static String validEmail(String name) {
+        return "OK";
+    }
+
+    public static String validPhone(String name) {
+        return "OK";
+    }
+
+
+
 }

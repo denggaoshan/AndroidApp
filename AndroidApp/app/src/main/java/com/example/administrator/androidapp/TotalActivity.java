@@ -6,6 +6,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TotalActivity extends ActionBarActivity {
 
@@ -13,7 +24,38 @@ public class TotalActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_total);
+
+        ListView vi=(ListView) findViewById(R.id.content);
+        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_activity_total, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
+        vi.setAdapter(adapter);
     }
+
+    private List<Map<String, Object>> getData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("title", "1234");
+        map.put("time", "12:33");
+        map.put("position", "12:33");
+        map.put("attending", "qqqqqq");
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "1234");
+        map.put("time", "12:33");
+        map.put("position", "12:33");
+        map.put("attending", "zzzzzz");
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "1234");
+        map.put("time", "12:1fasd");
+        map.put("position", "11234123");
+        map.put("attending", "tttttt");
+        list.add(map);
+
+        return list;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

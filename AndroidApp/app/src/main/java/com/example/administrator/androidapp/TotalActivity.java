@@ -25,10 +25,9 @@ public class TotalActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_total);
 
-        ListView vi=(ListView) findViewById(R.id.scroll);
+        ListView vi=(ListView) findViewById(R.id.content);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.activity, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
         vi.setAdapter(adapter);
-
     }
 
     private List<Map<String, Object>> getData() {
@@ -45,14 +44,14 @@ public class TotalActivity extends ActionBarActivity {
         map.put("title", "1234");
         map.put("time", "12:33");
         map.put("position", "12:33");
-        map.put("attending", "qqqqqq");
+        map.put("attending", "zzzzzz");
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "1234");
-        map.put("time", "12:33");
-        map.put("position", "12:33");
-        map.put("attending", "qqqqqq");
+        map.put("time", "12:1fasd");
+        map.put("position", "11234123");
+        map.put("attending", "tttttt");
         list.add(map);
 
         return list;

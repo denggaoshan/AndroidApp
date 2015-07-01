@@ -183,8 +183,6 @@
         android:id="@+id/content"
         android:paddingTop="20dp">
 
-
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

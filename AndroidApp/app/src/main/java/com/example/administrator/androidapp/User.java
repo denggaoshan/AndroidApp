@@ -37,7 +37,10 @@ public class User {
     private String good;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> bind
     private static User currentUser;
 
     public static void setUser(User us){
@@ -51,9 +54,15 @@ public class User {
         }
     }
 
+<<<<<<< HEAD
 
     public Activity[] getActivities(){return activities;}
 
+=======
+
+    public Activity[] getActivities(){return activities;}
+
+>>>>>>> bind
     public boolean ifLoading(){
         if(mess.equals("loginfail")){
             return false;
@@ -69,7 +78,11 @@ public class User {
 
             String val = userMsg.getString(data);
 <<<<<<< HEAD
+<<<<<<< HEAD
             fs.set(this,val);//data属性设置成从userMsg中取得的val
+=======
+            fs.set(this,val);
+>>>>>>> bind
 =======
             fs.set(this,val);
 >>>>>>> bind

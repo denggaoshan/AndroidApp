@@ -238,7 +238,7 @@ public class ToolClass {
      * @param password 用户密码
      * @return 返回用户信息map 失败时map中“mess”->"loginfail" 账号密码不正确
      */
-    public User load(String account, String password)
+    public static User load(String account, String password)
     {
         String pass_MD = convetToMD5(password);
         String getUrl = MSGSERVERURL + "?" + "oper=login"
@@ -257,7 +257,7 @@ public class ToolClass {
      * @param avatar 用户头像图片网络地址
      * @return 返回用户信息map，失败时map中"mess"->"registerfail" 账号已存在
      */
-    public User register(String account, String password, String sex, String phone, String mailBox, String avatar)
+    public static User register(String account, String password, String sex, String phone, String mailBox, String avatar)
     {
         String pass_MD = MD5Deal.convetToMD5(password);
         String getUrl = MSGSERVERURL + "?" + "oper=register"
@@ -281,7 +281,7 @@ public class ToolClass {
      * @param mailBox 用户邮箱
      * @return 返回用户信息map，失败时map中"mess"->"useriderror"  userid错误
      */
-    public User updateuserbaseinfo(String userid, String sex, String age, String constellation,
+    public static User updateuserbaseinfo(String userid, String sex, String age, String constellation,
                                                          String profession, String liveplace, String description,
                                                          String phone, String mailBox)
     {
@@ -302,7 +302,7 @@ public class ToolClass {
      * @param newpassword 用户新密码
      * @return 返回用户信息map， 成功时map中"mess"->"updateerror" userid错误或密码错误
      */
-    public User updateuserpassword(String userid, String oldpassword, String newpassword)
+    public static User updateuserpassword(String userid, String oldpassword, String newpassword)
     {
         String oldPassword_MD = convetToMD5(oldpassword);
         String newPassword_MD = convetToMD5(newpassword);
@@ -319,7 +319,7 @@ public class ToolClass {
      * @param userid 用户Id
      * @return 返回用户信息map， 成功时map中"mess"->"empty" userid错误或未发起活动
      */
-    public User getLaunchedActivity(String userid)
+    public static User getLaunchedActivity(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"
                 + "&userid=" + userid;
@@ -332,70 +332,28 @@ public class ToolClass {
      * @param userid 用户Id
      * @return 返回用户信息map， 成功时map中"mess"->"empty" userid错误或未发起活动
      */
-    public static Map<String, Object> getParticipatedActivity(String userid)
+    public static User getParticipatedActivity(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getpartactivitybyuserid"
                 + "&userid=" + userid;
 
-        return parseJSONString_participatedActivity(httpGet(getUrl));
+        return new User(httpGet(getUrl));
     }
 
-    /**
-     * 获取用户参与的活动 信息中json解析
-     * @param JSONString
-     * @return
-     */
-    private static Map<String, Object> parseJSONString_participatedActivity(String JSONString)
-    {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try
-        {
-            JSONObject msg = new JSONObject(JSONString);
-            resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
-        }
-        catch (JSONException e)
-        {
-
-        }
-
-        return resultMap;
-    }
 
     /**
      * 获取用户申请的活动方法
      * @param userid 用户Id
      * @return 返回用户信息map， 成功时map中"mess"->"empty" userid错误或未发起活动
      */
-    public static Map<String, Object> getApplicatedActivity(String userid)
+    public static User getApplicatedActivity(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getappliactivitybyuserid"
                 + "&userid=" + userid;
 
-        return parseJSONString_applicatedActivity(httpGet(getUrl));
+        return new User(httpGet(getUrl));
     }
 
-    /**
-     * 获取用户参与的活动 信息中json解析
-     * @param JSONString
-     * @return
-     */
-    private static Map<String, Object> parseJSONString_applicatedActivity(String JSONString)
-    {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try
-        {
-            JSONObject msg = new JSONObject(JSONString);
-            resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
-        }
-        catch (JSONException e)
-        {
-
-        }
-
-        return resultMap;
-    }
 
     /**
      * 发起活动方法
@@ -408,30 +366,16 @@ public class ToolClass {
      * @param type
      * @return 返回map, 当map中的"mess"->"error" 异常
      */
-    public static Map<String, Object> launchActivity(String userid, String title, String content,
+    public static User launchActivity(String userid, String title, String content,
                                                      String starttime, String endtime, String place, String type)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getappliactivitybyuserid"
                 + "&userid=" + userid;
 
-        return parseJSONString_applicatedActivity(httpGet(getUrl));
+        return new User(httpGet(getUrl));
     }
 
-    private static Map<String, Object> parseJSONString_launchActivity(String JSONString)
-    {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try
-        {
-            JSONObject msg = new JSONObject(JSONString);
-            resultMap.put("mess", msg.getString("mess"));
-            resultMap.put("user", jsonArrayToStringArray(msg.getJSONArray("user")));
-        }
-        catch (JSONException e)
-        {
+    public static 
 
-        }
-
-        return resultMap;
-    }
 
 }

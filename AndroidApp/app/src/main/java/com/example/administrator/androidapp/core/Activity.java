@@ -1,4 +1,4 @@
-package com.example.administrator.androidapp;
+package com.example.administrator.androidapp.core;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.example.administrator.androidapp;
+package com.example.administrator.androidapp.tool;
 
 import java.io.BufferedReader;
 import java.io.IOException;

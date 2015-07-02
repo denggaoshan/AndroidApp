@@ -1,7 +1,9 @@
-package com.example.administrator.androidapp;
+package com.example.administrator.androidapp.core;
 
 
 import android.widget.TextView;
+
+import com.example.administrator.androidapp.tool.ToolClass;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -160,7 +162,7 @@ public class User {
                 "Constellation","Profession","LivePlace","Description","Phone",
                 "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
 
-        userMsg = ToolClass.getJSONObject(allMsg,"user");
+        userMsg = ToolClass.getJSONObject(allMsg, "user");
 
         if (userMsg != null) {
             for(String val :tmp){

@@ -1,7 +1,9 @@
-package com.example.administrator.androidapp;
+package com.example.administrator.androidapp.tool;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.example.administrator.androidapp.core.User;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,7 +30,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import Test.MD5Deal;
 

@@ -1,4 +1,4 @@
-package com.example.administrator.androidapp;
+package com.example.administrator.androidapp.page;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,12 +10,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.core.User;
+
 public class Page_UserManager extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_manager);
+        setContentView(R.layout.page_user_manager);
 
         User user = User.getCurrentUser();
         TextView account = (TextView)findViewById(R.id.Account);
@@ -38,7 +41,7 @@ public class Page_UserManager extends ActionBarActivity {
 
     public void close_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(Page_UserManager.this, TotalActivity.class);
+        intent.setClass(Page_UserManager.this, Page_TotalActivity.class);
         Page_UserManager.this.startActivity(intent);
         Page_UserManager.this.finish();
     }

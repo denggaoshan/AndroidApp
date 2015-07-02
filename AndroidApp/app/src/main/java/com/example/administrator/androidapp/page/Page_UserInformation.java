@@ -1,4 +1,4 @@
-package com.example.administrator.androidapp;
+package com.example.administrator.androidapp.page;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.core.User;
 
 
 public class Page_UserInformation extends ActionBarActivity {

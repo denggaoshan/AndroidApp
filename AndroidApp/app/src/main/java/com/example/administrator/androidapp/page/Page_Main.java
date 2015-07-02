@@ -1,4 +1,4 @@
-package com.example.administrator.androidapp;
+package com.example.administrator.androidapp.page;
 
 import android.content.Intent;
 import android.os.StrictMode;
@@ -10,13 +10,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.administrator.androidapp.tool.PatternValid;
+import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.tool.ToolClass;
+import com.example.administrator.androidapp.core.User;
+
 
 public class Page_Main extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.page_main);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
     }
@@ -32,7 +37,7 @@ public class Page_Main extends ActionBarActivity {
     }
 
     private String checkUser(String username,String password){
-        User user =  ToolClass.load(username,password);
+        User user =  ToolClass.load(username, password);
         if(user==null){
             return "NO";
         }
@@ -46,18 +51,18 @@ public class Page_Main extends ActionBarActivity {
     public void landing_Click(View v) {
         //获得输入框文本
         getInput();
+        Toast.makeText(Page_Main.this, "登录中", Toast.LENGTH_LONG).show();
 
         if(!"OK".equals(PatternValid.validUsername(username))){
             Toast.makeText(Page_Main.this, "用户名格式不正确", Toast.LENGTH_LONG).show();
         }else if(!"OK".equals(PatternValid.validPassword(password))){
             Toast.makeText(Page_Main.this, "密码格式不正确", Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(Page_Main.this, "登录中", Toast.LENGTH_LONG).show();
             if( "OK".equals(checkUser(username, password))){
                 //登陆成功
                 Toast.makeText(Page_Main.this, "", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
-                intent.setClass(Page_Main.this, TotalActivity.class);
+                intent.setClass(Page_Main.this, Page_TotalActivity.class);
                 Page_Main.this.startActivity(intent);
                 Page_Main.this.finish();
             }else{

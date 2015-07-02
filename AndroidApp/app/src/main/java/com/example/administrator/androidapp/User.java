@@ -33,58 +33,90 @@ public class User {
     private Activity[] activities;
     private String good;
 
+    private String isgood;
 
 
     private void getProperty(String data,JSONObject userMsg){
-        try {
-            Field  fs= this.getClass().getField(data);
+        Field fs;
+        String value;
+        try
+        {
+            fs= this.getClass().getField(data);
             fs.setAccessible(true);
-
-            String val = userMsg.getString(data);
+        }
+        catch (NoSuchFieldException e)
+        {
+            return;
+        }
+        try
+        {
+            value = userMsg.getString(data);
+        }
+        catch (JSONException e)
+        {
+            value = null;
+        }
+        try {
             fs.set(this,data);
-
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e)
+        {
             e.printStackTrace();
         }
     }
 
     public User(String jsonString)
     {
-        try
-        {
-            JSONObject allMsg = new JSONObject(jsonString);
-            mess = allMsg.getString("mess");
-
-            String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
-                    "Constellation","Profession","LivePlace","Description","Phone",
-                    "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
-
-            JSONObject userMsg = allMsg.getJSONObject("user");
-
-            for(String val :tmp){
-                getProperty(val,userMsg);
-            }
-
-            good = allMsg.getString("good");
-
-
-            JSONArray jsonArray = allMsg.getJSONArray("activities");
-            if (jsonArray.length() != 0)
-            {
-                activities = new Activity[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++)
-                {
-                    activities[i] = new Activity(jsonArray.getJSONObject(i));
-                }
-            }
+        JSONObject allMsg;
+        try {
+            allMsg = new JSONObject(jsonString);
         }
         catch (JSONException e)
         {
+            allMsg = null;
+        }
+        getProperty("mess", allMsg);
 
+        String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
+                "Constellation","Profession","LivePlace","Description","Phone",
+                "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
+        JSONObject userMsg;
+        try {
+            userMsg = allMsg.getJSONObject("user");
+        }
+        catch (JSONException e) {
+            userMsg = null;
+        }
+        if (userMsg != null) {
+            for(String val :tmp){
+                getProperty(val,userMsg);
+            }
+        }
+
+        getProperty("good", allMsg);
+
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = allMsg.getJSONArray("activities");
+        }
+        catch (JSONException E) {
+            jsonArray = null;
+        }
+
+        if (jsonArray != null) {
+            if (jsonArray.length() != 0) {
+                activities = new Activity[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try
+                    {
+                        activities[i] = new Activity(jsonArray.getJSONObject(i));
+                    }
+                    catch (JSONException e)
+                    {
+                        activities[i] = null;
+                    }
+                }
+            }
         }
     }
 
@@ -93,6 +125,61 @@ public class User {
 
     }
 
+    public User(String jsonString, boolean nouse)
+    {
+        JSONObject allMsg;
+        try {
+            allMsg = new JSONObject(jsonString);
+        }
+        catch (JSONException e)
+        {
+            allMsg = null;
+        }
+        getProperty("mess", allMsg);
+
+        String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
+                "Constellation","Profession","LivePlace","Description","Phone",
+                "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
+        JSONObject userMsg;
+        try {
+            userMsg = allMsg.getJSONObject("user");
+        }
+        catch (JSONException e) {
+            userMsg = null;
+        }
+        if (userMsg != null) {
+            for(String val :tmp){
+                getProperty(val,userMsg);
+            }
+        }
+
+        getProperty("good", allMsg);
+        getProperty("isgood", allMsg);
+
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = allMsg.getJSONArray("activities");
+        }
+        catch (JSONException E) {
+            jsonArray = null;
+        }
+
+        if (jsonArray != null) {
+            if (jsonArray.length() != 0) {
+                activities = new Activity[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try
+                    {
+                        activities[i] = new Activity(jsonArray.getJSONObject(i));
+                    }
+                    catch (JSONException e)
+                    {
+                        activities[i] = null;
+                    }
+                }
+            }
+        }
+    }
     public User[] getUsers(String jsonString)
     {
         User [] result = null;
@@ -106,23 +193,11 @@ public class User {
             for (int i = 0; i < jsonArray.length(); i++)
             {
                 result[i] = new User();
-                result[i].UserID = jsonArray.getJSONObject(i).getString("UserID");
-                result[i].Account = jsonArray.getJSONObject(i).getString("Account");
-                result[i].Avatar = jsonArray.getJSONObject(i).getString("Avatar");
-                result[i].NickName = jsonArray.getJSONObject(i).getString("NickName");
-                result[i].Sex = jsonArray.getJSONObject(i).getString("Sex");
-                result[i].Age = jsonArray.getJSONObject(i).getString("Age");
-                result[i].Constellation = jsonArray.getJSONObject(i).getString("Constellation");
-                result[i].Profession = jsonArray.getJSONObject(i).getString("Profession");
-                result[i].LivePlace = jsonArray.getJSONObject(i).getString("LivePlace");
-                result[i].Description = jsonArray.getJSONObject(i).getString("Description");
-                result[i].Phone = jsonArray.getJSONObject(i).getString("Phone");
-                result[i].Mailbox = jsonArray.getJSONObject(i).getString("Mailbox");
-                result[i].IsCheckedMailbox = jsonArray.getJSONObject(i).getString("IsCheckedMailbox");
-                result[i].QQ = jsonArray.getJSONObject(i).getString("QQ");
-                result[i].WeiBo = jsonArray.getJSONObject(i).getString("WeiBo");
-                result[i].RoleID = jsonArray.getJSONObject(i).getString("RoleID");
-                result[i].RegisterTime = jsonArray.getJSONObject(i).getString("RegisterTime");
+                String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
+                        "Constellation","Profession","LivePlace","Description","Phone",
+                        "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
+                for (String var : tmp)
+                    result[i].getProperty(var, jsonArray.getJSONObject(i));
             }
         }
         catch (JSONException E)

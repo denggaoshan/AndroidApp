@@ -438,5 +438,182 @@ public class ToolClass {
         return new User(httpGet(getUrl));
     }
 
+    /**
+     * 获取某活动的所有申请
+     * @param userid
+     * @param activityid
+     * @return 返回mess 为 nopermiss时表示失败
+     */
+    public static User[] getApplication(String userid, String activityid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getapplication"
+                + "&userid=" + userid + "&activityid=" + activityid;
 
+        User tmp = new User();
+        return tmp.getUsers(httpGet(getUrl));
+    }
+
+    /**
+     * 活动发起人允许/拒绝别人的申请
+     * @param userid
+     * @param applyid
+     * @param isallow
+     * @return 返回中mess 为 noperimiss时表示失败
+     */
+    public static User handleApplication(String userid, String applyid, String isallow)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=handleapplication"
+                + "&userid=" + userid + "&applyid=" + applyid
+                + "&isallow=" + isallow;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**
+     * 发起人群发消息
+     * @param userid
+     * @param activityid
+     * @param title
+     * @param content
+     * @return 返回中mess 为 noperimiss时表示失败
+     */
+    public static User fsendMess(String userid, String activityid, String title, String content)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=fsendmess"
+                + "&userid=" + userid + "&activityid=" + activityid
+                + "&title=" + title + "&content=" + content;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**
+     * 确认消息已读
+     * @param informid
+     * @return
+     */
+    public static User affirminform(String informid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=affirminform"
+                + "&informid=" + informid;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**
+     * 发送私信
+     * @param userid
+     * @param toid
+     * @param title
+     * @param content
+     * @return
+     */
+    public static User sendPrivateMess(String userid, String toid, String title, String content)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=sendprivatemess"
+                + "&userid=" + userid + "&toid=" + toid
+                + "&title=" + title + "&content=" + content;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**\
+     * 修改活动信息
+     * @param activityid
+     * @param title
+     * @param content
+     * @param starttime
+     * @param endtime
+     * @param place
+     * @param type
+     * @return 返回时mess为activityiderror表示错误
+     */
+    public static User updateActivityInfo(String activityid, String title, String content,
+                                          String starttime, String endtime, String place, String type)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=updateactivityinfo"
+                + "&activityid=" + activityid + "&title=" + title
+                + "&content=" + content + "&starttime=" + starttime
+                + "&endtime=" + endtime + "&place=" + place + "&type=" + type;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**
+     * 根据ID获取用户信息
+     * @param userid
+     * @param searchid
+     * @return 返回中isgood 1为有点赞 0为无点赞
+     */
+    public static User getUserInfo(String userid, String searchid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getuserinfobyid"
+                + "&userid=" + userid + "&searchid=" + searchid;
+
+        return new User(httpGet(getUrl), true);
+    }
+
+    /**
+     * 给某人点赞/取消赞操作
+     * @param userid
+     * @param toid
+     * @param good
+     * @return
+     */
+    public static User addOrDeleteGood(String userid, String toid, String good)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=addordeletegood"
+                + "&userid=" + userid + "&toid=" + toid + "&good=" + good;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**
+     * 活动发起人踢人
+     * @param userid
+     * @param activityid
+     * @param kickid
+     * @return
+     */
+    public static User kick(String userid, String activityid, String kickid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=kick"
+                + "&userid=" + userid + "&activityid=" + activityid + "&kickid=" + kickid;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**
+     * 发表评论
+     * @param userid
+     * @param activityid
+     * @param content
+     * @return 返回mess中为error表示错误
+     */
+    public static User addCommment(String userid, String activityid, String content)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=addcomment"
+                + "&userid=" + userid + "&activityid=" + activityid + "&content=" + content;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**
+     * 发照片
+     * @param userid
+     * @param activityid
+     * @param address
+     * @param title
+     * @param describe
+     * @param level
+     * @return 返回mess中为error表示错误
+     */
+    public static User addPhoto(String userid, String activityid, String address,
+                                String title, String describe, String level)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=addphoto"
+                + "&userid=" + userid + "&activityid=" + activityid + "&address=" + address
+                + "&title=" + title + "&describe=" + describe + "&level=" + level;
+
+        return new User(httpGet(getUrl));
+    }
 }

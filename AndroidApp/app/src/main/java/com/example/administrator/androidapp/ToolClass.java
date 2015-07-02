@@ -369,13 +369,74 @@ public class ToolClass {
     public static User launchActivity(String userid, String title, String content,
                                                      String starttime, String endtime, String place, String type)
     {
-        String getUrl = MSGSERVERURL + "?" + "oper=getappliactivitybyuserid"
-                + "&userid=" + userid;
+        String getUrl = MSGSERVERURL + "?" + "oper=launchactivity"
+                + "&userid=" + userid + "&title=" + title
+                + "&content=" + content + "&starttime=" + starttime
+                + "&endtime=" + endtime + "&place=" + place + "&type=" + type;
 
         return new User(httpGet(getUrl));
     }
 
-    public static 
+    /**
+     * 获取活动列表方法
+     * @param page
+     * @param type
+     * @param applyable
+     * @param keyword
+     * @return 返回User类型中仅有activity项
+     */
+    public static User getActivityList(String page, String type, String applyable, String keyword)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getactivitylist"
+                + "&page=" + page + "&type=" + type
+                + "applyable=" + applyable + "&keyword=" + keyword;
+
+        return new User(httpGet(getUrl));
+    }
+
+    /**
+     * 获取活动参与人员方法
+     * @param userid
+     * @param activityid
+     * @return 默认第0个为发起者
+     */
+    public static User[] getParticipation(String userid, String activityid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getparticipation"
+                + "&userid=" + userid + "&activityid=" + activityid;
+
+        User temp = new User();
+        return temp.getUsers(httpGet(getUrl));
+    }
+
+    /**
+     * 获得某用户消息
+     * @param userid
+     * @return
+     */
+    public static Message getInform(String userid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getinformbyuserid"
+                + "&userid=" + userid;
+
+        return new Message(httpGet(getUrl));
+    }
+
+    /**
+     * 用户申请参加活动
+     * @param userid
+     * @param activityid
+     * @param explain
+     * @return
+     */
+    public static User applyParticipation(String userid, String activityid, String explain)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=applyparticipation"
+                + "&userid=" + userid + "&activityid=" + activityid
+                + "&explain=" + explain;
+
+        return new User(httpGet(getUrl));
+    }
 
 
 }

@@ -86,6 +86,50 @@ public class User {
         {
 
         }
+    }
 
+    public User()
+    {
+
+    }
+
+    public User[] getUsers(String jsonString)
+    {
+        User [] result = null;
+        try
+        {
+            JSONObject allMsg = new JSONObject(jsonString);
+            mess = allMsg.getString("mess");
+
+            JSONArray jsonArray = allMsg.getJSONArray("users");
+            result = new User[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++)
+            {
+                result[i] = new User();
+                result[i].UserID = jsonArray.getJSONObject(i).getString("UserID");
+                result[i].Account = jsonArray.getJSONObject(i).getString("Account");
+                result[i].Avatar = jsonArray.getJSONObject(i).getString("Avatar");
+                result[i].NickName = jsonArray.getJSONObject(i).getString("NickName");
+                result[i].Sex = jsonArray.getJSONObject(i).getString("Sex");
+                result[i].Age = jsonArray.getJSONObject(i).getString("Age");
+                result[i].Constellation = jsonArray.getJSONObject(i).getString("Constellation");
+                result[i].Profession = jsonArray.getJSONObject(i).getString("Profession");
+                result[i].LivePlace = jsonArray.getJSONObject(i).getString("LivePlace");
+                result[i].Description = jsonArray.getJSONObject(i).getString("Description");
+                result[i].Phone = jsonArray.getJSONObject(i).getString("Phone");
+                result[i].Mailbox = jsonArray.getJSONObject(i).getString("Mailbox");
+                result[i].IsCheckedMailbox = jsonArray.getJSONObject(i).getString("IsCheckedMailbox");
+                result[i].QQ = jsonArray.getJSONObject(i).getString("QQ");
+                result[i].WeiBo = jsonArray.getJSONObject(i).getString("WeiBo");
+                result[i].RoleID = jsonArray.getJSONObject(i).getString("RoleID");
+                result[i].RegisterTime = jsonArray.getJSONObject(i).getString("RegisterTime");
+            }
+        }
+        catch (JSONException E)
+        {
+
+        }
+
+        return result;
     }
 }

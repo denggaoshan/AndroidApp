@@ -616,4 +616,18 @@ public class ToolClass {
 
         return new User(httpGet(getUrl));
     }
+
+    /**
+     * 获取活动详情（评论与相册）
+     * @param userid
+     * @param activityid
+     * @return 返回mess中为error表示错误
+     */
+    public static ActivityInfo getActivityInfo(String userid, String activityid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getactivityinfo"
+                + "&userid=" + userid + "&activityid=" + activityid;
+
+        return new ActivityInfo(httpGet(getUrl));
+    }
 }

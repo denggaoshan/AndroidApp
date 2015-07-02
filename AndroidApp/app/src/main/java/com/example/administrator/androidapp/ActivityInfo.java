@@ -88,7 +88,7 @@ public class ActivityInfo {
             {
                 try
                 {
-                    photos[i] = new Photo(jsonArray_photo.getJSONObject(i))
+                    photos[i] = new Photo(jsonArray_photo.getJSONObject(i));
                 }
                 catch (JSONException e)
                 {

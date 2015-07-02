@@ -30,10 +30,9 @@ public class User {
     private String WeiBo;
     private String RoleID;
     private String RegisterTime;
+
     private Activity[] activities;
     private String good;
-
-
 
     private void getProperty(String data,JSONObject userMsg){
         try {
@@ -41,7 +40,7 @@ public class User {
             fs.setAccessible(true);
 
             String val = userMsg.getString(data);
-            fs.set(this,data);
+            fs.set(this,val);//data属性设置成从userMsg中取得的val
 
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -63,14 +62,11 @@ public class User {
                     "Constellation","Profession","LivePlace","Description","Phone",
                     "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
 
-            JSONObject userMsg = allMsg.getJSONObject("user");
-
+        JSONObject userMsg = allMsg.getJSONObject("user");
             for(String val :tmp){
                 getProperty(val,userMsg);
             }
-
             good = allMsg.getString("good");
-
 
             JSONArray jsonArray = allMsg.getJSONArray("activities");
             if (jsonArray.length() != 0)

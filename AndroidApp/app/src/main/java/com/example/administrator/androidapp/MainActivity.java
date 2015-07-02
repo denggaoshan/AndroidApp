@@ -44,8 +44,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private String checkUser(String username,String password){
-
+        Toast.makeText(MainActivity.this, "ç™»å½•ä¸­", Toast.LENGTH_LONG).show();
         User user =  ToolClass.load(username,password);
+        if(user==null){
+            return "NO";
+        }
         if(user.ifLoading()){
             User.setUser(user);
             return "OK";
@@ -57,25 +60,25 @@ public class MainActivity extends ActionBarActivity {
         getInput();
 
         if(!"OK".equals(PatternValid.validUsername(username))){
-            Toast.makeText(MainActivity.this, "ÓÃ»§Ãû¸ñÊ½²»ÕıÈ·", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½È·", Toast.LENGTH_LONG).show();
         }else if(!"OK".equals(PatternValid.validPassword(password))){
-            Toast.makeText(MainActivity.this, "ÃÜÂë¸ñÊ½²»ÕıÈ·", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½È·", Toast.LENGTH_LONG).show();
         }else {
             if( "OK".equals(checkUser(username, password))){
-                //µÇÂ½³É¹¦
+                //ï¿½ï¿½Â½ï¿½É¹ï¿½
                 Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, TotalActivity.class);
                 MainActivity.this.startActivity(intent);
                 MainActivity.this.finish();
             }else{
-                Toast.makeText(MainActivity.this, "ÓÃ»§Ãû»òÕßÃÜÂë´íÎó", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "ç”¨æˆ·åæˆ–è€…å¯†ç é”™è¯¯", Toast.LENGTH_LONG).show();
             }
         }
 
     }
 
-    //åˆ‡æ¢åˆ°æ³¨å†Œç•Œé?
+    //åˆ‡æ¢åˆ°æ³¨å†Œç•Œï¿½?
     public void registered_Click(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, RegisteredActivity.class);

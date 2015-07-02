@@ -9,20 +9,20 @@ public class PatternValid {
 
     public static String validUsername(String name) {
         if (!name.matches("^[a-zA-Z][a-zA-Z0-9_]*$")) {
-            return "非法字符";
+            return "NO";
         }
         if (name.length() > username_maxLen || name.length() < username_minLen) {
-            return "长度不合法";
+            return "NO";
         }
         return "OK";
     }
 
     public static String validPassword(String name) {
         if (!name.matches("[a-zA-Z0-9_]*")) {
-            return "非法字符";
+            return "NO";
         }
         if (name.length() > username_maxLen || name.length() < username_minLen) {
-            return "长度不合法";
+            return "NO";
         }
         return "OK";
     }

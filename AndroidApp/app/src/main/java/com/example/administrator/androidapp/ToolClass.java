@@ -41,10 +41,10 @@ public class ToolClass {
     public static String MSGSERVERURL = "http://chenranzhen.xyz/privateinterface.php";
 
     /**
-     * Í¼Æ¬ÉÏ´«·½·¨
-     * @param fileUrl Í¼Æ¬±¾µØµØÖ·
-     * @param serverUrl Í¼Æ¬ÉÏ´«·þÎñÆ÷µØÖ· Ä¬ÈÏIMGSERVERURL
-     * @return ³É¹¦Ê±·µ»ØÍ¼Æ¬ÔÚÍøÂçÉÏ´æ´¢µØÖ·£¬¿ÉÓÃÓÚºóÐøÏÔÊ¾Í¼Æ¬  Ê§°ÜÊ±·µ»Ønull
+     * Í¼Æ¬ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param fileUrl Í¼Æ¬ï¿½ï¿½ï¿½Øµï¿½Ö·
+     * @param serverUrl Í¼Æ¬ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö· Ä¬ï¿½ï¿½IMGSERVERURL
+     * @return ï¿½É¹ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´æ´¢ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Í¼Æ¬  Ê§ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½null
      */
     public static String uploadFile(String fileUrl, String serverUrl)
     {
@@ -55,14 +55,14 @@ public class ToolClass {
         {
             URL url = new URL(serverUrl);
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-            // ÉèÖÃÃ¿´Î´«ÊäµÄÁ÷´óÐ¡£¬¿ÉÒÔÓÐÐ§·ÀÖ¹ÊÖ»úÒòÎªÄÚ´æ²»×ã±ÀÀ£
-            // ´Ë·½·¨ÓÃÓÚÔÚÔ¤ÏÈ²»ÖªµÀÄÚÈÝ³¤¶ÈÊ±ÆôÓÃÃ»ÓÐ½øÐÐÄÚ²¿»º³åµÄ HTTP ÇëÇóÕýÎÄµÄÁ÷¡£
+            // ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½Ö¹ï¿½Ö»ï¿½ï¿½ï¿½Îªï¿½Ú´æ²»ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½È²ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½
             httpURLConnection.setChunkedStreamingMode(128 * 1024);// 128K
-            // ÔÊÐíÊäÈëÊä³öÁ÷
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setUseCaches(false);
-            // Ê¹ÓÃPOST·½·¨
+            // Ê¹ï¿½ï¿½POSTï¿½ï¿½ï¿½ï¿½
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
             httpURLConnection.setRequestProperty("Charset", "UTF-8");
@@ -81,7 +81,7 @@ public class ToolClass {
             FileInputStream fis = new FileInputStream(fileUrl);
             byte[] buffer = new byte[8192]; // 8k
             int count = 0;
-            // ¶ÁÈ¡ÎÄ¼þ
+            // ï¿½ï¿½È¡ï¿½Ä¼ï¿½
             while ((count = fis.read(buffer)) != -1)
             {
                 dos.write(buffer, 0, count);
@@ -111,9 +111,9 @@ public class ToolClass {
     }
 
     /**
-     * ÏÂÔØÍ¼Æ¬·½·¨
-     * @param imgUrl Í¼Æ¬ÔÚÍøÂçÉÏµÄµØÖ·
-     * @return ³É¹¦Ê±·µ»ØËùÏÂÔØµÄÍ¼Æ¬ Ê§°ÜÊ±·µ»Ønull
+     * ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
+     * @param imgUrl Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÄµï¿½Ö·
+     * @return ï¿½É¹ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½Í¼Æ¬ Ê§ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½null
      */
     public static Bitmap downBitmap(String imgUrl)
     {
@@ -143,9 +143,9 @@ public class ToolClass {
     }
 
     /**
-     * MD5ÖÐ×Ö½ÚÊý×é×ª»»Îª´óÐ´×Ö·û´®·½·¨
-     * @param byteArray ×Ö½ÚÊý×é
-     * @return ×ª»»ºóµÄ´óÐ´×Ö·û´®
+     * MD5ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½Ð´ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param byteArray ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @return ×ªï¿½ï¿½ï¿½ï¿½Ä´ï¿½Ð´ï¿½Ö·ï¿½ï¿½ï¿½
      */
     private static String byteArrayToHex(byte[] byteArray) {
         char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -160,7 +160,7 @@ public class ToolClass {
     }
 
     /**
-     * ½«×Ö·û´®ÓÃMD5¼ÓÃÜ·½·¨£¬ÓÃÓÚÃÜÂë¼ÓÃÜ
+     * ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½MD5ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param str
      * @return
      */
@@ -185,7 +185,7 @@ public class ToolClass {
     }
 
     /**
-     * JSON ARRAY ×ª»»³É Array<List> ·½·¨
+     * JSON ARRAY ×ªï¿½ï¿½ï¿½ï¿½ Array<List> ï¿½ï¿½ï¿½ï¿½
      * @param array
      * @return
      */
@@ -206,7 +206,6 @@ public class ToolClass {
 
         return  result;
     }
-
 
     private static String httpGet(String url)
     {
@@ -233,10 +232,10 @@ public class ToolClass {
     }
 
     /**
-     * µÇÂ½·½·¨
-     * @param account ÓÃ»§ÕËºÅ
-     * @param password ÓÃ»§ÃÜÂë
-     * @return ·µ»ØÓÃ»§ÐÅÏ¢map Ê§°ÜÊ±mapÖÐ¡°mess¡±->"loginfail" ÕËºÅÃÜÂë²»ÕýÈ·
+     * ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½
+     * @param account ï¿½Ã»ï¿½ï¿½Ëºï¿½
+     * @param password ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @return ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢map Ê§ï¿½ï¿½Ê±mapï¿½Ð¡ï¿½messï¿½ï¿½->"loginfail" ï¿½Ëºï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½È·
      */
     public static User load(String account, String password)
     {
@@ -244,18 +243,20 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=login"
                 + "&account=" + account + "&password=" + pass_MD;
 
-        return new User(httpGet(getUrl));
+        User ret = User.createUserByJson(httpGet(getUrl));
+
+        return ret;
     }
 
     /**
-     * ×¢²á·½·¨
-     * @param account ÓÃ»§ÕËºÅ
-     * @param password ÓÃ»§ÃÜÂë
-     * @param sex ÓÃ»§ÐÔ±ð 0ÄÐ 1Å®
-     * @param phone ÓÃ»§ÊÖ»úºÅÂë
-     * @param mailBox ÓÃ»§ÓÊÏä
-     * @param avatar ÓÃ»§Í·ÏñÍ¼Æ¬ÍøÂçµØÖ·
-     * @return ·µ»ØÓÃ»§ÐÅÏ¢map£¬Ê§°ÜÊ±mapÖÐ"mess"->"registerfail" ÕËºÅÒÑ´æÔÚ
+     * ×¢ï¿½á·½ï¿½ï¿½
+     * @param account ï¿½Ã»ï¿½ï¿½Ëºï¿½
+     * @param password ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param sex ï¿½Ã»ï¿½ï¿½Ô±ï¿½ 0ï¿½ï¿½ 1Å®
+     * @param phone ï¿½Ã»ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param mailBox ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param avatar ï¿½Ã»ï¿½Í·ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
+     * @return ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢mapï¿½ï¿½Ê§ï¿½ï¿½Ê±mapï¿½ï¿½"mess"->"registerfail" ï¿½Ëºï¿½ï¿½Ñ´ï¿½ï¿½ï¿½
      */
     public static User register(String account, String password, String sex, String phone, String mailBox, String avatar)
     {
@@ -264,22 +265,22 @@ public class ToolClass {
                 + "&account=" + account + "&password=" + pass_MD
                 + "&sex=" + sex + "&phone=" + phone + "&mailbox=" + mailBox + "&avatar=" + avatar;
 
-        return new User(httpGet(getUrl));
+        return User.createUserByJson(httpGet(getUrl));
     }
 
 
     /**
-     * ÐÞ¸ÄÓÃ»§ÐÅÏ¢·½·¨
-     * @param userid ÓÃ»§id
-     * @param sex ÓÃ»§ÐÔ±ð 0ÄÐ 1Å®
-     * @param age ÓÃ»§ÄêÁä
-     * @param constellation ÓÃ»§ÐÇ×ù
-     * @param profession ÓÃ»§Ö°Òµ
-     * @param liveplace ÓÃ»§µØÖ·
-     * @param description ÓÃ»§¸öÈËËµÃ÷
-     * @param phone ÓÃ»§ÊÖ»úºÅÂë
-     * @param mailBox ÓÃ»§ÓÊÏä
-     * @return ·µ»ØÓÃ»§ÐÅÏ¢map£¬Ê§°ÜÊ±mapÖÐ"mess"->"useriderror"  userid´íÎó
+     * ï¿½Þ¸ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
+     * @param userid ï¿½Ã»ï¿½id
+     * @param sex ï¿½Ã»ï¿½ï¿½Ô±ï¿½ 0ï¿½ï¿½ 1Å®
+     * @param age ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param constellation ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param profession ï¿½Ã»ï¿½Ö°Òµ
+     * @param liveplace ï¿½Ã»ï¿½ï¿½ï¿½Ö·
+     * @param description ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½
+     * @param phone ï¿½Ã»ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param mailBox ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @return ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢mapï¿½ï¿½Ê§ï¿½ï¿½Ê±mapï¿½ï¿½"mess"->"useriderror"  useridï¿½ï¿½ï¿½ï¿½
      */
     public User updateuserbaseinfo(String userid, String sex, String age, String constellation,
                                                          String profession, String liveplace, String description,
@@ -291,16 +292,16 @@ public class ToolClass {
                 + "&liveplace=" + liveplace + "&description=" + description
                 + "&phone=" + phone + "&mailBox=" + mailBox;
 
-        return new User(httpGet(getUrl));
+        return User.createUserByJson(httpGet(getUrl));
     }
 
 
     /**
-     * ÐÞ¸ÄÓÃ»§ÃÜÂë·½·¨
-     * @param userid ÓÃ»§Id
-     * @param oldpassword ÓÃ»§Ô­ÃÜÂë
-     * @param newpassword ÓÃ»§ÐÂÃÜÂë
-     * @return ·µ»ØÓÃ»§ÐÅÏ¢map£¬ ³É¹¦Ê±mapÖÐ"mess"->"updateerror" userid´íÎó»òÃÜÂë´íÎó
+     * ï¿½Þ¸ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ë·½ï¿½ï¿½
+     * @param userid ï¿½Ã»ï¿½Id
+     * @param oldpassword ï¿½Ã»ï¿½Ô­ï¿½ï¿½ï¿½ï¿½
+     * @param newpassword ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @return ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢mapï¿½ï¿½ ï¿½É¹ï¿½Ê±mapï¿½ï¿½"mess"->"updateerror" useridï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public User updateuserpassword(String userid, String oldpassword, String newpassword)
     {
@@ -310,27 +311,27 @@ public class ToolClass {
                 + "&userid=" + userid + "&oldpassword=" + oldPassword_MD
                 + "&newpassword=" + newPassword_MD;
 
-        return new User(httpGet(getUrl));
+        return User.createUserByJson(httpGet(getUrl));
     }
 
 
     /**
-     * »ñÈ¡ÓÃ»§·¢ÆðµÄ»î¶¯·½·¨
-     * @param userid ÓÃ»§Id
-     * @return ·µ»ØÓÃ»§ÐÅÏ¢map£¬ ³É¹¦Ê±mapÖÐ"mess"->"empty" userid´íÎó»òÎ´·¢Æð»î¶¯
+     * ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä»î¶¯ï¿½ï¿½ï¿½ï¿½
+     * @param userid ï¿½Ã»ï¿½Id
+     * @return ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢mapï¿½ï¿½ ï¿½É¹ï¿½Ê±mapï¿½ï¿½"mess"->"empty" useridï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½î¶¯
      */
     public User getLaunchedActivity(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"
                 + "&userid=" + userid;
 
-        return new User(httpGet(getUrl));
+        return User.createUserByJson(httpGet(getUrl));
     }
 
     /**
-     * »ñÈ¡ÓÃ»§²ÎÓëµÄ»î¶¯·½·¨
-     * @param userid ÓÃ»§Id
-     * @return ·µ»ØÓÃ»§ÐÅÏ¢map£¬ ³É¹¦Ê±mapÖÐ"mess"->"empty" userid´íÎó»òÎ´·¢Æð»î¶¯
+     * ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä»î¶¯ï¿½ï¿½ï¿½ï¿½
+     * @param userid ï¿½Ã»ï¿½Id
+     * @return ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢mapï¿½ï¿½ ï¿½É¹ï¿½Ê±mapï¿½ï¿½"mess"->"empty" useridï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½î¶¯
      */
     public static Map<String, Object> getParticipatedActivity(String userid)
     {
@@ -341,7 +342,7 @@ public class ToolClass {
     }
 
     /**
-     * »ñÈ¡ÓÃ»§²ÎÓëµÄ»î¶¯ ÐÅÏ¢ÖÐjson½âÎö
+     * ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä»î¶¯ ï¿½ï¿½Ï¢ï¿½ï¿½jsonï¿½ï¿½ï¿½ï¿½
      * @param JSONString
      * @return
      */
@@ -363,9 +364,9 @@ public class ToolClass {
     }
 
     /**
-     * »ñÈ¡ÓÃ»§ÉêÇëµÄ»î¶¯·½·¨
-     * @param userid ÓÃ»§Id
-     * @return ·µ»ØÓÃ»§ÐÅÏ¢map£¬ ³É¹¦Ê±mapÖÐ"mess"->"empty" userid´íÎó»òÎ´·¢Æð»î¶¯
+     * ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä»î¶¯ï¿½ï¿½ï¿½ï¿½
+     * @param userid ï¿½Ã»ï¿½Id
+     * @return ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢mapï¿½ï¿½ ï¿½É¹ï¿½Ê±mapï¿½ï¿½"mess"->"empty" useridï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½î¶¯
      */
     public static Map<String, Object> getApplicatedActivity(String userid)
     {
@@ -376,7 +377,7 @@ public class ToolClass {
     }
 
     /**
-     * »ñÈ¡ÓÃ»§²ÎÓëµÄ»î¶¯ ÐÅÏ¢ÖÐjson½âÎö
+     * ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä»î¶¯ ï¿½ï¿½Ï¢ï¿½ï¿½jsonï¿½ï¿½ï¿½ï¿½
      * @param JSONString
      * @return
      */
@@ -398,7 +399,7 @@ public class ToolClass {
     }
 
     /**
-     * ·¢Æð»î¶¯·½·¨
+     * ï¿½ï¿½ï¿½ï¿½î¶¯ï¿½ï¿½ï¿½ï¿½
      * @param userid
      * @param title
      * @param content
@@ -406,7 +407,7 @@ public class ToolClass {
      * @param endtime
      * @param place
      * @param type
-     * @return ·µ»Ømap, µ±mapÖÐµÄ"mess"->"error" Òì³£
+     * @return ï¿½ï¿½ï¿½ï¿½map, ï¿½ï¿½mapï¿½Ðµï¿½"mess"->"error" ï¿½ì³£
      */
     public static Map<String, Object> launchActivity(String userid, String title, String content,
                                                      String starttime, String endtime, String place, String type)

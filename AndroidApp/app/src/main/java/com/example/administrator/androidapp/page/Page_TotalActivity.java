@@ -26,7 +26,7 @@ public class Page_TotalActivity extends ActionBarActivity {
         setContentView(R.layout.page_total_activity);
 
         ListView vi=(ListView) findViewById(R.id.content);
-        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_activity_total, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
+        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_total_activity, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
         vi.setAdapter(adapter);
     }
 

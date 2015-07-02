@@ -15,7 +15,6 @@ import java.util.Map;
  */
 public class HttpRequest {
 
-
     public static String sendGet(String url, String param) {
         String result = "";
         BufferedReader in = null;

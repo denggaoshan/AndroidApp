@@ -21,12 +21,11 @@ public class PatternValid {
         if (!name.matches("[a-zA-Z0-9_]*")) {
             return "NO";
         }
-        if (name.length() > username_maxLen || name.length() < username_minLen) {
+        if (name.length() > password_maxLen || name.length() < password_minLen) {
             return "NO";
         }
         return "OK";
     }
-
 
     public static String validEmail(String name) {
         return "OK";

@@ -60,7 +60,7 @@ public class Page_Main extends ActionBarActivity {
         }else {
             if( "OK".equals(checkUser(username, password))){
                 //登陆成功
-                Toast.makeText(Page_Main.this, "", Toast.LENGTH_LONG).show();
+                Toast.makeText(Page_Main.this, "登陆成功", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.setClass(Page_Main.this, Page_TotalActivity.class);
                 Page_Main.this.startActivity(intent);

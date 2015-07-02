@@ -17,7 +17,7 @@ public class Page_UserInformation extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_information);
+        setContentView(R.layout.page_information);
 
         LoadInformation();
     }

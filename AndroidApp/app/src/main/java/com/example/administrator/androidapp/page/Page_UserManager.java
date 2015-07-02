@@ -18,7 +18,7 @@ public class Page_UserManager extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.page_user_manager);
+        setContentView(R.layout.page_manager);
 
         User user = User.getCurrentUser();
         TextView account = (TextView)findViewById(R.id.Account);

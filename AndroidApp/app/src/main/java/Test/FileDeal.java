@@ -31,14 +31,10 @@ public class FileDeal {
         {
             URL url = new URL(serverUrl);
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-            // 设置每次传输的流大小，可以有效防止手机因为内存不足崩溃
-            // 此方法用于在预先不知道内容长度时启用没有进行内部缓冲的 HTTP 请求正文的流。
-            httpURLConnection.setChunkedStreamingMode(128 * 1024);// 128K
-            // 允许输入输出流
+            httpURLConnection.setChunkedStreamingMode(128 * 1024);
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setUseCaches(false);
-            // 使用POST方法
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
             httpURLConnection.setRequestProperty("Charset", "UTF-8");
@@ -57,7 +53,6 @@ public class FileDeal {
             FileInputStream fis = new FileInputStream(fileUrl);
             byte[] buffer = new byte[8192]; // 8k
             int count = 0;
-            // 读取文件
             while ((count = fis.read(buffer)) != -1)
             {
                 dos.write(buffer, 0, count);
@@ -80,9 +75,7 @@ public class FileDeal {
         }
         catch (Exception w)
         {
-
         }
-
         return null;
     }
 

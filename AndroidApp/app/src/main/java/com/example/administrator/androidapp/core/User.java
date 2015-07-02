@@ -51,13 +51,10 @@ public class User {
     //当前登陆的用户
     private static User currentUser;
 
-    //PUBLIC
-    //GET SET 方法
+
     public String getAccount(){return Account;}
     public static User getCurrentUser(){return currentUser;}
     public Activity[] getActivities(){return activities;}
-    public static void setUser(User us){currentUser = us;}
-
     public boolean ifLoading(){
         if(mess.equals("loginfail")){
             return false;
@@ -65,6 +62,7 @@ public class User {
         return true;
     }
 
+    public static void setUser(User us){currentUser = us;}
 
     private void getProperty(String data,JSONObject userMsg){
         Field fs = null;
@@ -177,7 +175,11 @@ public class User {
             fs.setAccessible(true);
 
             String val = (String)fs.get(this);
-            tv.setText(val);
+            if(val != null || !val.equals("null")){
+                tv.setText(val);
+            }else{
+                tv.setText("");
+            }
 
         } catch (NoSuchFieldException e) {
             e.printStackTrace();

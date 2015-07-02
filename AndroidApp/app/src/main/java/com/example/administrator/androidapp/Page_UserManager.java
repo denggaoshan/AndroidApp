@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class UserManagerActivity extends ActionBarActivity {
+public class Page_UserManager extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +31,16 @@ public class UserManagerActivity extends ActionBarActivity {
 
     public void edit_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(UserManagerActivity.this, UserInformation.class);
-        UserManagerActivity.this.startActivity(intent);
-        UserManagerActivity.this.finish();
+        intent.setClass(Page_UserManager.this, Page_UserInformation.class);
+        Page_UserManager.this.startActivity(intent);
+        Page_UserManager.this.finish();
     }
 
     public void close_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(UserManagerActivity.this, TotalActivity.class);
-        UserManagerActivity.this.startActivity(intent);
-        UserManagerActivity.this.finish();
+        intent.setClass(Page_UserManager.this, TotalActivity.class);
+        Page_UserManager.this.startActivity(intent);
+        Page_UserManager.this.finish();
     }
 
     int focus = 0;

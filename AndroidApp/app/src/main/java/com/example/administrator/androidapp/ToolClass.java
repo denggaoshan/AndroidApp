@@ -435,4 +435,16 @@ public class ToolClass {
         return resultMap;
     }
 
+
+    //在parent中提取字段为key的子JSON
+    public static JSONObject getJSONObject(JSONObject parent,String key){
+        JSONObject ret;
+        try {
+            ret = parent.getJSONObject("user");
+        }
+        catch (JSONException e) {
+            ret = null;
+        }
+        return ret;
+    }
 }

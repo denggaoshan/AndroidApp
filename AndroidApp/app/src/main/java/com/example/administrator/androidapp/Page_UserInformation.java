@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
-public class UserInformation extends ActionBarActivity {
+public class Page_UserInformation extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +45,12 @@ public class UserInformation extends ActionBarActivity {
 
     }
 
-    //·µ»ØµÇÂ½½çÃæ
+
     public void back_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(UserInformation.this, UserManagerActivity.class);
-        UserInformation.this.startActivity(intent);
-        UserInformation.this.finish();
+        intent.setClass(Page_UserInformation.this, Page_UserManager.class);
+        Page_UserInformation.this.startActivity(intent);
+        Page_UserInformation.this.finish();
     }
 
     @Override

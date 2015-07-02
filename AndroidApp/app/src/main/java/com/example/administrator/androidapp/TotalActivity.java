@@ -6,12 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +24,7 @@ public class TotalActivity extends ActionBarActivity {
         ListView vi=(ListView) findViewById(R.id.content);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_activity_total, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
         vi.setAdapter(adapter);
+
     }
 
 
@@ -45,6 +42,7 @@ public class TotalActivity extends ActionBarActivity {
     private List<Map<String, Object>> getData() {
 
         User user = User.getCurrentUser();
+
         Activity[] activities = user.getActivities();
 
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -65,7 +63,7 @@ public class TotalActivity extends ActionBarActivity {
 
     public void edit_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(TotalActivity.this, UserManagerActivity.class);
+        intent.setClass(TotalActivity.this, Page_UserManager.class);
         TotalActivity.this.startActivity(intent);
         TotalActivity.this.finish();
     }

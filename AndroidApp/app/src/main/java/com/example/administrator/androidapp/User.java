@@ -17,32 +17,44 @@ public class User {
     //禁止直接创建User实例
     private User(){};
 
-    private String mess;
-    private String UserID;
-    private String Account;public String getAccount(){return Account;}
-    private String Avatar;
-    private String NickName;
-    private String Sex;
-    private String Age;
-    private String Constellation;
-    private String Profession;
-    private String LivePlace;
-    private String Description;
-    private String Phone;
-    private String Mailbox;
-    private String IsCheckedMailbox;
-    private String QQ;
-    private String WeiBo;
-    private String RoleID;
-    private String RegisterTime;
+    //登陆状态
+    private String mess = "";
+
+    //用户的个人信息
+    private String UserID= "";
+    private String Account= "";
+    private String Avatar= "";
+    private String NickName= "";
+    private String Sex= "";
+    private String Age= "";
+    private String Constellation= "";
+    private String Profession= "";
+    private String LivePlace= "";
+    private String Description= "";
+    private String Phone= "";
+    private String Mailbox= "";
+    private String IsCheckedMailbox= "";
+    private String QQ= "";
+    private String WeiBo= "";
+    private String RoleID= "";
+    private String RegisterTime= "";
+
+    //点赞数目
+    private String good;
+    private String isgood;
+
+    //活动
     private Activity[] activities;
 
-    public static void setUser(User us){
-        currentUser = us;
-    }
-    public static User getCurrentUser(){
-        return currentUser;
-    }
+    //当前登陆的用户
+    private static User currentUser;
+
+    //PUBLIC
+    //GET SET 方法
+    public String getAccount(){return Account;}
+    public static User getCurrentUser(){return currentUser;}
+    public Activity[] getActivities(){return activities;}
+    public static void setUser(User us){currentUser = us;}
 
     public boolean ifLoading(){
         if(mess.equals("loginfail")){
@@ -51,44 +63,34 @@ public class User {
         return true;
     }
 
-    public Activity[] getActivities(){return activities;}
-    private String good;
-
-    private String isgood;
-
-    private static User currentUser;
-
-
 
     private void getProperty(String data,JSONObject userMsg){
-        Field fs;
-        String value;
+        Field fs = null;
         try
         {
-            fs= this.getClass().getField(data);
+            fs= this.getClass().getDeclaredField(data);
             fs.setAccessible(true);
+            String value = userMsg.getString(data);
+            fs.set(this,value);
         }
-        catch (NoSuchFieldException e)
+        catch (NoSuchFieldException e)//没找到对应属性
         {
             return;
         }
-        try
+        catch (JSONException e)//没找到JSON
         {
-            value = userMsg.getString(data);
+            try {
+                fs.set(this,"");
+            } catch (IllegalAccessException e1) {
+                e1.printStackTrace();
+            }
         }
-        catch (JSONException e)
-        {
-            value = null;
-        }
-        try {
-            fs.set(this,data);
-        }
-        catch (IllegalAccessException e)
+        catch (IllegalAccessException e)//不允许设置属性
         {
             e.printStackTrace();
         }
     }
-
+    //获得所有的
     private JSONObject getAllMsg(String jsonString){
         JSONObject allMsg;
         try {
@@ -100,7 +102,6 @@ public class User {
         }
         return allMsg;
     }
-
     //通过Json串创建一个User对象
     public static User createUserByJson(String jsonString){
         User ret = new User();
@@ -121,33 +122,30 @@ public class User {
         ret.getActivitiesByJson(allMsg);
         return ret;
     }
-
+    //读取所有的活动信息
     private void getActivitiesByJson(JSONObject allMsg) {
         JSONArray jsonArray = null;
         try {
             jsonArray = allMsg.getJSONArray("activities");
-        }
-        catch (JSONException E) {
-            jsonArray = null;
-        }
 
-        if (jsonArray != null) {
-            if (jsonArray.length() != 0) {
+            if (jsonArray == null || jsonArray.length() == 0) {
+                return;
+            }else{
                 activities = new Activity[jsonArray.length()];
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    try
-                    {
-                        activities[i] = new Activity(jsonArray.getJSONObject(i));
+                    try{
+                       activities[i] = new Activity(jsonArray.getJSONObject(i));
                     }
-                    catch (JSONException e)
-                    {
+                    catch (JSONException e){
                         activities[i] = null;
                     }
                 }
             }
         }
+        catch (JSONException E) {
+            jsonArray = null;
+        }
     }
-
     private void getGoodInformationByJson(JSONObject allMsg) {
         try {
             this.good = allMsg.getString("good");
@@ -155,119 +153,22 @@ public class User {
             e.printStackTrace();
         }
     }
-
     //读取userMsg中的用户信息
     private void getUserInformationByJson(JSONObject allMsg) {
+        JSONObject userMsg;
         String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
                 "Constellation","Profession","LivePlace","Description","Phone",
                 "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
-        JSONObject userMsg;
 
-        try {
-            userMsg = allMsg.getJSONObject("user");
-        }
-        catch (JSONException e) {
-            userMsg = null;
-        }
+        userMsg = ToolClass.getJSONObject(allMsg,"user");
 
         if (userMsg != null) {
             for(String val :tmp){
-                getProperty(val,userMsg);
+                this.getProperty(val, userMsg);
             }
         }
 
     }
-
-    /*
-    public User(String jsonString, boolean nouse)
-    {
-        JSONObject allMsg;
-        try {
-            allMsg = new JSONObject(jsonString);
-        }
-        catch (JSONException e)
-        {
-            allMsg = null;
-        }
-        getProperty("mess", allMsg);
-
-        String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
-                "Constellation","Profession","LivePlace","Description","Phone",
-                "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
-        JSONObject userMsg;
-        try {
-            userMsg = allMsg.getJSONObject("user");
-        }
-        catch (JSONException e) {
-            userMsg = null;
-        }
-        if (userMsg != null) {
-            for(String val :tmp){
-                getProperty(val,userMsg);
-            }
-        }
-
-        getProperty("good", allMsg);
-        getProperty("isgood", allMsg);
-
-        JSONArray jsonArray = null;
-        try {
-            jsonArray = allMsg.getJSONArray("activities");
-        }
-        catch (JSONException E) {
-            jsonArray = null;
-        }
-
-        if (jsonArray != null) {
-            if (jsonArray.length() != 0) {
-                activities = new Activity[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try
-                    {
-                        activities[i] = new Activity(jsonArray.getJSONObject(i));
-                    }
-                    catch (JSONException e)
-                    {
-                        activities[i] = null;
-                    }
-                }
-            }
-        }
-    }
-    */
-
-    /*
-    public User[] getUsers(String jsonString)
-    {
-        User [] result = null;
-        try
-        {
-            JSONObject allMsg = new JSONObject(jsonString);
-            mess = allMsg.getString("mess");
-
-            JSONArray jsonArray = allMsg.getJSONArray("users");
-            result = new User[jsonArray.length()];
-            for (int i = 0; i < jsonArray.length(); i++)
-            {
-                result[i] = new User();
-                String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
-                        "Constellation","Profession","LivePlace","Description","Phone",
-                        "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
-                for (String var : tmp)
-                    result[i].getProperty(var, jsonArray.getJSONObject(i));
-            }
-        }
-        catch (JSONException E)
-        {
-
-        }
-
-        return result;
-    }
-    */
-
-
-
     public void loadInformationToTextEdit(TextView tv,String data) {
         try {
             Field  fs= this.getClass().getDeclaredField(data);
@@ -282,6 +183,4 @@ public class User {
             e.printStackTrace();
         }
     }
-
-
 }

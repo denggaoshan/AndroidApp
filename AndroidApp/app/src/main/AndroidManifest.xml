@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".Page_Main"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisteredActivity"
+            android:name=".Page_Registered"
             android:label="@string/title_activity_registered" >
         </activity>
         <activity
@@ -29,11 +29,11 @@
             android:label="@string/title_activity_total" >
         </activity>
         <activity
-            android:name=".UserManagerActivity"
+            android:name=".Page_UserManager"
             android:label="@string/title_activity_user_manager" >
         </activity>
         <activity
-            android:name=".UserInformation"
+            android:name=".Page_UserInformation"
             android:label="@string/title_activity_user_information" >
         </activity>
     </application>

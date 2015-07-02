@@ -1,29 +1,17 @@
 package com.example.administrator.androidapp;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.apache.http.protocol.HTTP;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-
-public class MainActivity extends ActionBarActivity {
+public class Page_Main extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +32,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private String checkUser(String username,String password){
-        Toast.makeText(MainActivity.this, "登录中", Toast.LENGTH_LONG).show();
         User user =  ToolClass.load(username,password);
         if(user==null){
             return "NO";
@@ -57,33 +44,34 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void landing_Click(View v) {
+        //获得输入框文本
         getInput();
 
         if(!"OK".equals(PatternValid.validUsername(username))){
-            Toast.makeText(MainActivity.this, "�û�����ʽ����ȷ", Toast.LENGTH_LONG).show();
+            Toast.makeText(Page_Main.this, "用户名格式不正确", Toast.LENGTH_LONG).show();
         }else if(!"OK".equals(PatternValid.validPassword(password))){
-            Toast.makeText(MainActivity.this, "�����ʽ����ȷ", Toast.LENGTH_LONG).show();
+            Toast.makeText(Page_Main.this, "密码格式不正确", Toast.LENGTH_LONG).show();
         }else {
+            Toast.makeText(Page_Main.this, "登录中", Toast.LENGTH_LONG).show();
             if( "OK".equals(checkUser(username, password))){
-                //��½�ɹ�
-                Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
+                //登陆成功
+                Toast.makeText(Page_Main.this, "", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, TotalActivity.class);
-                MainActivity.this.startActivity(intent);
-                MainActivity.this.finish();
+                intent.setClass(Page_Main.this, TotalActivity.class);
+                Page_Main.this.startActivity(intent);
+                Page_Main.this.finish();
             }else{
-                Toast.makeText(MainActivity.this, "用户名或者密码错误", Toast.LENGTH_LONG).show();
+                Toast.makeText(Page_Main.this, "用户名或者密码错误", Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
-    //切换到注册界�?
+    //切换到注册界面
     public void registered_Click(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, RegisteredActivity.class);
-                MainActivity.this.startActivity(intent);
-                MainActivity.this.finish();
+                intent.setClass(Page_Main.this, Page_Registered.class);
+                Page_Main.this.startActivity(intent);
+                Page_Main.this.finish();
     }
 
     @Override

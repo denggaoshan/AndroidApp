@@ -9,10 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Map;
 
-
-public class RegisteredActivity extends ActionBarActivity {
+public class Page_Registered extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +18,12 @@ public class RegisteredActivity extends ActionBarActivity {
         setContentView(R.layout.activity_registered);
     }
 
-    //·µ»ØµÇÂ½½çÃæ
+
     public void back_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(RegisteredActivity.this, MainActivity.class);
-        RegisteredActivity.this.startActivity(intent);
-        RegisteredActivity.this.finish();
+        intent.setClass(Page_Registered.this, Page_Main.class);
+        Page_Registered.this.startActivity(intent);
+        Page_Registered.this.finish();
     }
 
 
@@ -35,11 +33,11 @@ public class RegisteredActivity extends ActionBarActivity {
           User user = ToolClass.register(account,password,sex,phone,mailbox,avatar);
 
             if(user.ifLoading()){
-                //×¢²á³É¹¦£¬×ªµ½µÇÂ½½çÃæ
-                Toast.makeText(this, "×¢²á³É¹¦", Toast.LENGTH_LONG).show();
+                //×¢ï¿½ï¿½É¹ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½
+                Toast.makeText(this, "×¢ï¿½ï¿½É¹ï¿½", Toast.LENGTH_LONG).show();
             }else{
-                //×¢²áÊ§°Ü
-                Toast.makeText(this, "×¢²áÊ§°Ü", Toast.LENGTH_LONG).show();
+                //×¢ï¿½ï¿½Ê§ï¿½ï¿½
+                Toast.makeText(this, "×¢ï¿½ï¿½Ê§ï¿½ï¿½", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -80,27 +78,27 @@ public class RegisteredActivity extends ActionBarActivity {
 
         account = ((EditText) findViewById(R.id.account_RegText)).getText().toString();
         if(!"OK".equals(PatternValid.validUsername(account))){
-            //ÓÃ»§ÃûÑéÖ¤Ê§°Ü
-            Toast.makeText(this, "ÓÃ»§Ãû¸ñÊ½²»ÕýÈ·", Toast.LENGTH_LONG).show();
+            //ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤Ê§ï¿½ï¿½
+            Toast.makeText(this, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½È·", Toast.LENGTH_LONG).show();
             return "ERROR";
         }
 
         password =((EditText) findViewById(R.id.password_RegTxt)).getText().toString();
         if(!"OK".equals(PatternValid.validPassword(password))){
-            Toast.makeText(this, "ÃÜÂë¸ñÊ½²»ÕýÈ·", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½È·", Toast.LENGTH_LONG).show();
         }
         String repassword = ((EditText) findViewById(R.id.repassword_RegTxt)).getText().toString();
        if(!repassword.equals(password)){
-           //ÃÜÂë²»Ò»ÖÂ
-           Toast.makeText(this, "Á½´ÎÊäÈëµÄÃÜÂë²»Ò»ÖÂ", Toast.LENGTH_LONG).show();
+           //ï¿½ï¿½ï¿½ë²»Ò»ï¿½ï¿½
+           Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»Ò»ï¿½ï¿½", Toast.LENGTH_LONG).show();
            return "ERROR";
        }
 
 
         phone = ((EditText) findViewById(R.id.phone_RegTxt)).getText().toString();
         if(!"OK".equals(PatternValid.validPhone(account))){
-            //ÑéÖ¤ÊÖ»ú¸ñÊ½Ê§°Ü
-            Toast.makeText(this, "ÊÖ»úºÅÂë¸ñÊ½²»ÕýÈ·", Toast.LENGTH_LONG).show();
+            //ï¿½ï¿½Ö¤ï¿½Ö»ï¿½ï¿½ï¿½Ê½Ê§ï¿½ï¿½
+            Toast.makeText(this, "ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½È·", Toast.LENGTH_LONG).show();
             return "ERROR";
         }
 
@@ -110,13 +108,13 @@ public class RegisteredActivity extends ActionBarActivity {
             sex = "0";
         }
 
-        //Í·Ïñ TO DO
+        //Í·ï¿½ï¿½ TO DO
         avatar = "";
 
         mailbox = ((EditText) findViewById(R.id.email_RegTxt)).getText().toString();
         if(!"OK".equals(PatternValid.validPhone(mailbox))){
-            //ÑéÖ¤ÓÊÏä¸ñÊ½Ê§°Ü
-            Toast.makeText(this, "ÓÊÏä¸ñÊ½²»ÕýÈ·", Toast.LENGTH_LONG).show();
+            //ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Ê§ï¿½ï¿½
+            Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½È·", Toast.LENGTH_LONG).show();
             return "ERROR";
         }
         return "OK";

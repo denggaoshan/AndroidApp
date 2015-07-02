@@ -10,13 +10,13 @@ public class Activity {
 
     private String ActivityID;
     private String UserID;
-    private String Title;
+    private String Title;public String getTitle(){return Title;}
     private String Content;
-    private String StartTime;
+    private String StartTime;public String getStartTime(){return StartTime;}
     private String EndTime;
-    private String Place;
+    private String Place;public String getPlace(){return Place;}
     private String Type;
-    private String UserCount;
+    private String UserCount;public String getUserCount(){return UserCount;}
     private String IsChecked;
     private String NickName;
     private String Avatar;

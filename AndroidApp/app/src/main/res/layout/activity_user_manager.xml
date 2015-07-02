@@ -33,19 +33,21 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:id="@+id/imageView7"
+            android:id="@+id/Edit"
             android:src="@drawable/icon_edit"
             android:layout_weight="0.126"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:onClick="edit_Click" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/head"
         android:id="@+id/userinfo"
-        android:padding="30dp">
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,40 +55,14 @@
             android:id="@+id/imageView8"
             android:src="@drawable/icon_user" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Culiner"
+            android:id="@+id/Account"
+            android:textSize="15dp"
+            android:layout_marginTop="20dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:text="用户名"
-                android:id="@+id/textView11"
-                android:layout_weight="0.25" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:text="Culiner"
-                android:id="@+id/textView12"
-                android:layout_weight="0.25" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:text="性别"
-                android:id="@+id/textView13"
-                android:layout_weight="0.25" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:text="男"
-                android:id="@+id/textView14"
-                android:layout_weight="0.25" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -186,8 +162,4 @@
             android:layout_height="match_parent"
             android:id="@+id/content" />
     </ScrollView>
-
-
-
-
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class UserManagerActivity extends ActionBarActivity {
 
@@ -16,6 +17,10 @@ public class UserManagerActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_manager);
+
+        User user = User.getCurrentUser();
+        TextView account = (TextView)findViewById(R.id.Account);
+        account.setText(user.getAccount());
     }
 
     @Override
@@ -23,6 +28,13 @@ public class UserManagerActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_user_manager, menu);
         return true;
+    }
+
+    public void edit_Click(View v) {
+        Intent intent = new Intent();
+        intent.setClass(UserManagerActivity.this, UserInformation.class);
+        UserManagerActivity.this.startActivity(intent);
+        UserManagerActivity.this.finish();
     }
 
     public void close_Click(View v) {

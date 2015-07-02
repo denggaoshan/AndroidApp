@@ -238,7 +238,7 @@ public class ToolClass {
      * @param password 用户密码
      * @return 返回用户信息map 失败时map中“mess”->"loginfail" 账号密码不正确
      */
-    public User load(String account, String password)
+    public static User load(String account, String password)
     {
         String pass_MD = convetToMD5(password);
         String getUrl = MSGSERVERURL + "?" + "oper=login"
@@ -257,7 +257,7 @@ public class ToolClass {
      * @param avatar 用户头像图片网络地址
      * @return 返回用户信息map，失败时map中"mess"->"registerfail" 账号已存在
      */
-    public User register(String account, String password, String sex, String phone, String mailBox, String avatar)
+    public static User register(String account, String password, String sex, String phone, String mailBox, String avatar)
     {
         String pass_MD = MD5Deal.convetToMD5(password);
         String getUrl = MSGSERVERURL + "?" + "oper=register"

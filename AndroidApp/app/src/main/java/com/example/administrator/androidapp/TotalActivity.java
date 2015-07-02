@@ -20,8 +20,6 @@ import java.util.Map;
 
 public class TotalActivity extends ActionBarActivity {
 
-    User currentUser;//存储当前的用户信息
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,60 +28,30 @@ public class TotalActivity extends ActionBarActivity {
         ListView vi=(ListView) findViewById(R.id.content);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_activity_total, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
         vi.setAdapter(adapter);
+    }
 
+
+    private  Map<String, Object> getActivityData(Activity activity){
+        Map<String, Object> ret = new HashMap<String, Object>();
+
+        ret.put("title", activity.getTitle());
+        ret.put("time", activity.getStartTime());
+        ret.put("position", activity.getPlace());
+        ret.put("attending", activity.getUserCount());
+
+        return ret;
     }
 
     private List<Map<String, Object>> getData() {
+
+        User user = User.getCurrentUser();
+        Activity[] activities = user.getActivities();
+
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("title", "1234");
-        map.put("time", "12:33");
-        map.put("position", "12:33");
-        map.put("attending", "qqqqqq");
-        list.add(map);
 
-        map = new HashMap<String, Object>();
-        map.put("title", "1234");
-        map.put("time", "12:33");
-        map.put("position", "12:33");
-        map.put("attending", "zzzzzz");
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "1234");
-        map.put("time", "12:1fasd");
-        map.put("position", "11234123");
-        map.put("attending", "tttttt");
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "1234");
-        map.put("time", "12:33");
-        map.put("position", "12:33");
-        map.put("attending", "zzzzzz");
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "1234");
-        map.put("time", "12:33");
-        map.put("position", "12:33");
-        map.put("attending", "zzzzzz");
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "1234");
-        map.put("time", "12:33");
-        map.put("position", "12:33");
-        map.put("attending", "zzzzzz");
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "1234");
-        map.put("time", "12:33");
-        map.put("position", "12:33");
-        map.put("attending", "zzzzzz");
-        list.add(map);
-
+        for(int i=0;i<activities.length;i++){
+            list.add(getActivityData(activities[i]));
+        }
         return list;
     }
 

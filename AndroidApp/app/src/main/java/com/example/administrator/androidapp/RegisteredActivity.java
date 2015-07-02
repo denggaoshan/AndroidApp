@@ -32,16 +32,15 @@ public class RegisteredActivity extends ActionBarActivity {
     public void register_Click(View v){
 
         if("OK".equals(getInput())){
-            Map<String,Object> ret = ToolClass.register(account,password,sex,phone,mailbox,avatar);
+          User user = ToolClass.register(account,password,sex,phone,mailbox,avatar);
 
-            String tmp = (String)ret.get("mess");
-            if(tmp.equals("loginfail")){
+            if(user.ifLoading()){
+                //注册成功，转到登陆界面
+                Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
+            }else{
                 //注册失败
                 Toast.makeText(this, "注册失败", Toast.LENGTH_LONG).show();
                 return;
-            }else{
-                //注册成功，转到登陆界面
-                Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
             }
 
         }

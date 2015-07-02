@@ -44,42 +44,38 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private String checkUser(String username,String password){
-        //æäº¤ç”¨æˆ·åå¯†ç 
-        Map<String,Object> ret =  ToolClass.load(username,password);
 
-        String info = (String)ret.get("mess");
-        if(info.equals("loginfail")){
-            //ç™»é™†å¤±è´¥
-            return "NO";
+        User user =  ToolClass.load(username,password);
+        if(user.ifLoading()){
+            User.setUser(user);
+            return "OK";
         }
-        return "OK";
+        return "NO";
     }
 
     public void landing_Click(View v) {
         getInput();
 
-
         if(!"OK".equals(PatternValid.validUsername(username))){
-            Toast.makeText(MainActivity.this, "ç”¨æˆ·åä¸åˆæ³•", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "ÓÃ»§Ãû¸ñÊ½²»ÕıÈ·", Toast.LENGTH_LONG).show();
         }else if(!"OK".equals(PatternValid.validPassword(password))){
-            Toast.makeText(MainActivity.this, "å¯†ç ä¸åˆæ³•", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "ÃÜÂë¸ñÊ½²»ÕıÈ·", Toast.LENGTH_LONG).show();
         }else {
             if( "OK".equals(checkUser(username, password))){
-                //ç™»é™†æˆåŠŸï¼Œåˆ‡æ¢åˆ°ä¸»é¡µé¢
-                Toast.makeText(MainActivity.this, "ç™»é™†æˆåŠŸ", Toast.LENGTH_LONG).show();
+                //µÇÂ½³É¹¦
+                Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, TotalActivity.class);
                 MainActivity.this.startActivity(intent);
                 MainActivity.this.finish();
-
             }else{
-                Toast.makeText(MainActivity.this, "ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "ÓÃ»§Ãû»òÕßÃÜÂë´íÎó", Toast.LENGTH_LONG).show();
             }
         }
 
     }
 
-    //åˆ‡æ¢åˆ°æ³¨å†Œç•Œé¢
+    //åˆ‡æ¢åˆ°æ³¨å†Œç•Œé?
     public void registered_Click(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, RegisteredActivity.class);

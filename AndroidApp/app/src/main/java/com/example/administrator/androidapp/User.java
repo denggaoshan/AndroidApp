@@ -1,6 +1,8 @@
 package com.example.administrator.androidapp;
 
 
+import android.widget.TextView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,9 +16,9 @@ public class User {
 
     private String mess;
     private String UserID;
-    private String Account;
+    private String Account;public String getAccount(){return Account;}
     private String Avatar;
-    private String NickName;
+    private String NickName;public String getNickName(){return NickName;}
     private String Sex;
     private String Age;
     private String Constellation;
@@ -34,13 +36,43 @@ public class User {
     private Activity[] activities;
     private String good;
 
+<<<<<<< HEAD
+=======
+    private static User currentUser;
+
+    public static void setUser(User us){
+        currentUser = us;
+    }
+    public static User getCurrentUser(){
+        if(currentUser == null){
+            return null;
+        }else{
+            return currentUser;
+        }
+    }
+
+
+    public Activity[] getActivities(){return activities;}
+
+    public boolean ifLoading(){
+        if(mess.equals("loginfail")){
+            return false;
+        }
+        return true;
+    }
+
+>>>>>>> bind
     private void getProperty(String data,JSONObject userMsg){
         try {
-            Field  fs= this.getClass().getField(data);
+            Field  fs= this.getClass().getDeclaredField(data);
             fs.setAccessible(true);
 
             String val = userMsg.getString(data);
+<<<<<<< HEAD
             fs.set(this,val);//data属性设置成从userMsg中取得的val
+=======
+            fs.set(this,val);
+>>>>>>> bind
 
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
@@ -83,5 +115,20 @@ public class User {
 
         }
 
+    }
+
+    public void loadInformationToTextEdit(TextView tv,String data) {
+        try {
+            Field  fs= this.getClass().getDeclaredField(data);
+            fs.setAccessible(true);
+
+            String val = (String)fs.get(this);
+            tv.setText(val);
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }  catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

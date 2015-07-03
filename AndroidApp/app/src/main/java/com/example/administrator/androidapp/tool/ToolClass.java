@@ -21,7 +21,6 @@ import Test.MD5Deal;
  * Created by admin on 2015/7/1.
  */
 public class ToolClass {
-
     private static String IMGSERVERURL = "http://chenranzhen.xyz/UpLoadFile.php";
     private static String MSGSERVERURL = "http://chenranzhen.xyz/privateinterface.php";
 
@@ -31,9 +30,7 @@ public class ToolClass {
         String pass_MD = convetToMD5(password);
         String getUrl = MSGSERVERURL + "?" + "oper=login"
                 + "&account=" + account + "&password=" + pass_MD;
-
         User ret = User.createUserByJson(httpGet(getUrl));
-
         return ret;
     }
 
@@ -135,8 +132,12 @@ public class ToolClass {
         return result;
     }
 
+<<<<<<< HEAD
 
     public static User updateuserbaseinfo(String userid, String sex, String age, String constellation,
+=======
+    public User updateuserbaseinfo(String userid, String sex, String age, String constellation,
+>>>>>>> origin/develop
                                                          String profession, String liveplace, String description,
                                                          String phone, String mailBox)
     {
@@ -172,8 +173,8 @@ public class ToolClass {
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getpartactivitybyuserid"
                 + "&userid=" + userid;
+        return parseJSONString_participatedActivity(httpGet(getUrl));
 
-        return User.createUserByJson(httpGet(getUrl));
     }
 
     public static Map<String, Object> getApplicatedActivity(String userid)

@@ -12,6 +12,8 @@ import org.json.JSONObject;
 public class Message {
 
     private String mess;
+
+    //
     private Msg[] informs;
 
     public Message(String jsonString)

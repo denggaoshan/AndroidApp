@@ -12,7 +12,11 @@ import java.lang.reflect.Field;
  * Created by admin on 2015/7/2.
  */
 public class Message {
+
+    //状态
     private String mess;
+
+    //
     private Msg[] informs;
 
     public Message(String jsonString)

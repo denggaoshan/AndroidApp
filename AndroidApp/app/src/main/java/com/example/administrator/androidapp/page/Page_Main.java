@@ -19,6 +19,9 @@ import com.example.administrator.androidapp.tool.Utils;
 
 public class Page_Main extends ActionBarActivity {
 
+    private String username;
+    private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +29,6 @@ public class Page_Main extends ActionBarActivity {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
     }
-
-    private String username;
-    private String password;
 
     private void getInput(){
         EditText us=(EditText) findViewById(R.id.username);

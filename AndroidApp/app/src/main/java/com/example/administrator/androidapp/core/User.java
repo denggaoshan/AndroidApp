@@ -51,8 +51,6 @@ public class User {
 
     //当前登陆的用户
     private static User currentUser;
-
-
     public String getAccount(){return Account;}
     public static User getCurrentUser(){return currentUser;}
     public Activity[] getActivities(){return activities;}
@@ -62,9 +60,7 @@ public class User {
         }
         return true;
     }
-
     public static void setUser(User us){currentUser = us;}
-
     private void getProperty(String data,JSONObject userMsg){
         Field fs = null;
         try
@@ -103,6 +99,7 @@ public class User {
         }
         return allMsg;
     }
+
     //通过Json串创建一个User对象
     public static User createUserByJson(String jsonString){
         User ret = new User();

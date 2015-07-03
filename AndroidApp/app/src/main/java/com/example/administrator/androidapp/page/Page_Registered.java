@@ -13,6 +13,7 @@ import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.tool.ToolClass;
 import com.example.administrator.androidapp.core.User;
+import com.example.administrator.androidapp.tool.Utils;
 
 
 public class Page_Registered extends ActionBarActivity {
@@ -52,10 +53,7 @@ public class Page_Registered extends ActionBarActivity {
 
 
     public void back_Click(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Page_Registered.this, Page_Main.class);
-        Page_Registered.this.startActivity(intent);
-        Page_Registered.this.finish();
+        Utils.transPage(this, Page_Main.class);
     }
 
     public void register_Click(View v){
@@ -66,11 +64,7 @@ public class Page_Registered extends ActionBarActivity {
                 Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
                 User.setUser(user);
                 //登陆
-                Toast.makeText(Page_Registered.this, "", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.setClass(Page_Registered.this, Page_Total.class);
-                Page_Registered.this.startActivity(intent);
-                Page_Registered.this.finish();
+                Utils.transPage(this, Page_Total.class);
             }else{
                 Toast.makeText(this, "注册失败", Toast.LENGTH_LONG).show();
                 return;

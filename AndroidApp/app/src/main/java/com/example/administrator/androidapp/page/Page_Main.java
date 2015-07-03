@@ -14,6 +14,7 @@ import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.tool.ToolClass;
 import com.example.administrator.androidapp.core.User;
+import com.example.administrator.androidapp.tool.Utils;
 
 
 public class Page_Main extends ActionBarActivity {
@@ -51,32 +52,34 @@ public class Page_Main extends ActionBarActivity {
     public void landing_Click(View v) {
         //获得输入框文本
         getInput();
-        Toast.makeText(Page_Main.this, "登录中", Toast.LENGTH_LONG).show();
+        Utils.showMessage(this, "登录中");
 
         if(!"OK".equals(PatternValid.validUsername(username))){
-            Toast.makeText(Page_Main.this, "用户名格式不正确", Toast.LENGTH_LONG).show();
+            Utils.showMessage(this, "用户名格式不正确");
         }else if(!"OK".equals(PatternValid.validPassword(password))){
-            Toast.makeText(Page_Main.this, "密码格式不正确", Toast.LENGTH_LONG).show();
+            Utils.showMessage(this, "密码格式不正确");
         }else {
             if( "OK".equals(checkUser(username, password))){
                 //登陆成功
+<<<<<<< HEAD
                 Toast.makeText(Page_Main.this, "登陆成功", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.setClass(Page_Main.this, Page_TotalActivity.class);
                 Page_Main.this.startActivity(intent);
                 Page_Main.this.finish();
+=======
+                Utils.showMessage(this, "登陆成功");
+                Utils.transPage(this,Page_Total.class);
+>>>>>>> origin/develop
             }else{
-                Toast.makeText(Page_Main.this, "用户名或者密码错误", Toast.LENGTH_LONG).show();
+                Utils.showMessage(this,"用户名或者密码错误");
             }
         }
     }
 
     //切换到注册界面
     public void registered_Click(View v) {
-                Intent intent = new Intent();
-                intent.setClass(Page_Main.this, Page_Registered.class);
-                Page_Main.this.startActivity(intent);
-                Page_Main.this.finish();
+        Utils.transPage(this,Page_Registered.class);
     }
 
     @Override

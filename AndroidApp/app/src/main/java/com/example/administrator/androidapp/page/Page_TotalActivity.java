@@ -3,15 +3,20 @@ package com.example.administrator.androidapp.page;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnTouchListener;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
-
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.core.Activity;
 import com.example.administrator.androidapp.core.User;
+import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,11 +57,46 @@ public class Page_TotalActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private PopupWindow popupWindow;
+
+    public void func_Click(View v){
+        // 获取自定义布局文件activity_popupwindow_left.xml的视图
+        View popupWindow_view = getLayoutInflater().inflate(R.layout.menu_total, null,false);
+        // 创建PopupWindow实例,200,LayoutParams.MATCH_PARENT分别是宽度和高度
+        popupWindow = new PopupWindow(popupWindow_view, 300, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        // 这里是位置显示方式,在屏幕的左侧
+        popupWindow.showAsDropDown(v,0,0);
+        // 点击其他地方消失
+        popupWindow_view.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                if (popupWindow != null && popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                    popupWindow = null;
+                }
+                return false;
+            }
+        });
+    }
+
+    public void add_Click(View v){
+        Utils.transPage(this, Page_Organize.class);
+    }
+
+    public void logout_Click(View v){
+        Utils.transPage(this,Page_Main.class);
+    }
+
     public void edit_Click(View v) {
+<<<<<<< HEAD:AndroidApp/app/src/main/java/com/example/administrator/androidapp/page/Page_TotalActivity.java
         Intent intent = new Intent();
         intent.setClass(Page_TotalActivity.this, Page_UserManager.class);
         Page_TotalActivity.this.startActivity(intent);
         Page_TotalActivity.this.finish();
+=======
+        Utils.transPage(this, Page_Manager.class);
+>>>>>>> origin/develop:AndroidApp/app/src/main/java/com/example/administrator/androidapp/page/Page_Total.java
     }
 
     private List<Map<String, Object>> getData() {

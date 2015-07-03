@@ -193,17 +193,7 @@ public class ToolClass {
         return parseJSONString_applicatedActivity(httpGet(getUrl));
     }
 
-    //在parent中提取字段为key的子JSON
-    public static JSONObject getJSONObject(JSONObject parent,String key){
-        JSONObject ret;
-        try {
-            ret = parent.getJSONObject("user");
-        }
-        catch (JSONException e) {
-            ret = null;
-        }
-        return ret;
-    }
+
 
     private static String byteArrayToHex(byte[] byteArray) {
         char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',

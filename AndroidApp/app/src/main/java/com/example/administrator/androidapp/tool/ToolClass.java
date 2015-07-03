@@ -136,7 +136,7 @@ public class ToolClass {
     }
 
 
-    public User updateuserbaseinfo(String userid, String sex, String age, String constellation,
+    public static User updateuserbaseinfo(String userid, String sex, String age, String constellation,
                                                          String profession, String liveplace, String description,
                                                          String phone, String mailBox)
     {
@@ -149,7 +149,7 @@ public class ToolClass {
         return User.createUserByJson(httpGet(getUrl));
     }
 
-    public User updateuserpassword(String userid, String oldpassword, String newpassword)
+    public static User updateuserpassword(String userid, String oldpassword, String newpassword)
     {
         String oldPassword_MD = convetToMD5(oldpassword);
         String newPassword_MD = convetToMD5(newpassword);
@@ -160,7 +160,7 @@ public class ToolClass {
         return User.createUserByJson(httpGet(getUrl));
     }
 
-    public User getLaunchedActivity(String userid)
+    public static User getLaunchedActivity(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"
                 + "&userid=" + userid;
@@ -168,12 +168,12 @@ public class ToolClass {
         return User.createUserByJson(httpGet(getUrl));
     }
 
-    public static Map<String, Object> getParticipatedActivity(String userid)
+    public static User getParticipatedActivity(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getpartactivitybyuserid"
                 + "&userid=" + userid;
 
-        return parseJSONString_participatedActivity(httpGet(getUrl));
+        return User.createUserByJson(httpGet(getUrl));
     }
 
     public static Map<String, Object> getApplicatedActivity(String userid)

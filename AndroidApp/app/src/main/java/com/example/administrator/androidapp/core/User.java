@@ -4,6 +4,7 @@ package com.example.administrator.androidapp.core;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.tool.ToolClass;
+import com.example.administrator.androidapp.tool.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +24,7 @@ public class User {
     private String mess = "";
 
     //用户的个人信息
-    private String UserID= "";
+    private String UserID= "";public String getUserId(){return UserID;}
     private String Account= "";
     private String Avatar= "";
     private String NickName= "";
@@ -160,7 +161,7 @@ public class User {
                 "Constellation","Profession","LivePlace","Description","Phone",
                 "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
 
-        userMsg = ToolClass.getJSONObject(allMsg, "user");
+        userMsg = Utils.getJSONObject(allMsg, "user");
 
         if (userMsg != null) {
             for(String val :tmp){

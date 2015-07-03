@@ -35,6 +35,6 @@ public class PatternValid {
         return "OK";
     }
 
-
+    public static String validTime(String time){return "OK";}
 
 }

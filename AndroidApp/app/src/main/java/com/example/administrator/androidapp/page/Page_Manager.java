@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.core.User;
 
-public class Page_UserManager extends ActionBarActivity {
+public class Page_Manager extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +34,16 @@ public class Page_UserManager extends ActionBarActivity {
 
     public void edit_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(Page_UserManager.this, Page_UserInformation.class);
-        Page_UserManager.this.startActivity(intent);
-        Page_UserManager.this.finish();
+        intent.setClass(Page_Manager.this, Page_Information.class);
+        Page_Manager.this.startActivity(intent);
+        Page_Manager.this.finish();
     }
 
     public void close_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(Page_UserManager.this, Page_TotalActivity.class);
-        Page_UserManager.this.startActivity(intent);
-        Page_UserManager.this.finish();
+        intent.setClass(Page_Manager.this, Page_Total.class);
+        Page_Manager.this.startActivity(intent);
+        Page_Manager.this.finish();
     }
 
     int focus = 0;

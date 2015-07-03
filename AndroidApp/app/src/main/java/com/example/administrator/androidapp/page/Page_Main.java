@@ -62,7 +62,7 @@ public class Page_Main extends ActionBarActivity {
                 //登陆成功
                 Toast.makeText(Page_Main.this, "登陆成功", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
-                intent.setClass(Page_Main.this, Page_TotalActivity.class);
+                intent.setClass(Page_Main.this, Page_Total.class);
                 Page_Main.this.startActivity(intent);
                 Page_Main.this.finish();
             }else{

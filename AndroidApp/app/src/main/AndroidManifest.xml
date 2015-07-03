@@ -25,16 +25,20 @@
             android:label="@string/title_activity_registered" >
         </activity>
         <activity
-            android:name=".page.Page_TotalActivity"
+            android:name=".page.Page_Total"
             android:label="@string/title_activity_total" >
         </activity>
         <activity
-            android:name=".page.Page_UserManager"
+            android:name=".page.Page_Manager"
             android:label="@string/title_activity_user_manager" >
         </activity>
         <activity
-            android:name=".page.Page_UserInformation"
+            android:name=".page.Page_Information"
             android:label="@string/title_activity_user_information" >
+        </activity>
+        <activity
+            android:name=".page.Page_Organize"
+            android:label="@string/title_activity_page__organize" >
         </activity>
     </application>
 

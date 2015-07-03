@@ -12,7 +12,7 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.core.User;
 
 
-public class Page_UserInformation extends ActionBarActivity {
+public class Page_Information extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,9 @@ public class Page_UserInformation extends ActionBarActivity {
 
     public void back_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(Page_UserInformation.this, Page_UserManager.class);
-        Page_UserInformation.this.startActivity(intent);
-        Page_UserInformation.this.finish();
+        intent.setClass(Page_Information.this, Page_Manager.class);
+        Page_Information.this.startActivity(intent);
+        Page_Information.this.finish();
     }
 
     @Override

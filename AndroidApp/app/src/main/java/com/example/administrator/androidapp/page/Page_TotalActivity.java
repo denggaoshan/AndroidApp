@@ -18,12 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Page_Total extends ActionBarActivity {
+public class Page_TotalActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.page_total);
+        setContentView(R.layout.page_total_activity);
 
         ListView vi=(ListView) findViewById(R.id.content);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_total_activity, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
@@ -54,9 +54,9 @@ public class Page_Total extends ActionBarActivity {
 
     public void edit_Click(View v) {
         Intent intent = new Intent();
-        intent.setClass(Page_Total.this, Page_Manager.class);
-        Page_Total.this.startActivity(intent);
-        Page_Total.this.finish();
+        intent.setClass(Page_TotalActivity.this, Page_UserManager.class);
+        Page_TotalActivity.this.startActivity(intent);
+        Page_TotalActivity.this.finish();
     }
 
     private List<Map<String, Object>> getData() {

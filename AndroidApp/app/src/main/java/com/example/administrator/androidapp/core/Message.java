@@ -6,12 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
-
 /**
  * Created by admin on 2015/7/2.
  */
 public class Message {
+
     private String mess;
     private Msg[] informs;
 

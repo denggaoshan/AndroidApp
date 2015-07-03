@@ -68,7 +68,7 @@ public class Page_Registered extends ActionBarActivity {
                 //登陆
                 Toast.makeText(Page_Registered.this, "", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
-                intent.setClass(Page_Registered.this, Page_Total.class);
+                intent.setClass(Page_Registered.this, Page_TotalActivity.class);
                 Page_Registered.this.startActivity(intent);
                 Page_Registered.this.finish();
             }else{

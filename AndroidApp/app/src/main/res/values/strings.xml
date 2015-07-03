@@ -7,5 +7,4 @@
     <string name="title_activity_total">TotalActivity</string>
     <string name="title_activity_user_manager">UserManagerActivity</string>
     <string name="title_activity_user_information">UserInformation</string>
-    <string name="title_activity_page__organize">Page_Organize</string>
 </resources>

@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="#ffffff"
 
-    tools:context="com.example.administrator.androidapp.page.Page_Information"
+    tools:context="com.example.administrator.androidapp.page.Page_UserInformation"
     android:orientation="vertical">
 
 

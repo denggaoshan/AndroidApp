@@ -111,6 +111,10 @@ public class Page_Organize extends ActionBarActivity {
     private void commit(){
         User user = User.getCurrentUser();
 
+<<<<<<< HEAD
+=======
+        /* 提交活动到服务器
+>>>>>>> add
         Map<String, Object> ret =  ToolClass.launchActivity(user.getUserId(), title, content, startTime, endTime, place, type);
         if("error".equals(ret.get("mess"))){
             Utils.showMessage(this,"添加活动失败");
@@ -118,6 +122,7 @@ public class Page_Organize extends ActionBarActivity {
             Utils.showMessage(this,"添加活动成功");
             Utils.transPage(this,Page_Total.class);
         }
+<<<<<<< HEAD
     }
 
     private void getInput() {
@@ -128,6 +133,32 @@ public class Page_Organize extends ActionBarActivity {
         endTime = Utils.getEditTextById(this,R.id.endTime);
         place = Utils.getEditTextById(this,R.id.place);
         type = Utils.getSpinnerById(this, R.id.type);
+=======
+        */
+    }
+
+    //还没验证
+    private String getInput() {
+        title = Utils.getEditTextById(this,R.id.title);
+        if(title==""){
+            return "请输入活动标题";
+        }
+
+        content = Utils.getEditTextById(this,R.id.content);
+        if(content==""){
+            return "请输入活动内容";
+        }
+
+        startTime = Utils.getEditTextById(this,R.id.startTime);
+        if(startTime==""){
+            return "请输入活动开始时间";
+        }
+        endTime = Utils.getEditTextById(this,R.id.endTime);
+        place = Utils.getEditTextById(this,R.id.place);
+        type = Utils.getSpinnerById(this, R.id.type);
+
+        return "提交中";
+>>>>>>> add
     }
 
 

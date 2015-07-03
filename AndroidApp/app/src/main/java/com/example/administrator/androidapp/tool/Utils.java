@@ -51,4 +51,26 @@ public class Utils {
     public static String getEditTextById(ActionBarActivity parent,int id){
        return ((EditText) parent.findViewById(id)).getText().toString();
     }
+<<<<<<< HEAD
+=======
+
+    /******************* 适配器接口 *******************/
+    //性别
+    public static String changeSex(String val){
+        if(val.equals("0")){
+            return "男";
+        }
+        if(val.equals("1")){
+            return "女";
+        }
+        return "出错";
+    }
+    //活动类型
+    public static String changeType(String val){
+        //0户外 1运动 2玩乐 3旅行 4音乐 5其他
+        String[] data = {"户外","运动","玩乐","旅行","音乐","其他"};
+        int index = Integer.parseInt(val);
+        return data[index];
+    }
+>>>>>>> add
 }

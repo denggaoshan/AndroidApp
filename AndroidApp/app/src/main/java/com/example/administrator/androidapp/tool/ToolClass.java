@@ -1,3 +1,4 @@
+/*
 package com.example.administrator.androidapp.tool;
 
 import android.graphics.*;
@@ -17,9 +18,11 @@ import java.util.*;
 
 import Test.MD5Deal;
 
+*/
 /**
  * Created by admin on 2015/7/1.
- */
+ *//*
+
 public class ToolClass {
     private static String IMGSERVERURL = "http://chenranzhen.xyz/UpLoadFile.php";
     private static String MSGSERVERURL = "http://chenranzhen.xyz/privateinterface.php";
@@ -132,12 +135,7 @@ public class ToolClass {
         return result;
     }
 
-<<<<<<< HEAD
-
     public static User updateuserbaseinfo(String userid, String sex, String age, String constellation,
-=======
-    public User updateuserbaseinfo(String userid, String sex, String age, String constellation,
->>>>>>> origin/develop
                                                          String profession, String liveplace, String description,
                                                          String phone, String mailBox)
     {
@@ -315,3 +313,4 @@ public class ToolClass {
         return resultMap;
     }
 }
+*/

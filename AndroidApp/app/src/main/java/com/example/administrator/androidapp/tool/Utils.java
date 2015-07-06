@@ -51,8 +51,6 @@ public class Utils {
     public static String getEditTextById(ActionBarActivity parent,int id){
        return ((EditText) parent.findViewById(id)).getText().toString();
     }
-<<<<<<< HEAD
-=======
 
     /******************* 适配器接口 *******************/
     //性别
@@ -72,5 +70,4 @@ public class Utils {
         int index = Integer.parseInt(val);
         return data[index];
     }
->>>>>>> add
 }

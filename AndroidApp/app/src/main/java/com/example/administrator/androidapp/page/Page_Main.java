@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.tool.ToolClass;
-import com.example.administrator.androidapp.core.User;
+import com.example.administrator.androidapp.msg.ToolClass;
+import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.tool.Utils;
 
 
@@ -38,15 +38,25 @@ public class Page_Main extends ActionBarActivity {
     }
 
     private String checkUser(String username,String password){
-        User user =  ToolClass.load(username, password);
-        if(user==null){
+        Message msg =  ToolClass.load(username, password);
+        if(msg == null){
             return "NO";
         }
-        if(user.ifLoading()){
-            User.setUser(user);
+        if (checkMess(msg.getMess()))
+        {
+            Message.setCurrentMessage(msg);
             return "OK";
         }
-        return "NO";
+        else
+            return "NO";
+    }
+
+    private boolean checkMess(String mess)
+    {
+        if (mess == null || mess.equals("loginfail") || mess.equals(""))
+            return false;
+        else
+            return true;
     }
 
     public void landing_Click(View v) {
@@ -61,16 +71,9 @@ public class Page_Main extends ActionBarActivity {
         }else {
             if( "OK".equals(checkUser(username, password))){
                 //登陆成功
-<<<<<<< HEAD
                 Toast.makeText(Page_Main.this, "登陆成功", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.setClass(Page_Main.this, Page_TotalActivity.class);
-                Page_Main.this.startActivity(intent);
-                Page_Main.this.finish();
-=======
                 Utils.showMessage(this, "登陆成功");
-                Utils.transPage(this,Page_Total.class);
->>>>>>> origin/develop
+                Utils.transPage(this,Page_TotalActivity.class);
             }else{
                 Utils.showMessage(this,"用户名或者密码错误");
             }

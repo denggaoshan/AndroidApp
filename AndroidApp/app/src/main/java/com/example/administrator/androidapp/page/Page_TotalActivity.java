@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.core.Activity;
-import com.example.administrator.androidapp.core.User;
+import com.example.administrator.androidapp.msg.Activity;
+import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -89,19 +89,15 @@ public class Page_TotalActivity extends ActionBarActivity {
     }
 
     public void edit_Click(View v) {
-<<<<<<< HEAD:AndroidApp/app/src/main/java/com/example/administrator/androidapp/page/Page_TotalActivity.java
         Intent intent = new Intent();
         intent.setClass(Page_TotalActivity.this, Page_UserManager.class);
         Page_TotalActivity.this.startActivity(intent);
         Page_TotalActivity.this.finish();
-=======
-        Utils.transPage(this, Page_Manager.class);
->>>>>>> origin/develop:AndroidApp/app/src/main/java/com/example/administrator/androidapp/page/Page_Total.java
     }
 
     private List<Map<String, Object>> getData() {
-        User user = User.getCurrentUser();
-        Activity[] activities = user.getActivities();
+        Message msg = Message.getCurrentMessage();
+        Activity[] activities = msg.getActivities();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         for(int i=0;i<activities.length;i++){
             list.add(getActivityData(activities[i]));

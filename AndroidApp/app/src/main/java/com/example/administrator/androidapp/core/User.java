@@ -1,3 +1,4 @@
+/*
 package com.example.administrator.androidapp.core;
 
 
@@ -12,9 +13,11 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
+*/
 /**
  * Created by admin on 2015/7/1.
- */
+ *//*
+
 public class User {
 
     //禁止直接创建User实例
@@ -185,4 +188,4 @@ public class User {
             e.printStackTrace();
         }
     }
-}
+}*/

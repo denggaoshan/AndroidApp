@@ -1,6 +1,8 @@
 package com.example.administrator.androidapp.msg;
 
-import com.example.administrator.androidapp.tool.ToolClass;
+import android.widget.TextView;
+
+import com.example.administrator.androidapp.msg.ToolClass;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +53,34 @@ public class User {
         return temp;
     }
 
+    public String getUserID()
+    {
+        return UserID;
+    }
+
+    public String getAccount()
+    {
+        return Account;
+    }
+
+    public void loadInformationToTextEdit(TextView tv,String data) {
+        try {
+            Field  fs= this.getClass().getDeclaredField(data);
+            fs.setAccessible(true);
+
+            String val = (String)fs.get(this);
+            if(val != null || !val.equals("null")){
+                tv.setText(val);
+            }else{
+                tv.setText("");
+            }
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }  catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void setGood(JSONObject jsonObject)
     {

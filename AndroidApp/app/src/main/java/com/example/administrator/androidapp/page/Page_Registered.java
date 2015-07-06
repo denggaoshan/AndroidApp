@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.tool.ToolClass;
-import com.example.administrator.androidapp.core.User;
+import com.example.administrator.androidapp.msg.ToolClass;
+import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.tool.Utils;
 
 
@@ -58,26 +58,30 @@ public class Page_Registered extends ActionBarActivity {
 
     public void register_Click(View v){
         if("OK".equals(getInput())){
-            User user = ToolClass.register(account, password, sex, phone, mailbox, avatar);
+             Message msg = ToolClass.register(account, password, sex, phone, mailbox, avatar);
 
-            if(user.ifLoading()){
+            if(checkMess(msg.getMess())){
                 Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
-                User.setUser(user);
+                Message.setCurrentMessage(msg);
                 //登陆
-<<<<<<< HEAD
                 Toast.makeText(Page_Registered.this, "", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.setClass(Page_Registered.this, Page_TotalActivity.class);
                 Page_Registered.this.startActivity(intent);
                 Page_Registered.this.finish();
-=======
-                Utils.transPage(this, Page_Total.class);
->>>>>>> origin/develop
             }else{
                 Toast.makeText(this, "注册失败", Toast.LENGTH_LONG).show();
                 return;
             }
         }
+    }
+
+    private boolean checkMess(String mess)
+    {
+        if (mess == null || mess.equals("register") || mess.equals(""))
+            return false;
+        else
+            return true;
     }
 
     private String getInput() {

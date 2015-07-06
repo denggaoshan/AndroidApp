@@ -1,3 +1,4 @@
+/*
 package com.example.administrator.androidapp.core;
 
 import org.json.JSONException;
@@ -5,9 +6,11 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
+*/
 /**
  * Created by Administrator on 2015/7/3.
- */
+ *//*
+
 class Comment
 {
     private String CommentID;
@@ -45,3 +48,4 @@ class Comment
         }
     }
 }
+*/

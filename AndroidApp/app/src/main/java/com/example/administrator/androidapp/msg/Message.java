@@ -16,7 +16,17 @@ public class Message {
     private static User[] users;
     private static Activity activity;
     private static Activity[] activities;
+    private static Message currentMessage;
 
+    public static void setCurrentMessage(Message msg)
+    {
+        currentMessage = msg;
+    }
+
+    public static Message getCurrentMessage()
+    {
+        return currentMessage;
+    }
     public static Message createMessage(String jsonString, int userCount, int activityCount)
     {
         Message temp = new Message();
@@ -41,6 +51,7 @@ public class Message {
 
         return temp;
     }
+
 
     private JSONObject getAllMsg(String jsonString)
     {
@@ -67,7 +78,7 @@ public class Message {
         }
     }
 
-    public void setUser(JSONObject jsonObject)
+    private void setUser(JSONObject jsonObject)
     {
         try {
             user = User.createUser(jsonObject.getJSONObject("user"));
@@ -78,7 +89,7 @@ public class Message {
         }
     }
 
-    public void setUsers(JSONObject jsonObject) {
+    private void setUsers(JSONObject jsonObject) {
         JSONArray jsonArray;
         try {
             jsonArray = jsonObject.getJSONArray("users");
@@ -110,7 +121,7 @@ public class Message {
         }
     }
 
-    public void setActivity(JSONObject jsonObject) {
+    private void setActivity(JSONObject jsonObject) {
         try {
             activity = Activity.createActivity(jsonObject.getJSONObject("activity"));
         }
@@ -120,7 +131,7 @@ public class Message {
         }
     }
 
-    public void setActivities(JSONObject jsonObject) {
+    private void setActivities(JSONObject jsonObject) {
         JSONArray jsonArray;
         try {
             jsonArray = jsonObject.getJSONArray("activities");
@@ -153,10 +164,10 @@ public class Message {
     }
 
 
-    public static String getMess() { return mess; }
-    public static Activity getActivity() { return activity; }
-    public static Activity[] getActivities() { return activities; }
-    public static User getUser() { return user; }
-    public static User[] getUsers() { return users; }
+    public String getMess() { return mess; }
+    public Activity getActivity() { return activity; }
+    public Activity[] getActivities() { return activities; }
+    public User getUser() { return user; }
+    public User[] getUsers() { return users; }
 
 }

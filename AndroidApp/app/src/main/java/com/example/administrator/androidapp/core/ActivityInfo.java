@@ -1,3 +1,4 @@
+/*
 package com.example.administrator.androidapp.core;
 
 import com.example.administrator.androidapp.core.Comment;
@@ -7,9 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+*/
 /**
  * Created by admin on 2015/7/2.
- */
+ *//*
+
 public class ActivityInfo {
 
     private String mess;
@@ -99,3 +102,4 @@ public class ActivityInfo {
     }
 }
 
+*/

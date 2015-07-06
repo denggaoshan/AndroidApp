@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.core.User;
+import com.example.administrator.androidapp.msg.Message;
 
 
 public class Page_UserInformation extends ActionBarActivity {
@@ -23,28 +23,28 @@ public class Page_UserInformation extends ActionBarActivity {
     }
 
     private void LoadInformation(){
-        User user = User.getCurrentUser();
+        Message msg = Message.getCurrentMessage();
 
         TextView tv = (TextView)findViewById(R.id.Account);
-        user.loadInformationToTextEdit(tv ,"Account");
+        msg.getUser().loadInformationToTextEdit(tv, "Account");
 
         tv = (TextView)findViewById(R.id.Sex);
-        user.loadInformationToTextEdit(tv ,"Sex");
+        msg.getUser().loadInformationToTextEdit(tv, "Sex");
 
         tv = (TextView)findViewById(R.id.Age);
-        user.loadInformationToTextEdit(tv ,"Age");
+        msg.getUser().loadInformationToTextEdit(tv, "Age");
 
         tv = (TextView)findViewById(R.id.Constellation);
-        user.loadInformationToTextEdit(tv ,"Constellation");
+        msg.getUser().loadInformationToTextEdit(tv, "Constellation");
 
         tv = (TextView)findViewById(R.id.Profession);
-        user.loadInformationToTextEdit(tv ,"Profession");
+        msg.getUser().loadInformationToTextEdit(tv, "Profession");
 
         tv = (TextView)findViewById(R.id.LivePlace);
-        user.loadInformationToTextEdit(tv ,"LivePlace");
+        msg.getUser().loadInformationToTextEdit(tv, "LivePlace");
 
         tv = (TextView)findViewById(R.id.Description);
-        user.loadInformationToTextEdit(tv ,"Description");
+        msg.getUser().loadInformationToTextEdit(tv ,"Description");
 
     }
 

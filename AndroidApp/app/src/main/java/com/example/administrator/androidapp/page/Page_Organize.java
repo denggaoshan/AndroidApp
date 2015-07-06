@@ -12,8 +12,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.core.User;
-import com.example.administrator.androidapp.tool.ToolClass;
+import com.example.administrator.androidapp.msg.User;
+import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class Page_Organize extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_page__organize, menu);
+        //getMenuInflater().inflate(R.menu.menu_page__organize, menu);
         return true;
     }
 
@@ -100,65 +101,63 @@ public class Page_Organize extends ActionBarActivity {
     }
 
     public void exit_Click(View v){
-        Utils.transPage(this, Page_Total.class);
+        Utils.transPage(this, Page_TotalActivity.class);
     }
 
     public void sure_Click(View v){
-        getInput();
+        Utils.showMessage(this, getInput());
+        if (!getInput().equals("提交中"))
+            return;
         commit();
     }
 
     private void commit(){
-        User user = User.getCurrentUser();
+        Message msg = Message.getCurrentMessage();
 
-<<<<<<< HEAD
-=======
-        /* 提交活动到服务器
->>>>>>> add
-        Map<String, Object> ret =  ToolClass.launchActivity(user.getUserId(), title, content, startTime, endTime, place, type);
-        if("error".equals(ret.get("mess"))){
+        Message reflect =  ToolClass.launchActivity(msg.getUser().getUserID(), title, content, startTime, endTime, place, type);
+        if(checkMess(reflect.getMess())){
             Utils.showMessage(this,"添加活动失败");
         }else{
             Utils.showMessage(this,"添加活动成功");
-            Utils.transPage(this,Page_Total.class);
+            Utils.transPage(this,Page_TotalActivity.class);
         }
-<<<<<<< HEAD
     }
 
-    private void getInput() {
-        title = Utils.getEditTextById(this,R.id.title);
-
-        content = Utils.getEditTextById(this,R.id.content);
-        startTime = Utils.getEditTextById(this,R.id.startTime);
-        endTime = Utils.getEditTextById(this,R.id.endTime);
-        place = Utils.getEditTextById(this,R.id.place);
-        type = Utils.getSpinnerById(this, R.id.type);
-=======
-        */
+    private boolean checkMess(String mess)
+    {
+        if (mess == null || mess.equals("error") || mess.equals(""))
+            return false;
+        else
+            return true;
     }
 
     //还没验证
     private String getInput() {
         title = Utils.getEditTextById(this,R.id.title);
-        if(title==""){
+        if(title.equals("")){
             return "请输入活动标题";
         }
 
         content = Utils.getEditTextById(this,R.id.content);
-        if(content==""){
+        if(content.equals("")){
             return "请输入活动内容";
         }
 
         startTime = Utils.getEditTextById(this,R.id.startTime);
-        if(startTime==""){
+        if(startTime.equals("")){
             return "请输入活动开始时间";
         }
         endTime = Utils.getEditTextById(this,R.id.endTime);
+        if (endTime.equals("")){
+            return "请输入活动结束时间";
+        }
         place = Utils.getEditTextById(this,R.id.place);
+        if (place.equals("")){
+            return "请输入地点";
+        }
         type = Utils.getSpinnerById(this, R.id.type);
 
         return "提交中";
->>>>>>> add
     }
 
 

@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.core.User;
+import com.example.administrator.androidapp.msg.Message;
 
 public class Page_UserManager extends ActionBarActivity {
 
@@ -20,9 +20,9 @@ public class Page_UserManager extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_manager);
 
-        User user = User.getCurrentUser();
+        Message msg = Message.getCurrentMessage();
         TextView account = (TextView)findViewById(R.id.Account);
-        account.setText(user.getAccount());
+        account.setText(msg.getUser().getAccount());
     }
 
     @Override

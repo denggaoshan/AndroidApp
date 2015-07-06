@@ -6,6 +6,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -25,7 +28,7 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=login"
                 + "&account=" + account + "&password=" + pass_MD;
 
-        return Message.createMessage(httpGet(getUrl), false, true);
+        return Message.createMessage(httpGet(getUrl), 1, 2);
     }
 
     public static Message register(String account, String password, String
@@ -37,7 +40,7 @@ public class ToolClass {
                 + "&sex=" + sex + "&phone=" + phone + "&mailbox=" + mailBox
                 + "&avatar=" + avatar;
 
-        return Message.createMessage(httpGet(getUrl), false, true);
+        return Message.createMessage(httpGet(getUrl), 1, 2);
     }
 
     public static Message updateuserbaseinfo(String userid, String sex, String age, String constellation,
@@ -50,7 +53,42 @@ public class ToolClass {
                 + "&liveplace=" + liveplace + "&description=" + description
                 + "&phone=" + phone + "&mailBox=" + mailBox;
 
-        return Message.createMessage(httpGet(getUrl), false, true);
+        return Message.createMessage(httpGet(getUrl), 1, 0);
+    }
+
+    public static Message updateuserpassword(String userid, String oldpassword, String newpassword)
+    {
+        String oldPassword_MD = convetToMD5(oldpassword);
+        String newPassword_MD = convetToMD5(newpassword);
+        String getUrl = MSGSERVERURL + "?" + "oper=updateuserpassword"
+                + "&userid=" + userid + "&oldpassword=" + oldPassword_MD
+                + "&newpassword=" + newPassword_MD;
+
+        return Message.createMessage(httpGet(getUrl), 1, 0);
+    }
+
+    public static Message getLaunchedActivity(String userid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"
+                + "&userid=" + userid;
+
+        return Message.createMessage(httpGet(getUrl), 0, 2);
+    }
+
+    public static Message getParticipatedActivity(String userid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getpartactivitybyuserid"
+                + "&userid=" + userid;
+
+        return Message.createMessage(httpGet(getUrl), 0, 2);
+    }
+
+    public static Message getApplicatedActivity(String userid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getappliactivitybyuserid"
+                + "&userid=" + userid;
+
+        return Message.createMessage(httpGet(getUrl), 0, 2);
     }
 
     public static Message launchActivity(String userid, String title, String content,
@@ -61,8 +99,148 @@ public class ToolClass {
                 + "&content=" + content + "&starttime=" + starttime
                 + "&endtime=" + endtime + "&place=" + place + "&type=" + type;
 
-        return Message.createMessage(httpGet(getUrl), false, true);
+        return Message.createMessage(httpGet(getUrl), 0, 1);
     }
+
+    public static Message getActivityList(String page, String type, String applyable, String keyword)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getactivitylist"
+                + "&page=" + page + "&type=" + type
+                + "applyable=" + applyable + "&keyword=" + keyword;
+
+        return Message.createMessage(httpGet(getUrl), 0, 2);
+    }
+
+    public static Message getParticipation(String userid, String activityid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getparticipation"
+                + "&userid=" + userid + "&activityid=" + activityid;
+
+        return Message.createMessage(httpGet(getUrl), 2, 0);
+    }
+
+    public static InformArray getInform(String userid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getinformbyuserid"
+                + "&userid=" + userid;
+
+        return InformArray.createInformArray(httpGet(getUrl));
+    }
+
+    public static String applyParticipation(String userid, String activityid, String explain)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=applyparticipation"
+                + "&userid=" + userid + "&activityid=" + activityid
+                + "&explain=" + explain;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static Message getApplication(String userid, String activityid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getapplication"
+                + "&userid=" + userid + "&activityid=" + activityid;
+
+        return Message.createMessage(httpGet(getUrl), 2, 0);
+    }
+
+    public static String handleApplication(String userid, String applyid, String isallow)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=handleapplication"
+                + "&userid=" + userid + "&applyid=" + applyid
+                + "&isallow=" + isallow;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static String fsendMess(String userid, String activityid, String title, String content)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=fsendmess"
+                + "&userid=" + userid + "&activityid=" + activityid
+                + "&title=" + title + "&content=" + content;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static String affirminform(String informid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=affirminform"
+                + "&informid=" + informid;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static String sendPrivateMess(String userid, String toid, String title, String content)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=sendprivatemess"
+                + "&userid=" + userid + "&toid=" + toid
+                + "&title=" + title + "&content=" + content;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static Message updateActivityInfo(String activityid, String title, String content,
+                                          String starttime, String endtime, String place, String type)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=updateactivityinfo"
+                + "&activityid=" + activityid + "&title=" + title
+                + "&content=" + content + "&starttime=" + starttime
+                + "&endtime=" + endtime + "&place=" + place + "&type=" + type;
+
+        return Message.createMessage(httpGet(getUrl), 0, 1);
+    }
+
+    public static Message getUserInfo(String userid, String searchid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getuserinfobyid"
+                + "&userid=" + userid + "&searchid=" + searchid;
+
+        return Message.createMessage(httpGet(getUrl), 1, 0);
+    }
+
+    public static String addOrDeleteGood(String userid, String toid, String good)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=addordeletegood"
+                + "&userid=" + userid + "&toid=" + toid + "&good=" + good;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static String kick(String userid, String activityid, String kickid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=kick"
+                + "&userid=" + userid + "&activityid=" + activityid + "&kickid=" + kickid;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static String addCommment(String userid, String activityid, String content)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=addcomment"
+                + "&userid=" + userid + "&activityid=" + activityid + "&content=" + content;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static String addPhoto(String userid, String activityid, String address,
+                                String title, String describe, String level)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=addphoto"
+                + "&userid=" + userid + "&activityid=" + activityid + "&address=" + address
+                + "&title=" + title + "&describe=" + describe + "&level=" + level;
+
+        return onlyGetMess(httpGet(getUrl));
+    }
+
+    public static ActivityInfo getActivityInfo(String userid, String activityid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=addphoto"
+                + "&userid=" + userid + "&activityid=" + activityid;
+
+        return ActivityInfo.createActivityInfo(httpGet(getUrl));
+    }
+
+
 
     private static String httpGet(String url)
     {
@@ -120,7 +298,32 @@ public class ToolClass {
         return result;
     }
 
+    private static String onlyGetMess(String jsonString)
+    {
+        JSONObject jsonObject;
+        String mess;
+        try {
+            jsonObject = new JSONObject(jsonString);
+        }
+        catch (JSONException e)
+        {
+            jsonObject = null;
+        }
+        if (jsonObject != null)
+        {
+            try {
+                mess = jsonObject.getString("mess");
+            }
+            catch (JSONException e)
+            {
+                mess = null;
+            }
+        }
+        else
+            mess = null;
 
+        return mess;
+    }
 
 
 }

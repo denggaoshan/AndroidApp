@@ -17,22 +17,27 @@ public class Message {
     private static Activity activity;
     private static Activity[] activities;
 
-    public static Message createMessage(String jsonString, boolean moreUser, boolean moreActivity)
+    public static Message createMessage(String jsonString, int userCount, int activityCount)
     {
         Message temp = new Message();
 
         JSONObject allMsg = temp.getAllMsg(jsonString);
         temp.setMess(allMsg);
 
-        if (moreUser)
-            temp.setUsers(allMsg);
-        else
-            temp.setUser(allMsg);
-
-        if (moreActivity)
-            temp.setActivities(allMsg);
-        else
-            temp.setActivity(allMsg);
+        if (userCount > 0)
+        {
+            if (userCount > 1)
+                temp.setUsers(allMsg);
+            else
+                temp.setUser(allMsg);
+        }
+        if (activityCount > 0)
+        {
+            if (activityCount > 1)
+                temp.setActivities(allMsg);
+            else
+                temp.setActivity(allMsg);
+        }
 
         return temp;
     }
@@ -73,8 +78,7 @@ public class Message {
         }
     }
 
-    public void setUsers(JSONObject jsonObject)
-    {
+    public void setUsers(JSONObject jsonObject) {
         JSONArray jsonArray;
         try {
             jsonArray = jsonObject.getJSONArray("users");
@@ -106,8 +110,7 @@ public class Message {
         }
     }
 
-    public void setActivity(JSONObject jsonObject)
-    {
+    public void setActivity(JSONObject jsonObject) {
         try {
             activity = Activity.createActivity(jsonObject.getJSONObject("activity"));
         }
@@ -117,8 +120,7 @@ public class Message {
         }
     }
 
-    public void setActivities(JSONObject jsonObject)
-    {
+    public void setActivities(JSONObject jsonObject) {
         JSONArray jsonArray;
         try {
             jsonArray = jsonObject.getJSONArray("activities");

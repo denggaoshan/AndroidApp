@@ -30,7 +30,8 @@ public class User {
     private String RoleID= "";
     private String RegisterTime= "";
 
-    private String good="";
+    private String good= "";
+    private String isgood = "";
 
     public static User createUser(JSONObject jsonObject)
     {
@@ -44,6 +45,8 @@ public class User {
                 temp.setProperty(val, jsonObject);
             }
         }
+        temp.setGood(jsonObject);
+        temp.setIsgood(jsonObject);
 
         return temp;
     }
@@ -51,8 +54,27 @@ public class User {
 
     private void setGood(JSONObject jsonObject)
     {
-
+        try
+        {
+            good = jsonObject.getString("good");
+        }
+        catch (JSONException e) {
+            good = "";
+        }
     }
+
+    private void setIsgood(JSONObject jsonObject)
+    {
+        try
+        {
+            isgood = jsonObject.getString("isgood");
+        }
+        catch (JSONException e) {
+            isgood = "";
+        }
+    }
+
+
     private void setProperty(String data,JSONObject userMsg){
         Field fs = null;
         try

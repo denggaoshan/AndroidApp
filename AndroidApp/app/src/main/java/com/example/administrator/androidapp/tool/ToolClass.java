@@ -173,7 +173,7 @@ public class ToolClass {
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getpartactivitybyuserid"
                 + "&userid=" + userid;
-        return parseJSONString_participatedActivity(httpGet(getUrl));
+        return User.createUserByJson(httpGet(getUrl));
 
     }
 

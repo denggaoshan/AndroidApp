@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.ToolClass;
@@ -56,6 +57,7 @@ public class Page_Main extends ActionBarActivity {
         {
             Utils.storeLogData(msg.getJsonString());
             Message.setCurrentMessage(msg);
+            User.setCurrentUser(msg.getUser());
             return "OK";
         }
         else

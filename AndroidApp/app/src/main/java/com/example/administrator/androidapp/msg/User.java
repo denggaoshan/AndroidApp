@@ -17,9 +17,9 @@ public class User {
     private String UserID= "";
     private String Account= "";
     private String Avatar= "";
-    private String NickName= "";
+    private String NickName= "";public String getNickName(){return NickName;}
     private String Sex= "";
-    private String Age= "";
+    private String Age= "";public String getAge(){return Age;}
     private String Constellation= "";
     private String Profession= "";
     private String LivePlace= "";
@@ -34,6 +34,10 @@ public class User {
 
     private String good= "";
     private String isgood = "";
+
+    private static User currentUser;
+    public static User getCurrentUser(){return currentUser;}
+    public static void setCurrentUser(User user){currentUser = user;}
 
     public static User createUser(JSONObject jsonObject)
     {

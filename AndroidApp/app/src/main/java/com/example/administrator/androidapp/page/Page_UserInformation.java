@@ -10,50 +10,39 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.User;
+import com.example.administrator.androidapp.tool.Utils;
 
 
 public class Page_UserInformation extends ActionBarActivity {
+
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_information);
-
+        user = User.getCurrentUser();
         LoadInformation();
     }
 
     private void LoadInformation(){
-        Message msg = Message.getCurrentMessage();
-
-        TextView tv = (TextView)findViewById(R.id.Account);
-        msg.getUser().loadInformationToTextEdit(tv, "Account");
-
-        tv = (TextView)findViewById(R.id.Sex);
-        msg.getUser().loadInformationToTextEdit(tv, "Sex");
-
-        tv = (TextView)findViewById(R.id.Age);
-        msg.getUser().loadInformationToTextEdit(tv, "Age");
-
-        tv = (TextView)findViewById(R.id.Constellation);
-        msg.getUser().loadInformationToTextEdit(tv, "Constellation");
-
-        tv = (TextView)findViewById(R.id.Profession);
-        msg.getUser().loadInformationToTextEdit(tv, "Profession");
-
-        tv = (TextView)findViewById(R.id.LivePlace);
-        msg.getUser().loadInformationToTextEdit(tv, "LivePlace");
-
-        tv = (TextView)findViewById(R.id.Description);
-        msg.getUser().loadInformationToTextEdit(tv ,"Description");
-
+        loadOne(R.id.Account,"Accout");
+        loadOne(R.id.Sex,"Sex");
+        loadOne(R.id.Age,"Age");
+        loadOne(R.id.Constellation, "Constellation");
+        loadOne(R.id.Profession, "Profession");
+        loadOne(R.id.LivePlace,"LivePlace");
+        loadOne(R.id.Description, "Description");
     }
 
+    private void loadOne(int id,String content){
+        TextView tv = (TextView)findViewById(id);
+        user.loadInformationToTextEdit(tv, content);
+    }
 
     public void back_Click(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Page_UserInformation.this, Page_UserManager.class);
-        Page_UserInformation.this.startActivity(intent);
-        Page_UserInformation.this.finish();
+        Utils.transPage(this, Page_UserManager.class);
     }
 
     @Override

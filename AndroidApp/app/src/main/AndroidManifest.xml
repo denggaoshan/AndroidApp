@@ -45,6 +45,10 @@
             android:name=".page.Page_Organize"
             android:label="activity_page__organize" >
         </activity>
+        <activity
+            android:name=".page.Page_ActivityInformation"
+            android:label="@string/title_activity_page__activity_information" >
+        </activity>
     </application>
 
 </manifest>

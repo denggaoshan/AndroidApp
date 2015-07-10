@@ -12,14 +12,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Activity;
+import com.example.administrator.androidapp.msg.ActivityInfo;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
+import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -37,6 +40,10 @@ public class Page_TotalActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_total_activity);
+        loadActivity();
+    }
+
+    private void loadActivity(){
 
         ListView vi=(ListView) findViewById(R.id.content);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_total_activity,
@@ -56,6 +63,44 @@ public class Page_TotalActivity extends ActionBarActivity {
             }
         });
         vi.setAdapter(adapter);
+
+        vi.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position<activities.length){
+                    Activity.setCurrentActivity(activities[position]);
+                }else{
+                    Utils.debugMessage(Page_TotalActivity.this,"活动数组越界");
+                }
+                Utils.transPage(Page_TotalActivity.this,Page_ActivityInformation.class);
+            }
+        });
+
+    }
+
+    Activity[] activities;
+
+    private List<Map<String, Object>> getData() {
+        Message msg = ToolClass.getActivityList("" + curPage, "" + activityType, "" + applyAble);
+        activities = msg.getActivities();
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        if (activities != null) {
+            for (int i = 0; i < activities.length; i++) {
+                list.add(getActivityData(activities[i]));
+            }
+        }
+        return list;
+    }
+
+    private  Map<String, Object> getActivityData(Activity activity){
+        Map<String, Object> ret = new HashMap<String, Object>();
+        ret.put("title", activity.getTitle());
+        ret.put("time", activity.getStartTime());
+        ret.put("position", activity.getPlace());
+        ret.put("attending", activity.getUserCount());
+        Bitmap temp = ToolClass.returnBitMap(activity.getAvatar());
+        ret.put("image", ToolClass.returnBitMap(activity.getAvatar()));
+        return ret;
     }
 
     @Override
@@ -88,7 +133,7 @@ public class Page_TotalActivity extends ActionBarActivity {
         // 创建PopupWindow实例,200,LayoutParams.MATCH_PARENT分别是宽度和高度
         popupWindow = new PopupWindow(popupWindow_view, 300, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         // 这里是位置显示方式,在屏幕的左侧
-        popupWindow.showAsDropDown(v,0,0);
+        popupWindow.showAsDropDown(v, 0, 0);
         // 点击其他地方消失
         popupWindow_view.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -119,26 +164,4 @@ public class Page_TotalActivity extends ActionBarActivity {
         Page_TotalActivity.this.finish();
     }
 
-    private List<Map<String, Object>> getData() {
-        Message msg = ToolClass.getActivityList(""+curPage, ""+activityType, ""+applyAble);
-        Activity[] activities = msg.getActivities();
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        if (activities != null) {
-            for (int i = 0; i < activities.length; i++) {
-                list.add(getActivityData(activities[i]));
-            }
-        }
-        return list;
-    }
-
-    private  Map<String, Object> getActivityData(Activity activity){
-        Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("title", activity.getTitle());
-        ret.put("time", activity.getStartTime());
-        ret.put("position", activity.getPlace());
-        ret.put("attending", activity.getUserCount());
-        Bitmap temp = ToolClass.returnBitMap(activity.getAvatar());
-        ret.put("image", ToolClass.returnBitMap(activity.getAvatar()));
-        return ret;
-    }
 }

@@ -10,10 +10,10 @@ import java.lang.reflect.Field;
  */
 public class Activity {
 
-    private String ActivityID;
+    private String ActivityID;public String getActivityID(){return ActivityID;}
     private String UserID;
     private String Title;public String getTitle(){return Title;}
-    private String Content;
+    private String Content;public String getContent(){return Content;}
     private String StartTime;public String getStartTime(){return StartTime;}
     private String EndTime;
     private String Place;public String getPlace(){return Place;}
@@ -22,6 +22,14 @@ public class Activity {
     private String IsChecked;
     private String NickName;
     private String Avatar;public String getAvatar(){return Avatar;}
+
+    private static Activity currentActivity;
+    public static Activity getCurrentActivity(){
+        return currentActivity;
+    }
+    public static void setCurrentActivity(Activity activity){
+        currentActivity = activity;
+    }
 
     public static Activity createActivity(JSONObject jsonObject)
     {

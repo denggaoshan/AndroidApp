@@ -25,9 +25,19 @@ public class Page_Main extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.page_main);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
+        String jsonMsg = Utils.getLogData();
+        if (jsonMsg != null && !jsonMsg.equals(""))
+        {
+            Message tempMsg = Message.createMessage(jsonMsg, 1, 2);
+            if (checkMess(tempMsg.getMess())) {
+                Message.setCurrentMessage(tempMsg);
+                Utils.transPage(this, Page_TotalActivity.class);
+                return;
+            }
+        }
+        setContentView(R.layout.page_main);
     }
 
     private void getInput(){
@@ -44,6 +54,7 @@ public class Page_Main extends ActionBarActivity {
         }
         if (checkMess(msg.getMess()))
         {
+            Utils.storeLogData(msg.getJsonString());
             Message.setCurrentMessage(msg);
             return "OK";
         }

@@ -62,7 +62,8 @@
                     android:layout_marginTop="30dp"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/head_registered"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:onClick="choose_Click" />
 
                 <ImageView
                     android:layout_width="40dp"
@@ -125,7 +126,8 @@
                     android:inputType="textPassword"
                     android:ems="10"
                     android:id="@+id/password_RegTxt"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="12345" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +141,8 @@
                     android:inputType="textPassword"
                     android:ems="10"
                     android:id="@+id/repassword_RegTxt"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="12345" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -176,7 +179,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/phone_RegTxt"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="12345678900" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -189,7 +193,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/email_RegTxt"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="821465068@qq.com" />
 
             </LinearLayout>
         </ScrollView>

@@ -33,6 +33,8 @@ public class Page_Organize extends ActionBarActivity {
     private String type;
     private String place;
 
+    private String[] types = {"户外","运动","玩乐","旅行","音乐","其他"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +66,6 @@ public class Page_Organize extends ActionBarActivity {
     }
 
     private void createActivityTypeSpinner(){
-        String[] types = {"户外","运动","吃喝","讲座","其他"};
         //第一步：添加一个下拉列表项的list，这里添加的项就是下拉列表的菜单项
         for(String item : types){
             list.add(item);
@@ -116,10 +117,10 @@ public class Page_Organize extends ActionBarActivity {
 
         Message reflect =  ToolClass.launchActivity(msg.getUser().getUserID(), title, content, startTime, endTime, place, type);
         if(checkMess(reflect.getMess())){
-            Utils.showMessage(this,"添加活动失败");
-        }else{
             Utils.showMessage(this,"添加活动成功");
-            Utils.transPage(this,Page_TotalActivity.class);
+            Utils.transPage(this, Page_TotalActivity.class);
+        }else{
+            Utils.showMessage(this, "添加活动失败");
         }
     }
 
@@ -147,7 +148,7 @@ public class Page_Organize extends ActionBarActivity {
         if(startTime.equals("")){
             return "请输入活动开始时间";
         }
-        endTime = Utils.getEditTextById(this,R.id.endTime);
+        endTime = Utils.getEditTextById(this, R.id.endTime);
         if (endTime.equals("")){
             return "请输入活动结束时间";
         }
@@ -155,7 +156,7 @@ public class Page_Organize extends ActionBarActivity {
         if (place.equals("")){
             return "请输入地点";
         }
-        type = Utils.getSpinnerById(this, R.id.type);
+        type = "" + Utils.getSpinnerById(this, R.id.type);
 
         return "提交中";
     }

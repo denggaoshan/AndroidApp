@@ -17,6 +17,11 @@ public class Message {
     private static Activity activity;
     private static Activity[] activities;
     private static Message currentMessage;
+    private static String tempJsonString;
+    public String getJsonString()
+    {
+        return tempJsonString;
+    }
 
     public static void setCurrentMessage(Message msg)
     {
@@ -29,19 +34,21 @@ public class Message {
     }
     public static Message createMessage(String jsonString, int userCount, int activityCount)
     {
+        tempJsonString = jsonString;
         Message temp = new Message();
 
         JSONObject allMsg = temp.getAllMsg(jsonString);
-        temp.setMess(allMsg);
+        if (allMsg != null)
+            temp.setMess(allMsg);
 
-        if (userCount > 0)
+        if (allMsg != null && userCount > 0)
         {
             if (userCount > 1)
                 temp.setUsers(allMsg);
             else
                 temp.setUser(allMsg);
         }
-        if (activityCount > 0)
+        if (allMsg != null && activityCount > 0)
         {
             if (activityCount > 1)
                 temp.setActivities(allMsg);
@@ -52,10 +59,11 @@ public class Message {
         return temp;
     }
 
-
     private JSONObject getAllMsg(String jsonString)
     {
         JSONObject allMsg;
+        if (jsonString == null)
+            return null;
         try {
             allMsg = new JSONObject(jsonString);
         }

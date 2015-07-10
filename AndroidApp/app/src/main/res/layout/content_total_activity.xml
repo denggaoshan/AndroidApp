@@ -109,6 +109,7 @@
             android:src="@drawable/icon_user"
             android:layout_weight="0.33"
             android:paddingTop="10dp"
-            android:paddingBottom="40dp" />
+            android:paddingBottom="40dp"
+            android:id="@+id/image" />
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.administrator.androidapp.tool;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -9,13 +10,133 @@ import android.widget.Toast;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.page.*;
 
+//import org.apache.commons.codec.binary.Base64;
+import android.util.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 
 /**
  * Created by Administrator on 2015/7/3.
  */
 public class Utils {
+
+    public static final String KEY_ALGORITHM = "DES";
+    public static final String CIPHER_ALGORITHM = "DES/ECB/NoPadding";
+    public static final String SCRETEKEY = "A1B553D4E5F60758";
+    private static String LOGADRESS = "userLog.dat";
+    public static void storeLogData(String jsonString)
+    {
+        File extDir = Environment.getExternalStorageDirectory();
+        try {
+            DataOutputStream out=new DataOutputStream(new FileOutputStream(new File(extDir, LOGADRESS)));
+            try {
+                String encryptData = "";
+                try
+                {
+                    encryptData = encrypt(jsonString, SCRETEKEY);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                out.writeUTF(encryptData);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try {
+                out.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static void clearLogData()
+    {
+        File extDir = Environment.getExternalStorageDirectory();
+        try {
+            DataOutputStream out=new DataOutputStream(new FileOutputStream(new File(extDir, LOGADRESS)));
+            try {
+                out.writeUTF("");
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try {
+                out.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static String getLogData()
+    {
+        File extDir = Environment.getExternalStorageDirectory();
+        String result = "";
+        try {
+            DataInputStream in=new DataInputStream(
+                    new BufferedInputStream(
+                            new FileInputStream(new File(extDir, LOGADRESS))));
+            try {
+/*                byte[] tempBuffer;
+                in.read(tempBuffer);*/
+                result = in.readUTF();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try {
+                in.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            return null;
+            //e.printStackTrace();
+        }
+
+        String decryptData = "";
+        if (result != null && !result.equals("")) {
+            try {
+                decryptData = decrypt(result, SCRETEKEY);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return decryptData;
+    }
+
 
     //在parent中提取字段为key的子JSON
     public static JSONObject getJSONObject(JSONObject parent,String key){
@@ -43,8 +164,8 @@ public class Utils {
     }
 
     //返回文本框的内容
-    public static String getSpinnerById(ActionBarActivity parent,int id){
-        return ((Spinner) parent.findViewById(id)).getSelectedItem().toString();
+    public static long getSpinnerById(ActionBarActivity parent,int id){
+        return ((Spinner) parent.findViewById(id)).getSelectedItemId();
     }
 
     //返回文本框的内容
@@ -69,5 +190,60 @@ public class Utils {
         String[] data = {"户外","运动","玩乐","旅行","音乐","其他"};
         int index = Integer.parseInt(val);
         return data[index];
+    }
+
+    private static SecretKey keyGenerator(String keyStr) throws Exception {
+        byte input[] = HexString2Bytes(keyStr);
+        DESKeySpec desKey = new DESKeySpec(input);
+        //创建一个密匙工厂，然后用它把DESKeySpec转换成
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+        SecretKey securekey = keyFactory.generateSecret(desKey);
+        return securekey;
+    }
+
+    private static int parse(char c) {
+        if (c >= 'a') return (c - 'a' + 10) & 0x0f;
+        if (c >= 'A') return (c - 'A' + 10) & 0x0f;
+        return (c - '0') & 0x0f;
+    }
+
+    // 从十六进制字符串到字节数组转换
+    private static byte[] HexString2Bytes(String hexstr) {
+        byte[] b = new byte[hexstr.length() / 2];
+        int j = 0;
+        for (int i = 0; i < b.length; i++) {
+            char c0 = hexstr.charAt(j++);
+            char c1 = hexstr.charAt(j++);
+            b[i] = (byte) ((parse(c0) << 4) | parse(c1));
+        }
+        return b;
+    }
+
+    private static String encrypt(String data, String key) throws Exception {
+        Key deskey = keyGenerator(key);
+        // 实例化Cipher对象，它用于完成实际的加密操作
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        SecureRandom random = new SecureRandom();
+        // 初始化Cipher对象，设置为加密模式
+        cipher.init(Cipher.ENCRYPT_MODE, deskey, random);
+        byte[] results = cipher.doFinal(data.getBytes());
+        // 该部分是为了与加解密在线测试网站（http://tripledes.online-domain-tools.com/）的十六进制结果进行核对
+        for (int i = 0; i < results.length; i++) {
+            System.out.print(results[i] + " ");
+        }
+        System.out.println();
+        // 执行加密操作。加密后的结果通常都会用Base64编码进行传输
+        //return Base64.encodeBase64String(results);
+        return Base64.encodeToString(results, Base64.DEFAULT);
+    }
+
+    private static String decrypt(String data, String key) throws Exception {
+        Key deskey = keyGenerator(key);
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        //初始化Cipher对象，设置为解密模式
+        cipher.init(Cipher.DECRYPT_MODE, deskey);
+        // 执行解密操作
+        //return new String(cipher.doFinal(Base64.decodeBase64(data)));
+        return new String(cipher.doFinal(Base64.decode(data, Base64.DEFAULT)));
     }
 }

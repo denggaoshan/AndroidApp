@@ -1,6 +1,8 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -10,12 +12,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Activity;
 import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -25,13 +29,32 @@ import java.util.Map;
 
 public class Page_TotalActivity extends ActionBarActivity {
 
+    private int curPage = 1;
+    private int activityType = 0;
+    private int applyAble = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_total_activity);
 
         ListView vi=(ListView) findViewById(R.id.content);
-        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_total_activity, new String[] { "title",  "time","position","attending" }, new int[] { R.id.title, R.id.time,R.id.position,R.id.attending});
+        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_total_activity,
+                new String[] { "title",  "time","position","attending","image"},
+                new int[] { R.id.title, R.id.time,R.id.position,R.id.attending,R.id.image});
+        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+            @Override
+            public boolean setViewValue(View view, Object data,
+                                        String textRepresentation) {
+                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
+                    ImageView iv = (ImageView) view;
+                    Bitmap bm = (Bitmap) data;
+                    iv.setImageBitmap(bm);
+                    return true;
+                }
+                return false;
+            }
+        });
         vi.setAdapter(adapter);
     }
 
@@ -85,6 +108,7 @@ public class Page_TotalActivity extends ActionBarActivity {
     }
 
     public void logout_Click(View v){
+        Utils.clearLogData();
         Utils.transPage(this,Page_Main.class);
     }
 
@@ -96,11 +120,13 @@ public class Page_TotalActivity extends ActionBarActivity {
     }
 
     private List<Map<String, Object>> getData() {
-        Message msg = Message.getCurrentMessage();
+        Message msg = ToolClass.getActivityList(""+curPage, ""+activityType, ""+applyAble);
         Activity[] activities = msg.getActivities();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        for(int i=0;i<activities.length;i++){
-            list.add(getActivityData(activities[i]));
+        if (activities != null) {
+            for (int i = 0; i < activities.length; i++) {
+                list.add(getActivityData(activities[i]));
+            }
         }
         return list;
     }
@@ -111,6 +137,8 @@ public class Page_TotalActivity extends ActionBarActivity {
         ret.put("time", activity.getStartTime());
         ret.put("position", activity.getPlace());
         ret.put("attending", activity.getUserCount());
+        Bitmap temp = ToolClass.returnBitMap(activity.getAvatar());
+        ret.put("image", ToolClass.returnBitMap(activity.getAvatar()));
         return ret;
     }
 }

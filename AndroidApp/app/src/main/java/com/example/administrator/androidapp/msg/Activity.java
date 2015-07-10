@@ -21,7 +21,7 @@ public class Activity {
     private String UserCount;public String getUserCount(){return UserCount;}
     private String IsChecked;
     private String NickName;
-    private String Avatar;
+    private String Avatar;public String getAvatar(){return Avatar;}
 
     public static Activity createActivity(JSONObject jsonObject)
     {

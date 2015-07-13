@@ -1,5 +1,8 @@
 package com.example.administrator.androidapp.tool;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -176,6 +179,15 @@ public class Utils {
     //返回文本框的内容
     public static String getEditTextById(ActionBarActivity parent,int id){
        return ((EditText) parent.findViewById(id)).getText().toString();
+    }
+
+    /* 弹出输入框 */
+    public static String showInputDialog(String title,Context ctx){
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setTitle(title);
+        builder.setMessage("Message");
+
+        return null;
     }
 
     /******************* 适配器接口 *******************/

@@ -30,14 +30,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="路易"
-                    android:id="@+id/textView29"
+                    android:id="@+id/name"
                     android:textColor="#000000" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="07月02日 10:00"
-                    android:id="@+id/textView30"
+                    android:id="@+id/time"
                     android:layout_marginTop="5dp" />
 
             </LinearLayout>
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩"
-            android:id="@+id/textView31"
+            android:id="@+id/comment"
             android:paddingLeft="70dp"
             android:textSize="20dp" />
     </LinearLayout>

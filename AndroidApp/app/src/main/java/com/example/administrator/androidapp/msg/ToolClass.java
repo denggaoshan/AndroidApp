@@ -257,7 +257,7 @@ public class ToolClass {
 
     public static ActivityInfo getActivityInfo(String userid, String activityid)
     {
-        String getUrl = MSGSERVERURL + "?" + "oper=addphoto"
+        String getUrl = MSGSERVERURL + "?" + "oper=getactivityinfo"
                 + "&userid=" + userid + "&activityid=" + activityid;
 
         return ActivityInfo.createActivityInfo(httpGet(getUrl));

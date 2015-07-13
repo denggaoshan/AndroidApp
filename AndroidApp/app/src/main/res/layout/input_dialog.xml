@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="评论"
+        android:id="@+id/title"
+        android:gravity="center"
+        android:textSize="20dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.33"
+        android:text="请在此输入您的内容" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.06"
+        android:padding="20dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="确定"
+            android:id="@+id/commit"
+            android:layout_weight="0.5"
+            android:textSize="25dp"
+            android:background="#50d2c2"
+            android:textColor="#ffffff"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="取消"
+            android:id="@+id/cancel"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.5"
+            android:textSize="25dp"
+            android:background="#50d2c2"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+</LinearLayout>

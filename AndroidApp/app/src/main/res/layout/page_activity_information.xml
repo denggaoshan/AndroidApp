@@ -163,4 +163,28 @@
             android:layout_height="wrap_content"
             android:id="@+id/content" />
     </ScrollView>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/input_comment"
+        android:layout_above="@+id/btn"
+        android:text="在这里输入文字"
+        android:onClick="cleanstring" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="报名参加"
+        android:id="@+id/btn"
+        android:layout_alignParentBottom="true"
+        android:background="#50d2c2"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:onClick="btn_Click"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
 </RelativeLayout>

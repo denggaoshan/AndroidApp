@@ -12,9 +12,9 @@ public class Comment
     private String CommentID;
     private String UserID;
     private String ActivityID;
-    private String Content;
-    private String Time;
-    private String NickName;
+    private String Content;public String getContent(){return Content;}
+    private String Time;public String getTime(){return Time;}
+    private String NickName;public String getNickName(){return NickName;}
     private String Avatar;
 
     public static Comment createComment(JSONObject jsonObject)

@@ -10,8 +10,8 @@ import org.json.JSONObject;
 public class ActivityInfo {
 
     private String mess;
-    private Comment[] comments;
-    private Photo[] photos;
+    private Comment[] comments;public Comment[] getComments(){return comments;}
+    private Photo[] photos;public Photo[] getPhoto(){return photos;}
 
     public static ActivityInfo createActivityInfo(String jsonString)
     {
@@ -27,12 +27,12 @@ public class ActivityInfo {
 
         temp.getMess(allMsg);
         temp.getPhotos(allMsg);
-        temp.getPhotos(allMsg);
+        temp.getComments(allMsg);
 
         return temp;
     }
 
-    public void getMess(JSONObject jsonObject)
+    private void getMess(JSONObject jsonObject)
     {
         if (jsonObject != null)
         {
@@ -47,7 +47,7 @@ public class ActivityInfo {
             mess = "";
     }
 
-    public void getPhotos(JSONObject jsonObject)
+    private void getPhotos(JSONObject jsonObject)
     {
         JSONArray jsonArray;
         try {
@@ -75,7 +75,7 @@ public class ActivityInfo {
             photos = null;
     }
 
-    public void getComments(JSONObject jsonObject)
+    private void getComments(JSONObject jsonObject)
     {
         JSONArray jsonArray;
         try {

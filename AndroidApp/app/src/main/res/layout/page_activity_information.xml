@@ -144,7 +144,7 @@
 
             <TextView
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="200dp"
                 android:text="评论"
                 android:id="@+id/textView17"
                 android:gravity="center"
@@ -173,8 +173,7 @@
         android:ems="10"
         android:id="@+id/input_comment"
         android:layout_above="@+id/btn"
-        android:text="在这里输入文字"
-        android:onClick="cleanstring" />
+        android:text="在这里输入文字" />
 
     <Button
         android:layout_width="fill_parent"

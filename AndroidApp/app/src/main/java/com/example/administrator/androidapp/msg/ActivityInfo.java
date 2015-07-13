@@ -79,7 +79,7 @@ public class ActivityInfo {
     {
         JSONArray jsonArray;
         try {
-            jsonArray = jsonObject.getJSONArray("comment");
+            jsonArray = jsonObject.getJSONArray("comments");
         }
         catch (JSONException e)
         {

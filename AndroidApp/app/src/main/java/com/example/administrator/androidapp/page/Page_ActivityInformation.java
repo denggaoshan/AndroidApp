@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Page_ActivityInformation extends ActionBarActivity {
 
@@ -83,15 +84,45 @@ public class Page_ActivityInformation extends ActionBarActivity {
             }
         });
         vi.setAdapter(adapter);
-
     }
 
     private void loadActivityComment() {
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        SimpleAdapter adapter = new SimpleAdapter(this, getCommentData(), R.layout.content_activity_member,
+        SimpleAdapter adapter = new SimpleAdapter(this, getCommentData(), R.layout.content_activity_comment,
                 new String[] { "name",  "time","comment"},
                 new int[] { R.id.name, R.id.time,R.id.comment});
+        vi.setAdapter(adapter);
+    }
+
+    private void loadActivityAlbum(){
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        SimpleAdapter adapter = new SimpleAdapter(this, getAlbumData(), R.layout.content_activity_album,
+                new String[] { "avater", "nickname", "time", "img"},
+                new int[] { R.id.name, R.id.time,R.id.comment});
+        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+            @Override
+            public boolean setViewValue(View view, Object data,
+                                        String textRepresentation) {
+                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
+                    ImageView iv = (ImageView) view;
+                    Bitmap bm = (Bitmap) data;
+                    iv.setImageBitmap(bm);
+                    return true;
+                }
+                return false;
+            }
+        });
+        vi.setAdapter(adapter);
+    }
+
+    private void loadActivityMember() {
+        ListView vi=(ListView) findViewById(R.id.content);
+        SimpleAdapter adapter = new SimpleAdapter(this, getCommentData(), R.layout.content_activity_member,
+                new String[] { "name",  "age","time"},
+                new int[] { R.id.name, R.id.age,R.id.time});
+
         vi.setAdapter(adapter);
     }
 
@@ -145,12 +176,6 @@ public class Page_ActivityInformation extends ActionBarActivity {
     }
 
     /*  点击事件  */
-    public void cleanstring(View v) {
-        EditText test = (EditText)v;
-        if(test.getText().equals("在这里输入文字")){
-            test.clearComposingText();
-        }
-    }
 
     public void btn_Click(View v) {
         switch (currentSelect){
@@ -168,6 +193,8 @@ public class Page_ActivityInformation extends ActionBarActivity {
 
         EditText comment = (EditText)findViewById(R.id.input_comment);
         comment.setVisibility(View.VISIBLE);
+
+        loadActivityComment();
     }
 
     public void album_Click(View v) {
@@ -187,6 +214,7 @@ public class Page_ActivityInformation extends ActionBarActivity {
         changeFocus(0);
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
+
         loadActivityDetail();
 
         Button btn = (Button)findViewById(R.id.btn);
@@ -199,11 +227,27 @@ public class Page_ActivityInformation extends ActionBarActivity {
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
 
-        SimpleAdapter adapter = new SimpleAdapter(this, getCommentData(), R.layout.content_activity_member,
-                new String[] { "name",  "age","time"},
-                new int[] { R.id.name, R.id.age,R.id.time});
+        loadActivityMember();
+    }
 
-        vi.setAdapter(adapter);
+    private List<? extends Map<String, ?>> getAlbumData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        if (allPhotos != null){
+            for (Photo photo : allPhotos){
+                list.add(getOnePhoto(photo));
+            }
+        }
+        return list;
+    }
+
+    public Map<String, Object> getOnePhoto(Photo photo){
+        Map<String, Object> ret = new HashMap<String, Object>();
+        Bitmap Ava = ToolClass.returnBitMap(photo.getAvatar());
+        ret.put("avater", ToolClass.returnBitMap(photo.getAvatar()));
+        ret.put("nickname", photo.getNickName());
+        ret.put("time", photo.getTime());
+        ret.put("img", ToolClass.returnBitMap(photo.getAddress()));
+        return ret;
     }
 
     private List<? extends Map<String, ?>> getMemberData() {

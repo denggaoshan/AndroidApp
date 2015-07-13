@@ -4,15 +4,29 @@
     tools:context="com.example.administrator.androidapp.page.Page_Message"
     android:background="#ffffff">
 
-    <TextView
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="消息列表"
-        android:id="@+id/textView22"
-        android:gravity="center"
         android:background="#50d2c2"
-        android:textColor="#ffffff"
-        android:textSize="30dp" />
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageView12"
+            android:src="@drawable/icon_close"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="消息"
+            android:id="@+id/textView22"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="30dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"

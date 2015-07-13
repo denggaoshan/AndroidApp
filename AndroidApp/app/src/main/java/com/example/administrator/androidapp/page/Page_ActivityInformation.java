@@ -180,10 +180,14 @@ public class Page_ActivityInformation extends ActionBarActivity {
     public void btn_Click(View v) {
         switch (currentSelect){
             case 0:joinActivity();break;
-            case 1:break;
+            case 1:memberMana();break;
             case 2:addPhoto();break;
             case 3:addComment();break;
         }
+    }
+
+    private void memberMana() {
+        Utils.transPage(this,Page_MemberManager.class);
     }
 
     public void comment_Click(View v) {
@@ -228,6 +232,9 @@ public class Page_ActivityInformation extends ActionBarActivity {
         vi.removeAllViewsInLayout();
 
         loadActivityMember();
+
+        Button btn = (Button)findViewById(R.id.btn);
+        btn.setText("成员管理");
     }
 
     private List<? extends Map<String, ?>> getAlbumData() {

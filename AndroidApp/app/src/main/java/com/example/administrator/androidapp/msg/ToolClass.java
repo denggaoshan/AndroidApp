@@ -203,8 +203,9 @@ public class ToolClass {
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getapplication"
                 + "&userid=" + userid + "&activityid=" + activityid;
+        Message ret = Message.createMessage(httpGet(getUrl), 2, 0);
 
-        return Message.createMessage(httpGet(getUrl), 2, 0);
+        return ret;
     }
 
     public static String handleApplication(String userid, String applyid, String isallow)

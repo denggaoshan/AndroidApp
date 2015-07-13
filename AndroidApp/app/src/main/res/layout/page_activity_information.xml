@@ -144,7 +144,7 @@
 
             <TextView
                 android:layout_width="fill_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:text="评论"
                 android:id="@+id/textView17"
                 android:gravity="center"

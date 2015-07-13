@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView19"
+                android:src="@drawable/icon_user"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingRight="10dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="left|center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="花千骨"
+                    android:id="@+id/name"
+                    android:layout_marginTop="-20dp"
+                    android:layout_marginBottom="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="07月02日 12:00"
+                    android:id="@+id/time" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:text="同意"
+                android:id="@+id/button3"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="#ff50d2c2"
+                android:textColor="#ffffff"
+                android:layout_marginRight="20dp" />
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:text="拒绝"
+                android:id="@+id/button4"
+                android:textSize="20dp"
+                android:background="#ffffff" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="我想加入活动"
+            android:id="@+id/content"
+            android:paddingLeft="100dp" />
+    </LinearLayout>
+
+</LinearLayout>

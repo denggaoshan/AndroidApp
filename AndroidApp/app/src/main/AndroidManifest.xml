@@ -53,6 +53,10 @@
             android:name=".page.Page_Message"
             android:label="@string/title_activity_page__message" >
         </activity>
+        <activity
+            android:name=".page.Page_MemberManager"
+            android:label="@string/title_activity_page__member_manager" >
+        </activity>
     </application>
 
 </manifest>

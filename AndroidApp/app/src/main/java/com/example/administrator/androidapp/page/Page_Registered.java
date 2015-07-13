@@ -36,6 +36,7 @@ public class Page_Registered extends ActionBarActivity {
     private String avatar;
     private String phone;
     private String mailbox;
+    private String DEFAULTIMG = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,7 @@ public class Page_Registered extends ActionBarActivity {
                         picPath = path;
                         Bitmap bitmap = BitmapFactory.decodeStream(cr
                                 .openInputStream(uri));
-                        ((ImageView)findViewById(R.id.imageView2)).setImageBitmap(bitmap);
+                        ((ImageView) findViewById(R.id.imageView2)).setImageBitmap(bitmap);
                     } else {
                         alert();
                     }
@@ -129,7 +130,10 @@ public class Page_Registered extends ActionBarActivity {
 
     public void register_Click(View v){
         if("OK".equals(getInput())){
-             avatar = ToolClass.uploadFile(picPath);
+            if (picPath == null)
+                avatar = DEFAULTIMG;
+            else
+                avatar = ToolClass.uploadFile(picPath);
              Message msg = ToolClass.register(account, password, sex, phone, mailbox, avatar);
 
             if(checkMess(msg.getMess())){

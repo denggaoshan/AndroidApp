@@ -36,6 +36,46 @@ public class ToolClass {
 
     public static String IMGSERVERURL = "http://chenranzhen.xyz/UpLoadFile.php";
     public static String MSGSERVERURL = "http://chenranzhen.xyz/privateinterface.php";
+    public static String AK = "3Ne7OXKQwUIDLiD9UF6IM90g";
+    public static String IPAPI = "http://api.map.baidu.com/location/ip";
+
+    public static String getCurLocation(){
+        String getUrl = IPAPI + "?" + "ak=" + AK;
+        String jsonString = httpGet(getUrl);
+        String result = "";
+
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(jsonString).getJSONObject("content");
+        }
+        catch (JSONException e){
+            jsonObject = null;
+        }
+        if (jsonObject != null){
+            try {
+                result = jsonObject.getString("address");
+            }
+            catch (JSONException e){
+                result = "";
+            }
+        }
+        return result;
+    }
+    private String convert(String utfString){
+        StringBuilder sb = new StringBuilder();
+        int i = -1;
+        int pos = 0;
+
+        while((i=utfString.indexOf("\\u", pos)) != -1){
+            sb.append(utfString.substring(pos, i));
+            if(i+5 < utfString.length()){
+                pos = i+6;
+                sb.append((char)Integer.parseInt(utfString.substring(i+2, i+6), 16));
+            }
+        }
+
+        return sb.toString();
+    }
 
     public static Message load(String account, String password)
     {
@@ -268,6 +308,11 @@ public class ToolClass {
     {
         String resultStr = null;
         url = url.replaceAll(" ", "%20");
+        url = url.replaceAll("[{]", "%7B");
+        url = url.replaceAll("[}]", "%7D");
+        url = url.replaceAll("\\[", "%5B");
+        url = url.replaceAll("\\]", "%5D");
+        url = url.replaceAll("\"", "%22");
 
         HttpGet getMethod = new HttpGet(url);
         HttpClient httpClient = new DefaultHttpClient();

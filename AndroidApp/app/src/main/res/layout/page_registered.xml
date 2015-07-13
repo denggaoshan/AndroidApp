@@ -74,7 +74,8 @@
                     android:layout_alignRight="@id/imageView2"
                     android:src="@drawable/plus"
                     android:layout_gravity="center"
-                    android:layout_marginRight="-10dp" />
+                    android:layout_marginRight="-10dp"
+                    android:onClick="choose_Click" />
 
             </RelativeLayout>
 

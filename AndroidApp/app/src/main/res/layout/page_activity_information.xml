@@ -1,0 +1,166 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.example.administrator.androidapp.page.Page_ActivityInformation">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/head"
+        android:paddingLeft="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageView6"
+            android:src="@drawable/icon_close"
+            android:layout_weight="0.126"
+            android:padding="10dp"
+            android:onClick="close_Click" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="活动信息"
+            android:id="@+id/textView10"
+            android:layout_weight="0.64"
+            android:textSize="20dp"
+            android:gravity="center" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/Edit"
+            android:src="@drawable/icon_user"
+            android:layout_weight="0.126" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/head"
+        android:layout_height="100dp"
+        android:id="@+id/navi">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.25"
+            android:padding="20dp"
+            android:id="@+id/details"
+            android:background="#50d2c2"
+            android:onClick="details_Click">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/icon_running"
+                android:layout_weight="0.5"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="详情"
+                android:gravity="center"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.25"
+            android:padding="20dp"
+            android:id="@+id/member"
+            android:onClick="member_Click">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:id="@+id/imageView9"
+                android:src="@drawable/icon_running"
+                android:layout_weight="0.5"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="成员"
+                android:id="@+id/textView15"
+                android:gravity="center"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.25"
+            android:padding="20dp"
+            android:id="@+id/album"
+            android:onClick="album_Click">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:id="@+id/imageView10"
+                android:src="@drawable/icno_history"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="相册"
+                android:id="@+id/textView16"
+                android:gravity="center"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.25"
+            android:padding="20dp"
+            android:nestedScrollingEnabled="false"
+            android:id="@+id/comment"
+            android:onClick="comment_Click">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:id="@+id/imageView11"
+                android:src="@drawable/icno_applying"
+                android:layout_weight="0.5" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="评论"
+                android:id="@+id/textView17"
+                android:gravity="center"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scroll"
+        android:layout_below="@+id/navi"
+        android:paddingTop="30dp"
+        android:fillViewport="false">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/content" />
+    </ScrollView>
+</RelativeLayout>

@@ -163,6 +163,11 @@ public class Utils {
         Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
     }
 
+    //弹出Debug窗口
+    public static void debugMessage(ActionBarActivity parent,String message){
+        Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
+    }
+
     //返回文本框的内容
     public static long getSpinnerById(ActionBarActivity parent,int id){
         return ((Spinner) parent.findViewById(id)).getSelectedItemId();

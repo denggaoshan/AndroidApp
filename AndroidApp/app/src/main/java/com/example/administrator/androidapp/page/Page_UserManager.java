@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.tool.Utils;
 
 public class Page_UserManager extends ActionBarActivity {
 
@@ -40,51 +41,32 @@ public class Page_UserManager extends ActionBarActivity {
     }
 
     public void close_Click(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Page_UserManager.this, Page_TotalActivity.class);
-        Page_UserManager.this.startActivity(intent);
-        Page_UserManager.this.finish();
+        Utils.transPage(this, Page_TotalActivity.class);
     }
 
-    int focus = 0;
+    private void changeFocus(int i){
+        int[] ids = {R.id.running,R.id.history,R.id.applying};
+
+        for(int id:ids){
+            LinearLayout layout=(LinearLayout) findViewById(id);
+            layout.setBackgroundColor(Color.WHITE);
+        }
+
+        LinearLayout rn=(LinearLayout) findViewById(ids[i]);
+        rn.setBackgroundColor(0xFF50d2c2);
+    }
 
 
     public void running_Click(View v) {
-        if(focus!=0){
-            focus = 0 ;
-            LinearLayout rn=(LinearLayout) findViewById(R.id.running);
-            rn.setBackgroundColor(0xFF50d2c2);
-            LinearLayout hi=(LinearLayout) findViewById(R.id.history);
-            hi.setBackgroundColor(Color.WHITE);
-            LinearLayout ap=(LinearLayout) findViewById(R.id.applying);
-            ap.setBackgroundColor(Color.WHITE);
-        }
+       changeFocus(0);
     }
 
     public void history_Click(View v) {
-        if(focus!=1){
-            focus = 1 ;
-            LinearLayout rn=(LinearLayout) findViewById(R.id.running);
-            rn.setBackgroundColor(Color.WHITE);
-            LinearLayout hi=(LinearLayout) findViewById(R.id.history);
-            hi.setBackgroundColor(0xFF50d2c2);
-            LinearLayout ap=(LinearLayout) findViewById(R.id.applying);
-            ap.setBackgroundColor(Color.WHITE);
-        }
-
+       changeFocus(1);
     }
 
     public void applying_Click(View v) {
-        if(focus!=2){
-            focus = 2 ;
-            LinearLayout rn=(LinearLayout) findViewById(R.id.running);
-            rn.setBackgroundColor(Color.WHITE);
-            LinearLayout hi=(LinearLayout) findViewById(R.id.history);
-            hi.setBackgroundColor(Color.WHITE);
-            LinearLayout ap=(LinearLayout) findViewById(R.id.applying);
-            ap.setBackgroundColor(0xFF50d2c2);
-        }
-
+         changeFocus(2);
     }
 
     @Override

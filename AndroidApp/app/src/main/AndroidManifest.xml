@@ -49,6 +49,10 @@
             android:name=".page.Page_ActivityInformation"
             android:label="@string/title_activity_page__activity_information" >
         </activity>
+        <activity
+            android:name=".page.Page_Message"
+            android:label="@string/title_activity_page__message" >
+        </activity>
     </application>
 
 </manifest>

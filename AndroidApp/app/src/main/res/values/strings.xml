@@ -8,4 +8,5 @@
     <string name="title_activity_user_manager">UserManagerActivity</string>
     <string name="title_activity_user_information">UserInformation</string>
     <string name="title_activity_page__activity_information">Page_ActivityInformation</string>
+    <string name="title_activity_page__message">Page_Message</string>
 </resources>

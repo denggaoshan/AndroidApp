@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -26,35 +28,52 @@ public class Page_ActivityInformation extends ActionBarActivity {
     private int currentSelect = 0 ; //当前所选择的标签 0详情 1成员 2相册 3评论
     private Activity currentActivity;
 
+    private User currentUser;
+    private User[] allUsers;
+    private Comment[]  allComments;
+    private Photo[] allPhotos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_activity_information);
-
         loadCurrentActivity();
-
         loadActivityDetail();
+
+        EditText comment = (EditText)findViewById(R.id.input_comment);
+        comment.setVisibility(View.GONE);
 
     }
 
+    //装载当前的活动信息
     private void loadCurrentActivity() {
         currentActivity = Activity.getCurrentActivity();
+        currentUser = User.getCurrentUser();
+        Message msg = ToolClass.getParticipation(currentUser.getUserID(), currentActivity.getActivityID());
+        allUsers = msg.getUsers();
+
+        ActivityInfo info = ToolClass.getActivityInfo(currentUser.getUserID(), currentActivity.getActivityID());
+        allComments = info.getComments();
+        if(allComments==null){
+            allComments = new Comment[0];
+        }
+        allPhotos = info.getPhoto();
+        if (allPhotos == null){
+            allPhotos = new Photo[0];
+        }
     }
 
     //装载活动详情
     private void loadActivityDetail(){
-
         ListView vi=(ListView) findViewById(R.id.content);
-
         SimpleAdapter adapter = new SimpleAdapter(this, getDetailData(), R.layout.content_activity_detail,
                 new String[] { "title",  "time","position","attending","image","description"},
                 new int[] { R.id.title, R.id.time,R.id.position,R.id.attending,R.id.image,R.id.description});
 
-        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+        adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data,
                                         String textRepresentation) {
-                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
+                if ((view instanceof ImageView) & (data instanceof Bitmap)) {
                     ImageView iv = (ImageView) view;
                     Bitmap bm = (Bitmap) data;
                     iv.setImageBitmap(bm);
@@ -63,6 +82,16 @@ public class Page_ActivityInformation extends ActionBarActivity {
                 return false;
             }
         });
+        vi.setAdapter(adapter);
+
+    }
+
+    private void loadActivityComment() {
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        SimpleAdapter adapter = new SimpleAdapter(this, getCommentData(), R.layout.content_activity_member,
+                new String[] { "name",  "time","comment"},
+                new int[] { R.id.name, R.id.time,R.id.comment});
         vi.setAdapter(adapter);
     }
 
@@ -88,6 +117,115 @@ public class Page_ActivityInformation extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void changeFocus(int i){
+        currentSelect = i ;
+        int[] ids = {R.id.details,R.id.member,R.id.album,R.id.comment};
+        for(int id:ids){
+            LinearLayout layout=(LinearLayout) findViewById(id);
+            layout.setBackgroundColor(Color.WHITE);
+        }
+        LinearLayout rn=(LinearLayout) findViewById(ids[i]);
+        rn.setBackgroundColor(0xFF50d2c2);
+    }
+
+    private void addComment() {
+        EditText test = (EditText)findViewById(R.id.input_comment);
+        String content = test.getText().toString();
+        String ret =ToolClass.addCommment(currentUser.getUserID(),currentActivity.getActivityID(),content);
+        Utils.showMessage(this, ret);
+    }
+
+    private void addPhoto() {
+
+    }
+
+    private void joinActivity() {
+        String ret = ToolClass.applyParticipation(currentUser.getUserID(),currentActivity.getActivityID(),"我想参加");
+        Utils.showMessage(this, ret);
+    }
+
+    /*  点击事件  */
+    public void cleanstring(View v) {
+        EditText test = (EditText)v;
+        if(test.getText().equals("在这里输入文字")){
+            test.clearComposingText();
+        }
+    }
+
+    public void btn_Click(View v) {
+        switch (currentSelect){
+            case 0:joinActivity();break;
+            case 1:break;
+            case 2:addPhoto();break;
+            case 3:addComment();break;
+        }
+    }
+
+    public void comment_Click(View v) {
+        changeFocus(3);
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+
+        EditText comment = (EditText)findViewById(R.id.input_comment);
+        comment.setVisibility(View.VISIBLE);
+    }
+
+    public void album_Click(View v) {
+        changeFocus(2);
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+
+        Button btn = (Button)findViewById(R.id.btn);
+        btn.setText("添加照片");
+
+        EditText comment = (EditText)findViewById(R.id.input_comment);
+        comment.setVisibility(View.GONE);
+    }
+
+
+    public void details_Click(View v) {
+        changeFocus(0);
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        loadActivityDetail();
+
+        Button btn = (Button)findViewById(R.id.btn);
+        btn.setText("报名参加");
+    }
+
+    //获取活动成员
+    public void member_Click(View v) {
+        changeFocus(1);
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+
+        SimpleAdapter adapter = new SimpleAdapter(this, getCommentData(), R.layout.content_activity_member,
+                new String[] { "name",  "age","time"},
+                new int[] { R.id.name, R.id.age,R.id.time});
+
+        vi.setAdapter(adapter);
+    }
+
+    private List<? extends Map<String, ?>> getMemberData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        if(allUsers !=null){
+            for(User user:allUsers){
+                list.add(getOneMember(user));
+            }
+        }
+        return list;
+    }
+
+    private List<? extends Map<String, ?>> getCommentData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        if(allComments!=null){
+            for(Comment comment:allComments){
+                list.add(getOneComment(comment));
+            }
+        }
+        return list;
+    }
+
     private List<Map<String, Object>> getDetailData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Map<String, Object> ret = new HashMap<String, Object>();
@@ -108,80 +246,15 @@ public class Page_ActivityInformation extends ActionBarActivity {
         return ret;
     }
 
-    private List<? extends Map<String, ?>> getMemberData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-        ActivityInfo info = ToolClass.getActivityInfo(User.getCurrentUser().getUserID(), currentActivity.getActivityID());
-
-        //找出参加活动的所有用户
-
-        return list;
+    private Map<String, Object> getOneComment(Comment comment) {
+        Map<String, Object> ret = new HashMap<String, Object>();
+        ret.put("name", comment.getNickName());
+        ret.put("time", comment.getTime());
+        ret.put("comment",comment.getContent() );
+        return ret;
     }
-
-    private void changeFocus(int i){
-        int[] ids = {R.id.details,R.id.member,R.id.album,R.id.comment};
-
-        for(int id:ids){
-            LinearLayout layout=(LinearLayout) findViewById(id);
-            layout.setBackgroundColor(Color.WHITE);
-        }
-
-        LinearLayout rn=(LinearLayout) findViewById(ids[i]);
-        rn.setBackgroundColor(0xFF50d2c2);
-    }
-
-    public void album_Click(View v) {
-        changeFocus(2);
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-    }
-
-    public void comment_Click(View v) {
-        changeFocus(3);
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-    }
-
-    public void details_Click(View v) {
-        changeFocus(0);
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-
-        loadActivityDetail();
-    }
-
-
-    public void member_Click(View v) {
-        changeFocus(1);
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-
-        SimpleAdapter adapter = new SimpleAdapter(this, getMemberData(), R.layout.content_activity_member,
-                new String[] { "name",  "age","time"},
-                new int[] { R.id.name, R.id.age,R.id.time});
-
-        adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data,
-                                        String textRepresentation) {
-                if ((view instanceof ImageView) & (data instanceof Bitmap)) {
-                    ImageView iv = (ImageView) view;
-                    Bitmap bm = (Bitmap) data;
-                    iv.setImageBitmap(bm);
-                    return true;
-                }
-                return false;
-            }
-        });
-        vi.setAdapter(adapter);
-    }
-
-
 
     public void close_Click(View v) {
         Utils.transPage(this, Page_TotalActivity.class);
     }
-
-
-
 }

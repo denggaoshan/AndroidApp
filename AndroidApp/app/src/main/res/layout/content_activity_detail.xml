@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="match_parent"
    >
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="厦门相亲交友大聚会"
             android:layout_gravity="center_horizontal"
@@ -134,15 +134,5 @@
         android:text="厦门相亲交友大聚会，期待大家的报名参加"
         android:id="@+id/description"
         android:layout_marginTop="20dp" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:text="报名参加"
-        android:id="@+id/button2"
-        android:background="#50d2c2"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:layout_marginTop="40dp" />
 
 </LinearLayout>

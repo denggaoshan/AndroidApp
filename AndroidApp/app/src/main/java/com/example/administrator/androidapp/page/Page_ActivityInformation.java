@@ -100,7 +100,7 @@ public class Page_ActivityInformation extends ActionBarActivity {
         vi.removeAllViewsInLayout();
         SimpleAdapter adapter = new SimpleAdapter(this, getAlbumData(), R.layout.content_activity_album,
                 new String[] { "avater", "nickname", "time", "img"},
-                new int[] { R.id.name, R.id.time,R.id.comment});
+                new int[] { R.id.avater_album, R.id.name_album, R.id.time_album, R.id.img_album});
         adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
             @Override
             public boolean setViewValue(View view, Object data,
@@ -211,6 +211,7 @@ public class Page_ActivityInformation extends ActionBarActivity {
 
         EditText comment = (EditText)findViewById(R.id.input_comment);
         comment.setVisibility(View.GONE);
+        loadActivityAlbum();
     }
 
 
@@ -247,10 +248,15 @@ public class Page_ActivityInformation extends ActionBarActivity {
         return list;
     }
 
+    private String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
     public Map<String, Object> getOnePhoto(Photo photo){
         Map<String, Object> ret = new HashMap<String, Object>();
-        Bitmap Ava = ToolClass.returnBitMap(photo.getAvatar());
-        ret.put("avater", ToolClass.returnBitMap(photo.getAvatar()));
+        String ava;
+        if (photo.getAvatar() == null || photo.getAvatar().equals(""))
+            ava = DEFAULTAVATER;
+        else
+            ava = photo.getAvatar();
+        ret.put("avater", ToolClass.returnBitMap(ava));
         ret.put("nickname", photo.getNickName());
         ret.put("time", photo.getTime());
         ret.put("img", ToolClass.returnBitMap(photo.getAddress()));

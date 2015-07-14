@@ -11,11 +11,11 @@ import org.json.JSONObject;
  */
 public class Message {
 
-    private static String mess;
-    private static User user;
-    private static User[] users;
-    private static Activity activity;
-    private static Activity[] activities;
+    private String mess;
+    private User user;
+    private User[] users;
+    private Activity activity;
+    private Activity[] activities;
     private static Message currentMessage;
     private static String tempJsonString;
     public String getJsonString()

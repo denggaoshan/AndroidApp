@@ -1,18 +1,27 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.Photo;
 import com.example.administrator.androidapp.tool.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Page_UserManager extends ActionBarActivity {
 
@@ -59,6 +68,38 @@ public class Page_UserManager extends ActionBarActivity {
 
     public void running_Click(View v) {
        changeFocus(0);
+
+    }
+
+    private void loadRunningActivity(){
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        SimpleAdapter adapter = new SimpleAdapter(this, getRunningData(), R.layout.content_activity_album,
+                new String[] { "avater", "nickname", "time", "img"},
+                new int[] { R.id.avater_album, R.id.name_album, R.id.time_album, R.id.img_album});
+        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+            @Override
+            public boolean setViewValue(View view, Object data,
+                                        String textRepresentation) {
+                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
+                    ImageView iv = (ImageView) view;
+                    Bitmap bm = (Bitmap) data;
+                    iv.setImageBitmap(bm);
+                    return true;
+                }
+                return false;
+            }
+        });
+        vi.setAdapter(adapter);
+    }
+    private List<? extends Map<String, ?>> getRunningData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        if (allPhotos != null){
+            for (Photo photo : allPhotos){
+                list.add(getOnePhoto(photo));
+            }
+        }
+        return list;
     }
 
     public void history_Click(View v) {

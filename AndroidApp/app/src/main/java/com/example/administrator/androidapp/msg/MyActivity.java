@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 /**
  * Created by admin on 2015/7/3.
  */
-public class Activity {
+public class MyActivity {
 
     private String ActivityID;public String getActivityID(){return ActivityID;}
     private String UserID;
@@ -23,17 +23,17 @@ public class Activity {
     private String NickName;
     private String Avatar;public String getAvatar(){return Avatar;}
 
-    private static Activity currentActivity;
-    public static Activity getCurrentActivity(){
+    private static MyActivity currentActivity;
+    public static MyActivity getCurrentActivity(){
         return currentActivity;
     }
-    public static void setCurrentActivity(Activity activity){
+    public static void setCurrentActivity(MyActivity activity){
         currentActivity = activity;
     }
 
-    public static Activity createActivity(JSONObject jsonObject)
+    public static MyActivity createActivity(JSONObject jsonObject)
     {
-        Activity temp = new Activity();
+        MyActivity temp = new MyActivity();
         String[] tmp = {"ActivityID","UserID","Title","Content","StartTime","EndTime",
                 "Place","Type","UserCount","IsChecked","NickName",
                 "Avatar"};

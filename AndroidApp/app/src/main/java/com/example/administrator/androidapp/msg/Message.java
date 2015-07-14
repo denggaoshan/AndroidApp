@@ -1,7 +1,5 @@
 package com.example.administrator.androidapp.msg;
 
-import com.example.administrator.androidapp.msg.*;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,8 +12,8 @@ public class Message {
     private String mess;
     private User user;
     private User[] users;
-    private Activity activity;
-    private Activity[] activities;
+    private MyActivity activity;
+    private MyActivity[] activities;
     private static Message currentMessage;
     private static String tempJsonString;
     public String getJsonString()
@@ -131,7 +129,7 @@ public class Message {
 
     private void setActivity(JSONObject jsonObject) {
         try {
-            activity = Activity.createActivity(jsonObject.getJSONObject("activity"));
+            activity = MyActivity.createActivity(jsonObject.getJSONObject("activity"));
         }
         catch (JSONException e)
         {
@@ -151,12 +149,12 @@ public class Message {
 
         if (jsonArray != null && jsonArray.length() != 0)
         {
-            activities = new Activity[jsonArray.length()];
+            activities = new MyActivity[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++)
             {
                 try
                 {
-                    activities[i] = Activity.createActivity(jsonArray.getJSONObject(i));
+                    activities[i] = MyActivity.createActivity(jsonArray.getJSONObject(i));
                 }
                 catch (JSONException E)
                 {
@@ -173,8 +171,8 @@ public class Message {
 
 
     public String getMess() { return mess; }
-    public Activity getActivity() { return activity; }
-    public Activity[] getActivities() { return activities; }
+    public MyActivity getActivity() { return activity; }
+    public MyActivity[] getActivities() { return activities; }
     public User getUser() { return user; }
     public User[] getUsers() { return users; }
 

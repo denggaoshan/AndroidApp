@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Activity;
@@ -45,6 +46,10 @@ public class Page_MemberManager extends ActionBarActivity {
     }
 
     private Activity currentActivity;
+
+    public void back_Click(View v) {
+        Utils.transPage(this, Page_UserManager.class);
+    }
 
     private void loadActivity(){
         currentActivity  = Activity.getCurrentActivity();

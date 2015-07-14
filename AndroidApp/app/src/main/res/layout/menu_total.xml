@@ -19,22 +19,10 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="查看消息"
+        android:text="搜索活动"
         android:id="@+id/button2"
         android:textColor="#ffffff"
         android:textSize="20dp"
         android:background="#50d2c2" />
-
-    <Button
-        android:id="@+id/Exit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#50d2c2"
-        android:text="退出登录"
-        android:textSize="20dp"
-        android:padding="10dp"
-        android:onClick="logout_Click"
-        android:textColor="#ffffff" />
 
 </LinearLayout>

@@ -4,8 +4,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.tool.Utils;
 
 public class Page_Message extends ActionBarActivity {
 
@@ -35,5 +37,9 @@ public class Page_Message extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void back_Click(View v) {
+        Utils.transPage(this, Page_TotalActivity.class);
     }
 }

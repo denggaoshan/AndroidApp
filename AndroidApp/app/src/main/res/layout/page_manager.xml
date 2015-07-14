@@ -10,7 +10,6 @@
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/head"
-        android:paddingLeft="20dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp">
 
@@ -32,14 +31,6 @@
             android:textSize="25dp"
             android:gravity="center" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:id="@+id/Edit"
-            android:src="@drawable/icon_edit"
-            android:layout_weight="0.126"
-            android:padding="10dp"
-            android:onClick="edit_Click" />
     </LinearLayout>
 
     <LinearLayout

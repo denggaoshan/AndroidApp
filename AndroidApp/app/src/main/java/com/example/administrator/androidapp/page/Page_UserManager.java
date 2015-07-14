@@ -42,13 +42,6 @@ public class Page_UserManager extends ActionBarActivity {
         return true;
     }
 
-    public void edit_Click(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Page_UserManager.this, Page_UserInformation.class);
-        Page_UserManager.this.startActivity(intent);
-        Page_UserManager.this.finish();
-    }
-
     public void close_Click(View v) {
         Utils.transPage(this, Page_TotalActivity.class);
     }
@@ -108,6 +101,10 @@ public class Page_UserManager extends ActionBarActivity {
 
     public void applying_Click(View v) {
          changeFocus(2);
+    }
+
+    public void back_Click(View v) {
+        Utils.transPage(this, Page_UserManager.class);
     }
 
     @Override

@@ -1,11 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="#50d2c2"
+        android:paddingTop="20dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="20dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView20"
+                android:src="@drawable/icon_user" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="花千骨"
+            android:id="@+id/textView27"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="查看信息"
+            android:id="@+id/button5"
+            android:background="#50d2c2"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:onClick="message_Click" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="个人资料"
+            android:id="@+id/button6"
+            android:background="#50d2c2"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:onClick="userInfo_Click" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="活动管理"
+            android:id="@+id/button7"
+            android:background="#50d2c2"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:onClick="edit_Click" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="退出登录"
+            android:id="@+id/button8"
+            android:background="#50d2c2"
+            android:textSize="20dp"
+            android:onClick="logout_Click"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:id="@+id/main_content">
 
 
         <LinearLayout
@@ -25,7 +100,7 @@
                 android:id="@+id/imageView4"
                 android:src="@drawable/icon_user"
                 android:layout_weight="0.126"
-                android:onClick="edit_Click"
+                android:onClick="head_Click"
                 android:nestedScrollingEnabled="false" />
 
             <TextView

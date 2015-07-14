@@ -42,7 +42,7 @@ public class Page_UserInformation extends ActionBarActivity {
     }
 
     public void back_Click(View v) {
-        Utils.transPage(this, Page_UserManager.class);
+        Utils.transPage(this, Page_TotalActivity.class);
     }
 
     @Override

@@ -80,7 +80,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.3"
             android:padding="20dp"
-            android:onClick="running_Click"
+            android:onClick="launched_Click"
             android:id="@+id/running"
             android:background="#50d2c2">
 
@@ -96,7 +96,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:text="正在进行"
+                android:text="用户发起"
                 android:id="@+id/textView15"
                 android:gravity="center"
                 android:layout_weight="0.5" />
@@ -108,7 +108,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.3"
             android:padding="20dp"
-            android:onClick="history_Click"
+            android:onClick="participated_Click"
             android:id="@+id/history">
 
             <ImageView
@@ -121,7 +121,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:text="历史活动"
+                android:text="用户参与"
                 android:id="@+id/textView16"
                 android:gravity="center"
                 android:layout_weight="0.5" />
@@ -133,7 +133,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.3"
             android:padding="20dp"
-            android:onClick="applying_Click"
+            android:onClick="applyed_Click"
             android:nestedScrollingEnabled="false"
             android:id="@+id/applying">
 
@@ -147,7 +147,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:text="正在申请"
+                android:text="用户申请"
                 android:id="@+id/textView17"
                 android:gravity="center"
                 android:layout_weight="0.5" />

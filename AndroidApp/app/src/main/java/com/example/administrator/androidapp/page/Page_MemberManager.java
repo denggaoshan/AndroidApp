@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.msg.Activity;
+import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
@@ -44,10 +44,10 @@ public class Page_MemberManager extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private Activity currentActivity;
+    private MyActivity currentActivity;
 
     private void loadActivity(){
-        currentActivity  = Activity.getCurrentActivity();
+        currentActivity  = MyActivity.getCurrentActivity();
         Message msg = ToolClass.getApplication(User.getCurrentUser().getUserID(), currentActivity.getActivityID());
         if(msg==null){
             Utils.debugMessage(this,"msg = null");

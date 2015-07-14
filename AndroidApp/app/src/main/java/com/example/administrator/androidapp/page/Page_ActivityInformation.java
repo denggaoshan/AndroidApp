@@ -22,12 +22,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Page_ActivityInformation extends ActionBarActivity {
 
     private int currentSelect = 0 ; //当前所选择的标签 0详情 1成员 2相册 3评论
-    private Activity currentActivity;
+    private MyActivity currentActivity;
 
     private User currentUser;
     private User[] allUsers;
@@ -47,7 +46,7 @@ public class Page_ActivityInformation extends ActionBarActivity {
 
     //装载当前的活动信息
     private void loadCurrentActivity() {
-        currentActivity = Activity.getCurrentActivity();
+        currentActivity = MyActivity.getCurrentActivity();
         currentUser = User.getCurrentUser();
         Message msg = ToolClass.getParticipation(currentUser.getUserID(), currentActivity.getActivityID());
         allUsers = msg.getUsers();

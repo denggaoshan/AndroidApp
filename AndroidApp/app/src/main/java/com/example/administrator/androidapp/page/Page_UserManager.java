@@ -1,5 +1,6 @@
 package com.example.administrator.androidapp.page;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -16,10 +17,13 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Message;
-import com.example.administrator.androidapp.msg.Photo;
+import com.example.administrator.androidapp.msg.MyActivity;
+import com.example.administrator.androidapp.msg.ToolClass;
+import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +37,9 @@ public class Page_UserManager extends ActionBarActivity {
         Message msg = Message.getCurrentMessage();
         TextView account = (TextView)findViewById(R.id.Account);
         account.setText(msg.getUser().getAccount());
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        loadLaunchedActivity();
     }
 
     @Override
@@ -66,17 +73,19 @@ public class Page_UserManager extends ActionBarActivity {
     }
 
 
-    public void running_Click(View v) {
+    public void launched_Click(View v) {
        changeFocus(0);
-
-    }
-
-    private void loadRunningActivity(){
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        SimpleAdapter adapter = new SimpleAdapter(this, getRunningData(), R.layout.content_activity_album,
-                new String[] { "avater", "nickname", "time", "img"},
-                new int[] { R.id.avater_album, R.id.name_album, R.id.time_album, R.id.img_album});
+        loadLaunchedActivity();
+    }
+
+    private void loadLaunchedActivity(){
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        SimpleAdapter adapter = new SimpleAdapter(this, getLaunchedData(), R.layout.content_manager_activity,
+                new String[] { "title", "time", "position", "attending", "avater"},
+                new int[] { R.id.title, R.id.time, R.id.position, R.id.attending, R.id.avater});
         adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
             @Override
             public boolean setViewValue(View view, Object data,
@@ -92,22 +101,138 @@ public class Page_UserManager extends ActionBarActivity {
         });
         vi.setAdapter(adapter);
     }
-    private List<? extends Map<String, ?>> getRunningData() {
+    private List<? extends Map<String, ?>> getLaunchedData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        if (allPhotos != null){
-            for (Photo photo : allPhotos){
-                list.add(getOnePhoto(photo));
+        Message msg = ToolClass.getLaunchedActivity(User.getCurrentUser().getUserID());
+        if (msg.getActivities() != null){
+            for (MyActivity ac : msg.getActivities()){
+                list.add(getOneLaunched(ac));
             }
         }
         return list;
     }
 
-    public void history_Click(View v) {
-       changeFocus(1);
+    private String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
+    private Map<String, Object> getOneLaunched(MyActivity ac){
+        Map<String, Object> ret = new HashMap<String, Object>();
+        String ava;
+        if (ac.getAvatar() == null || ac.getAvatar().equals(""))
+            ava = DEFAULTAVATER;
+        else
+            ava = ac.getAvatar();
+        ret.put("title", ac.getTitle());
+        ret.put("time", ac.getStartTime());
+        ret.put("position", ac.getPlace());
+        ret.put("attending", ac.getUserCount());
+        ret.put("avater", ToolClass.returnBitMap(ava));
+        return ret;
     }
 
-    public void applying_Click(View v) {
+    public void participated_Click(View v) {
+       changeFocus(1);
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        loadParticipatedActivity();
+    }
+    private void loadParticipatedActivity(){
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        SimpleAdapter adapter = new SimpleAdapter(this, getParticipatedData(), R.layout.content_manager_activity,
+                new String[] { "title", "time", "position", "attending", "avater"},
+                new int[] { R.id.title, R.id.time, R.id.position, R.id.attending, R.id.avater});
+        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+            @Override
+            public boolean setViewValue(View view, Object data,
+                                        String textRepresentation) {
+                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
+                    ImageView iv = (ImageView) view;
+                    Bitmap bm = (Bitmap) data;
+                    iv.setImageBitmap(bm);
+                    return true;
+                }
+                return false;
+            }
+        });
+        vi.setAdapter(adapter);
+    }
+    private List<? extends Map<String, ?>> getParticipatedData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Message msg = ToolClass.getParticipatedActivity(User.getCurrentUser().getUserID());
+        if (msg.getActivities() != null){
+            for (MyActivity ac : msg.getActivities()){
+                list.add(getOneParticipated(ac));
+            }
+        }
+        return list;
+    }
+
+    private Map<String, Object> getOneParticipated(MyActivity ac){
+        Map<String, Object> ret = new HashMap<String, Object>();
+        String ava;
+        if (ac.getAvatar() == null || ac.getAvatar().equals(""))
+            ava = DEFAULTAVATER;
+        else
+            ava = ac.getAvatar();
+        ret.put("title", ac.getTitle());
+        ret.put("time", ac.getStartTime());
+        ret.put("position", ac.getPlace());
+        ret.put("attending", ac.getUserCount());
+        ret.put("avater", ToolClass.returnBitMap(ava));
+        return ret;
+    }
+
+
+    public void applyed_Click(View v) {
          changeFocus(2);
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        loadApplyedActivity();
+    }
+    private void loadApplyedActivity(){
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        SimpleAdapter adapter = new SimpleAdapter(this, getApplyedData(), R.layout.content_manager_activity,
+                new String[] { "title", "time", "position", "attending", "avater"},
+                new int[] { R.id.title, R.id.time, R.id.position, R.id.attending, R.id.avater});
+        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+            @Override
+            public boolean setViewValue(View view, Object data,
+                                        String textRepresentation) {
+                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
+                    ImageView iv = (ImageView) view;
+                    Bitmap bm = (Bitmap) data;
+                    iv.setImageBitmap(bm);
+                    return true;
+                }
+                return false;
+            }
+        });
+        vi.setAdapter(adapter);
+    }
+    private List<? extends Map<String, ?>> getApplyedData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Message msg = ToolClass.getApplicatedActivity(User.getCurrentUser().getUserID());
+        if (msg.getActivities() != null){
+            for (MyActivity ac : msg.getActivities()){
+                list.add(getOneAppyed(ac));
+            }
+        }
+        return list;
+    }
+
+    private Map<String, Object> getOneAppyed(MyActivity ac){
+        Map<String, Object> ret = new HashMap<String, Object>();
+        String ava;
+        if (ac.getAvatar() == null || ac.getAvatar().equals(""))
+            ava = DEFAULTAVATER;
+        else
+            ava = ac.getAvatar();
+        ret.put("title", ac.getTitle());
+        ret.put("time", ac.getStartTime());
+        ret.put("position", ac.getPlace());
+        ret.put("attending", ac.getUserCount());
+        ret.put("avater", ToolClass.returnBitMap(ava));
+        return ret;
     }
 
     @Override

@@ -2,10 +2,8 @@ package com.example.administrator.androidapp.page;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -18,11 +16,9 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.msg.Activity;
-import com.example.administrator.androidapp.msg.ActivityInfo;
+import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
-import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -68,7 +64,7 @@ public class Page_TotalActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position<activities.length){
-                    Activity.setCurrentActivity(activities[position]);
+                    MyActivity.setCurrentActivity(activities[position]);
                 }else{
                     Utils.debugMessage(Page_TotalActivity.this,"活动数组越界");
                 }
@@ -78,7 +74,7 @@ public class Page_TotalActivity extends ActionBarActivity {
 
     }
 
-    Activity[] activities;
+    MyActivity[] activities;
 
     private List<Map<String, Object>> getData() {
         Message msg = ToolClass.getActivityList("" + curPage, "" + activityType, "" + applyAble);
@@ -92,7 +88,7 @@ public class Page_TotalActivity extends ActionBarActivity {
         return list;
     }
 
-    private  Map<String, Object> getActivityData(Activity activity){
+    private  Map<String, Object> getActivityData(MyActivity activity){
         Map<String, Object> ret = new HashMap<String, Object>();
         ret.put("title", activity.getTitle());
         ret.put("time", activity.getStartTime());

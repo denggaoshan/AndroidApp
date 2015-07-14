@@ -94,12 +94,31 @@
                 android:text="开始时间"
                 android:id="@+id/textView13" />
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/startTime"
-                android:text="2015-07-08 19:50:20" />
-        </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                    android:id="@+id/startTime"
+                    android:text="2015-07-08 19:50:20"
+                    android:onClick="setStartTime"
+                    android:background="#fff1f1f1" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="New Button"
+                        android:id="@+id/startHour"
+                        android:background="#fff1f1f1"
+                        android:onClick="setStartHour" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
             android:orientation="vertical"
@@ -112,12 +131,31 @@
                 android:text="结束时间"
                 android:id="@+id/textView14" />
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/endTime"
-                android:text="2015-08-09 15:20:20" />
-        </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                    android:id="@+id/endTime"
+                    android:text="2015-08-09 15:20:20"
+                    android:onClick="setEndTime"
+                    android:background="#fff1f1f1" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="New Button"
+                        android:id="@+id/endHour"
+                        android:background="#fff1f1f1"
+                        android:onClick="setEndHour" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
             android:orientation="vertical"

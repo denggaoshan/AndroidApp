@@ -199,12 +199,12 @@ public class ToolClass {
         return onlyGetMess(httpGet(getUrl));
     }
 
-    public static Message getApplication(String userid, String activityid)
+    public static UserAndExplainArray getApplication(String userid, String activityid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getapplication"
                 + "&userid=" + userid + "&activityid=" + activityid;
 
-        return Message.createMessage(httpGet(getUrl), 2, 0);
+        return UserAndExplainArray.createUserAndExplainArray(httpGet(getUrl));
     }
 
     public static String handleApplication(String userid, String applyid, String isallow)

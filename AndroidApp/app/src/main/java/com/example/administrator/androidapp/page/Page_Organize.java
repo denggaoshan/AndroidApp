@@ -1,5 +1,8 @@
 package com.example.administrator.androidapp.page;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.graphics.pdf.PdfDocument;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,8 +11,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.User;
@@ -18,6 +25,7 @@ import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +49,92 @@ public class Page_Organize extends ActionBarActivity {
         setContentView(R.layout.page_organize);
 
         createActivityTypeSpinner();
-
+        ((EditText)findViewById(R.id.place)).setText(ToolClass.getCurLocation());
+        initCurTime();
     }
+
+    private void initCurTime(){
+        String curTime = "";
+        Calendar cal = Calendar.getInstance();
+        curTime += cal.get(Calendar.YEAR);
+        curTime += "-";
+        curTime += (cal.get(Calendar.MONTH) + 1);
+        curTime += "-";
+        curTime += cal.get(Calendar.DAY_OF_MONTH);
+        ((Button)findViewById(R.id.startTime)).setText(curTime);
+        ((Button)findViewById(R.id.endTime)).setText(curTime);
+        String curHour = "";
+        curHour += cal.get(Calendar.HOUR_OF_DAY);
+        curHour += " : ";
+        curHour += cal.get(Calendar.MINUTE);
+        ((Button)findViewById(R.id.startHour)).setText(curHour);
+        ((Button)findViewById(R.id.endHour)).setText(curHour);
+    }
+
+    public void setStartTime(View v){
+        Calendar c = Calendar.getInstance();
+        new DatePickerDialog(Page_Organize.this,
+                new DatePickerDialog.OnDateSetListener()
+                {
+                    public void onDateSet(DatePicker dp, int year,
+                                          int month, int dayOfMouth)
+                    {
+                        Button btn = (Button)findViewById(R.id.startTime);
+                        btn.setText(year + "-" + (month + 1) + "-" + dayOfMouth);
+                    }
+                }
+                , c.get(Calendar.YEAR)
+                , c.get(Calendar.MONTH)
+                , c.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public void setEndTime(View v){
+        Calendar c = Calendar.getInstance();
+        new DatePickerDialog(Page_Organize.this,
+                new DatePickerDialog.OnDateSetListener()
+                {
+                    public void onDateSet(DatePicker dp, int year,
+                                          int month, int dayOfMouth)
+                    {
+                        Button btn = (Button)findViewById(R.id.endTime);
+                        btn.setText(year + "-" + (month + 1) + "-" + dayOfMouth);
+                    }
+                }
+                , c.get(Calendar.YEAR)
+                , c.get(Calendar.MONTH)
+                , c.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public void setStartHour(View v){
+        Calendar c = Calendar.getInstance();
+        new TimePickerDialog(Page_Organize.this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hour, int minute) {
+                        // TODO Auto-generated method stub
+                        Button btn = (Button)findViewById(R.id.startHour);
+                        btn.setText(hour + " : " + minute);
+                    }
+                },
+                c.get(Calendar.HOUR_OF_DAY),
+                c.get(Calendar.MINUTE), true).show();
+    }
+
+    public void setEndHour(View v){
+        Calendar c = Calendar.getInstance();
+        new TimePickerDialog(Page_Organize.this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hour, int minute) {
+                        // TODO Auto-generated method stub
+                        Button btn = (Button)findViewById(R.id.endHour);
+                        btn.setText(hour + " : " + minute);
+                    }
+                },
+                c.get(Calendar.HOUR_OF_DAY),
+                c.get(Calendar.MINUTE), true).show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -35,45 +35,106 @@
             android:textColor="#ffffff"
             android:textSize="20dp" />
 
-        <Button
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="查看信息"
-            android:id="@+id/button5"
-            android:background="#50d2c2"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:onClick="message_Click" />
+            android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="个人资料"
-            android:id="@+id/button6"
-            android:background="#50d2c2"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:onClick="userInfo_Click" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView21"
+                android:src="@drawable/icon_system_message" />
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="活动管理"
-            android:id="@+id/button7"
-            android:background="#50d2c2"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:onClick="edit_Click" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="邮箱"
+                android:id="@+id/button5"
+                android:background="#50d2c2"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:onClick="message_Click" />
+        </LinearLayout>
 
-        <Button
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView22"
+                android:src="@drawable/icon_system_message" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="个人资料"
+                android:id="@+id/button6"
+                android:background="#50d2c2"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:onClick="userInfo_Click" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView23"
+                android:src="@drawable/icon_system_message" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="活动管理"
+                android:id="@+id/button7"
+                android:background="#50d2c2"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:onClick="edit_Click" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView24"
+                android:src="@drawable/icon_system_message" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="退出登录"
+                android:id="@+id/button8"
+                android:background="#50d2c2"
+                android:textSize="20dp"
+                android:onClick="logout_Click"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="退出登录"
-            android:id="@+id/button8"
-            android:background="#50d2c2"
-            android:textSize="20dp"
-            android:onClick="logout_Click"
-            android:textColor="#ffffff" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/imageView25"
+                android:src="@drawable/main_logo"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
 
     </LinearLayout>
 

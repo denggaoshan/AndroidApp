@@ -17,6 +17,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.ToolClass;
@@ -43,8 +44,13 @@ public class Page_UserManager extends ActionBarActivity {
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
         loadLaunchedActivity();
-        AsynImageLoader asynImageLoader = new AsynImageLoader();
-        asynImageLoader.showImageAsyn(((ImageView)findViewById(R.id.imageView8)), User.getCurrentUser().getAvatar(), 0);
+        ImageView iv = (ImageView)findViewById(R.id.imageView8);
+        if (Cache.getUserAvater() != null)
+            iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
+        else{
+            AsynImageLoader asynImageLoader = new AsynImageLoader();
+            asynImageLoader.showImageAsyn(((ImageView)findViewById(R.id.imageView8)), User.getCurrentUser().getAvatar(), 0);
+        }
     }
 
     @Override
@@ -114,17 +120,17 @@ public class Page_UserManager extends ActionBarActivity {
         ret.put("attending", ac.getUserCount());
         ret.put("avater", ToolClass.returnBitMap(ava));
 
-        if(!ac.getIsChecked().equals("1")){//申请通过的活动
+        if(!ac.getIsChecked().equals("1")){//申请通过的活�?
             String endtime = ac.getEndTime();
             if(Utils.ifTimeEnd(endtime)){
-                //已截止
-                ret.put("status","已结束");
+                //已截�?
+                ret.put("status","已结�?");
             }else{
-                //正在进行中
-                ret.put("status","进行中");
+                //正在进行�?
+                ret.put("status","进行�?");
             }
-        }else{//申请未通过
-            ret.put("status","审核中");
+        }else{//申请未�?�过
+            ret.put("status","审核�?");
         }
 
         return ret;

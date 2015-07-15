@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
@@ -24,6 +27,8 @@ public class Page_UserInformation extends ActionBarActivity {
         setContentView(R.layout.page_information);
         user = User.getCurrentUser();
         LoadInformation();
+        ImageView iv = (ImageView)findViewById(R.id.imageView13);
+        iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
     }
 
     private void LoadInformation(){

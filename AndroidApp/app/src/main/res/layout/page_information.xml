@@ -28,8 +28,9 @@
         android:id="@+id/Head">
 
         <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="110dp"
             android:id="@+id/imageView13"
             android:src="@drawable/icon_user"
             android:layout_alignParentTop="false"

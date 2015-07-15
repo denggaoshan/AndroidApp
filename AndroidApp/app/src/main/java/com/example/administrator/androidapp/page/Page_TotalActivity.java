@@ -24,10 +24,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
+import com.example.administrator.androidapp.tool.AsynImageLoader;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -250,6 +252,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     void putImgs(){
         Bitmap bm = ToolClass.returnBitMap(User.getCurrentUser().getAvatar());
+        Cache.setUserAvater(bm);
         ((ImageView) findViewById(R.id.imageView20)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 100, 100));
         ((ImageView) findViewById(R.id.imageView4)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 60, 60));
     }
@@ -359,6 +362,13 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                 tv.setText(activity.getPlace());
                 tv = (TextView) convertView.findViewById(R.id.attending);
                 tv.setText(activity.getUserCount());
+                ImageView iv = (ImageView)findViewById(R.id.image);
+                Bitmap bm = Cache.getBitmap(activity.getAvatar());
+                if (bm == null){
+                    bm = new AsynImageLoader().loadImageAsyn(activity.getAvatar(), null);
+                    Cache.setBitmap(activity.getAvatar(), bm);
+                }
+                iv.setImageBitmap(bm);
 
                 //监听事件
                 convertView.setOnClickListener(new View.OnClickListener() {

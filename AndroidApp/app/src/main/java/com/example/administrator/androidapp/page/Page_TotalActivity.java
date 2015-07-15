@@ -17,6 +17,7 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -26,6 +27,7 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
+import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -270,11 +272,35 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_total_activity);
-
         initValues();
         content.setOnTouchListener(this);
 
         loadActivity();
+        Thread tempThread = new Thread(){
+            public void run(){
+                new AnotherTask().execute("none");
+            }
+        };
+        tempThread.start();
+    }
+
+    private class AnotherTask extends AsyncTask<String, Void, String>{
+        @Override
+        protected void onPostExecute(String result) {
+            //对UI组件的更新操作
+            putImgs();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            //耗时的操作
+            return params[0];
+        }
+    }
+
+    void putImgs(){
+        Bitmap bm = ToolClass.returnBitMap(User.getCurrentUser().getAvatar());
+        ((ImageView) findViewById(R.id.imageView20)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 100, 100));
+        ((ImageView) findViewById(R.id.imageView4)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 60, 60));
     }
 
     @Override

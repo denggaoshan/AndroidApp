@@ -19,8 +19,8 @@
             android:paddingLeft="20dp">
 
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/imageView20"
                 android:src="@drawable/icon_user" />
 
@@ -156,7 +156,7 @@
             android:padding="20dp">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:id="@+id/imageView4"
                 android:src="@drawable/icon_user"

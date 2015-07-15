@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,7 @@ import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
+import com.example.administrator.androidapp.tool.AsynImageLoader;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ public class Page_UserManager extends ActionBarActivity {
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
         loadLaunchedActivity();
+        AsynImageLoader asynImageLoader = new AsynImageLoader();
+        asynImageLoader.showImageAsyn(((ImageView)findViewById(R.id.imageView8)), User.getCurrentUser().getAvatar(), 0);
     }
 
     @Override

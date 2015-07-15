@@ -16,7 +16,7 @@ public class User {
 
     private String UserID= "";
     private String Account= "";
-    private String Avatar= "";
+    private String Avatar= ""; public String getAvatar() {return Avatar; }
     private String NickName= "";public String getNickName(){return NickName;}
     private String Sex= "";
     private String Age= "";public String getAge(){return Age;}

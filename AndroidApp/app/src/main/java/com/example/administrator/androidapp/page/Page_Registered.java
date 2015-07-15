@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -19,13 +20,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.tool.Utils;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class Page_Registered extends ActionBarActivity {
@@ -64,64 +70,53 @@ public class Page_Registered extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private int TAKE_PICTURE = 1234;
     private String picPath = null;
     public void choose_Click(View v)
     {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, TAKE_PICTURE);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            /**
-             * 当选择的图片不为空的话，在获取到图片的途径
-             */
-            Uri uri = data.getData();
-            //Log.e(TAG, "uri = " + uri);
-            try {
-                String[] pojo = { MediaStore.Images.Media.DATA };
 
-                Cursor cursor = managedQuery(uri, pojo, null, null, null);
-                if (cursor != null) {
-                    ContentResolver cr = this.getContentResolver();
-                    int colunm_index = cursor
-                            .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    String path = cursor.getString(colunm_index);
-                    /***
-                     * 这里加这样一个判断主要是为了第三方的软件选择，比如：使用第三方的文件管理器的话，你选择的文件就不一定是图片了，
-                     * 这样的话，我们判断文件的后缀名 如果是图片格式的话，那么才可以
-                     */
-                    if (path.endsWith("jpg") || path.endsWith("png")) {
-                        picPath = path;
-                        Bitmap bitmap = BitmapFactory.decodeStream(cr
-                                .openInputStream(uri));
-                        ((ImageView) findViewById(R.id.imageView2)).setImageBitmap(bitmap);
-                    } else {
-                        alert();
+        if (resultCode == RESULT_OK){
+            switch (requestCode) {
+                case 1234:
+                    Bitmap bitmap;
+                    Uri originalUri = data.getData();
+                    ContentResolver resolver = getContentResolver();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+                    } catch (IOException e){
+                        bitmap = null;
                     }
-                } else {
-                    alert();
-                }
+                    int width = bitmap.getWidth();
+                    int height = bitmap.getHeight();
+                    float density = getResources().getDisplayMetrics().density;
+                    float newWidth = 130 * density;
+                    float newHeight = 130 * density;
+                    float scaleWidth = ((float)newWidth) / width;
+                    float scaleHeight = ((float)newHeight) / height;
+                    Matrix matrix = new Matrix();
+                    matrix.postScale(scaleWidth, scaleHeight);
+                    Bitmap resizeBitmap = Bitmap.createBitmap(bitmap, 0, 0, width,
+                            height, matrix, true);
+                    ((ImageView) findViewById(R.id.imageView2)).setImageBitmap(resizeBitmap);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                    String[] proj = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = managedQuery(originalUri, proj, null, null, null);
+                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    String path = cursor.getString(column_index);
+                    picPath = path;
+                    break;
             }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
-    }
-    private void alert() {
-        Dialog dialog = new AlertDialog.Builder(this).setTitle("提示")
-                .setMessage("您选择的不是有效的图片")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        picPath = null;
-                    }
-                }).create();
-        dialog.show();
     }
 
     public void back_Click(View v) {
@@ -139,6 +134,7 @@ public class Page_Registered extends ActionBarActivity {
             if(checkMess(msg.getMess())){
                 Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
                 Message.setCurrentMessage(msg);
+                User.setCurrentUser(msg.getUser());
                 //登陆
                 Toast.makeText(Page_Registered.this, "", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();

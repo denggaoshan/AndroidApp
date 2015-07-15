@@ -1,7 +1,10 @@
 package com.example.administrator.androidapp.msg;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -511,6 +514,22 @@ public class ToolClass {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static Bitmap resizeBitmap(Bitmap bm, ActionBarActivity ac, int srcWidth, int srcHeight){
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float density = ac.getResources().getDisplayMetrics().density;
+        float newWidth = srcWidth * density;
+        float newHeight = srcHeight * density;
+        float scaleWidth = ((float)newWidth) / width;
+        float scaleHeight = ((float)newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap resizeBitmap = Bitmap.createBitmap(bm, 0, 0, width,
+                height, matrix, true);
+
+        return resizeBitmap;
     }
 
 }

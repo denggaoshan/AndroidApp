@@ -32,6 +32,7 @@ public class Page_Main extends ActionBarActivity {
         if (jsonMsg != null && !jsonMsg.equals(""))
         {
             Message tempMsg = Message.createMessage(jsonMsg, 1, 2);
+            User.setCurrentUser(tempMsg.getUser());
             if (checkMess(tempMsg.getMess())) {
                 Message.setCurrentMessage(tempMsg);
                 Utils.transPage(this, Page_TotalActivity.class);

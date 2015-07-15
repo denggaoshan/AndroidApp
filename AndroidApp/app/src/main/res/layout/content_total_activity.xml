@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -113,4 +114,5 @@
             android:paddingBottom="40dp"
             android:id="@+id/image" />
     </LinearLayout>
+
 </LinearLayout>

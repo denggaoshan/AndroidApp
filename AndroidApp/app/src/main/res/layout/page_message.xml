@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#50d2c2"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/head">
 
         <ImageView
             android:layout_width="30dp"
@@ -27,7 +28,14 @@
             android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="30dp" />
+
     </LinearLayout>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView2"
+        android:layout_below="@+id/head" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -96,4 +104,5 @@
                 android:id="@+id/textView26" />
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>

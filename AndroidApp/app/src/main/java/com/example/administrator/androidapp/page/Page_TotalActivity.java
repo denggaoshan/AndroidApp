@@ -3,10 +3,10 @@ package com.example.administrator.androidapp.page;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -16,11 +16,12 @@ import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Page_TotalActivity extends ActionBarActivity implements OnTouchListener{
 
@@ -38,11 +40,10 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     private int activityType = 0;
     private int applyAble = 1;
 
-
     /**
      * 滚动显示和隐藏menu时，手指滑动需要达到的速度。
      */
-    public static final int SNAP_VELOCITY = 150;
+    public static final int SNAP_VELOCITY = 100;
 
     /**
      * 屏幕宽度值。
@@ -322,27 +323,109 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         loadActivity();
     }
 
-    private void loadActivity(){
 
-        ListView vi=(ListView) findViewById(R.id.content);
-        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.content_total_activity,
-                new String[] { "title",  "time","position","attending","image"},
-                new int[] { R.id.title, R.id.time,R.id.position,R.id.attending,R.id.image});
-        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
-            @Override
-            public boolean setViewValue(View view, Object data,
-                                        String textRepresentation) {
-                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
-                    ImageView iv = (ImageView) view;
-                    Bitmap bm = (Bitmap) data;
-                    iv.setImageBitmap(bm);
-                    return true;
-                }
-                return false;
+    private MyActivity[] activities;
+
+    private Map<String,List<MyActivity>> loadAllActivities(){
+        Message msg = ToolClass.getActivityList("" + curPage, "" + activityType, "" + applyAble);
+        activities = msg.getActivities();
+
+        Map<String,List<MyActivity>> allActivitiesByDayOrder = new HashMap<String,List<MyActivity>>();
+        for(MyActivity act : activities){
+            String time = act.getStartTime();
+            if(allActivitiesByDayOrder.containsKey(time)){
+                List<MyActivity> tmp =  allActivitiesByDayOrder.get(time);
+                tmp.add(act);
+            }else{
+                List<MyActivity> tmp = new ArrayList<MyActivity>();
+                tmp.add(act);
+                allActivitiesByDayOrder.put(time,tmp);
             }
-        });
-        vi.setAdapter(adapter);
+        }
+        return allActivitiesByDayOrder;
+    }
 
+    class MyAdapter extends BaseAdapter{
+
+        ArrayList<Integer> dateIndex = new ArrayList<Integer>();
+
+        ArrayList<Object> allItem = new ArrayList<Object>();
+
+        public MyAdapter(Map<String,List<MyActivity>> allActivitiesByDayOrder){
+
+            for (Map.Entry<String, List<MyActivity>> entry : allActivitiesByDayOrder.entrySet()) {
+                dateIndex.add(allItem.size());//记录日期的位置
+                allItem.add(entry.getKey());
+                List<MyActivity> tmp = entry.getValue();
+                for(MyActivity act : tmp){
+                    allItem.add(act);
+                }
+            }
+
+        }
+
+        @Override
+        public int getCount() {
+           return allItem.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = new LinearLayout(parent.getContext());
+
+            Context ctx = convertView.getContext() ;
+            LayoutInflater nflater = LayoutInflater.from(ctx);
+
+            if(dateIndex.contains(position)){
+                //显示日期
+                String date = (String)allItem.get(position);
+                convertView= nflater.inflate(R.layout.content_total_date, null);
+
+                TextView tv = (TextView) convertView.findViewById(R.id.time);
+                tv.setText(date);
+            }else{
+                final MyActivity activity = (MyActivity)allItem.get(position);
+
+                //内容
+                convertView= nflater.inflate(R.layout.content_total_activity, null);
+                TextView tv = (TextView) convertView.findViewById(R.id.title);
+                tv.setText(activity.getTitle());
+                tv = (TextView) convertView.findViewById(R.id.time);
+                tv.setText(activity.getStartTime());
+                tv = (TextView) convertView.findViewById(R.id.position);
+                tv.setText(activity.getPlace());
+                tv = (TextView) convertView.findViewById(R.id.attending);
+                tv.setText(activity.getUserCount());
+
+                //监听事件
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyActivity.setCurrentActivity(activity);
+                        Utils.transPage(Page_TotalActivity.this, Page_ActivityInformation.class);
+                    }
+                });
+            }
+            return convertView;
+        }
+    }
+
+    private void loadActivity(){
+        ListView vi=(ListView) findViewById(R.id.content);
+        MyAdapter myAdapter = new MyAdapter( loadAllActivities());
+        vi.setAdapter(myAdapter);
+
+/*
         vi.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -354,20 +437,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                 Utils.transPage(Page_TotalActivity.this,Page_ActivityInformation.class);
             }
         });
-
-    }
-
-    MyActivity[] activities;
-    private List<Map<String, Object>> getData() {
-        Message msg = ToolClass.getActivityList("" + curPage, "" + activityType, "" + applyAble);
-        activities = msg.getActivities();
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        if (activities != null) {
-            for (int i = 0; i < activities.length; i++) {
-                list.add(getActivityData(activities[i]));
-            }
-        }
-        return list;
+*/
     }
 
     private  Map<String, Object> getActivityData(MyActivity activity){

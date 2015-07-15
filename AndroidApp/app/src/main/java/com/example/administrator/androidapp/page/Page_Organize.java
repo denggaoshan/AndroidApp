@@ -70,7 +70,6 @@ public class Page_Organize extends ActionBarActivity {
         ((Button)findViewById(R.id.startHour)).setText(curHour);
         ((Button)findViewById(R.id.endHour)).setText(curHour);
     }
-
     public void setStartTime(View v){
         Calendar c = Calendar.getInstance();
         new DatePickerDialog(Page_Organize.this,
@@ -87,7 +86,6 @@ public class Page_Organize extends ActionBarActivity {
                 , c.get(Calendar.MONTH)
                 , c.get(Calendar.DAY_OF_MONTH)).show();
     }
-
     public void setEndTime(View v){
         Calendar c = Calendar.getInstance();
         new DatePickerDialog(Page_Organize.this,
@@ -104,7 +102,6 @@ public class Page_Organize extends ActionBarActivity {
                 , c.get(Calendar.MONTH)
                 , c.get(Calendar.DAY_OF_MONTH)).show();
     }
-
     public void setStartHour(View v){
         Calendar c = Calendar.getInstance();
         new TimePickerDialog(Page_Organize.this,
@@ -119,7 +116,6 @@ public class Page_Organize extends ActionBarActivity {
                 c.get(Calendar.HOUR_OF_DAY),
                 c.get(Calendar.MINUTE), true).show();
     }
-
     public void setEndHour(View v){
         Calendar c = Calendar.getInstance();
         new TimePickerDialog(Page_Organize.this,
@@ -224,7 +220,7 @@ public class Page_Organize extends ActionBarActivity {
             return true;
     }
 
-    //还没验证
+    //获得输入
     private String getInput() {
         title = Utils.getEditTextById(this,R.id.title);
         if(title.equals("")){
@@ -236,18 +232,19 @@ public class Page_Organize extends ActionBarActivity {
             return "请输入活动内容";
         }
 
-        startTime = Utils.getEditTextById(this,R.id.startTime);
-        if(startTime.equals("")){
-            return "请输入活动开始时间";
-        }
-        endTime = Utils.getEditTextById(this, R.id.endTime);
-        if (endTime.equals("")){
-            return "请输入活动结束时间";
-        }
+        Button btn1 = (Button)findViewById(R.id.startTime);
+        Button btn2 = (Button)findViewById(R.id.startHour);
+        startTime = btn1.getText().toString()+" " + btn2.getText().toString();
+
+        btn1 = (Button)findViewById(R.id.endTime);
+        btn2 = (Button)findViewById(R.id.endHour);
+        endTime = btn1.getText().toString()+" " + btn2.getText().toString();
+
         place = Utils.getEditTextById(this,R.id.place);
         if (place.equals("")){
             return "请输入地点";
         }
+
         type = "" + Utils.getSpinnerById(this, R.id.type);
 
         return "提交中";

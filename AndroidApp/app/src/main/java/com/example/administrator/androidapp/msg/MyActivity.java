@@ -15,11 +15,11 @@ public class MyActivity {
     private String Title;public String getTitle(){return Title;}
     private String Content;public String getContent(){return Content;}
     private String StartTime;public String getStartTime(){return StartTime;}
-    private String EndTime;
+    private String EndTime;public String getEndTime(){return EndTime;}
     private String Place;public String getPlace(){return Place;}
     private String Type;
     private String UserCount;public String getUserCount(){return UserCount;}
-    private String IsChecked;
+    private String IsChecked;public String getIsChecked(){return IsChecked;}
     private String NickName;
     private String Avatar;public String getAvatar(){return Avatar;}
 

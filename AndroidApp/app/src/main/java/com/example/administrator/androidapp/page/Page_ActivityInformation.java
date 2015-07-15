@@ -118,10 +118,9 @@ public class Page_ActivityInformation extends ActionBarActivity {
 
     private void loadActivityMember() {
         ListView vi=(ListView) findViewById(R.id.content);
-        SimpleAdapter adapter = new SimpleAdapter(this, getCommentData(), R.layout.content_activity_member,
+        SimpleAdapter adapter = new SimpleAdapter(this, getMemberData(), R.layout.content_activity_member,
                 new String[] { "name",  "age","time"},
                 new int[] { R.id.name, R.id.age,R.id.time});
-
         vi.setAdapter(adapter);
     }
 

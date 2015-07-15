@@ -4,11 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/color_lightblue"
-        android:layout_weight="0.15" />
+        android:layout_height="match_parent"
+        android:layout_weight="0.15">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="申请中"
+            android:id="@+id/status"
+            android:background="#50d2c2"
+            android:gravity="center" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"

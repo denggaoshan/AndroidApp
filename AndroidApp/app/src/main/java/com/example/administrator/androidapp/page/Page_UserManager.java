@@ -25,6 +25,7 @@ import com.example.administrator.androidapp.tool.AsynImageLoader;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,23 +82,12 @@ public class Page_UserManager extends ActionBarActivity {
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
         SimpleAdapter adapter = new SimpleAdapter(this, getLaunchedData(), R.layout.content_manager_activity,
-                new String[] { "title", "time", "position", "attending", "avater"},
-                new int[] { R.id.title, R.id.time, R.id.position, R.id.attending, R.id.avater});
-        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
-            @Override
-            public boolean setViewValue(View view, Object data,
-                                        String textRepresentation) {
-                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
-                    ImageView iv = (ImageView) view;
-                    Bitmap bm = (Bitmap) data;
-                    iv.setImageBitmap(bm);
-                    return true;
-                }
-                return false;
-            }
-        });
+                new String[] { "title", "time", "position", "attending", "avater","status"},
+                new int[] { R.id.title, R.id.time, R.id.position, R.id.attending, R.id.avater,R.id.status});
+
         vi.setAdapter(adapter);
     }
+
     private List<? extends Map<String, ?>> getLaunchedData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Message msg = ToolClass.getLaunchedActivity(User.getCurrentUser().getUserID());
@@ -110,6 +100,7 @@ public class Page_UserManager extends ActionBarActivity {
     }
 
     private String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
+
     private Map<String, Object> getOneLaunched(MyActivity ac){
         Map<String, Object> ret = new HashMap<String, Object>();
         String ava;
@@ -122,15 +113,31 @@ public class Page_UserManager extends ActionBarActivity {
         ret.put("position", ac.getPlace());
         ret.put("attending", ac.getUserCount());
         ret.put("avater", ToolClass.returnBitMap(ava));
+
+        if(!ac.getIsChecked().equals("1")){//申请通过的活动
+            String endtime = ac.getEndTime();
+            if(Utils.ifTimeEnd(endtime)){
+                //已截止
+                ret.put("status","已结束");
+            }else{
+                //正在进行中
+                ret.put("status","进行中");
+            }
+        }else{//申请未通过
+            ret.put("status","审核中");
+        }
+
         return ret;
     }
 
+    /*我参与的活动*/
     public void participated_Click(View v) {
        changeFocus(1);
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
         loadParticipatedActivity();
     }
+
     private void loadParticipatedActivity(){
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
@@ -155,6 +162,8 @@ public class Page_UserManager extends ActionBarActivity {
     private List<? extends Map<String, ?>> getParticipatedData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Message msg = ToolClass.getParticipatedActivity(User.getCurrentUser().getUserID());
+
+
         if (msg.getActivities() != null){
             for (MyActivity ac : msg.getActivities()){
                 list.add(getOneParticipated(ac));

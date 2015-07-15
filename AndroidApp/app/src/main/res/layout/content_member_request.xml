@@ -55,7 +55,8 @@
                 android:layout_marginLeft="20dp"
                 android:background="#ff50d2c2"
                 android:textColor="#ffffff"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:onClick="agree_Click" />
 
             <Button
                 android:layout_width="60dp"
@@ -64,7 +65,8 @@
                 android:id="@+id/button4"
                 android:textSize="20dp"
                 android:background="#ffff584f"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:onClick="refuse_Click" />
         </LinearLayout>
 
         <TextView

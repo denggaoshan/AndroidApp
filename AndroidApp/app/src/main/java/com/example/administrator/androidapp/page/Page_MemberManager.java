@@ -63,6 +63,16 @@ public class Page_MemberManager extends ActionBarActivity {
         Utils.transPage(this, Page_ActivityInformation.class);
     }
 
+    //同意请求
+    public void agree_Click(View v) {
+
+    }
+
+    //拒绝请求
+    public void refuse_Click(View v) {
+
+
+    }
 
     private UserAndExplain[] allRequests ; //所有请求
     //装载所有活动

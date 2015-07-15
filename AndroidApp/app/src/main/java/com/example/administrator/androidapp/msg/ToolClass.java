@@ -177,6 +177,12 @@ public class ToolClass {
         return Message.createMessage(httpGet(getUrl), 0, 2);
     }
 
+    /**
+     * 查看活动参与人员
+     * @param userid
+     * @param activityid
+     * @return
+     */
     public static Message getParticipation(String userid, String activityid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getparticipation"

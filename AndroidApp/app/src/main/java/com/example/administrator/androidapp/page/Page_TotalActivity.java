@@ -43,6 +43,9 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     private int applyAble = 1;
 
 
+
+    /*************  侧边栏滑动的效果 ****************/
+
     public static final int SNAP_VELOCITY = 100;//滚动显示和隐藏menu时，手指滑动需要达到的速度。
     private int screenWidth;   //屏幕宽度值。
     private int leftEdge;  //menu最多可以滑动到的左边缘。值由menu布局的宽度来定，marginLeft到达此值之后，不能再减少。
@@ -75,7 +78,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         content.getLayoutParams().width = screenWidth;
     }
 
-    //点击屏幕事件
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         createVelocityTracker(event);
@@ -124,68 +126,32 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         return true;
     }
 
-
-
-    /**
-     * 判断当前手势的意图是不是想显示content。如果手指移动的距离是负数，且当前menu是可见的，则认为当前手势是想要显示content。
-     *
-     * @return 当前手势想显示content返回true，否则返回false。
-     */
     private boolean wantToShowContent() {
         return xUp - xDown < 0 && isMenuVisible;
     }
 
-    /**
-     * 判断当前手势的意图是不是想显示menu。如果手指移动的距离是正数，且当前menu是不可见的，则认为当前手势是想要显示menu。
-     *
-     * @return 当前手势想显示menu返回true，否则返回false。
-     */
     private boolean wantToShowMenu() {
         return xUp - xDown > 0 && !isMenuVisible;
     }
 
-    /**
-     * 判断是否应该滚动将menu展示出来。如果手指移动距离大于屏幕的1/2，或者手指移动速度大于SNAP_VELOCITY，
-     * 就认为应该滚动将menu展示出来。
-     *
-     * @return 如果应该滚动将menu展示出来返回true，否则返回false。
-     */
     private boolean shouldScrollToMenu() {
         return xUp - xDown > screenWidth / 2 || getScrollVelocity() > SNAP_VELOCITY;
     }
 
-    /**
-     * 判断是否应该滚动将content展示出来。如果手指移动距离加上menuPadding大于屏幕的1/2，
-     * 或者手指移动速度大于SNAP_VELOCITY， 就认为应该滚动将content展示出来。
-     *
-     * @return 如果应该滚动将content展示出来返回true，否则返回false。
-     */
     private boolean shouldScrollToContent() {
         return xDown - xUp + menuPadding > screenWidth / 2 || getScrollVelocity() > SNAP_VELOCITY;
     }
 
-    /**
-     * 将屏幕滚动到menu界面，滚动速度设定为30.
-     */
     private void scrollToMenu() {
         ifMenuShow = true;
         new ScrollTask().execute(30);
     }
 
-    /**
-     * 将屏幕滚动到content界面，滚动速度设定为-30.
-     */
     private void scrollToContent() {
         ifMenuShow = false;
         new ScrollTask().execute(-30);
     }
 
-    /**
-     * 创建VelocityTracker对象，并将触摸content界面的滑动事件加入到VelocityTracker当中。
-     *
-     * @param event
-     *            content界面的滑动事件
-     */
     private void createVelocityTracker(MotionEvent event) {
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
@@ -193,25 +159,16 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         mVelocityTracker.addMovement(event);
     }
 
-    /**
-     * 获取手指在content界面滑动的速度。
-     *
-     * @return 滑动速度，以每秒钟移动了多少像素值为单位。
-     */
     private int getScrollVelocity() {
         mVelocityTracker.computeCurrentVelocity(1000);
         int velocity = (int) mVelocityTracker.getXVelocity();
         return Math.abs(velocity);
     }
 
-    /**
-     * 回收VelocityTracker对象。
-     */
     private void recycleVelocityTracker() {
         mVelocityTracker.recycle();
         mVelocityTracker = null;
     }
-
     class ScrollTask extends AsyncTask<Integer, Integer, Integer> {
 
         @Override
@@ -252,13 +209,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             menu.setLayoutParams(menuParams);
         }
     }
-
-    /**
-     * 使当前线程睡眠指定的毫秒数。
-     *
-     * @param millis
-     *            指定当前线程睡眠多久，以毫秒为单位
-     */
     private void sleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -267,6 +217,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         }
     }
 
+    /*************  END 侧边栏滑动的效果 ****************/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -346,6 +297,8 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         return allActivitiesByDayOrder;
     }
 
+
+    /********** 活动列表适配器 **************/
     class MyAdapter extends BaseAdapter{
 
         ArrayList<Integer> dateIndex = new ArrayList<Integer>();
@@ -427,8 +380,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         vi.setAdapter(myAdapter);
     }
 
-
-
     private PopupWindow popupWindow;
 
     /*右上菜单栏 */
@@ -465,7 +416,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     public void head_Click(View v){
         scrollToMenu();
     }
-
     //查看消息
     public void  message_Click(View v){
         Utils.transPage(this,Page_Message.class);

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,6 +30,8 @@ import java.io.IOException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -46,6 +49,21 @@ public class Utils {
     public static final String CIPHER_ALGORITHM = "DES/ECB/NoPadding";
     public static final String SCRETEKEY = "A1B553D4E5F60758";
     private static String LOGADRESS = "userLog.dat";
+
+
+
+    /*日期处理相关的*/
+    //判断一个时间 是否已经截止
+    public static boolean ifTimeEnd(String timeString){
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+        Date time = new Date();
+        /*未完成 比较2个日期的大小*/
+        return false;
+    }
+
+
+
     public static void storeLogData(String jsonString)
     {
         File extDir = Environment.getExternalStorageDirectory();
@@ -171,9 +189,14 @@ public class Utils {
         Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
     }
 
-    //返回文本框的内容
+    //返回复选框的内容
     public static long getSpinnerById(ActionBarActivity parent,int id){
         return ((Spinner) parent.findViewById(id)).getSelectedItemId();
+    }
+
+    //返回按钮的内容
+    public static String getButtonTextById(ActionBarActivity parent,int id){
+        return ((Button) parent.findViewById(id)).getText().toString();
     }
 
     //返回文本框的内容
@@ -201,6 +224,7 @@ public class Utils {
         }
         return "出错";
     }
+
     //活动类型
     public static String changeType(String val){
         //0户外 1运动 2玩乐 3旅行 4音乐 5其他

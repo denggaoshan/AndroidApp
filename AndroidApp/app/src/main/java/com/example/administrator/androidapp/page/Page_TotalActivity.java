@@ -36,78 +36,27 @@ import java.util.Objects;
 
 public class Page_TotalActivity extends ActionBarActivity implements OnTouchListener{
 
-    private int curPage = 1;
-    private int activityType = 0;
+    private int curPage = 1; //当前页数
+    private int activityType = 0;//当前活动类型
     private int applyAble = 1;
 
-    /**
-     * 滚动显示和隐藏menu时，手指滑动需要达到的速度。
-     */
-    public static final int SNAP_VELOCITY = 100;
 
-    /**
-     * 屏幕宽度值。
-     */
-    private int screenWidth;
+    public static final int SNAP_VELOCITY = 100;//滚动显示和隐藏menu时，手指滑动需要达到的速度。
+    private int screenWidth;   //屏幕宽度值。
+    private int leftEdge;  //menu最多可以滑动到的左边缘。值由menu布局的宽度来定，marginLeft到达此值之后，不能再减少。
+    private int rightEdge = 0;//menu最多可以滑动到的右边缘。值恒为0，即marginLeft到达0之后，不能增加。
+    private int menuPadding = 500; //menu完全显示时，留给content的宽度值。
+    private View content;   //主内容的布局。
+    private View menu; //menu的布局。
+    private LinearLayout.LayoutParams menuParams;//menu布局的参数，通过此参数来更改leftMargin的值。
+    private float xDown;  //记录手指按下时的横坐标。
+    private float xMove;//记录手指移动时的横坐标。
+    private float xUp;//记录手机抬起时的横坐标。
+    private boolean isMenuVisible;// menu当前是显示还是隐藏。只有完全显示或隐藏menu时才会更改此值，滑动过程中此值无效。
+    private VelocityTracker mVelocityTracker;  //用于计算手指滑动的速度。
+    private boolean ifMenuShow = false;
 
-    /**
-     * menu最多可以滑动到的左边缘。值由menu布局的宽度来定，marginLeft到达此值之后，不能再减少。
-     */
-    private int leftEdge;
-
-    /**
-     * menu最多可以滑动到的右边缘。值恒为0，即marginLeft到达0之后，不能增加。
-     */
-    private int rightEdge = 0;
-
-    /**
-     * menu完全显示时，留给content的宽度值。
-     */
-    private int menuPadding = 500;
-
-    /**
-     * 主内容的布局。
-     */
-    private View content;
-
-    /**
-     * menu的布局。
-     */
-    private View menu;
-
-    /**
-     * menu布局的参数，通过此参数来更改leftMargin的值。
-     */
-    private LinearLayout.LayoutParams menuParams;
-
-    /**
-     * 记录手指按下时的横坐标。
-     */
-    private float xDown;
-
-    /**
-     * 记录手指移动时的横坐标。
-     */
-    private float xMove;
-
-    /**
-     * 记录手机抬起时的横坐标。
-     */
-    private float xUp;
-
-    /**
-     * menu当前是显示还是隐藏。只有完全显示或隐藏menu时才会更改此值，滑动过程中此值无效。
-     */
-    private boolean isMenuVisible;
-
-    /**
-     * 用于计算手指滑动的速度。
-     */
-    private VelocityTracker mVelocityTracker;
-
-    /**
-     * 初始化一些关键性数据。包括获取屏幕的宽度，给content布局重新设置宽度，给menu布局重新设置宽度和偏移距离等。
-     */
+    //初始化一些关键性数据。包括获取屏幕的宽度，给content布局重新设置宽度，给menu布局重新设置宽度和偏移距离等。
     private void initValues() {
         WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         screenWidth = window.getDefaultDisplay().getWidth();
@@ -124,6 +73,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         content.getLayoutParams().width = screenWidth;
     }
 
+    //点击屏幕事件
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         createVelocityTracker(event);
@@ -163,6 +113,8 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                     } else {
                         scrollToMenu();
                     }
+                }else if(ifMenuShow  && xUp > rightEdge){//只点击Content也可以切换
+                    scrollToContent();
                 }
                 recycleVelocityTracker();
                 break;
@@ -214,6 +166,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
      * 将屏幕滚动到menu界面，滚动速度设定为30.
      */
     private void scrollToMenu() {
+        ifMenuShow = true;
         new ScrollTask().execute(30);
     }
 
@@ -221,6 +174,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
      * 将屏幕滚动到content界面，滚动速度设定为-30.
      */
     private void scrollToContent() {
+        ifMenuShow = false;
         new ScrollTask().execute(-30);
     }
 
@@ -323,6 +277,27 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         loadActivity();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_total, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private MyActivity[] activities;
 
@@ -361,7 +336,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                     allItem.add(act);
                 }
             }
-
         }
 
         @Override
@@ -420,61 +394,20 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         }
     }
 
+
     private void loadActivity(){
         ListView vi=(ListView) findViewById(R.id.content);
         MyAdapter myAdapter = new MyAdapter( loadAllActivities());
         vi.setAdapter(myAdapter);
-
-/*
-        vi.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position<activities.length){
-                    MyActivity.setCurrentActivity(activities[position]);
-                }else{
-                    Utils.debugMessage(Page_TotalActivity.this,"活动数组越界");
-                }
-                Utils.transPage(Page_TotalActivity.this,Page_ActivityInformation.class);
-            }
-        });
-*/
     }
 
-    private  Map<String, Object> getActivityData(MyActivity activity){
-        Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("title", activity.getTitle());
-        ret.put("time", activity.getStartTime());
-        ret.put("position", activity.getPlace());
-        ret.put("attending", activity.getUserCount());
-        Bitmap temp = ToolClass.returnBitMap(activity.getAvatar());
-        ret.put("image", ToolClass.returnBitMap(activity.getAvatar()));
-        return ret;
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_total, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     private PopupWindow popupWindow;
 
+    /*右上菜单栏 */
+
+    //菜单点击事件
     public void func_Click(View v){
         // 获取自定义布局文件activity_popupwindow_left.xml的视图
         View popupWindow_view = getLayoutInflater().inflate(R.layout.menu_total, null,false);
@@ -495,33 +428,34 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         });
     }
 
+    //发起活动
     public void add_Click(View v){
         Utils.transPage(this, Page_Organize.class);
     }
 
+    /*左侧菜单栏*/
+
+    //点击左上角的头像
     public void head_Click(View v){
         scrollToMenu();
     }
 
+    //查看消息
     public void  message_Click(View v){
         Utils.transPage(this,Page_Message.class);
     }
-
-
+    //个人资料
     public void   userInfo_Click(View v){
         Utils.transPage(this,Page_UserInformation.class);
     }
-
+    //活动管理
+    public void manage_Click(View v) {
+        Utils.transPage(this,Page_UserManager.class);
+    }
+    //退出登录
     public void logout_Click(View v){
         Utils.clearLogData();
         Utils.transPage(this,Page_Main.class);
-    }
-
-    public void edit_Click(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Page_TotalActivity.this, Page_UserManager.class);
-        Page_TotalActivity.this.startActivity(intent);
-        Page_TotalActivity.this.finish();
     }
 
 }

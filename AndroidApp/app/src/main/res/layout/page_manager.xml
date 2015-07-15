@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:text="用户发起"
+                android:text="我发起"
                 android:id="@+id/textView15"
                 android:gravity="center"
                 android:layout_weight="0.5" />
@@ -112,7 +112,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:text="用户参与"
+                android:text="参与"
                 android:id="@+id/textView16"
                 android:gravity="center"
                 android:layout_weight="0.5" />
@@ -138,7 +138,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:text="用户申请"
+                android:text="申请中"
                 android:id="@+id/textView17"
                 android:gravity="center"
                 android:layout_weight="0.5" />

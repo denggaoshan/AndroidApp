@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public class UserAndExplainArray {
 
     private String mess; public String getMess(){ return mess; }
-    public UserAndExplain[] userAndExplains;
+    private UserAndExplain[] userAndExplains;public UserAndExplain[] getUserAndExplains(){return userAndExplains;}
 
     public static UserAndExplainArray createUserAndExplainArray(String jsonString){
         UserAndExplainArray temp = new UserAndExplainArray();

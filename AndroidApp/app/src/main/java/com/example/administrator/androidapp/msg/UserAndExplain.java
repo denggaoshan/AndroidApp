@@ -8,7 +8,7 @@ import org.json.JSONObject;
  */
 public class UserAndExplain {
 
-    public User user;
+    private User user;public User getUser(){return user;}
     private String expain; public String getExpain(){ return expain; }
     private String time; public String getTime(){ return time; }
 

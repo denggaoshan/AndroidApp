@@ -98,7 +98,7 @@
                 android:background="#50d2c2"
                 android:textSize="20dp"
                 android:textColor="#ffffff"
-                android:onClick="edit_Click" />
+                android:onClick="manage_Click" />
 
         </LinearLayout>
 

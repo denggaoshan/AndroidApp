@@ -39,6 +39,7 @@ public class Page_Message extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //返回上级
     public void back_Click(View v) {
         Utils.transPage(this, Page_TotalActivity.class);
     }

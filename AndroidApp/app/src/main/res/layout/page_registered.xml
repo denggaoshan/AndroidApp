@@ -155,15 +155,15 @@
                     android:id="@+id/gendergroup"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="horizontal" >
                     <RadioButton
                         android:id="@+id/girl"
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="女" />
                     <RadioButton
                         android:id="@+id/boy"
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="男" />
                 </RadioGroup>

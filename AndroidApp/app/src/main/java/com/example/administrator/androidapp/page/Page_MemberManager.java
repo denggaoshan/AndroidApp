@@ -16,6 +16,8 @@ import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
+import com.example.administrator.androidapp.msg.UserAndExplain;
+import com.example.administrator.androidapp.msg.UserAndExplainArray;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -29,7 +31,6 @@ public class Page_MemberManager extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_member_manager);
-
         loadActivity();
     }
 
@@ -57,21 +58,21 @@ public class Page_MemberManager extends ActionBarActivity {
 
     private MyActivity currentActivity;
 
+    //返回上级
     public void back_Click(View v) {
-        Utils.transPage(this, Page_UserManager.class);
+        Utils.transPage(this, Page_ActivityInformation.class);
     }
 
-    private User[] allUsers ;
 
+    private UserAndExplain[] allRequests ; //所有请求
+    //装载所有活动
     private void loadActivity(){
         currentActivity  = MyActivity.getCurrentActivity();
-        Message msg = ToolClass.getApplication(User.getCurrentUser().getUserID(), currentActivity.getActivityID());
-        if(msg==null){
-            Utils.debugMessage(this,"msg = null");
-        }
-        allUsers= msg.getUsers();
+        UserAndExplainArray ret = ToolClass.getApplication(User.getCurrentUser().getUserID(), currentActivity.getActivityID());
 
-        ListView vi=(ListView) findViewById(R.id.content);
+        allRequests = ret.getUserAndExplains();
+
+        ListView vi=(ListView) findViewById(R.id.requests);
         SimpleAdapter adapter = new SimpleAdapter(this, getDetailData(), R.layout.content_member_request,
                 new String[] { "name",  "time","content"},
                 new int[] { R.id.name, R.id.time,R.id.content});
@@ -80,20 +81,17 @@ public class Page_MemberManager extends ActionBarActivity {
 
     private List<? extends Map<String,?>> getDetailData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-        for(User user:allUsers){
-            list.add(getOneRequset(user));
+        for(UserAndExplain req:allRequests){
+            list.add(getOneRequset(req));
         }
 
         return list;
     }
-
-    private Map<String, Object> getOneRequset(User user) {
-
+    private Map<String, Object> getOneRequset(UserAndExplain req) {
         Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("name", user.getNickName());
-        ret.put("time", "07月02日");
-        ret.put("content","我想加入" );
+        ret.put("name",req.getUser().getNickName() );
+        ret.put("time",req.getTime());
+        ret.put("content",req.getExpain());
         return ret;
     }
 

@@ -35,7 +35,7 @@ public class PicUtil {
     private static final String TAG = "PicUtil";
 
     /**
-     * ¸ù¾İÒ»¸öÍøÂçÁ¬½Ó(URL)»ñÈ¡bitmapDrawableÍ¼Ïñ
+     * æ ¹æ®ä¸€ä¸ªç½‘ç»œè¿æ¥(URL)è·å–bitmapDrawableå›¾åƒ
      *
      * @param imageUri
      * @return
@@ -46,15 +46,15 @@ public class PicUtil {
         try {
             HttpURLConnection hp = (HttpURLConnection) imageUri
                     .openConnection();
-            icon = new BitmapDrawable(hp.getInputStream());// ½«ÊäÈëÁ÷×ª»»³Ébitmap
-            hp.disconnect();// ¹Ø±ÕÁ¬½Ó
+            icon = new BitmapDrawable(hp.getInputStream());// å°†è¾“å…¥æµè½¬æ¢æˆbitmap
+            hp.disconnect();// å…³é—­è¿æ¥
         } catch (Exception e) {
         }
         return icon;
     }
 
     /**
-     * ¸ù¾İÒ»¸öÍøÂçÁ¬½Ó(String)»ñÈ¡bitmapDrawableÍ¼Ïñ
+     * æ ¹æ®ä¸€ä¸ªç½‘ç»œè¿æ¥(String)è·å–bitmapDrawableå›¾åƒ
      *
      * @param imageUri
      * @return
@@ -69,21 +69,21 @@ public class PicUtil {
         BitmapDrawable icon = null;
         try {
             HttpURLConnection hp = (HttpURLConnection) imgUrl.openConnection();
-            icon = new BitmapDrawable(hp.getInputStream());// ½«ÊäÈëÁ÷×ª»»³Ébitmap
-            hp.disconnect();// ¹Ø±ÕÁ¬½Ó
+            icon = new BitmapDrawable(hp.getInputStream());// å°†è¾“å…¥æµè½¬æ¢æˆbitmap
+            hp.disconnect();// å…³é—­è¿æ¥
         } catch (Exception e) {
         }
         return icon;
     }
 
     /**
-     * ¸ù¾İÒ»¸öÍøÂçÁ¬½Ó(URL)»ñÈ¡bitmapÍ¼Ïñ
+     * æ ¹æ®ä¸€ä¸ªç½‘ç»œè¿æ¥(URL)è·å–bitmapå›¾åƒ
      *
      * @param imageUri
      * @return
      */
     public static Bitmap getusericon(URL imageUri) {
-        // ÏÔÊ¾ÍøÂçÉÏµÄÍ¼Æ¬
+        // æ˜¾ç¤ºç½‘ç»œä¸Šçš„å›¾ç‰‡
         URL myFileUrl = imageUri;
         Bitmap bitmap = null;
         try {
@@ -101,14 +101,14 @@ public class PicUtil {
     }
 
     /**
-     * ¸ù¾İÒ»¸öÍøÂçÁ¬½Ó(String)»ñÈ¡bitmapÍ¼Ïñ
+     * æ ¹æ®ä¸€ä¸ªç½‘ç»œè¿æ¥(String)è·å–bitmapå›¾åƒ
      *
      * @param imageUri
      * @return
      * @throws MalformedURLException
      */
     public static Bitmap getbitmap(String imageUri) {
-        // ÏÔÊ¾ÍøÂçÉÏµÄÍ¼Æ¬
+        // æ˜¾ç¤ºç½‘ç»œä¸Šçš„å›¾ç‰‡
         Bitmap bitmap = null;
         try {
             URL myFileUrl = new URL(imageUri);
@@ -129,7 +129,7 @@ public class PicUtil {
     }
 
     /**
-     * ÏÂÔØÍ¼Æ¬ Í¬Ê±Ğ´µÀ±¾µØ»º´æÎÄ¼şÖĞ
+     * ä¸‹è½½å›¾ç‰‡ åŒæ—¶å†™é“æœ¬åœ°ç¼“å­˜æ–‡ä»¶ä¸­
      *
      * @param context
      * @param imageUri
@@ -139,7 +139,7 @@ public class PicUtil {
     public static Bitmap getbitmapAndwrite(String imageUri) {
         Bitmap bitmap = null;
         try {
-            // ÏÔÊ¾ÍøÂçÉÏµÄÍ¼Æ¬
+            // æ˜¾ç¤ºç½‘ç»œä¸Šçš„å›¾ç‰‡
             URL myFileUrl = new URL(imageUri);
             HttpURLConnection conn = (HttpURLConnection) myFileUrl
                     .openConnection();
@@ -154,7 +154,7 @@ public class PicUtil {
 
             byte[] buf = new byte[1024];
             int len = 0;
-            // ½«ÍøÂçÉÏµÄÍ¼Æ¬´æ´¢µ½±¾µØ
+            // å°†ç½‘ç»œä¸Šçš„å›¾ç‰‡å­˜å‚¨åˆ°æœ¬åœ°
             while ((len = is.read(buf)) > 0) {
                 bos.write(buf, 0, len);
             }
@@ -162,7 +162,7 @@ public class PicUtil {
             is.close();
             bos.close();
 
-            // ´Ó±¾µØ¼ÓÔØÍ¼Æ¬
+            // ä»æœ¬åœ°åŠ è½½å›¾ç‰‡
             bitmap = BitmapFactory.decodeFile(cacheFile.getCanonicalPath());
             //String name = MD5Util.MD5(imageUri);
             String name = imageUri;
@@ -209,7 +209,7 @@ public class PicUtil {
     }
 
     /**
-     * ½«ÎÄ¼şĞ´Èë»º´æÏµÍ³ÖĞ
+     * å°†æ–‡ä»¶å†™å…¥ç¼“å­˜ç³»ç»Ÿä¸­
      *
      * @param filename
      * @param is
@@ -249,7 +249,7 @@ public class PicUtil {
         return context.getFilesDir() + "/" + filename + ".jpg";
     }
 
-    // ·Å´óËõĞ¡Í¼Æ¬
+    // æ”¾å¤§ç¼©å°å›¾ç‰‡
     public static Bitmap zoomBitmap(Bitmap bitmap, int w, int h) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
@@ -262,7 +262,7 @@ public class PicUtil {
         return newbmp;
     }
 
-    // ½«Drawable×ª»¯ÎªBitmap
+    // å°†Drawableè½¬åŒ–ä¸ºBitmap
     public static Bitmap drawableToBitmap(Drawable drawable) {
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
@@ -276,7 +276,7 @@ public class PicUtil {
 
     }
 
-    // »ñµÃÔ²½ÇÍ¼Æ¬µÄ·½·¨
+    // è·å¾—åœ†è§’å›¾ç‰‡çš„æ–¹æ³•
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
         if(bitmap == null){
             return null;
@@ -301,7 +301,7 @@ public class PicUtil {
         return output;
     }
 
-    // »ñµÃ´øµ¹Ó°µÄÍ¼Æ¬·½·¨
+    // è·å¾—å¸¦å€’å½±çš„å›¾ç‰‡æ–¹æ³•
     public static Bitmap createReflectionImageWithOrigin(Bitmap bitmap) {
         final int reflectionGap = 4;
         int width = bitmap.getWidth();

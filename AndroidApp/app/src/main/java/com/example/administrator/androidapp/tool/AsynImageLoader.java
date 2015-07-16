@@ -19,26 +19,26 @@ import java.util.Map;
 public class AsynImageLoader {
     private static final String TAG = "AsynImageLoader";
     public static String CACHE_DIR = "cache.dat";
-    // »º´æÏÂÔØ¹ıµÄÍ¼Æ¬µÄMap
+    // ç¼“å­˜ä¸‹è½½è¿‡çš„å›¾ç‰‡çš„Map
     private static Map<String, SoftReference<Bitmap>> caches;
-    // ÈÎÎñ¶ÓÁĞ
+    // ä»»åŠ¡é˜Ÿåˆ—
     private List<Task> taskQueue;
     private boolean isRunning = false;
 
     public AsynImageLoader(){
-        // ³õÊ¼»¯±äÁ¿
+        // åˆå§‹åŒ–å˜é‡
         caches = new HashMap<String, SoftReference<Bitmap>>();
         taskQueue = new ArrayList<Task>();
-        // Æô¶¯Í¼Æ¬ÏÂÔØÏß³Ì
+        // å¯åŠ¨å›¾ç‰‡ä¸‹è½½çº¿ç¨‹
         isRunning = true;
         new Thread(runnable).start();
     }
 
     /**
      *
-     * @param imageView ĞèÒªÑÓ³Ù¼ÓÔØÍ¼Æ¬µÄ¶ÔÏó
-     * @param url Í¼Æ¬µÄURLµØÖ·
-     * @param resId Í¼Æ¬¼ÓÔØ¹ı³ÌÖĞÏÔÊ¾µÄÍ¼Æ¬×ÊÔ´
+     * @param imageView éœ€è¦å»¶è¿ŸåŠ è½½å›¾ç‰‡çš„å¯¹è±¡
+     * @param url å›¾ç‰‡çš„URLåœ°å€
+     * @param resId å›¾ç‰‡åŠ è½½è¿‡ç¨‹ä¸­æ˜¾ç¤ºçš„å›¾ç‰‡èµ„æº
      */
     public void showImageAsyn(ImageView imageView, String url, int resId){
         imageView.setTag(url);
@@ -52,43 +52,43 @@ public class AsynImageLoader {
     }
 
     public Bitmap loadImageAsyn(String path, ImageCallback callback){
-        // ÅĞ¶Ï»º´æÖĞÊÇ·ñÒÑ¾­´æÔÚ¸ÃÍ¼Æ¬
+        // åˆ¤æ–­ç¼“å­˜ä¸­æ˜¯å¦å·²ç»å­˜åœ¨è¯¥å›¾ç‰‡
         if(caches.containsKey(path)){
-            // È¡³öÈíÒıÓÃ
+            // å–å‡ºè½¯å¼•ç”¨
             SoftReference<Bitmap> rf = caches.get(path);
-            // Í¨¹ıÈíÒıÓÃ£¬»ñÈ¡Í¼Æ¬
+            // é€šè¿‡è½¯å¼•ç”¨ï¼Œè·å–å›¾ç‰‡
             Bitmap bitmap = rf.get();
-            // Èç¹û¸ÃÍ¼Æ¬ÒÑ¾­±»ÊÍ·Å£¬Ôò½«¸Ãpath¶ÔÓ¦µÄ¼ü´ÓMapÖĞÒÆ³ıµô
+            // å¦‚æœè¯¥å›¾ç‰‡å·²ç»è¢«é‡Šæ”¾ï¼Œåˆ™å°†è¯¥pathå¯¹åº”çš„é”®ä»Mapä¸­ç§»é™¤æ‰
             if(bitmap == null){
                 caches.remove(path);
             }else{
-                // Èç¹ûÍ¼Æ¬Î´±»ÊÍ·Å£¬Ö±½Ó·µ»Ø¸ÃÍ¼Æ¬
+                // å¦‚æœå›¾ç‰‡æœªè¢«é‡Šæ”¾ï¼Œç›´æ¥è¿”å›è¯¥å›¾ç‰‡
                 Log.i(TAG, "return image in cache" + path);
                 return bitmap;
             }
         }else{
-            // Èç¹û»º´æÖĞ²»³£ÔÚ¸ÃÍ¼Æ¬£¬Ôò´´½¨Í¼Æ¬ÏÂÔØÈÎÎñ
+            // å¦‚æœç¼“å­˜ä¸­ä¸å¸¸åœ¨è¯¥å›¾ç‰‡ï¼Œåˆ™åˆ›å»ºå›¾ç‰‡ä¸‹è½½ä»»åŠ¡
             Task task = new Task();
             task.path = path;
             task.callback = callback;
             Log.i(TAG, "new Task ," + path);
             if(!taskQueue.contains(task)){
                 taskQueue.add(task);
-                // »½ĞÑÈÎÎñÏÂÔØ¶ÓÁĞ
+                // å”¤é†’ä»»åŠ¡ä¸‹è½½é˜Ÿåˆ—
                 synchronized (runnable) {
                     runnable.notify();
                 }
             }
         }
 
-        // »º´æÖĞÃ»ÓĞÍ¼Æ¬Ôò·µ»Ønull
+        // ç¼“å­˜ä¸­æ²¡æœ‰å›¾ç‰‡åˆ™è¿”å›null
         return null;
     }
 
     /**
      *
      * @param imageView
-     * @param resId Í¼Æ¬¼ÓÔØÍê³ÉÇ°ÏÔÊ¾µÄÍ¼Æ¬×ÊÔ´ID
+     * @param resId å›¾ç‰‡åŠ è½½å®Œæˆå‰æ˜¾ç¤ºçš„å›¾ç‰‡èµ„æºID
      * @return
      */
     private ImageCallback getImageCallback(final ImageView imageView, final int resId){
@@ -109,9 +109,9 @@ public class AsynImageLoader {
 
         @Override
         public void handleMessage(Message msg) {
-            // ×ÓÏß³ÌÖĞ·µ»ØµÄÏÂÔØÍê³ÉµÄÈÎÎñ
+            // å­çº¿ç¨‹ä¸­è¿”å›çš„ä¸‹è½½å®Œæˆçš„ä»»åŠ¡
             Task task = (Task)msg.obj;
-            // µ÷ÓÃcallback¶ÔÏóµÄloadImage·½·¨£¬²¢½«Í¼Æ¬Â·¾¶ºÍÍ¼Æ¬»Ø´«¸øadapter
+            // è°ƒç”¨callbackå¯¹è±¡çš„loadImageæ–¹æ³•ï¼Œå¹¶å°†å›¾ç‰‡è·¯å¾„å’Œå›¾ç‰‡å›ä¼ ç»™adapter
             task.callback.loadImage(task.path, task.bitmap);
         }
 
@@ -122,23 +122,23 @@ public class AsynImageLoader {
         @Override
         public void run() {
             while(isRunning){
-                // µ±¶ÓÁĞÖĞ»¹ÓĞÎ´´¦ÀíµÄÈÎÎñÊ±£¬Ö´ĞĞÏÂÔØÈÎÎñ
+                // å½“é˜Ÿåˆ—ä¸­è¿˜æœ‰æœªå¤„ç†çš„ä»»åŠ¡æ—¶ï¼Œæ‰§è¡Œä¸‹è½½ä»»åŠ¡
                 while(taskQueue.size() > 0){
-                    // »ñÈ¡µÚÒ»¸öÈÎÎñ£¬²¢½«Ö®´ÓÈÎÎñ¶ÓÁĞÖĞÉ¾³ı
+                    // è·å–ç¬¬ä¸€ä¸ªä»»åŠ¡ï¼Œå¹¶å°†ä¹‹ä»ä»»åŠ¡é˜Ÿåˆ—ä¸­åˆ é™¤
                     Task task = taskQueue.remove(0);
-                    // ½«ÏÂÔØµÄÍ¼Æ¬Ìí¼Óµ½»º´æ
+                    // å°†ä¸‹è½½çš„å›¾ç‰‡æ·»åŠ åˆ°ç¼“å­˜
                     task.bitmap = PicUtil.getbitmap(task.path);
                     caches.put(task.path, new SoftReference<Bitmap>(task.bitmap));
                     if(handler != null){
-                        // ´´½¨ÏûÏ¢¶ÔÏó£¬²¢½«Íê³ÉµÄÈÎÎñÌí¼Óµ½ÏûÏ¢¶ÔÏóÖĞ
+                        // åˆ›å»ºæ¶ˆæ¯å¯¹è±¡ï¼Œå¹¶å°†å®Œæˆçš„ä»»åŠ¡æ·»åŠ åˆ°æ¶ˆæ¯å¯¹è±¡ä¸­
                         Message msg = handler.obtainMessage();
                         msg.obj = task;
-                        // ·¢ËÍÏûÏ¢»ØÖ÷Ïß³Ì
+                        // å‘é€æ¶ˆæ¯å›ä¸»çº¿ç¨‹
                         handler.sendMessage(msg);
                     }
                 }
 
-                //Èç¹û¶ÓÁĞÎª¿Õ,ÔòÁîÏß³ÌµÈ´ı
+                //å¦‚æœé˜Ÿåˆ—ä¸ºç©º,åˆ™ä»¤çº¿ç¨‹ç­‰å¾…
                 synchronized (this) {
                     try {
                         this.wait();
@@ -150,17 +150,17 @@ public class AsynImageLoader {
         }
     };
 
-    //»Øµ÷½Ó¿Ú
+    //å›è°ƒæ¥å£
     public interface ImageCallback{
         void loadImage(String path, Bitmap bitmap);
     }
 
     class Task{
-        // ÏÂÔØÈÎÎñµÄÏÂÔØÂ·¾¶
+        // ä¸‹è½½ä»»åŠ¡çš„ä¸‹è½½è·¯å¾„
         String path;
-        // ÏÂÔØµÄÍ¼Æ¬
+        // ä¸‹è½½çš„å›¾ç‰‡
         Bitmap bitmap;
-        // »Øµ÷¶ÔÏó
+        // å›è°ƒå¯¹è±¡
         ImageCallback callback;
 
         @Override

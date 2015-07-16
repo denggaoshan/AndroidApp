@@ -1,14 +1,21 @@
 package com.example.administrator.androidapp.page;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Comment;
@@ -63,18 +70,127 @@ public class Page_MemberManager extends ActionBarActivity {
         Utils.transPage(this, Page_ActivityInformation.class);
     }
 
-    //同意请求
-    public void agree_Click(View v) {
-
-    }
-
-    //拒绝请求
-    public void refuse_Click(View v) {
-
-
-    }
 
     private UserAndExplain[] allRequests ; //所有请求
+
+    private class MyAdapter extends BaseAdapter {
+
+        UserAndExplain[] allRequests;
+
+        public MyAdapter(UserAndExplain[] allRequests){
+            this.allRequests = allRequests;
+        }
+
+        @Override
+        public int getCount() {
+            return allRequests.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = new LinearLayout(parent.getContext());
+
+            final UserAndExplain request = allRequests[position];
+
+            Context ctx = convertView.getContext() ;
+            LayoutInflater nflater = LayoutInflater.from(ctx);
+
+            //装载请求信息
+            convertView= nflater.inflate(R.layout.content_member_request, null);
+
+
+            TextView tv = (TextView) convertView.findViewById(R.id.NickName);
+            if(tv!=null){
+                tv.setText(request.getUser().getNickName());
+                //查看用户信息
+                tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        User other = request.getUser();
+                        if (other != null) {
+                            User.setOtherUser(other);
+                            Utils.transPage(Page_MemberManager.this, Page_OthersInformation.class);
+                        } else {
+                            Utils.debugMessage(Page_MemberManager.this, "requset中User为空");
+                        }
+                    }
+                });
+            }else{
+                Utils.debugMessage(Page_MemberManager.this, "没找到名字标签");
+            }
+
+            tv = (TextView) convertView.findViewById(R.id.time);
+            if(tv!=null){
+                tv.setText(request.getTime());
+                //查看用户信息
+                tv.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        User other = request.getUser();
+                        if (other != null) {
+                            User.setOtherUser(other);
+                            Utils.transPage(Page_MemberManager.this, Page_OthersInformation.class);
+                        } else {
+                            Utils.debugMessage(Page_MemberManager.this, "requset中User为空");
+                        }
+                    }
+                });
+            }else{
+                Utils.debugMessage(Page_MemberManager.this,"没找到时间标签");
+            }
+
+            tv = (TextView) convertView.findViewById(R.id.content);
+            if(tv!=null){
+                tv.setText(request.getExpain());
+            }else{
+                Utils.debugMessage(Page_MemberManager.this,"没有content标签");
+            }
+
+
+            //同意按钮
+            Button btn = (Button)convertView.findViewById(R.id.agree);
+            if(btn!=null){
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String ret = ToolClass.handleApplication(User.getCurrentUser().getUserID(),MyActivity.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1");
+                        Utils.showMessage(Page_MemberManager.this, ret);
+                    }
+                });
+            }else{
+                Utils.debugMessage(Page_MemberManager.this,"没有agree按钮");
+            }
+
+            //拒绝
+            btn = (Button)convertView.findViewById(R.id.refuse);
+            if(btn!=null){
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String ret = ToolClass.handleApplication(User.getCurrentUser().getUserID(),MyActivity.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0");
+                        Utils.showMessage(Page_MemberManager.this, ret);
+                    }
+                });
+            }else{
+                Utils.debugMessage(Page_MemberManager.this,"没有refuse按钮");
+            }
+
+
+            return convertView;
+        }
+    }
+
     //装载所有活动
     private void loadActivity(){
         currentActivity  = MyActivity.getCurrentActivity();
@@ -83,27 +199,10 @@ public class Page_MemberManager extends ActionBarActivity {
         allRequests = ret.getUserAndExplains();
 
         ListView vi=(ListView) findViewById(R.id.requests);
-        SimpleAdapter adapter = new SimpleAdapter(this, getDetailData(), R.layout.content_member_request,
-                new String[] { "name",  "time","content"},
-                new int[] { R.id.name, R.id.time,R.id.content});
-        vi.setAdapter(adapter);
+        MyAdapter myAdapter = new MyAdapter(allRequests);
+        vi.setAdapter(myAdapter);
+
     }
 
-    private List<? extends Map<String,?>> getDetailData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        for(UserAndExplain req:allRequests){
-            list.add(getOneRequset(req));
-        }
 
-        return list;
-    }
-    private Map<String, Object> getOneRequset(UserAndExplain req) {
-        Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("name",req.getUser().getNickName() );
-        ret.put("time",req.getTime());
-        ret.put("content",req.getExpain());
-        return ret;
-    }
-
-    ;
 }

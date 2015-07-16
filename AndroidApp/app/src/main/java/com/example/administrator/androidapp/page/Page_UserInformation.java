@@ -1,6 +1,5 @@
 package com.example.administrator.androidapp.page;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
@@ -38,7 +36,7 @@ public class Page_UserInformation extends ActionBarActivity {
 
     private void loadOne(int id,String content){
         TextView tv = (TextView)findViewById(id);
-        user.loadInformationToTextEdit(tv, content);
+        user.loadInformationToTextView(tv, content);
     }
 
     public void back_Click(View v) {

@@ -188,6 +188,7 @@ public class Page_UserManager extends ActionBarActivity {
     }
 
 
+    /*申请的活动*/
     public void applyed_Click(View v) {
          changeFocus(2);
         ListView vi=(ListView) findViewById(R.id.content);

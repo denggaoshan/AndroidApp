@@ -362,12 +362,8 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                 tv.setText(activity.getPlace());
                 tv = (TextView) convertView.findViewById(R.id.attending);
                 tv.setText(activity.getUserCount());
-                ImageView iv = (ImageView)findViewById(R.id.image);
-                Bitmap bm = Cache.getBitmap(activity.getAvatar());
-                if (bm == null){
-                    bm = new AsynImageLoader().loadImageAsyn(activity.getAvatar(), null);
-                    Cache.setBitmap(activity.getAvatar(), bm);
-                }
+                ImageView iv = (ImageView)convertView.findViewById(R.id.image);
+                Bitmap bm = ToolClass.returnBitMap(activity.getAvatar());
                 iv.setImageBitmap(bm);
 
                 //监听事件
@@ -382,7 +378,18 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             return convertView;
         }
     }
+/*    private class AnotherTask2 extends AsyncTask<String, Void, String>{
+        @Override
+        protected void onPostExecute(String result) {
 
+            new AsynImageLoader().showImageAsyn(iv, activity.getAvatar(), 0);
+        }
+        @Override
+        protected String doInBackground(String... params) {
+
+            return params[0];
+        }
+    }*/
 
     private void loadActivity(){
         ListView vi=(ListView) findViewById(R.id.content);

@@ -42,7 +42,8 @@ public class Page_ActivityInformation extends ActionBarActivity {
         EditText comment = (EditText)findViewById(R.id.input_comment);
         comment.setVisibility(View.GONE);
         ImageView iv = ((ImageView) findViewById(R.id.Edit));
-        iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
+        iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getLayoutParams().width, iv.getLayoutParams().height));
+
     }
 
     //装载当前的活动信息
@@ -120,8 +121,21 @@ public class Page_ActivityInformation extends ActionBarActivity {
     private void loadActivityMember() {
         ListView vi=(ListView) findViewById(R.id.content);
         SimpleAdapter adapter = new SimpleAdapter(this, getMemberData(), R.layout.content_activity_member,
-                new String[] { "name",  "age","time"},
-                new int[] { R.id.name, R.id.age,R.id.time});
+                new String[] { "avater", "name",  "age","time"},
+                new int[] { R.id.imageView5, R.id.name, R.id.age,R.id.time});
+        adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Object data,
+                                        String textRepresentation) {
+                if ((view instanceof ImageView) & (data instanceof Bitmap)) {
+                    ImageView iv = (ImageView) view;
+                    Bitmap bm = (Bitmap) data;
+                    iv.setImageBitmap(bm);
+                    return true;
+                }
+                return false;
+            }
+        });
         vi.setAdapter(adapter);
     }
 
@@ -296,6 +310,12 @@ public class Page_ActivityInformation extends ActionBarActivity {
 
     private  Map<String, Object> getOneMember(User user){
         Map<String, Object> ret = new HashMap<String, Object>();
+        String ava;
+        if (user.getAvatar() == null || user.getAvatar().equals("") || user.getAvatar().equals("null"))
+            ava = DEFAULTAVATER;
+        else
+            ava = user.getAvatar();
+        ret.put("avater", ToolClass.returnBitMap(ava));
         ret.put("name", user.getNickName());
         ret.put("age", user.getAge());
         ret.put("time", "07月02日 10:00");

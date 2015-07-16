@@ -41,11 +41,10 @@ public class AsynImageLoader {
      * @param resId 图片加载过程中显示的图片资源
      */
     public void showImageAsyn(ImageView imageView, String url, int resId){
-        imageView.setTag(url);
         Bitmap bitmap = loadImageAsyn(url, getImageCallback(imageView, resId));
 
         if(bitmap == null){
-            imageView.setImageResource(resId);
+            //imageView.setImageResource(resId);
         }else{
             imageView.setImageBitmap(bitmap);
         }

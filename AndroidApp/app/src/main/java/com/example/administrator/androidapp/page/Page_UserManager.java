@@ -120,23 +120,23 @@ public class Page_UserManager extends ActionBarActivity {
         ret.put("attending", ac.getUserCount());
         ret.put("avater", ToolClass.returnBitMap(ava));
 
-        if(!ac.getIsChecked().equals("1")){//申请通过的活�?
+        if(!ac.getIsChecked().equals("1")){//鐢宠閫氳繃鐨勬椿鍔?
             String endtime = ac.getEndTime();
             if(Utils.ifTimeEnd(endtime)){
-                //已截�?
-                ret.put("status","已结�?");
+                //宸叉埅姝?
+                ret.put("status","宸茬粨鏉?");
             }else{
-                //正在进行�?
-                ret.put("status","进行�?");
+                //姝ｅ湪杩涜涓?
+                ret.put("status","杩涜涓?");
             }
-        }else{//申请未�?�过
-            ret.put("status","审核�?");
+        }else{//鐢宠鏈?氳繃
+            ret.put("status","瀹℃牳涓?");
         }
 
         return ret;
     }
 
-    /*我参与的活动*/
+    /*鎴戝弬涓庣殑娲诲姩*/
     public void participated_Click(View v) {
        changeFocus(1);
         ListView vi=(ListView) findViewById(R.id.content);

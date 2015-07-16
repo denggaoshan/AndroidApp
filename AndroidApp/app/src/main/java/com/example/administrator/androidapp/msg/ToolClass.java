@@ -164,8 +164,7 @@ public class ToolClass {
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getactivitylist"
                 + "&page=" + page + "&type=" + type
-                + "applyable=" + applyable;
-
+                + "&applyable=" + applyable;
         return Message.createMessage(httpGet(getUrl), 0, 2);
     }
     public static Message getActivityList(String page, String type, String applyable, String keyword)

@@ -41,7 +41,8 @@ public class Page_ActivityInformation extends ActionBarActivity {
 
         EditText comment = (EditText)findViewById(R.id.input_comment);
         comment.setVisibility(View.GONE);
-
+        ImageView iv = ((ImageView) findViewById(R.id.Edit));
+        iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
     }
 
     //装载当前的活动信息

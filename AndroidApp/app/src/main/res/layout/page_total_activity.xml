@@ -203,11 +203,12 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1">
+                    android:layout_weight="0.1"
+                    android:onClick="naviAll_Click">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/icon_activity"
+                        android:src="@drawable/title_all"
                         android:layout_weight="0.8" />
 
                     <TextView
@@ -222,11 +223,12 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1">
+                    android:layout_weight="0.1"
+                    android:onClick="naviOutSide_Click">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/icon_activity"
+                        android:src="@drawable/title_outside"
                         android:layout_weight="0.8" />
 
                     <TextView
@@ -241,12 +243,14 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1">
+                    android:layout_weight="0.1"
+                    android:onClick="naviSport_Click">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/icon_activity"
-                        android:layout_weight="0.8" />
+                        android:src="@drawable/title_sport"
+                        android:layout_weight="0.8"
+                        android:onClick="naviSport_Click" />
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -260,11 +264,12 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1">
+                    android:layout_weight="0.1"
+                    android:onClick="naviPlay_Click">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/icon_activity"
+                        android:src="@drawable/title_play"
                         android:layout_weight="0.8" />
 
                     <TextView
@@ -279,11 +284,12 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1">
+                    android:layout_weight="0.1"
+                    android:onClick="naviTravel_Click">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/icon_activity"
+                        android:src="@drawable/title_play"
                         android:layout_weight="0.8" />
 
                     <TextView
@@ -298,11 +304,12 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1">
+                    android:layout_weight="0.1"
+                    android:onClick="naviMusic_Click">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/icon_activity"
+                        android:src="@drawable/title_music"
                         android:layout_weight="0.8" />
 
                     <TextView
@@ -317,11 +324,12 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1">
+                    android:layout_weight="0.1"
+                    android:onClick="naviOther_Click">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/icon_activity"
+                        android:src="@drawable/title_other"
                         android:layout_weight="0.8" />
 
                     <TextView

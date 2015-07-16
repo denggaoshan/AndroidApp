@@ -1,7 +1,6 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,25 +28,20 @@ import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
-import com.example.administrator.androidapp.tool.AsynImageLoader;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Page_TotalActivity extends ActionBarActivity implements OnTouchListener{
 
     private int curPage = 1; //当前页数
-    private int activityType = 0;//当前活动类型
+    private int activityType = -1;//当前活动类型
     private int applyAble = 1;
 
-
-
     /*************  侧边栏滑动的效果 ****************/
-
     public static final int SNAP_VELOCITY = 100;//滚动显示和隐藏menu时，手指滑动需要达到的速度。
     private int screenWidth;   //屏幕宽度值。
     private int leftEdge;  //menu最多可以滑动到的左边缘。值由menu布局的宽度来定，marginLeft到达此值之后，不能再减少。
@@ -80,7 +73,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         // 将content的宽度设置为屏幕宽度
         content.getLayoutParams().width = screenWidth;
     }
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         createVelocityTracker(event);
@@ -172,8 +164,8 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         mVelocityTracker.recycle();
         mVelocityTracker = null;
     }
-    class ScrollTask extends AsyncTask<Integer, Integer, Integer> {
 
+    private class ScrollTask extends AsyncTask<Integer, Integer, Integer> {
         @Override
         protected Integer doInBackground(Integer... speed) {
             int leftMargin = menuParams.leftMargin;
@@ -212,6 +204,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             menu.setLayoutParams(menuParams);
         }
     }
+
     private void sleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -231,11 +224,10 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         initValues();
         content.setOnTouchListener(this);
 
-        loadActivity();
+        loadActivities("A");
 
         TextView tv = (TextView)findViewById(R.id.name);
         tv.setText(User.getCurrentUser().getNickName());
-
 
         Thread tempThread = new Thread(){
             public void run(){
@@ -243,7 +235,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             }
         };
         tempThread.start();
-
     }
 
     private class AnotherTask extends AsyncTask<String, Void, String>{
@@ -298,28 +289,37 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
 
 
-    private MyActivity[] activities;
+    private MyActivity[] activities; //存储所有的活动
 
-    private Map<String,List<MyActivity>> loadAllActivities(){
-        Message msg = ToolClass.getActivityList("" + curPage, "" + activityType, "" + applyAble);
-        activities = msg.getActivities();
+    // type A为全部 0为户外 1为XXX
+    private Map<String,List<MyActivity>> loadActivitiesMap(String type){
+
+        if(activities==null){
+            Message msg = ToolClass.getActivityList("" + curPage, "" + activityType, "" + applyAble);
+            activities = msg.getActivities();
+        }
 
         Map<String,List<MyActivity>> allActivitiesByDayOrder = new HashMap<String,List<MyActivity>>();
-        if (activities != null)
-        {
+
+        if(activities!=null){
             for(MyActivity act : activities){
                 String time = act.getStartTime();
                 String timekey = DateFactory.getFrontDate(time);
 
-                if(allActivitiesByDayOrder.containsKey(timekey)){
-                    List<MyActivity> tmp =  allActivitiesByDayOrder.get(timekey);
-                    tmp.add(act);
-                }else{
-                    List<MyActivity> tmp = new ArrayList<MyActivity>();
-                    tmp.add(act);
-                    allActivitiesByDayOrder.put(timekey,tmp);
+                if(type.equals("A") || type.equals(act.getType())){
+                    //是该类型的项目的话
+                    if(allActivitiesByDayOrder.containsKey(timekey)){
+                        List<MyActivity> tmp =  allActivitiesByDayOrder.get(timekey);
+                        tmp.add(act);
+                    }else{
+                        List<MyActivity> tmp = new ArrayList<MyActivity>();
+                        tmp.add(act);
+                        allActivitiesByDayOrder.put(timekey,tmp);
+                    }
                 }
             }
+        }else{
+            Utils.debugMessage(this,"活动为空");
         }
         return allActivitiesByDayOrder;
     }
@@ -378,7 +378,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                 }
             } else {
 
-
             final MyActivity activity = (MyActivity) allItem.get(position);
             try {
                 //内容
@@ -406,22 +405,32 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             } catch (NullPointerException e) {
                 Utils.debugMessage(Page_TotalActivity.this, "空指针" + e);
             }
-
             }
             return convertView;
         }
     }
 
-    private void loadActivity(){
-        ListView vi=(ListView) findViewById(R.id.content);
-        MyAdapter myAdapter = new MyAdapter( loadAllActivities());
-        vi.setAdapter(myAdapter);
 
+    //加载活动
+    private void loadActivities(String type){
+        ListView vi=(ListView) findViewById(R.id.content);
+        MyAdapter myAdapter = new MyAdapter( loadActivitiesMap(type));
+        vi.setAdapter(myAdapter);
     }
+
+    private void cleanContent(){
+        ListView lv = (ListView)findViewById(R.id.content);
+        if(lv!=null){
+            lv.removeAllViewsInLayout();
+        }else{
+            Utils.debugMessage(this,"没有找到content");
+        }
+    }
+
 
     private PopupWindow popupWindow;
 
-    /*右上菜单栏 */
+    /***************************   右上菜单栏  ************************ */
 
     //菜单点击事件
     public void func_Click(View v){
@@ -449,15 +458,14 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         Utils.transPage(this, Page_Organize.class);
     }
 
-    /*左侧菜单栏*/
-
+    /*************************左侧菜单栏*************************/
     //点击左上角的头像
     public void head_Click(View v){
         scrollToMenu();
     }
     //查看消息
     public void  message_Click(View v){
-        Utils.transPage(this,Page_Message.class);
+        Utils.transPage(this, Page_Message.class);
     }
     //个人资料
     public void   userInfo_Click(View v){
@@ -471,6 +479,38 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     public void logout_Click(View v){
         Utils.clearLogData();
         Utils.transPage(this,Page_Main.class);
+    }
+
+
+    /*********************导航栏 *****************************/
+    public void naviAll_Click(View v) {
+        cleanContent();
+        loadActivities("A");
+    }
+
+    public void naviOutSide_Click(View v) {
+        cleanContent();
+        loadActivities("0");
+    }
+    public void naviSport_Click(View v) {
+        cleanContent();
+        loadActivities("1");
+    }
+    public void naviPlay_Click(View v) {
+        cleanContent();
+        loadActivities("2");
+    }
+    public void naviTravel_Click(View v) {
+        cleanContent();
+        loadActivities("3");
+    }
+    public void naviMusic_Click(View v) {
+        cleanContent();
+        loadActivities("4");
+    }
+    public void naviOther_Click(View v) {
+        cleanContent();
+        loadActivities("5");
     }
 
 }

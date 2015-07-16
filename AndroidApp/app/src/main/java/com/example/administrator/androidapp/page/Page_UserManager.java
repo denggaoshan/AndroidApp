@@ -120,17 +120,17 @@ public class Page_UserManager extends ActionBarActivity {
         ret.put("attending", ac.getUserCount());
         ret.put("avater", ToolClass.returnBitMap(ava));
 
-        if(!ac.getIsChecked().equals("1")){//申请通过的活�?
+        if(!ac.getIsChecked().equals("1")){//申请通过活动
             String endtime = ac.getEndTime();
             if(Utils.ifTimeEnd(endtime)){
-                //已截�?
-                ret.put("status","已结�?");
+                //已截止
+                ret.put("status","已结束");
             }else{
-                //正在进行�?
-                ret.put("status","进行�?");
+                //正在进行中
+                ret.put("status","进行中");
             }
-        }else{//申请未�?�过
-            ret.put("status","审核�?");
+        }else{//申请未通过
+            ret.put("status","审核中");
         }
 
         return ret;

@@ -54,6 +54,11 @@ public class DateFactory {
         return ret;
     }
 
+    //只获得前面的时间
+    public static String getFrontDate(String date){
+        String dates[] = date.split(" ");
+        return dates[0];
+    }
 
     public static void main(String[] args){
         Date date = DateFactory.createDateByString("2010-04-10 12:33");

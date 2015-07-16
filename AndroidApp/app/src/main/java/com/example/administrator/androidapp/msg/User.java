@@ -39,6 +39,7 @@ public class User {
     public static User getCurrentUser(){return currentUser;}
     public static void setCurrentUser(User user){currentUser = user;}
 
+
     public static User createUser(JSONObject jsonObject)
     {
         User temp = new User();

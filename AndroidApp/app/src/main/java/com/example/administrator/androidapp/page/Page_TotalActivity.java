@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.DateFactory;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
@@ -295,13 +296,15 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         Map<String,List<MyActivity>> allActivitiesByDayOrder = new HashMap<String,List<MyActivity>>();
         for(MyActivity act : activities){
             String time = act.getStartTime();
-            if(allActivitiesByDayOrder.containsKey(time)){
-                List<MyActivity> tmp =  allActivitiesByDayOrder.get(time);
+            String timekey = DateFactory.getFrontDate(time);
+
+            if(allActivitiesByDayOrder.containsKey(timekey)){
+                List<MyActivity> tmp =  allActivitiesByDayOrder.get(timekey);
                 tmp.add(act);
             }else{
                 List<MyActivity> tmp = new ArrayList<MyActivity>();
                 tmp.add(act);
-                allActivitiesByDayOrder.put(time,tmp);
+                allActivitiesByDayOrder.put(timekey,tmp);
             }
         }
         return allActivitiesByDayOrder;
@@ -353,43 +356,42 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                 //显示日期
                 String date = (String)allItem.get(position);
                 convertView= nflater.inflate(R.layout.content_total_date, null);
-
-                TextView tv = (TextView) convertView.findViewById(R.id.time);
-                tv.setText(date);
-            }else{
-                final MyActivity activity = (MyActivity)allItem.get(position);
-
-                //内容
-                convertView= nflater.inflate(R.layout.content_total_activity, null);
-                TextView tv = (TextView) convertView.findViewById(R.id.title);
-                tv.setText(activity.getTitle());
-                tv = (TextView) convertView.findViewById(R.id.time);
-                tv.setText(activity.getStartTime());
-                tv = (TextView) convertView.findViewById(R.id.position);
-                tv.setText(activity.getPlace());
-                tv = (TextView) convertView.findViewById(R.id.attending);
-                tv.setText(activity.getUserCount());
-                ImageView iv = (ImageView)findViewById(R.id.image);
-                Bitmap bm = Cache.getBitmap(activity.getAvatar());
-                if (bm == null){
-                    bm = new AsynImageLoader().loadImageAsyn(activity.getAvatar(), null);
-                    Cache.setBitmap(activity.getAvatar(), bm);
-                }
-                iv.setImageBitmap(bm);
-
-                //监听事件
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MyActivity.setCurrentActivity(activity);
-                        Utils.transPage(Page_TotalActivity.this, Page_ActivityInformation.class);
+                if(convertView!=null){
+                    TextView tv = (TextView) convertView.findViewById(R.id.time);
+                    if(tv!=null){
+                        tv.setText(date);
                     }
-                });
+                }
+            }else{
+
+                try {
+                    final MyActivity activity = (MyActivity)allItem.get(position);
+                    //内容
+                    convertView= nflater.inflate(R.layout.content_total_activity, null);
+
+                    TextView tv = (TextView) convertView.findViewById(R.id.title);
+                    tv.setText(activity.getTitle());
+                    tv = (TextView) convertView.findViewById(R.id.time);
+                    tv.setText(activity.getStartTime());
+                    tv = (TextView) convertView.findViewById(R.id.position);
+                    tv.setText(activity.getPlace());
+                    tv = (TextView) convertView.findViewById(R.id.attending);
+                    tv.setText(activity.getUserCount());
+
+                    //监听事件
+                    convertView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {MyActivity.setCurrentActivity(activity);
+                                        Utils.transPage(Page_TotalActivity.this, Page_ActivityInformation.class);
+                                    }
+                                });
+                }catch (NullPointerException e){
+                    Utils.debugMessage(Page_TotalActivity.this,"空指针"+e);
+                }
             }
             return convertView;
         }
     }
-
 
     private void loadActivity(){
         ListView vi=(ListView) findViewById(R.id.content);

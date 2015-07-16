@@ -39,6 +39,7 @@ public class ToolClass {
 
     public static String IMGSERVERURL = "http://chenranzhen.xyz/UpLoadFile.php";
     public static String MSGSERVERURL = "http://chenranzhen.xyz/privateinterface.php";
+    public static String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
     public static String AK = "3Ne7OXKQwUIDLiD9UF6IM90g";
     public static String IPAPI = "http://api.map.baidu.com/location/ip";
 
@@ -414,6 +415,8 @@ public class ToolClass {
     {
         URL myFileUrl = null;
         Bitmap bitmap = null;
+        if (url == null)
+            return null;
         try
         {
             myFileUrl = new URL(url);

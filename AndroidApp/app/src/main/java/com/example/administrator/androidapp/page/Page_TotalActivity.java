@@ -260,10 +260,20 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
 
     void putImgs(){
-        Bitmap bm = ToolClass.returnBitMap(User.getCurrentUser().getAvatar());
-        Cache.setUserAvater(bm);
-        ((ImageView) findViewById(R.id.imageView20)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 100, 100));
-        ((ImageView) findViewById(R.id.imageView4)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 60, 60));
+        String ava;
+        if (User.getCurrentUser().getAvatar() == null
+                || User.getCurrentUser().getAvatar().equals("")
+                || User.getCurrentUser().getAvatar().equals("null"))
+            ava = ToolClass.DEFAULTAVATER;
+        else
+            ava = User.getCurrentUser().getAvatar();
+        Bitmap bm = ToolClass.returnBitMap(ava);
+        if (bm != null)
+        {
+            Cache.setUserAvater(bm);
+            ((ImageView) findViewById(R.id.imageView20)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 100, 100));
+            ((ImageView) findViewById(R.id.imageView4)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 60, 60));
+        }
     }
 
     @Override
@@ -295,17 +305,20 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         activities = msg.getActivities();
 
         Map<String,List<MyActivity>> allActivitiesByDayOrder = new HashMap<String,List<MyActivity>>();
-        for(MyActivity act : activities){
-            String time = act.getStartTime();
-            String timekey = DateFactory.getFrontDate(time);
+        if (activities != null)
+        {
+            for(MyActivity act : activities){
+                String time = act.getStartTime();
+                String timekey = DateFactory.getFrontDate(time);
 
-            if(allActivitiesByDayOrder.containsKey(timekey)){
-                List<MyActivity> tmp =  allActivitiesByDayOrder.get(timekey);
-                tmp.add(act);
-            }else{
-                List<MyActivity> tmp = new ArrayList<MyActivity>();
-                tmp.add(act);
-                allActivitiesByDayOrder.put(timekey,tmp);
+                if(allActivitiesByDayOrder.containsKey(timekey)){
+                    List<MyActivity> tmp =  allActivitiesByDayOrder.get(timekey);
+                    tmp.add(act);
+                }else{
+                    List<MyActivity> tmp = new ArrayList<MyActivity>();
+                    tmp.add(act);
+                    allActivitiesByDayOrder.put(timekey,tmp);
+                }
             }
         }
         return allActivitiesByDayOrder;

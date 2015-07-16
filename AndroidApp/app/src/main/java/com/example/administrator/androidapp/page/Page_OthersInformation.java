@@ -4,8 +4,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.User;
+import com.example.administrator.androidapp.tool.Utils;
 
 public class Page_OthersInformation extends ActionBarActivity {
 
@@ -13,7 +17,42 @@ public class Page_OthersInformation extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_others_information);
+
+        loadInformation();
     }
+
+
+    User user ;
+
+    private void loadInformation() {
+        user = User.getOtherUser();
+        if(user!=null){
+            LoadUserInformation(user);
+        }else{
+            Utils.debugMessage(null,"user为空");
+        }
+
+    }
+
+    private void LoadUserInformation(User user){
+        loadOne(user,R.id.Account,"NickName");
+        loadOne(user,R.id.Sex,"Sex");
+        loadOne(user,R.id.Age,"Age");
+        loadOne(user,R.id.Constellation, "Constellation");
+        loadOne(user, R.id.Profession, "Profession");
+        loadOne(user, R.id.LivePlace, "LivePlace");
+        loadOne(user, R.id.Description, "Description");
+    }
+
+    private void loadOne(User user,int id,String content){
+        TextView tv = (TextView)findViewById(id);
+        if(tv!=null){
+            user.loadInformationToTextView(tv,content);
+        }else{
+            Utils.debugMessage(Page_OthersInformation.this,"没有找到"+content);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,5 +74,9 @@ public class Page_OthersInformation extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void back_Click(View v) {
+        Utils.transPage(this, Page_MemberManager.class);
     }
 }

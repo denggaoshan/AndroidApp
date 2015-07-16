@@ -107,7 +107,7 @@
                     android:text="Jane"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/textView29" />
+                    android:id="@+id/NickName" />
             </LinearLayout>
 
             <LinearLayout
@@ -131,7 +131,7 @@
                     android:text="女"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/textView30" />
+                    android:id="@+id/Sex" />
             </LinearLayout>
 
             <LinearLayout
@@ -155,7 +155,7 @@
                     android:text="20"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/textView31" />
+                    android:id="@+id/Age" />
             </LinearLayout>
 
             <LinearLayout
@@ -179,14 +179,15 @@
                     android:text="营养师"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/textView32" />
+                    android:id="@+id/Profession" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp" >
+                android:padding="10dp"
+                android:focusableInTouchMode="false">
 
                 <TextView
                     android:layout_width="0dp"
@@ -203,7 +204,7 @@
                     android:text="福建厦门"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/textView33" />
+                    android:id="@+id/LivePlace" />
             </LinearLayout>
 
             <LinearLayout
@@ -227,7 +228,7 @@
                     android:text="狮子座"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/textView34" />
+                    android:id="@+id/Constellation" />
             </LinearLayout>
 
             <LinearLayout
@@ -251,7 +252,7 @@
                     android:text="爱运动"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/textView35" />
+                    android:id="@+id/Description" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -216,10 +216,10 @@ public class ToolClass {
         return UserAndExplainArray.createUserAndExplainArray(httpGet(getUrl));
     }
 
-    public static String handleApplication(String userid, String applyid, String isallow)
+    public static String handleApplication(String userid, String activityid, String applyid, String isallow)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=handleapplication"
-                + "&userid=" + userid + "&applyid=" + applyid
+                + "&userid=" + userid + "&activityid="+activityid+"&applyid=" + applyid
                 + "&isallow=" + isallow;
 
         return onlyGetMess(httpGet(getUrl));

@@ -2,7 +2,6 @@ package com.example.administrator.androidapp.page;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.graphics.pdf.PdfDocument;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,19 +14,18 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.msg.User;
+import com.example.administrator.androidapp.msg.DateFactory;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class Page_Organize extends ActionBarActivity {
 
@@ -110,7 +108,7 @@ public class Page_Organize extends ActionBarActivity {
                     public void onTimeSet(TimePicker view, int hour, int minute) {
                         // TODO Auto-generated method stub
                         Button btn = (Button)findViewById(R.id.startHour);
-                        btn.setText(hour + " : " + minute);
+                        btn.setText(hour + ":" + minute);
                     }
                 },
                 c.get(Calendar.HOUR_OF_DAY),
@@ -124,7 +122,7 @@ public class Page_Organize extends ActionBarActivity {
                     public void onTimeSet(TimePicker view, int hour, int minute) {
                         // TODO Auto-generated method stub
                         Button btn = (Button)findViewById(R.id.endHour);
-                        btn.setText(hour + " : " + minute);
+                        btn.setText(hour + ":" + minute);
                     }
                 },
                 c.get(Calendar.HOUR_OF_DAY),
@@ -234,11 +232,20 @@ public class Page_Organize extends ActionBarActivity {
 
         Button btn1 = (Button)findViewById(R.id.startTime);
         Button btn2 = (Button)findViewById(R.id.startHour);
-        startTime = btn1.getText().toString()+" " + btn2.getText().toString();
+        String btn2_text =  btn2.getText().toString();
+        btn2_text = btn2_text.replace(" ","");
+        startTime = btn1.getText().toString()+" " + btn2_text;
+
+        Date tmp = DateFactory.createDateByString(startTime);
+        startTime = DateFactory.createStringByDate(tmp);
 
         btn1 = (Button)findViewById(R.id.endTime);
         btn2 = (Button)findViewById(R.id.endHour);
-        endTime = btn1.getText().toString()+" " + btn2.getText().toString();
+        btn2_text =  btn2.getText().toString();
+        btn2_text = btn2_text.replace(" ", "");
+        endTime = btn1.getText().toString()+" " + btn2_text;
+        tmp = DateFactory.createDateByString(endTime);
+        endTime = DateFactory.createStringByDate(tmp);
 
         place = Utils.getEditTextById(this,R.id.place);
         if (place.equals("")){

@@ -67,7 +67,7 @@ public class User {
         return Account;
     }
 
-    public void loadInformationToTextEdit(TextView tv,String data) {
+    public void loadInformationToTextView(TextView tv, String data) {
         try {
             Field  fs= this.getClass().getDeclaredField(data);
             fs.setAccessible(true);
@@ -134,5 +134,13 @@ public class User {
         {
             e.printStackTrace();
         }
+    }
+
+    private static User otherUser; //存放用户查看别人信息时候的那个人
+    public static User getOtherUser() {
+        return otherUser;
+    }
+    public static void setOtherUser(User other){
+        otherUser = other;
     }
 }

@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="花千骨"
-                    android:id="@+id/name"
+                    android:id="@+id/NickName"
                     android:layout_marginTop="-20dp"
                     android:layout_marginBottom="20dp" />
 
@@ -50,23 +50,21 @@
                 android:layout_width="60dp"
                 android:layout_height="40dp"
                 android:text="同意"
-                android:id="@+id/button3"
+                android:id="@+id/agree"
                 android:textSize="20dp"
                 android:layout_marginLeft="20dp"
                 android:background="#ff50d2c2"
                 android:textColor="#ffffff"
-                android:layout_marginRight="20dp"
-                android:onClick="agree_Click" />
+                android:layout_marginRight="20dp" />
 
             <Button
                 android:layout_width="60dp"
                 android:layout_height="40dp"
                 android:text="拒绝"
-                android:id="@+id/button4"
+                android:id="@+id/refuse"
                 android:textSize="20dp"
                 android:background="#ffff584f"
-                android:textColor="#ffffff"
-                android:onClick="refuse_Click" />
+                android:textColor="#ffffff" />
         </LinearLayout>
 
         <TextView
@@ -75,6 +73,7 @@
             android:text="我想加入活动"
             android:id="@+id/content"
             android:paddingLeft="100dp" />
+
     </LinearLayout>
 
 </LinearLayout>

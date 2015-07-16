@@ -221,6 +221,8 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     /*************  END 侧边栏滑动的效果 ****************/
 
+
+    /*创建  */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -229,6 +231,11 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         content.setOnTouchListener(this);
 
         loadActivity();
+
+        TextView tv = (TextView)findViewById(R.id.name);
+        tv.setText(User.getCurrentUser().getNickName());
+
+
         Thread tempThread = new Thread(){
             public void run(){
                 new AnotherTask().execute("none");
@@ -302,7 +309,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
 
     /********** 活动列表适配器 **************/
-    class MyAdapter extends BaseAdapter{
+    private class MyAdapter extends BaseAdapter{
 
         ArrayList<Integer> dateIndex = new ArrayList<Integer>();
 
@@ -395,6 +402,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         ListView vi=(ListView) findViewById(R.id.content);
         MyAdapter myAdapter = new MyAdapter( loadAllActivities());
         vi.setAdapter(myAdapter);
+
     }
 
     private PopupWindow popupWindow;

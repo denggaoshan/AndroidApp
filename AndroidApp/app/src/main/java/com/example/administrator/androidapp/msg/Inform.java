@@ -11,11 +11,11 @@ import java.lang.reflect.Field;
 public class Inform {
     private String InformID;
     private String TargetID;
-    private String Form;
-    private String Time;
-    private String Type;
-    private String Title;
-    private String Content;
+    private String Form;public String getForm(){return Form;}
+    private String Time;public String getTime(){return Time;}
+    private String Type;public String getType(){return Type;}
+    private String Title;public String getTitle(){return Title;}
+    private String Content;public String getContent(){return  Content;}
     private String IsRead;
 
     public static Inform createInform(JSONObject jsonObject)

@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.DateFactory;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
@@ -242,6 +243,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             }
         };
         tempThread.start();
+
     }
 
     private class AnotherTask extends AsyncTask<String, Void, String>{
@@ -295,13 +297,15 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         Map<String,List<MyActivity>> allActivitiesByDayOrder = new HashMap<String,List<MyActivity>>();
         for(MyActivity act : activities){
             String time = act.getStartTime();
-            if(allActivitiesByDayOrder.containsKey(time)){
-                List<MyActivity> tmp =  allActivitiesByDayOrder.get(time);
+            String timekey = DateFactory.getFrontDate(time);
+
+            if(allActivitiesByDayOrder.containsKey(timekey)){
+                List<MyActivity> tmp =  allActivitiesByDayOrder.get(timekey);
                 tmp.add(act);
             }else{
                 List<MyActivity> tmp = new ArrayList<MyActivity>();
                 tmp.add(act);
-                allActivitiesByDayOrder.put(time,tmp);
+                allActivitiesByDayOrder.put(timekey,tmp);
             }
         }
         return allActivitiesByDayOrder;
@@ -309,19 +313,19 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
 
     /********** 活动列表适配器 **************/
-    private class MyAdapter extends BaseAdapter{
+    private class MyAdapter extends BaseAdapter {
 
         ArrayList<Integer> dateIndex = new ArrayList<Integer>();
 
         ArrayList<Object> allItem = new ArrayList<Object>();
 
-        public MyAdapter(Map<String,List<MyActivity>> allActivitiesByDayOrder){
+        public MyAdapter(Map<String, List<MyActivity>> allActivitiesByDayOrder) {
 
             for (Map.Entry<String, List<MyActivity>> entry : allActivitiesByDayOrder.entrySet()) {
                 dateIndex.add(allItem.size());//记录日期的位置
                 allItem.add(entry.getKey());
                 List<MyActivity> tmp = entry.getValue();
-                for(MyActivity act : tmp){
+                for (MyActivity act : tmp) {
                     allItem.add(act);
                 }
             }
@@ -329,7 +333,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
         @Override
         public int getCount() {
-           return allItem.size();
+            return allItem.size();
         }
 
         @Override
@@ -346,21 +350,26 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = new LinearLayout(parent.getContext());
 
-            Context ctx = convertView.getContext() ;
+            Context ctx = convertView.getContext();
             LayoutInflater nflater = LayoutInflater.from(ctx);
 
-            if(dateIndex.contains(position)){
+            if (dateIndex.contains(position)) {
                 //显示日期
-                String date = (String)allItem.get(position);
-                convertView= nflater.inflate(R.layout.content_total_date, null);
+                String date = (String) allItem.get(position);
+                convertView = nflater.inflate(R.layout.content_total_date, null);
+                if (convertView != null) {
+                    TextView tv = (TextView) convertView.findViewById(R.id.time);
+                    if (tv != null) {
+                        tv.setText(date);
+                    }
+                }
+            } else {
 
-                TextView tv = (TextView) convertView.findViewById(R.id.time);
-                tv.setText(date);
-            }else{
-                final MyActivity activity = (MyActivity)allItem.get(position);
 
+            final MyActivity activity = (MyActivity) allItem.get(position);
+            try {
                 //内容
-                convertView= nflater.inflate(R.layout.content_total_activity, null);
+                convertView = nflater.inflate(R.layout.content_total_activity, null);
                 TextView tv = (TextView) convertView.findViewById(R.id.title);
                 tv.setText(activity.getTitle());
                 tv = (TextView) convertView.findViewById(R.id.time);
@@ -369,7 +378,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                 tv.setText(activity.getPlace());
                 tv = (TextView) convertView.findViewById(R.id.attending);
                 tv.setText(activity.getUserCount());
-                ImageView iv = (ImageView)convertView.findViewById(R.id.image);
+                ImageView iv = (ImageView) convertView.findViewById(R.id.image);
                 Bitmap bm = ToolClass.returnBitMap(activity.getAvatar());
                 iv.setImageBitmap(bm);
 
@@ -381,22 +390,14 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                         Utils.transPage(Page_TotalActivity.this, Page_ActivityInformation.class);
                     }
                 });
+            } catch (NullPointerException e) {
+                Utils.debugMessage(Page_TotalActivity.this, "空指针" + e);
+            }
+
             }
             return convertView;
         }
     }
-/*    private class AnotherTask2 extends AsyncTask<String, Void, String>{
-        @Override
-        protected void onPostExecute(String result) {
-
-            new AsynImageLoader().showImageAsyn(iv, activity.getAvatar(), 0);
-        }
-        @Override
-        protected String doInBackground(String... params) {
-
-            return params[0];
-        }
-    }*/
 
     private void loadActivity(){
         ListView vi=(ListView) findViewById(R.id.content);

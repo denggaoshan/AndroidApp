@@ -120,17 +120,17 @@ public class Page_UserManager extends ActionBarActivity {
         ret.put("attending", ac.getUserCount());
         ret.put("avater", ToolClass.returnBitMap(ava));
 
-        if(!ac.getIsChecked().equals("1")){//鐢宠閫氳繃鐨勬椿鍔?
+        if(!ac.getIsChecked().equals("1")){//申请通过活动
             String endtime = ac.getEndTime();
             if(Utils.ifTimeEnd(endtime)){
-                //宸叉埅姝?
-                ret.put("status","宸茬粨鏉?");
+                //已截止
+                ret.put("status","已结束");
             }else{
-                //姝ｅ湪杩涜涓?
-                ret.put("status","杩涜涓?");
+                //正在进行中
+                ret.put("status","进行中");
             }
-        }else{//鐢宠鏈?氳繃
-            ret.put("status","瀹℃牳涓?");
+        }else{//申请未通过
+            ret.put("status","审核中");
         }
 
         return ret;

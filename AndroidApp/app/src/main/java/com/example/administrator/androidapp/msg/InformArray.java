@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public class InformArray {
 
     private String mess;
-    private Inform[] informs;
+    private Inform[] informs;public Inform[] getInforms(){return informs;}
 
     public static InformArray createInformArray(String jsonString)
     {

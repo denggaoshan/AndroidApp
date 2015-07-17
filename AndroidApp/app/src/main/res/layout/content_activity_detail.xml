@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
    >
 
     <LinearLayout
@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:text="厦门相亲交友大聚会"
             android:layout_gravity="center_horizontal"
-            android:textSize="25dp"
+            android:textSize="30dp"
             android:layout_weight="0.25"
             android:id="@+id/title"
             android:textColor="#000000"
@@ -41,8 +41,31 @@
                 android:gravity="left|center"
                 android:paddingLeft="10dp"
                 android:textSize="15dp"
-                android:id="@+id/time" />
+                android:id="@+id/startTime" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_time"
+                android:padding="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="5/27 12:00"
+                android:layout_gravity="center_horizontal"
+                android:gravity="left|center"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                android:id="@+id/endTime" />
         </LinearLayout>
 
         <LinearLayout
@@ -113,7 +136,7 @@
                 android:gravity="left|center"
                 android:paddingLeft="10dp"
                 android:textSize="15dp"
-              />
+                android:id="@+id/type" />
 
         </LinearLayout>
 
@@ -126,7 +149,9 @@
         android:layout_height="wrap_content"
         android:text="活动说明"
         android:id="@+id/textView25"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:textColor="#000000"
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="fill_parent"

@@ -26,8 +26,13 @@ public class Page_UserInformation extends ActionBarActivity {
         setContentView(R.layout.page_information);
         user = User.getCurrentUser();
         LoadInformation();
-        ImageView iv = (ImageView)findViewById(R.id.imageView13);
-        iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
+        try {
+            ImageView iv = (ImageView)findViewById(R.id.imageView13);
+            iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
+        }catch (Exception e){
+            Utils.debugMessage(this,"个人页面头像有BUG啊");
+        }
+
     }
 
     private void LoadInformation(){

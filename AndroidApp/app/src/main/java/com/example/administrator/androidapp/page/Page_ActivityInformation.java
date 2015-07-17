@@ -1,18 +1,24 @@
 package com.example.administrator.androidapp.page;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.*;
@@ -32,112 +38,371 @@ public class Page_ActivityInformation extends ActionBarActivity {
     private User[] allUsers;
     private Comment[]  allComments;
     private Photo[] allPhotos;
+
+
+    private boolean ifLoadMembers=false;
+    private boolean ifLoadPhotos=false;
+    private boolean ifLoadComments=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_activity_information);
-        loadCurrentActivity();
-        loadActivityDetail();
 
-        EditText comment = (EditText)findViewById(R.id.input_comment);
-        comment.setVisibility(View.GONE);
+        //加载当前的活动信息
+        loadCurrentActivity();
+
+        showActivityDetail();
+
         ImageView iv = ((ImageView) findViewById(R.id.Edit));
         iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getLayoutParams().width, iv.getLayoutParams().height));
 
     }
 
-    //装载当前的活动信息
-    private void loadCurrentActivity() {
-        currentActivity = MyActivity.getCurrentActivity();
-        currentUser = User.getCurrentUser();
+    /* 活动详情适配器 */
+    private class DetailAdapter extends BaseAdapter{
+        private MyActivity currentActivity;
+
+        public DetailAdapter(MyActivity activity){
+            currentActivity = activity;
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if(position == 0){
+                convertView = new LinearLayout(parent.getContext());
+                if(convertView!=null){
+                    Context ctx = convertView.getContext();
+                    LayoutInflater nflater = LayoutInflater.from(ctx);
+                    convertView = nflater.inflate(R.layout.content_activity_detail, null);
+
+                    int[] ids = {R.id.title,R.id.startTime,R.id.endTime,R.id.position,R.id.attending,R.id.type,R.id.description};
+                    String[] vals = {currentActivity.getTitle(),currentActivity.getStartTime(),currentActivity.getEndTime(),currentActivity.getPlace(),
+                            currentActivity.getUserCount(),currentActivity.getType(),currentActivity.getContent()};
+
+                    for(int i=0;i<ids.length;i++){
+                        TextView tv = (TextView)convertView.findViewById(ids[i]);
+                        if(ids[i] != R.id.type){
+                            tv.setText(vals[i]);
+                        }else {
+                            tv.setText(Utils.changeType(vals[i]));
+                        }
+                    }
+                }
+            }else{
+                //显示最后的按钮
+                convertView = new LinearLayout(parent.getContext());
+                if (convertView != null) {
+                    Context ctx = convertView.getContext();
+                    LayoutInflater nflater = LayoutInflater.from(ctx);
+                    convertView = nflater.inflate(R.layout.content_button, null);
+                    Button btn = (Button) convertView.findViewById(R.id.btn);
+                    btn.setText("报名参加");
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //
+                        }
+                    });
+                }
+            }
+
+            return convertView;
+        }
+    }
+    /*  活动成员适配器 */
+    private class AllUsersAdapter extends BaseAdapter{
+
+        public AllUsersAdapter(){
+        }
+
+        @Override
+        public int getCount() {
+            if(allUsers!=null){
+                return allUsers.length+1;
+            }else {
+                return 0;
+            }
+
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if(position < getCount()-1){
+                //如果是正常内容
+                convertView = new LinearLayout(parent.getContext());
+
+                final User user = allUsers[position];
+
+                if(convertView!=null && user!= null){
+
+                    Context ctx = convertView.getContext();
+                    LayoutInflater nflater = LayoutInflater.from(ctx);
+                    convertView = nflater.inflate(R.layout.content_activity_member, null);
+
+                    int[] ids = {R.id.name,R.id.age,R.id.sex};
+                    String[] vals = {user.getNickName(),"年龄： "+user.getAge(),user.getSex()};
+
+                    for(int i=0;i<ids.length;i++){
+                        TextView tv = (TextView)convertView.findViewById(ids[i]);
+                        if(ids[i] != R.id.sex){
+                            tv.setText(vals[i]);
+                        }else{
+                           tv.setText(Utils.changeSex(vals[i]));
+                        }
+                    }
+
+                    //添加点击事件
+                    convertView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            User.setOtherUser(user);
+                            Utils.transPage(Page_ActivityInformation.this,Page_OthersInformation.class);
+                        }
+                    });
+
+                }else{
+                    Utils.debugMessage(Page_ActivityInformation.this,"某个用户为空");
+                }
+            }else{
+                convertView = new LinearLayout(parent.getContext());
+                if(convertView!=null ) {
+                    Context ctx = convertView.getContext();
+                    LayoutInflater nflater = LayoutInflater.from(ctx);
+                    convertView = nflater.inflate(R.layout.content_button,null);
+                    Button btn = (Button)convertView.findViewById(R.id.btn);
+                    btn.setText("成员管理");
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Page_ActivityInformation.this.memberMana_Click();
+                        }
+                    });
+                }
+            }
+            return convertView;
+        }
+    }
+    /* 活动评论适配器 */
+    private class CommentsAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            if(allComments!=null){
+                return allComments.length+1;
+            }else {
+                Utils.debugMessage(Page_ActivityInformation.this,"评论为空");
+                return 0;
+            }
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(position<getCount()-1){
+                convertView = new LinearLayout(parent.getContext());
+
+                Comment comment = allComments[position];
+
+                if(convertView!=null && comment!= null){
+
+                    Context ctx = convertView.getContext();
+                    LayoutInflater nflater = LayoutInflater.from(ctx);
+                    convertView = nflater.inflate(R.layout.content_activity_comment, null);
+
+                    int[] ids = {R.id.name,R.id.time,R.id.comment};
+                    String[] vals = {comment.getNickName(),comment.getTime(),comment.getContent()};
+
+                    try{
+                        for(int i=0;i<ids.length;i++){
+                            TextView tv = (TextView)convertView.findViewById(ids[i]);
+                            tv.setText(vals[i]);
+                        }
+                    }catch (NullPointerException e){
+                        Utils.debugMessage(Page_ActivityInformation.this,"存在空的指针"+e);
+                    }
+
+                }else{
+                    Utils.debugMessage(Page_ActivityInformation.this,"某个用户为空");
+                }
+            }else {
+                //显示最后的按钮
+                convertView = new LinearLayout(parent.getContext());
+                if (convertView != null) {
+                    Context ctx = convertView.getContext();
+                    LayoutInflater nflater = LayoutInflater.from(ctx);
+                    convertView = nflater.inflate(R.layout.content_comment, null);
+                    Button btn = (Button) convertView.findViewById(R.id.btn);
+
+                    final EditText ed = (EditText) convertView.findViewById(R.id.comment);
+
+                    if(btn!=null){
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(ed!=null){
+                                    addComment_Click(ed);
+                                }else{
+                                    Utils.debugMessage(Page_ActivityInformation.this,"找不到ed");
+                                }
+                            }
+                        });
+                    }else{
+                        Utils.debugMessage(Page_ActivityInformation.this,"btn没找到");
+                    }
+
+                }
+            }
+            return convertView;
+        }
+    }
+    /* 活动相册适配器 */
+    private class PhotosAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            if(allPhotos!=null){
+                return allPhotos.length+1;
+            }else {
+                return 0;
+            }
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = new LinearLayout(parent.getContext());
+
+            Photo photo = allPhotos[position];
+
+            if(convertView!=null && photo!= null){
+
+                Context ctx = convertView.getContext();
+                LayoutInflater nflater = LayoutInflater.from(ctx);
+                convertView = nflater.inflate(R.layout.content_activity_album, null);
+
+                int[] ids = {R.id.name,R.id.time};
+                String[] vals = {photo.getNickName(),photo.getTime()};
+
+                for(int i=0;i<ids.length;i++){
+                    TextView tv = (TextView)convertView.findViewById(ids[i]);
+                    tv.setText(vals[i]);
+                }
+
+            }else{
+                Utils.debugMessage(Page_ActivityInformation.this,"某个用户为空");
+            }
+            return convertView;
+
+        }
+    }
+
+    //重新加载当前的全部成员
+    private void loadAllUsers(){
         Message msg = ToolClass.getParticipation(currentUser.getUserID(), currentActivity.getActivityID());
         allUsers = msg.getUsers();
-
+        ifLoadMembers = true;
+    }
+    //重新加载当前的全部评论
+    private void loadAllComments(){
         ActivityInfo info = ToolClass.getActivityInfo(currentUser.getUserID(), currentActivity.getActivityID());
         allComments = info.getComments();
-        if(allComments==null){
-            allComments = new Comment[0];
-        }
+        ifLoadComments = true;
+    }
+    //重新加载当前的全部相册
+    private void loadAllPhotos(){
+        ActivityInfo info = ToolClass.getActivityInfo(currentUser.getUserID(), currentActivity.getActivityID());
         allPhotos = info.getPhoto();
-        if (allPhotos == null){
-            allPhotos = new Photo[0];
+        ifLoadPhotos = true;
+    }
+
+    //装载当前的活动信息
+    private void loadCurrentActivity() {
+        //当前活动
+        currentActivity = MyActivity.getCurrentActivity();
+        //当前用户
+        currentUser = User.getCurrentUser();
+    }
+
+    //显示活动详情
+    private void showActivityDetail(){
+        ListView vi=(ListView) findViewById(R.id.content);
+        if(currentActivity!=null){
+            DetailAdapter adapter = new DetailAdapter(currentActivity);
+            vi.setAdapter(adapter);
+        }else{
+            Utils.debugMessage(this,"当前活动为空");
         }
     }
 
-    //装载活动详情
-    private void loadActivityDetail(){
+    //显示活动成员
+    private void showActivityMember() {
         ListView vi=(ListView) findViewById(R.id.content);
-        SimpleAdapter adapter = new SimpleAdapter(this, getDetailData(), R.layout.content_activity_detail,
-                new String[] { "title",  "time","position","attending","image","description"},
-                new int[] { R.id.title, R.id.time,R.id.position,R.id.attending,R.id.image,R.id.description});
-
-        adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data,
-                                        String textRepresentation) {
-                if ((view instanceof ImageView) & (data instanceof Bitmap)) {
-                    ImageView iv = (ImageView) view;
-                    Bitmap bm = (Bitmap) data;
-                    iv.setImageBitmap(bm);
-                    return true;
-                }
-                return false;
-            }
-        });
+        AllUsersAdapter adapter = new AllUsersAdapter();
         vi.setAdapter(adapter);
     }
 
-    private void loadActivityComment() {
+    //显示活动评论
+    private void showActivityComment() {
         ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-        SimpleAdapter adapter = new SimpleAdapter(this, getCommentData(), R.layout.content_activity_comment,
-                new String[] { "name",  "time","comment"},
-                new int[] { R.id.name, R.id.time,R.id.comment});
+        CommentsAdapter adapter = new CommentsAdapter();
         vi.setAdapter(adapter);
     }
 
-    private void loadActivityAlbum(){
+    //显示活动相册
+    private void showActivityAlbum(){
         ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-        SimpleAdapter adapter = new SimpleAdapter(this, getAlbumData(), R.layout.content_activity_album,
-                new String[] { "avater", "nickname", "time", "img"},
-                new int[] { R.id.avater_album, R.id.name_album, R.id.time_album, R.id.img_album});
-        adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
-            @Override
-            public boolean setViewValue(View view, Object data,
-                                        String textRepresentation) {
-                if( (view instanceof ImageView) & (data instanceof Bitmap) ) {
-                    ImageView iv = (ImageView) view;
-                    Bitmap bm = (Bitmap) data;
-                    iv.setImageBitmap(bm);
-                    return true;
-                }
-                return false;
-            }
-        });
+        PhotosAdapter  adapter = new PhotosAdapter();
         vi.setAdapter(adapter);
     }
 
-    private void loadActivityMember() {
-        ListView vi=(ListView) findViewById(R.id.content);
-        SimpleAdapter adapter = new SimpleAdapter(this, getMemberData(), R.layout.content_activity_member,
-                new String[] { "avater", "name",  "age","time"},
-                new int[] { R.id.imageView5, R.id.name, R.id.age,R.id.time});
-        adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data,
-                                        String textRepresentation) {
-                if ((view instanceof ImageView) & (data instanceof Bitmap)) {
-                    ImageView iv = (ImageView) view;
-                    Bitmap bm = (Bitmap) data;
-                    iv.setImageBitmap(bm);
-                    return true;
-                }
-                return false;
-            }
-        });
-        vi.setAdapter(adapter);
-    }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,164 +437,69 @@ public class Page_ActivityInformation extends ActionBarActivity {
         rn.setBackgroundColor(0xFF50d2c2);
     }
 
-    private void addComment() {
-        EditText test = (EditText)findViewById(R.id.input_comment);
-        String content = test.getText().toString();
-        String ret =ToolClass.addCommment(currentUser.getUserID(),currentActivity.getActivityID(),content);
-        Utils.showMessage(this, ret);
-    }
-
-    private void addPhoto() {
-
-    }
-
     private void joinActivity() {
         String ret = ToolClass.applyParticipation(currentUser.getUserID(),currentActivity.getActivityID(),"我想参加");
         Utils.showMessage(this, ret);
     }
 
-    /*  点击事件  */
-
-    public void btn_Click(View v) {
-        switch (currentSelect){
-            case 0:joinActivity();break;
-            case 1:memberMana();break;
-            case 2:addPhoto();break;
-            case 3:addComment();break;
-        }
-    }
-
-    private void memberMana() {
-        Utils.transPage(this,Page_MemberManager.class);
-    }
-
+    /**************       导航栏点击事件           *************/
+    //点击评论
     public void comment_Click(View v) {
         changeFocus(3);
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-
-        EditText comment = (EditText)findViewById(R.id.input_comment);
-        comment.setVisibility(View.VISIBLE);
-
-        loadActivityComment();
+        if(!ifLoadComments){
+            loadAllComments();
+        }
+        showActivityComment();
     }
-
+    //点击相册
     public void album_Click(View v) {
         changeFocus(2);
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-
-        Button btn = (Button)findViewById(R.id.btn);
-        btn.setText("添加照片");
-
-        EditText comment = (EditText)findViewById(R.id.input_comment);
-        comment.setVisibility(View.GONE);
-        loadActivityAlbum();
+        if(!ifLoadPhotos){
+            loadAllPhotos();
+        }
+        showActivityAlbum();
     }
-
-
+    //点击活动详情
     public void details_Click(View v) {
         changeFocus(0);
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-
-        loadActivityDetail();
-
-        Button btn = (Button)findViewById(R.id.btn);
-        btn.setText("报名参加");
+        if(currentActivity==null){
+            loadCurrentActivity();
+        }
+        showActivityDetail();
     }
-
-    //获取活动成员
+    //点击活动成员
     public void member_Click(View v) {
         changeFocus(1);
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-
-        loadActivityMember();
-
-        Button btn = (Button)findViewById(R.id.btn);
-        btn.setText("成员管理");
-    }
-
-    private List<? extends Map<String, ?>> getAlbumData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        if (allPhotos != null){
-            for (Photo photo : allPhotos){
-                list.add(getOnePhoto(photo));
-            }
+        if(!ifLoadMembers){
+            loadAllUsers();
         }
-        return list;
+        showActivityMember();
     }
 
-    private String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
-    public Map<String, Object> getOnePhoto(Photo photo){
-        Map<String, Object> ret = new HashMap<String, Object>();
-        String ava;
-        if (photo.getAvatar() == null || photo.getAvatar().equals(""))
-            ava = DEFAULTAVATER;
-        else
-            ava = photo.getAvatar();
-        ret.put("avater", ToolClass.returnBitMap(ava));
-        ret.put("nickname", photo.getNickName());
-        ret.put("time", photo.getTime());
-        ret.put("img", ToolClass.returnBitMap(photo.getAddress()));
-        return ret;
+    /**************       底部功能           *************/
+    //转到成员管理
+    private void memberMana_Click() {
+        Utils.transPage(this, Page_MemberManager.class);
     }
+    //添加评论
+    public void addComment_Click(EditText et){
 
-    private List<? extends Map<String, ?>> getMemberData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        if(allUsers !=null){
-            for(User user:allUsers){
-                list.add(getOneMember(user));
+        if(et!=null){
+            String str = et.getText().toString();
+            if(str!=null && str!=""){
+                String ret = ToolClass.addCommment(User.getCurrentUser().getUserID(), MyActivity.getCurrentActivity().getActivityID(),str);
+                Utils.showMessage(this,ret);
+                loadAllComments();
             }
+        }else{
+            Utils.debugMessage(this,"没找到comment");
         }
-        return list;
+
     }
 
-    private List<? extends Map<String, ?>> getCommentData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        if(allComments!=null){
-            for(Comment comment:allComments){
-                list.add(getOneComment(comment));
-            }
-        }
-        return list;
-    }
 
-    private List<Map<String, Object>> getDetailData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("title", currentActivity.getTitle());
-        ret.put("time", currentActivity.getStartTime());
-        ret.put("position", currentActivity.getPlace());
-        ret.put("attending", currentActivity.getUserCount());
-        ret.put("description", currentActivity.getContent());
-        list.add(ret);
-        return list;
-    }
 
-    private  Map<String, Object> getOneMember(User user){
-        Map<String, Object> ret = new HashMap<String, Object>();
-        String ava;
-        if (user.getAvatar() == null || user.getAvatar().equals("") || user.getAvatar().equals("null"))
-            ava = DEFAULTAVATER;
-        else
-            ava = user.getAvatar();
-        ret.put("avater", ToolClass.returnBitMap(ava));
-        ret.put("name", user.getNickName());
-        ret.put("age", user.getAge());
-        ret.put("time", "07月02日 10:00");
-        return ret;
-    }
-
-    private Map<String, Object> getOneComment(Comment comment) {
-        Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("name", comment.getNickName());
-        ret.put("time", comment.getTime());
-        ret.put("comment",comment.getContent() );
-        return ret;
-    }
-
+    /****************     返回      ****************/
     public void close_Click(View v) {
         Utils.transPage(this, Page_TotalActivity.class);
     }

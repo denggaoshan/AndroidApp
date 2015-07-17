@@ -60,10 +60,8 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:src="@drawable/icon_running"
-                android:layout_weight="0.5"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp" />
+                android:src="@drawable/icon_detail"
+                android:layout_weight="0.5" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -86,10 +84,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/imageView9"
-                android:src="@drawable/icon_running"
-                android:layout_weight="0.5"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp" />
+                android:src="@drawable/icon_member"
+                android:layout_weight="0.5" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -113,7 +109,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/imageView10"
-                android:src="@drawable/icno_history"
+                android:src="@drawable/icon_album"
                 android:layout_weight="0.5" />
 
             <TextView
@@ -139,12 +135,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/imageView11"
-                android:src="@drawable/icno_applying"
+                android:src="@drawable/icon_comments"
                 android:layout_weight="0.5" />
 
             <TextView
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="评论"
                 android:id="@+id/textView17"
                 android:gravity="center"
@@ -158,26 +154,4 @@
         android:id="@+id/content"
         android:layout_below="@+id/navi" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/input_comment"
-        android:layout_above="@+id/btn"
-        android:text="在这里输入文字" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="报名参加"
-        android:id="@+id/btn"
-        android:layout_alignParentBottom="true"
-        android:background="#50d2c2"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:onClick="btn_Click"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
 </RelativeLayout>

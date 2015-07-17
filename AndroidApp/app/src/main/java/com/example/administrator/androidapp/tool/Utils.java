@@ -1,5 +1,6 @@
 package com.example.administrator.androidapp.tool;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -51,6 +52,9 @@ public class Utils {
     private static String LOGADRESS = "userLog.dat";
 
 
+    private static ActionBarActivity beforeActivity;
+
+    public static ActionBarActivity getBeforeActivity(){return beforeActivity;}
 
     /*日期处理相关的*/
     //判断一个时间 是否已经截止
@@ -174,6 +178,7 @@ public class Utils {
     //切换页面
     public static void transPage(ActionBarActivity before,Class after){
         Intent intent = new Intent();
+        beforeActivity = before;
         intent.setClass(before,after);
         before.startActivity(intent);
         before.finish();

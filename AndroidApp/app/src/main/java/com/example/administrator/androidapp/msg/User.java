@@ -3,6 +3,7 @@ package com.example.administrator.androidapp.msg;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.msg.ToolClass;
+import com.example.administrator.androidapp.tool.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ public class User {
     private String Account= "";
     private String Avatar= ""; public String getAvatar() {return Avatar; }
     private String NickName= "";public String getNickName(){return NickName;}
-    private String Sex= "";
+    private String Sex= "";public String getSex(){return Sex;}
     private String Age= "";public String getAge(){return Age;}
     private String Constellation= "";
     private String Profession= "";
@@ -75,7 +76,11 @@ public class User {
 
             String val = (String)fs.get(this);
             if(val != null || !val.equals("null")){
-                tv.setText(val);
+                if(data.equals("Sex")){
+                    tv.setText(Utils.changeSex(val));
+                }else{
+                    tv.setText(val);
+                }
             }else{
                 tv.setText("");
             }

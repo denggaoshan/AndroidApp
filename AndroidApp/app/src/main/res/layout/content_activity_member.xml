@@ -15,33 +15,27 @@
             android:src="@drawable/icon_user"
             android:padding="10dp" />
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginLeft="-15dp">
+            android:layout_height="fill_parent"
+            android:text="花千骨"
+            android:id="@+id/name"
+            android:gravity="center" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="花千骨"
-                android:id="@+id/name" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="20岁"
-                android:id="@+id/age" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="fill_parent"
+            android:text="男"
+            android:id="@+id/sex"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:text="07月20日 12:00"
-            android:id="@+id/time"
-            android:gravity="left|center"
-            android:paddingLeft="30dp" />
+            android:text="20岁"
+            android:id="@+id/age"
+            android:gravity="center" />
+
     </LinearLayout>
 
 </LinearLayout>

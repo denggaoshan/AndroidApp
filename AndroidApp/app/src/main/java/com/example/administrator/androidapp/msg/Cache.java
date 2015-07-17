@@ -13,16 +13,24 @@ public class Cache {
     public static void setUserAvater(Bitmap bm){
         userAvater = bm;
     }
+
     public static Bitmap getUserAvater(){
         return userAvater;
     }
 
     private static HashMap<String, Bitmap> bitmapHashMap = new HashMap<>();
     public static Bitmap getBitmap(String url){
-        if (bitmapHashMap.containsKey(url))
+        if (bitmapHashMap.containsKey(url)){
             return bitmapHashMap.get(url);
-        else
-            return null;
+        }
+        else{
+            Bitmap bitmap =  ToolClass.returnBitMap(url);
+            if(bitmap!=null){
+                setBitmap(url,bitmap);
+            }
+            return bitmap;
+        }
+
     }
     public static void setBitmap(String url, Bitmap bm){
         bitmapHashMap.put(url, bm);

@@ -45,12 +45,17 @@ public class Page_UserManager extends ActionBarActivity {
         vi.removeAllViewsInLayout();
         loadLaunchedActivity();
         ImageView iv = (ImageView)findViewById(R.id.imageView8);
-        if (Cache.getUserAvater() != null)
-            iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
-        else{
-            AsynImageLoader asynImageLoader = new AsynImageLoader();
-            asynImageLoader.showImageAsyn(((ImageView)findViewById(R.id.imageView8)), User.getCurrentUser().getAvatar(), 0);
+        try {
+            if (Cache.getUserAvater() != null)
+                iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
+            else{
+                AsynImageLoader asynImageLoader = new AsynImageLoader();
+                asynImageLoader.showImageAsyn(((ImageView)findViewById(R.id.imageView8)), User.getCurrentUser().getAvatar(), 0);
+            }
+        }catch (Exception e){
+            Utils.debugMessage(this,"头像这里有BUG啊");
         }
+
     }
 
     @Override
@@ -118,7 +123,7 @@ public class Page_UserManager extends ActionBarActivity {
         ret.put("time", ac.getStartTime());
         ret.put("position", ac.getPlace());
         ret.put("attending", ac.getUserCount());
-        ret.put("avater", ToolClass.returnBitMap(ava));
+        ret.put("avater", Cache.getBitmap(ava));
 
         if(!ac.getIsChecked().equals("1")){//申请通过活动
             String endtime = ac.getEndTime();
@@ -189,10 +194,9 @@ public class Page_UserManager extends ActionBarActivity {
         ret.put("time", ac.getStartTime());
         ret.put("position", ac.getPlace());
         ret.put("attending", ac.getUserCount());
-        ret.put("avater", ToolClass.returnBitMap(ava));
+        ret.put("avater", Cache.getBitmap(ava));
         return ret;
     }
-
 
     /*申请的活动*/
     public void applyed_Click(View v) {
@@ -201,6 +205,7 @@ public class Page_UserManager extends ActionBarActivity {
         vi.removeAllViewsInLayout();
         loadApplyedActivity();
     }
+
     private void loadApplyedActivity(){
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
@@ -244,7 +249,7 @@ public class Page_UserManager extends ActionBarActivity {
         ret.put("time", ac.getStartTime());
         ret.put("position", ac.getPlace());
         ret.put("attending", ac.getUserCount());
-        ret.put("avater", ToolClass.returnBitMap(ava));
+        ret.put("avater", Cache.getBitmap(ava));
         return ret;
     }
 

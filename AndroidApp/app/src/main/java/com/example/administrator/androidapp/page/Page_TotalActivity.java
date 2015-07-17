@@ -258,7 +258,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             ava = ToolClass.DEFAULTAVATER;
         else
             ava = User.getCurrentUser().getAvatar();
-        Bitmap bm = ToolClass.returnBitMap(ava);
+        Bitmap bm = Cache.getBitmap(ava);
         if (bm != null)
         {
             Cache.setUserAvater(bm);
@@ -389,8 +389,10 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                 tv.setText(activity.getPlace());
                 tv = (TextView) convertView.findViewById(R.id.attending);
                 tv.setText(activity.getUserCount());
+
+
                 ImageView iv = (ImageView) convertView.findViewById(R.id.image);
-                Bitmap bm = ToolClass.returnBitMap(activity.getAvatar());
+                Bitmap bm = Cache.getBitmap(activity.getAvatar());
                 iv.setImageBitmap(bm);
 
                 //监听事件
@@ -402,7 +404,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                     }
                 });
             } catch (NullPointerException e) {
-                Utils.debugMessage(Page_TotalActivity.this, "空指针" + e);
+                Utils.debugMessage(Page_TotalActivity.this, "空指针" + e.getMessage());
             }
             }
             return convertView;

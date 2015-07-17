@@ -20,8 +20,6 @@ public class Page_OthersInformation extends ActionBarActivity {
 
         loadInformation();
     }
-
-
     User user ;
 
     private void loadInformation() {
@@ -31,11 +29,10 @@ public class Page_OthersInformation extends ActionBarActivity {
         }else{
             Utils.debugMessage(null,"user为空");
         }
-
     }
 
     private void LoadUserInformation(User user){
-        loadOne(user,R.id.Account,"NickName");
+        loadOne(user,R.id.NickName,"NickName");
         loadOne(user,R.id.Sex,"Sex");
         loadOne(user,R.id.Age,"Age");
         loadOne(user,R.id.Constellation, "Constellation");
@@ -76,7 +73,9 @@ public class Page_OthersInformation extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void back_Click(View v) {
-        Utils.transPage(this, Page_MemberManager.class);
+    public void back_Click(View v)
+    {
+        Utils.transPage(this, Utils.getBeforeActivity().getClass());
     }
+
 }

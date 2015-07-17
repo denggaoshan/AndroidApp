@@ -29,13 +29,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="路易"
-                    android:id="@+id/name_album" />
+                    android:id="@+id/name" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="7月02日 10:00"
-                    android:id="@+id/time_album" />
+                    android:id="@+id/time" />
             </LinearLayout>
 
         </LinearLayout>
@@ -50,7 +50,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/icon_activity"
-                android:id="@+id/img_album" />
+                android:id="@+id/img" />
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"

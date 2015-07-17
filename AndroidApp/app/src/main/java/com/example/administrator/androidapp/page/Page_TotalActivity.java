@@ -284,7 +284,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

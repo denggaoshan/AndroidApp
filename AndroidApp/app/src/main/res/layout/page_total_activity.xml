@@ -41,10 +41,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView21"
-                android:src="@drawable/icon_system_message" />
+                android:src="@drawable/icon_message" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -63,10 +63,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView22"
-                android:src="@drawable/icon_system_message" />
+                android:src="@drawable/icon_person" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -85,10 +85,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView23"
-                android:src="@drawable/icon_system_message" />
+                android:src="@drawable/icon_manage" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -108,10 +108,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView24"
-                android:src="@drawable/icon_system_message" />
+                android:src="@drawable/icon_exit" />
 
             <Button
                 android:layout_width="fill_parent"

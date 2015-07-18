@@ -30,6 +30,8 @@ public class Message {
     {
         return currentMessage;
     }
+
+
     public static Message createMessage(String jsonString, int userCount, int activityCount)
     {
         tempJsonString = jsonString;
@@ -173,7 +175,12 @@ public class Message {
     public String getMess() { return mess; }
     public MyActivity getActivity() { return activity; }
     public MyActivity[] getActivities() { return activities; }
-    public User getUser() { return user; }
+
+    public User getUser() {
+        Cache.saveUser(user);//将用户存到缓存中
+        return user;
+    }
+
     public User[] getUsers() { return users; }
 
 }

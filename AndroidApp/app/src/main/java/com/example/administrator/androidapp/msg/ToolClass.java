@@ -81,15 +81,22 @@ public class ToolClass {
         return sb.toString();
     }
 
+    //登陆
     public static Message load(String account, String password)
     {
         String pass_MD = convetToMD5(password);
         String getUrl = MSGSERVERURL + "?" + "oper=login"
                 + "&account=" + account + "&password=" + pass_MD;
 
-        return Message.createMessage(httpGet(getUrl), 1, 2);
+        Message ret =  Message.createMessage(httpGet(getUrl), 1, 2);
+
+        //记录当前用户
+        Cache.saveUser(ret.getUser());
+
+        return ret;
     }
 
+    //注册
     public static Message register(String account, String password, String
             sex, String phone, String mailBox, String avatar)
     {
@@ -102,6 +109,8 @@ public class ToolClass {
         return Message.createMessage(httpGet(getUrl), 1, 2);
     }
 
+
+    //更新用户的信息
     public static Message updateuserbaseinfo(String userid,String nickname,String sex, String age, String constellation,
                                           String profession, String liveplace, String description,
                                           String phone, String mailBox)
@@ -114,6 +123,7 @@ public class ToolClass {
         return Message.createMessage(httpGet(getUrl), 1, 0);
     }
 
+    //修改密码
     public static Message updateuserpassword(String userid, String oldpassword, String newpassword)
     {
         String oldPassword_MD = convetToMD5(oldpassword);
@@ -125,6 +135,8 @@ public class ToolClass {
         return Message.createMessage(httpGet(getUrl), 1, 0);
     }
 
+
+    //活动用户发起的活动
     public static Message getLaunchedActivity(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"

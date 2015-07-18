@@ -37,9 +37,7 @@ import java.util.Map;
 
 public class Page_TotalActivity extends ActionBarActivity implements OnTouchListener{
 
-    private int curPage = 1; //当前页数
-    private int activityType = -1;//当前活动类型
-    private int applyAble = 1;
+
 
     /*************  侧边栏滑动的效果 ****************/
     public static final int SNAP_VELOCITY = 100;//滚动显示和隐藏menu时，手指滑动需要达到的速度。
@@ -287,42 +285,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         return super.onOptionsItemSelected(item);
     }
 
-
     private MyActivity[] activities; //存储所有的活动
-
-    // type A为全部 0为户外 1为XXX
-    private Map<String,List<MyActivity>> loadActivitiesMap(String type){
-
-        if(activities==null){
-            Message msg = ToolClass.getActivityList("" + curPage, "" + activityType, "" + applyAble);
-            activities = msg.getActivities();
-        }
-
-        Map<String,List<MyActivity>> allActivitiesByDayOrder = new HashMap<String,List<MyActivity>>();
-
-        if(activities!=null){
-            for(MyActivity act : activities){
-                String time = act.getStartTime();
-                String timekey = DateFactory.getFrontDate(time);
-
-                if(type.equals("A") || type.equals(act.getType())){
-                    //是该类型的项目的话
-                    if(allActivitiesByDayOrder.containsKey(timekey)){
-                        List<MyActivity> tmp =  allActivitiesByDayOrder.get(timekey);
-                        tmp.add(act);
-                    }else{
-                        List<MyActivity> tmp = new ArrayList<MyActivity>();
-                        tmp.add(act);
-                        allActivitiesByDayOrder.put(timekey,tmp);
-                    }
-                }
-            }
-        }else{
-            Utils.debugMessage(this,"活动为空");
-        }
-        return allActivitiesByDayOrder;
-    }
-
 
     /********** 活动列表适配器 **************/
     private class MyAdapter extends BaseAdapter {
@@ -427,11 +390,10 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         }
     }
 
-
     //加载活动
     private void loadActivities(String type){
         ListView vi=(ListView) findViewById(R.id.content);
-        MyAdapter myAdapter = new MyAdapter( loadActivitiesMap(type));
+        MyAdapter myAdapter = new MyAdapter( Cache.loadActivitiesMap(type));
         vi.setAdapter(myAdapter);
     }
 

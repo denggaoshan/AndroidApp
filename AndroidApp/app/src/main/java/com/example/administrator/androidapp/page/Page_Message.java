@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Inform;
 import com.example.administrator.androidapp.msg.InformArray;
 import com.example.administrator.androidapp.msg.ToolClass;
@@ -43,38 +44,12 @@ public class Page_Message extends ActionBarActivity {
 
     User currentUser ;
 
-    InformArray informsArr;
 
-    ArrayList<Inform> systemInforms = new ArrayList<>();
-    ArrayList<Inform> activityInforms= new ArrayList<>();
-    ArrayList<Inform> privatedInforms= new ArrayList<>();
+
+
     boolean ifLoadInforms = false;
 
-    //重新加载所有的消息
-    private void loadAllMessages() {
-        if(currentUser!=null){
-            if(informsArr==null){
-                informsArr = ToolClass.getInform(currentUser.getUserID());
-            }
-            if(informsArr!=null) {
 
-                Inform[] allInforms = informsArr.getInforms();
-
-                for(Inform inform:allInforms){
-                    if(inform.getType().equals("0")){
-                        systemInforms.add(inform);
-                    }else if(inform.getType().equals("1")){
-                        activityInforms.add(inform);
-                    }else if(inform.getType().equals("2")){
-                        privatedInforms.add(inform);
-                    }else{
-                        Utils.debugMessage(this,"消息类型有问题");
-                    }
-                }
-            }
-        }
-        ifLoadInforms = true;
-    }
 
 
     private class MyAdapter extends BaseAdapter{
@@ -173,34 +148,25 @@ public class Page_Message extends ActionBarActivity {
 
     //显示系统消息
     private void showSystemMessage(){
-        if(ifLoadInforms ==false){
-            loadAllMessages();
-        }
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(systemInforms);
+        MyAdapter adapter = new MyAdapter(Cache.getSystemInforms(User.getCurrentUser().getUserID()));
         vi.setAdapter(adapter);
     }
 
     //显示活动消息
     private void showActivityMessage(){
-        if(ifLoadInforms ==false){
-            loadAllMessages();
-        }
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(activityInforms);
+        MyAdapter adapter = new MyAdapter(Cache.getActivityInforms(User.getCurrentUser().getUserID()));
         vi.setAdapter(adapter);
     }
 
     //显示私人消息
     private void showPrivateMessage(){
-        if(ifLoadInforms ==false){
-            loadAllMessages();
-        }
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(privatedInforms);
+        MyAdapter adapter = new MyAdapter(Cache.getPrivatedInforms(User.getCurrentUser().getUserID()));
         vi.setAdapter(adapter);
     }
 

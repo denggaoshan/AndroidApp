@@ -339,12 +339,14 @@ public class Page_Information_Activity extends ActionBarActivity {
         allUsers = msg.getUsers();
         ifLoadMembers = true;
     }
+
     //重新加载当前的全部评论
     private void loadAllComments(){
         ActivityInfo info = ToolClass.getActivityInfo(currentUser.getUserID(), currentActivity.getActivityID());
         allComments = info.getComments();
         ifLoadComments = true;
     }
+
     //重新加载当前的全部相册
     private void loadAllPhotos(){
         ActivityInfo info = ToolClass.getActivityInfo(currentUser.getUserID(), currentActivity.getActivityID());

@@ -43,6 +43,12 @@ public class User {
 
     public static User createUser(JSONObject jsonObject)
     {
+        try {
+            String id = jsonObject.getString("UserID");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         User temp = new User();
         String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
                 "Constellation","Profession","LivePlace","Description","Phone",
@@ -55,6 +61,9 @@ public class User {
         }
         temp.setGood(jsonObject);
         temp.setIsgood(jsonObject);
+
+        //将这个用户放到缓存中
+        Cache.saveUser(temp);
 
         return temp;
     }

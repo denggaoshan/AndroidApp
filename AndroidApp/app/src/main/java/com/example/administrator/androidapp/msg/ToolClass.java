@@ -90,9 +90,6 @@ public class ToolClass {
 
         Message ret =  Message.createMessage(httpGet(getUrl), 1, 2);
 
-        //记录当前用户
-        Cache.saveUser(ret.getUser());
-
         return ret;
     }
 

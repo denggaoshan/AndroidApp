@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -187,9 +188,7 @@ public class Page_OrganizeActivity extends ActionBarActivity {
         });
     }
 
-    public void back_Click(View v){
-        Utils.backPage(this);
-    }
+
 
     public void sure_Click(View v){
         Utils.showMessage(this, getInput());
@@ -255,6 +254,20 @@ public class Page_OrganizeActivity extends ActionBarActivity {
         type = "" + Utils.getSpinnerById(this, R.id.type);
 
         return "提交中";
+    }
+
+    public void back_Click(View v){
+        Utils.backPage(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Utils.backPage(this);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 

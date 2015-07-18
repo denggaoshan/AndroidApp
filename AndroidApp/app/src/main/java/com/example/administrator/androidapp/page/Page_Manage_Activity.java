@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -256,9 +257,7 @@ public class Page_Manage_Activity extends ActionBarActivity {
     private String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
 
     /***************  点击事件 **************/
-    public void back_Click(View v) {
-        Utils.backPage(this);
-    }
+
 
     public void launched_Click(View v) {
         changeFocus(0);
@@ -276,6 +275,17 @@ public class Page_Manage_Activity extends ActionBarActivity {
         shoAppliactivityActivities();
     }
 
-
+    public void back_Click(View v) {
+        Utils.backPage(this);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Utils.backPage(this);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }

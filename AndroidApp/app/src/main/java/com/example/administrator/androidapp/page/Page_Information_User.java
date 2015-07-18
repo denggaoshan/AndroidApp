@@ -2,6 +2,7 @@ package com.example.administrator.androidapp.page;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,12 +78,8 @@ public class Page_Information_User extends ActionBarActivity {
         if(val !=null){
             tv.setText(val);
         }else{
-            Utils.debugMessage(this,"找不到属性"+content);
+            Utils.debugMessage(this, "找不到属性" + content);
         }
-    }
-
-    public void back_Click(View v) {
-        Utils.backPage(this);
     }
 
 
@@ -144,6 +141,19 @@ public class Page_Information_User extends ActionBarActivity {
         phone = getInfoFromViewById(R.id.Phone );
         mailBox = getInfoFromViewById(R.id.Mailbox);
         description = getInfoFromViewById(R.id.description);
+    }
+
+    public void back_Click(View v) {
+        Utils.backPage(this);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Utils.backPage(this);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 

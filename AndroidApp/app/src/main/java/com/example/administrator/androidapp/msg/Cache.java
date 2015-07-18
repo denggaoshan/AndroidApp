@@ -124,12 +124,11 @@ public class Cache {
     }
 
 
-    /**
-     * ************* 所有活动的缓存**************
-     */
+
+    /************** 活动的缓存 ***************/
     private static Map<String, List<MyActivity>> activitiesCache = null;
 
-    // 获得当前的所有活动 type为活动类型
+    //主页面的活动缓存
     public static Map<String, List<MyActivity>> loadActivitiesMap(String type) {
 
         Map<String, List<MyActivity>> allActivitiesByDayOrder = new HashMap<String, List<MyActivity>>();
@@ -181,25 +180,70 @@ public class Cache {
 
 
 
+    private static HashMap<String,User[]> activityMember = new HashMap<>();
+    private static HashMap<String,Comment[]> activityComments = new HashMap<>();
+    private static HashMap<String,Photo[]> activityPhotos = new HashMap<>();
+
+    //活动的成员
+    public static User[] loadAllUsers(String id){
+        if(activityMember.containsKey(id)){
+            return activityMember.get(id);
+        }else{
+            Message msg = ToolClass.getParticipation(User.getCurrentUser().getUserID(), id);
+            User[] allUsers = msg.getUsers();
+            activityMember.put(id,allUsers);
+            return allUsers;
+        }
+    }
+
+    //提示Cache先更新再获得评论
+    public static Comment[] updateAndLoadComments(String id){
+        activityComments.remove(id);
+        return loadAllComments(id);
+    }
+
+    //活动的评论
+    public static Comment[] loadAllComments(String id){
+        if(activityComments.containsKey(id)){
+            return activityComments.get(id);
+        }else{
+            ActivityInfo info = ToolClass.getActivityInfo(User.getCurrentUser().getUserID(), id);
+            Comment[] allComments = info.getComments();
+            activityComments.put(id,allComments);
+            return allComments;
+        }
+    }
+
+    //活动相册
+    public static Photo[] loadAllPhotos(String id){
+        if(activityPhotos.containsKey(id)){
+            return activityPhotos.get(id);
+        }else{
+            ActivityInfo info = ToolClass.getActivityInfo(User.getCurrentUser().getUserID(), id);
+            Photo[] allPhotos = info.getPhoto();
+            activityPhotos.put(id,allPhotos);
+            return allPhotos;
+        }
+    }
+
+
+
+    /************** 用户信息缓存 **************/
     //存储用户信息
     private static HashMap<String,User> userCache = new HashMap<>();
 
 
-    public static void saveUser(User user){
-        if(user!=null){
-            userCache.put(user.getUserID(),user);
-        }
-    }
-
     //根据ID获得用户
-    public static User getUserById(String userId){
-        if(userCache.containsKey(userId)){
-            return userCache.get(userId);
+    public static User getUserById(String id){
+        if(userCache.containsKey(id)){
+            return userCache.get(id);
         }else{
-            return null;
+            Message msg = ToolClass.getUserInfo(User.getCurrentUser().getUserID(), id);
+            User user = msg.getUser();
+            userCache.put(id,user);
+            return user;
         }
     }
-
 
     //存储活动信息
     private static HashMap<String,MyActivity> activityCache = new HashMap<>();
@@ -213,7 +257,9 @@ public class Cache {
         }
     }
 
-    public static void beginDownLoadInformation(){
+
+
+    public static void beginDownLoad(){
 
     }
 

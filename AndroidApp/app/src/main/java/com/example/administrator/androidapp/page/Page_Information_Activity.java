@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -333,26 +334,6 @@ public class Page_Information_Activity extends ActionBarActivity {
         }
     }
 
-    //重新加载当前的全部成员
-    private void loadAllUsers(){
-        Message msg = ToolClass.getParticipation(currentUser.getUserID(), currentActivity.getActivityID());
-        allUsers = msg.getUsers();
-        ifLoadMembers = true;
-    }
-
-    //重新加载当前的全部评论
-    private void loadAllComments(){
-        ActivityInfo info = ToolClass.getActivityInfo(currentUser.getUserID(), currentActivity.getActivityID());
-        allComments = info.getComments();
-        ifLoadComments = true;
-    }
-
-    //重新加载当前的全部相册
-    private void loadAllPhotos(){
-        ActivityInfo info = ToolClass.getActivityInfo(currentUser.getUserID(), currentActivity.getActivityID());
-        allPhotos = info.getPhoto();
-        ifLoadPhotos = true;
-    }
 
     //装载当前的活动信息
     private void loadCurrentActivity() {
@@ -441,7 +422,7 @@ public class Page_Information_Activity extends ActionBarActivity {
     public void comment_Click(View v) {
         changeFocus(3);
         if(!ifLoadComments){
-            loadAllComments();
+            allComments = Cache.loadAllComments(currentActivity.getActivityID());
         }
         showActivityComment();
     }
@@ -449,7 +430,7 @@ public class Page_Information_Activity extends ActionBarActivity {
     public void album_Click(View v) {
         changeFocus(2);
         if(!ifLoadPhotos){
-            loadAllPhotos();
+           allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
         }
         showActivityAlbum();
     }
@@ -465,7 +446,7 @@ public class Page_Information_Activity extends ActionBarActivity {
     public void member_Click(View v) {
         changeFocus(1);
         if(!ifLoadMembers){
-            loadAllUsers();
+            allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
         }
         showActivityMember();
     }
@@ -483,7 +464,9 @@ public class Page_Information_Activity extends ActionBarActivity {
             if(str!=null && !str.replace(" ","").equals("")){
                 String ret = ToolClass.addCommment(User.getCurrentUser().getUserID(), MyActivity.getCurrentActivity().getActivityID(),str);
                 Utils.showMessage(this,ret);
-                loadAllComments();
+                //////////提示Cache更新评论
+                allComments = Cache.updateAndLoadComments(currentActivity.getActivityID());
+                showActivityComment();
             }
         }else{
             Utils.debugMessage(this,"没找到comment");
@@ -493,5 +476,15 @@ public class Page_Information_Activity extends ActionBarActivity {
     /****************     返回      ****************/
     public void back_Click(View v) {
         Utils.backPage(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Utils.backPage(this);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

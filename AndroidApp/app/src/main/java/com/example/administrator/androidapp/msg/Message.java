@@ -177,7 +177,6 @@ public class Message {
     public MyActivity[] getActivities() { return activities; }
 
     public User getUser() {
-        Cache.saveUser(user);//将用户存到缓存中
         return user;
     }
 

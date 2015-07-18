@@ -62,9 +62,6 @@ public class User {
         temp.setGood(jsonObject);
         temp.setIsgood(jsonObject);
 
-        //将这个用户放到缓存中
-        Cache.saveUser(temp);
-
         return temp;
     }
 

@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,9 +120,8 @@ public class Page_Registered extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void back_Click(View v) {
-        Utils.backPage(this);
-    }
+
+
 
     public void register_Click(View v){
         if("OK".equals(getInput())){
@@ -191,5 +191,19 @@ public class Page_Registered extends ActionBarActivity {
             return "NO";
         }
         return "OK";
+    }
+
+    public void back_Click(View v){
+        Utils.backPage(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Utils.backPage(this);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

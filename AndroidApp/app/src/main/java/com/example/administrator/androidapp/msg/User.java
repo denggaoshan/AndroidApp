@@ -15,26 +15,26 @@ import java.lang.reflect.Field;
  */
 public class User {
 
-    private String UserID= "";
-    private String Account= "";
-    private String Avatar= ""; public String getAvatar() {return Avatar; }
-    private String NickName= "";public String getNickName(){return NickName;}
-    private String Sex= "";public String getSex(){return Sex;}
-    private String Age= "";public String getAge(){return Age;}
-    private String Constellation= "";
-    private String Profession= "";
-    private String LivePlace= "";
-    private String Description= "";
-    private String Phone= "";
-    private String Mailbox= "";
-    private String IsCheckedMailbox= "";
-    private String QQ= "";
-    private String WeiBo= "";
-    private String RoleID= "";
-    private String RegisterTime= "";
+    private String UserID;
+    private String Account;
+    private String Avatar; public String getAvatar() {return Avatar; }
+    private String NickName;public String getNickName(){return NickName;}
+    private String Sex;public String getSex(){return Sex;}
+    private String Age;public String getAge(){return Age;}
+    private String Constellation;
+    private String Profession;
+    private String LivePlace;
+    private String Description;
+    private String Phone;
+    private String Mailbox;
+    private String IsCheckedMailbox;
+    private String QQ;
+    private String WeiBo;
+    private String RoleID;
+    private String RegisterTime;
 
-    private String good= "";
-    private String isgood = "";
+    private String good;
+    private String isgood;
 
     private static User currentUser;
     public static User getCurrentUser(){return currentUser;}

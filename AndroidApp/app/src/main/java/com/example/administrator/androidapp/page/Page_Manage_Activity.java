@@ -207,8 +207,10 @@ public class Page_Manage_Activity extends ActionBarActivity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MyActivity.setCurrentActivity(activity);
-                    Utils.transPage(Page_Manage_Activity.this,Page_Information_Activity.class);
+                   if(activity!=null){
+                       MyActivity.setCurrentActivity(activity);
+                       Utils.transPage(Page_Manage_Activity.this,Page_Information_Activity.class);
+                   }
                 }
             });
             return convertView;

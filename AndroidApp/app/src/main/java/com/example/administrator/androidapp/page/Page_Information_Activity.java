@@ -478,7 +478,7 @@ public class Page_Information_Activity extends ActionBarActivity {
 
         if(et!=null){
             String str = et.getText().toString();
-            if(str!=null && str!=""){
+            if(str!=null && !str.replace(" ","").equals("")){
                 String ret = ToolClass.addCommment(User.getCurrentUser().getUserID(), MyActivity.getCurrentActivity().getActivityID(),str);
                 Utils.showMessage(this,ret);
                 loadAllComments();

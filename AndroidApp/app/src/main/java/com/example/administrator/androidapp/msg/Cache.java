@@ -19,6 +19,7 @@ public class Cache {
     }
 
     private static HashMap<String, Bitmap> bitmapHashMap = new HashMap<>();
+
     public static Bitmap getBitmap(String url){
         if (bitmapHashMap.containsKey(url)){
             return bitmapHashMap.get(url);
@@ -35,4 +36,5 @@ public class Cache {
     public static void setBitmap(String url, Bitmap bm){
         bitmapHashMap.put(url, bm);
     }
+
 }

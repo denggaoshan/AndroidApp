@@ -1,5 +1,10 @@
 package com.example.administrator.androidapp.msg;
 
+import android.widget.Button;
+
+import com.example.administrator.androidapp.R;
+
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -14,7 +19,7 @@ public class DateFactory {
 
         Date ret = new Date();
         ret.setYear(Integer.parseInt(tmp2[0]) - 1900);
-        ret.setMonth(Integer.parseInt(tmp2[1]));
+        ret.setMonth(Integer.parseInt(tmp2[1])-1);
         ret.setDate(Integer.parseInt(tmp2[2]));
         ret.setHours(Integer.parseInt(tmp3[0]));
         ret.setMinutes(Integer.parseInt(tmp3[1]));
@@ -27,13 +32,13 @@ public class DateFactory {
     }
 
     public static String createStringByDate(Date date){
-        String year = String.valueOf(date.getYear()+1900);
+        String year = String.valueOf(date.getYear() + 1900);
 
-        String month = String.valueOf(date.getMonth());
+        String month = String.valueOf(date.getMonth()+1);
         if(month.length()==1){
             month = "0"+month;
         }
-        String day = String.valueOf(date.getDay());
+        String day = String.valueOf(date.getDate());
         if(day.length() == 1){
             day = "0" + day;
         }
@@ -62,6 +67,32 @@ public class DateFactory {
 
     public static void main(String[] args){
         Date date = DateFactory.createDateByString("2010-04-10 12:33");
+
+        date = getCurrentTime();
         String str = DateFactory.createStringByDate(date);
     }
+
+    public static Date getCurrentTime(){
+        String curTime = "";
+        Calendar cal = Calendar.getInstance();
+        curTime += cal.get(Calendar.YEAR);
+        curTime += "-";
+        curTime += (cal.get(Calendar.MONTH) + 1);
+        curTime += "-";
+        curTime += cal.get(Calendar.DAY_OF_MONTH);
+        String curHour = "";
+        curHour += cal.get(Calendar.HOUR_OF_DAY);
+        curHour += ":";
+        curHour += cal.get(Calendar.MINUTE);
+
+        Date now  =createDateByString(curTime+" "+curHour);
+        if(now!=null){
+            return now;
+        }else{
+            return null;
+        }
+
+    }
+
+
 }

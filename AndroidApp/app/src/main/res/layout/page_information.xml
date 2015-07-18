@@ -1,50 +1,64 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     android:background="#ffffff"
 
-    tools:context="com.example.administrator.androidapp.page.Page_UserInformation"
+    tools:context="com.example.administrator.androidapp.page.Page_Information_User"
     android:orientation="vertical">
 
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Back"
-        android:src="@drawable/icon_close"
-        android:onClick="back_Click" />
 
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="130dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_below="@+id/Back"
-        android:layout_marginBottom="30dp"
-        android:id="@+id/Head">
+        android:layout_height="200dp"
+        android:id="@+id/Head"
+        android:background="#50d2c2">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:id="@+id/linearLayout" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView26"
+                android:src="@drawable/icon_close"
+                android:layout_marginLeft="10dp"
+                android:onClick="back_Click" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="我的资料"
+                android:id="@+id/textView28"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="30dp" />
+        </LinearLayout>
 
         <ImageView
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_marginLeft="110dp"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
             android:id="@+id/imageView13"
             android:src="@drawable/icon_user"
             android:layout_alignParentTop="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentBottom="false"
             android:layout_alignParentRight="false"
-            android:layout_alignWithParentIfMissing="false" />
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@+id/linearLayout"
+            android:layout_alignParentEnd="false" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="false"
+            android:layout_alignBottom="@+id/imageView13">
 
             <ImageView
                 android:layout_width="20dp"
@@ -66,52 +80,61 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollView2"
         android:layout_below="@id/Head"
-        android:layout_gravity="center_horizontal" >
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="80dp">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" >
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp">
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="账号"
+                    android:text="昵称"
                     android:layout_weight="0.3"
                     android:textSize="20dp"
-                    android:textColor="#ffdcdcdc" />
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp"
+                   />
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Jane"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/Account" />
+                    android:id="@+id/NickName" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="性别"
                     android:layout_weight="0.3"
                     android:textSize="20dp"
-                    android:textColor="#ffdcdcdc"
-                     />
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp" />
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="女"
@@ -124,17 +147,20 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="年龄"
                     android:layout_weight="0.3"
                     android:textSize="20dp"
-                    android:textColor="#ffdcdcdc"
-                    />
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp" />
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="20"
@@ -147,17 +173,20 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="职业"
                     android:layout_weight="0.3"
                     android:textSize="20dp"
-                    android:textColor="#ffdcdcdc"
-                     />
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp" />
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="营养师"
@@ -170,17 +199,21 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp">
+                android:focusableInTouchMode="false"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="居住地"
                     android:layout_weight="0.3"
                     android:textSize="20dp"
-                    android:textColor="#ffdcdcdc"
-                    />
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp" />
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="福建厦门"
@@ -193,47 +226,105 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="星座"
                     android:layout_weight="0.3"
                     android:textSize="20dp"
-                    android:textColor="#ffdcdcdc" />
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp" />
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="狮子座"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/Constellation"/>
+                    android:id="@+id/Constellation" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="电话"
+                    android:layout_weight="0.3"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="狮子座"
+                    android:layout_weight="0.7"
+                    android:textSize="20dp"
+                    android:id="@+id/Phone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="邮箱"
+                    android:layout_weight="0.3"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="狮子座"
+                    android:layout_weight="0.7"
+                    android:textSize="20dp"
+                    android:id="@+id/Mailbox" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="个人说明"
                     android:layout_weight="0.3"
                     android:textSize="20dp"
-                    android:textColor="#ffdcdcdc" />
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp" />
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="爱运动"
                     android:layout_weight="0.7"
                     android:textSize="20dp"
-                    android:id="@+id/Description"
-                    />
+                    android:id="@+id/Description" />
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 
@@ -245,6 +336,9 @@
         android:layout_alignParentBottom="true"
         android:background="#ff50d2c3"
         android:textColor="#ffffff"
-        android:textSize="20dp" />
+        android:textSize="25dp"
+        android:layout_margin="10dp"
+        android:onClick="submit_Click" />
+
 
 </RelativeLayout>

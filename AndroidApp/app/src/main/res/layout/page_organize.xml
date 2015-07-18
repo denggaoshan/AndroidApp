@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.administrator.androidapp.page.Page_Organize"
+    tools:context="com.example.administrator.androidapp.page.Page_OrganizeActivity"
     android:orientation="vertical"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
@@ -22,7 +22,7 @@
         android:layout_height="fill_parent"
         android:id="@+id/imageView7"
         android:src="@drawable/icon_close"
-        android:onClick="exit_Click"
+        android:onClick="back_Click"
         android:paddingTop="10dp"
         android:paddingBottom="10dp" />
 

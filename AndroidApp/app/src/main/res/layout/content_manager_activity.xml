@@ -57,8 +57,31 @@
                 android:gravity="left|center"
                 android:paddingLeft="10dp"
                 android:textSize="15dp"
-                android:id="@+id/time" />
+                android:id="@+id/startTime" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_time"
+                android:padding="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="5/27 12:00"
+                android:layout_gravity="center_horizontal"
+                android:gravity="left|center"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                android:id="@+id/endTime" />
         </LinearLayout>
 
         <LinearLayout

@@ -31,8 +31,10 @@ import java.io.IOException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Stack;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -50,22 +52,6 @@ public class Utils {
     public static final String CIPHER_ALGORITHM = "DES/ECB/NoPadding";
     public static final String SCRETEKEY = "A1B553D4E5F60758";
     private static String LOGADRESS = "userLog.dat";
-
-
-    private static ActionBarActivity beforeActivity;
-
-    public static ActionBarActivity getBeforeActivity(){return beforeActivity;}
-
-    /*日期处理相关的*/
-    //判断一个时间 是否已经截止
-    public static boolean ifTimeEnd(String timeString){
-        Calendar calendar = Calendar.getInstance();
-        Date now = calendar.getTime();
-        Date time = new Date();
-        /*未完成 比较2个日期的大小*/
-        return false;
-    }
-
 
 
     public static void storeLogData(String jsonString)
@@ -175,13 +161,30 @@ public class Utils {
         return ret;
     }
 
+    private static Stack<Class> historyPages = new Stack<Class>();
+
     //切换页面
     public static void transPage(ActionBarActivity before,Class after){
+        //存储之前的页面
+        historyPages.push(before.getClass());
         Intent intent = new Intent();
-        beforeActivity = before;
         intent.setClass(before,after);
         before.startActivity(intent);
         before.finish();
+    }
+
+    //返回上一个页面
+    public static void backPage(ActionBarActivity now){
+        Class after = historyPages.pop();
+        if(after!=null){
+            Intent intent = new Intent();
+            intent.setClass(now,after);
+            now.startActivity(intent);
+            now.finish();
+        }else{
+            Utils.debugMessage(now,"返回上个页面的页面为空");
+        }
+
     }
 
     //弹出提示窗口

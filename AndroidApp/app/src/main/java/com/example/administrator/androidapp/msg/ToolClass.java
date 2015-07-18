@@ -102,16 +102,15 @@ public class ToolClass {
         return Message.createMessage(httpGet(getUrl), 1, 2);
     }
 
-    public static Message updateuserbaseinfo(String userid, String sex, String age, String constellation,
+    public static Message updateuserbaseinfo(String userid,String nickname,String sex, String age, String constellation,
                                           String profession, String liveplace, String description,
                                           String phone, String mailBox)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=updateuserbaseinfo"
-                + "&userid=" + userid + "&sex=" + sex + "&age=" + age
+                + "&userid=" + userid +"&sex=" + sex + "&age=" + age
                 + "&constellation=" + constellation + "&profession=" + profession
                 + "&liveplace=" + liveplace + "&description=" + description
-                + "&phone=" + phone + "&mailBox=" + mailBox;
-
+                + "&phone=" + phone + "&mailbox=" + mailBox+"&nickname="+nickname;
         return Message.createMessage(httpGet(getUrl), 1, 0);
     }
 

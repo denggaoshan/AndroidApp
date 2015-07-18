@@ -400,7 +400,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                     @Override
                     public void onClick(View v) {
                         MyActivity.setCurrentActivity(activity);
-                        Utils.transPage(Page_TotalActivity.this, Page_ActivityInformation.class);
+                        Utils.transPage(Page_TotalActivity.this, Page_Information_Activity.class);
                     }
                 });
             } catch (NullPointerException e) {
@@ -456,7 +456,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     //发起活动
     public void add_Click(View v){
-        Utils.transPage(this, Page_Organize.class);
+        Utils.transPage(this, Page_OrganizeActivity.class);
     }
 
     /*************************左侧菜单栏*************************/
@@ -470,16 +470,16 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
     //个人资料
     public void   userInfo_Click(View v){
-        Utils.transPage(this,Page_UserInformation.class);
+        Utils.transPage(this,Page_Information_User.class);
     }
     //活动管理
     public void manage_Click(View v) {
-        Utils.transPage(this,Page_UserManager.class);
+        Utils.transPage(this,Page_Manage_Activity.class);
     }
     //退出登录
     public void logout_Click(View v){
         Utils.clearLogData();
-        Utils.transPage(this,Page_Main.class);
+        Utils.transPage(this,Page_Login.class);
     }
 
 

@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Page_Organize extends ActionBarActivity {
+public class Page_OrganizeActivity extends ActionBarActivity {
 
     private List<String> list = new ArrayList<String>();
     private ArrayAdapter<String> adapter;
@@ -70,7 +70,7 @@ public class Page_Organize extends ActionBarActivity {
     }
     public void setStartTime(View v){
         Calendar c = Calendar.getInstance();
-        new DatePickerDialog(Page_Organize.this,
+        new DatePickerDialog(Page_OrganizeActivity.this,
                 new DatePickerDialog.OnDateSetListener()
                 {
                     public void onDateSet(DatePicker dp, int year,
@@ -86,7 +86,7 @@ public class Page_Organize extends ActionBarActivity {
     }
     public void setEndTime(View v){
         Calendar c = Calendar.getInstance();
-        new DatePickerDialog(Page_Organize.this,
+        new DatePickerDialog(Page_OrganizeActivity.this,
                 new DatePickerDialog.OnDateSetListener()
                 {
                     public void onDateSet(DatePicker dp, int year,
@@ -102,7 +102,7 @@ public class Page_Organize extends ActionBarActivity {
     }
     public void setStartHour(View v){
         Calendar c = Calendar.getInstance();
-        new TimePickerDialog(Page_Organize.this,
+        new TimePickerDialog(Page_OrganizeActivity.this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
@@ -116,7 +116,7 @@ public class Page_Organize extends ActionBarActivity {
     }
     public void setEndHour(View v){
         Calendar c = Calendar.getInstance();
-        new TimePickerDialog(Page_Organize.this,
+        new TimePickerDialog(Page_OrganizeActivity.this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
@@ -187,8 +187,8 @@ public class Page_Organize extends ActionBarActivity {
         });
     }
 
-    public void exit_Click(View v){
-        Utils.transPage(this, Page_TotalActivity.class);
+    public void back_Click(View v){
+        Utils.backPage(this);
     }
 
     public void sure_Click(View v){

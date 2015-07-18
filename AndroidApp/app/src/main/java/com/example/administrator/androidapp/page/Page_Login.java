@@ -1,6 +1,5 @@
 package com.example.administrator.androidapp.page;
 
-import android.content.Intent;
 import android.os.StrictMode;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -18,7 +17,7 @@ import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.tool.Utils;
 
 
-public class Page_Main extends ActionBarActivity {
+public class Page_Login extends ActionBarActivity {
 
     private String username;
     private String password;
@@ -85,7 +84,7 @@ public class Page_Main extends ActionBarActivity {
         }else {
             if( "OK".equals(checkUser(username, password))){
                 //登陆成功
-                Toast.makeText(Page_Main.this, "登陆成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(Page_Login.this, "登陆成功", Toast.LENGTH_LONG).show();
                 Utils.showMessage(this, "登陆成功");
                 Utils.transPage(this,Page_TotalActivity.class);
             }else{

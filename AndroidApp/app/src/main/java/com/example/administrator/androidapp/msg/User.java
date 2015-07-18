@@ -69,27 +69,30 @@ public class User {
         return Account;
     }
 
-    public void loadInformationToTextView(TextView tv, String data) {
-        try {
-            Field  fs= this.getClass().getDeclaredField(data);
-            fs.setAccessible(true);
 
-            String val = (String)fs.get(this);
-            if(val != null || !val.equals("null")){
-                if(data.equals("Sex")){
-                    tv.setText(Utils.changeSex(val));
-                }else{
-                    tv.setText(val);
+    //获得用户属性fieldName的值
+    public String getFieldContent(String fieldName) {
+        String ret = null;
+        try {
+            Field  fs= this.getClass().getDeclaredField(fieldName);
+            fs.setAccessible(true);
+            ret = (String)fs.get(this);
+            if(ret != null || !ret.equals("null")){
+                //转换性别
+                if(fieldName.equals("Sex")){
+                    ret = Utils.changeSex(ret);
                 }
             }else{
-                tv.setText("");
+                ret = null;
             }
 
         } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+            return null;
         }  catch (IllegalAccessException e) {
-            e.printStackTrace();
+            return  null;
         }
+
+        return ret;
     }
 
     private void setGood(JSONObject jsonObject)

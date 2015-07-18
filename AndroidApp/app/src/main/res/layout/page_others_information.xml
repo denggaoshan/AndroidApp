@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.androidapp.page.Page_OthersInformation"
+    tools:context="com.example.administrator.androidapp.page.Page_Information_Others"
     android:background="#ffffff">
 
     <RelativeLayout
@@ -180,6 +180,56 @@
                     android:layout_weight="0.7"
                     android:textSize="20dp"
                     android:id="@+id/Profession" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="手机"
+                    android:layout_weight="0.3"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="18120777275"
+                    android:layout_weight="0.7"
+                    android:textSize="20dp"
+                    android:id="@+id/Phone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="邮箱"
+                    android:layout_weight="0.3"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp"
+                     />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="475665610@qq.com"
+                    android:layout_weight="0.7"
+                    android:textSize="20dp"
+                    android:id="@+id/Mailbox" />
             </LinearLayout>
 
             <LinearLayout

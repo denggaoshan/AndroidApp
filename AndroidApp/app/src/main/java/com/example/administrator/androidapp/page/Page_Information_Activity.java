@@ -1,8 +1,6 @@
 package com.example.administrator.androidapp.page;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,19 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.*;
 import com.example.administrator.androidapp.tool.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class Page_ActivityInformation extends ActionBarActivity {
+public class Page_Information_Activity extends ActionBarActivity {
 
     private int currentSelect = 0 ; //当前所选择的标签 0详情 1成员 2相册 3评论
     private MyActivity currentActivity;
@@ -182,12 +174,12 @@ public class Page_ActivityInformation extends ActionBarActivity {
                         @Override
                         public void onClick(View v) {
                             User.setOtherUser(user);
-                            Utils.transPage(Page_ActivityInformation.this,Page_OthersInformation.class);
+                            Utils.transPage(Page_Information_Activity.this,Page_Information_Others.class);
                         }
                     });
 
                 }else{
-                    Utils.debugMessage(Page_ActivityInformation.this,"某个用户为空");
+                    Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
             }else{
                 convertView = new LinearLayout(parent.getContext());
@@ -200,7 +192,7 @@ public class Page_ActivityInformation extends ActionBarActivity {
                     btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Page_ActivityInformation.this.memberMana_Click();
+                            Page_Information_Activity.this.memberMana_Click();
                         }
                     });
                 }
@@ -216,7 +208,7 @@ public class Page_ActivityInformation extends ActionBarActivity {
             if(allComments!=null){
                 return allComments.length+1;
             }else {
-                Utils.debugMessage(Page_ActivityInformation.this,"评论为空");
+                Utils.debugMessage(Page_Information_Activity.this,"评论为空");
                 return 0;
             }
         }
@@ -254,11 +246,11 @@ public class Page_ActivityInformation extends ActionBarActivity {
                             tv.setText(vals[i]);
                         }
                     }catch (NullPointerException e){
-                        Utils.debugMessage(Page_ActivityInformation.this,"存在空的指针"+e);
+                        Utils.debugMessage(Page_Information_Activity.this,"存在空的指针"+e);
                     }
 
                 }else{
-                    Utils.debugMessage(Page_ActivityInformation.this,"某个用户为空");
+                    Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
             }else {
                 //显示最后的按钮
@@ -278,12 +270,12 @@ public class Page_ActivityInformation extends ActionBarActivity {
                                 if(ed!=null){
                                     addComment_Click(ed);
                                 }else{
-                                    Utils.debugMessage(Page_ActivityInformation.this,"找不到ed");
+                                    Utils.debugMessage(Page_Information_Activity.this,"找不到ed");
                                 }
                             }
                         });
                     }else{
-                        Utils.debugMessage(Page_ActivityInformation.this,"btn没找到");
+                        Utils.debugMessage(Page_Information_Activity.this,"btn没找到");
                     }
 
                 }
@@ -334,7 +326,7 @@ public class Page_ActivityInformation extends ActionBarActivity {
                 }
 
             }else{
-                Utils.debugMessage(Page_ActivityInformation.this,"某个用户为空");
+                Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
             }
             return convertView;
 
@@ -479,7 +471,7 @@ public class Page_ActivityInformation extends ActionBarActivity {
     /**************       底部功能           *************/
     //转到成员管理
     private void memberMana_Click() {
-        Utils.transPage(this, Page_MemberManager.class);
+        Utils.transPage(this, Page_Manage_Member.class);
     }
     //添加评论
     public void addComment_Click(EditText et){
@@ -494,13 +486,10 @@ public class Page_ActivityInformation extends ActionBarActivity {
         }else{
             Utils.debugMessage(this,"没找到comment");
         }
-
     }
 
-
-
     /****************     返回      ****************/
-    public void close_Click(View v) {
-        Utils.transPage(this, Page_TotalActivity.class);
+    public void back_Click(View v) {
+        Utils.backPage(this);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,28 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.msg.Comment;
 import com.example.administrator.androidapp.msg.MyActivity;
-import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.msg.UserAndExplain;
 import com.example.administrator.androidapp.msg.UserAndExplainArray;
 import com.example.administrator.androidapp.tool.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class Page_MemberManager extends ActionBarActivity {
+public class Page_Manage_Member extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +57,7 @@ public class Page_MemberManager extends ActionBarActivity {
 
     //返回上级
     public void back_Click(View v) {
-        Utils.transPage(this, Page_ActivityInformation.class);
+        Utils.backPage(this);
     }
 
 
@@ -119,14 +109,14 @@ public class Page_MemberManager extends ActionBarActivity {
                         User other = request.getUser();
                         if (other != null) {
                             User.setOtherUser(other);
-                            Utils.transPage(Page_MemberManager.this, Page_OthersInformation.class);
+                            Utils.transPage(Page_Manage_Member.this, Page_Information_Others.class);
                         } else {
-                            Utils.debugMessage(Page_MemberManager.this, "requset中User为空");
+                            Utils.debugMessage(Page_Manage_Member.this, "requset中User为空");
                         }
                     }
                 });
             }else{
-                Utils.debugMessage(Page_MemberManager.this, "没找到名字标签");
+                Utils.debugMessage(Page_Manage_Member.this, "没找到名字标签");
             }
 
             tv = (TextView) convertView.findViewById(R.id.time);
@@ -140,21 +130,21 @@ public class Page_MemberManager extends ActionBarActivity {
                         User other = request.getUser();
                         if (other != null) {
                             User.setOtherUser(other);
-                            Utils.transPage(Page_MemberManager.this, Page_OthersInformation.class);
+                            Utils.transPage(Page_Manage_Member.this, Page_Information_Others.class);
                         } else {
-                            Utils.debugMessage(Page_MemberManager.this, "requset中User为空");
+                            Utils.debugMessage(Page_Manage_Member.this, "requset中User为空");
                         }
                     }
                 });
             }else{
-                Utils.debugMessage(Page_MemberManager.this,"没找到时间标签");
+                Utils.debugMessage(Page_Manage_Member.this,"没找到时间标签");
             }
 
             tv = (TextView) convertView.findViewById(R.id.content);
             if(tv!=null){
                 tv.setText(request.getExpain());
             }else{
-                Utils.debugMessage(Page_MemberManager.this,"没有content标签");
+                Utils.debugMessage(Page_Manage_Member.this,"没有content标签");
             }
 
 
@@ -165,11 +155,11 @@ public class Page_MemberManager extends ActionBarActivity {
                     @Override
                     public void onClick(View v) {
                         String ret = ToolClass.handleApplication(User.getCurrentUser().getUserID(),MyActivity.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1");
-                        Utils.showMessage(Page_MemberManager.this, ret);
+                        Utils.showMessage(Page_Manage_Member.this, ret);
                     }
                 });
             }else{
-                Utils.debugMessage(Page_MemberManager.this,"没有agree按钮");
+                Utils.debugMessage(Page_Manage_Member.this,"没有agree按钮");
             }
 
             //拒绝
@@ -179,11 +169,11 @@ public class Page_MemberManager extends ActionBarActivity {
                     @Override
                     public void onClick(View v) {
                         String ret = ToolClass.handleApplication(User.getCurrentUser().getUserID(),MyActivity.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0");
-                        Utils.showMessage(Page_MemberManager.this, ret);
+                        Utils.showMessage(Page_Manage_Member.this, ret);
                     }
                 });
             }else{
-                Utils.debugMessage(Page_MemberManager.this,"没有refuse按钮");
+                Utils.debugMessage(Page_Manage_Member.this,"没有refuse按钮");
             }
 
 

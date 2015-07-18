@@ -183,6 +183,6 @@ public class Page_Message extends ActionBarActivity {
 
     //返回上级
     public void back_Click(View v) {
-        Utils.transPage(this, Page_TotalActivity.class);
+        Utils.backPage(this);
     }
 }

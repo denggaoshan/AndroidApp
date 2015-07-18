@@ -11,7 +11,7 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
-public class Page_OthersInformation extends ActionBarActivity {
+public class Page_Information_Others extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +36,24 @@ public class Page_OthersInformation extends ActionBarActivity {
         loadOne(user,R.id.Sex,"Sex");
         loadOne(user,R.id.Age,"Age");
         loadOne(user,R.id.Constellation, "Constellation");
-        loadOne(user, R.id.Profession, "Profession");
-        loadOne(user, R.id.LivePlace, "LivePlace");
+        loadOne(user,R.id.Profession, "Profession");
+        loadOne(user,R.id.LivePlace,"LivePlace");
         loadOne(user, R.id.Description, "Description");
+        loadOne(user, R.id.Phone, "Phone");
+        loadOne(user, R.id.Mailbox, "Mailbox");
     }
 
     private void loadOne(User user,int id,String content){
         TextView tv = (TextView)findViewById(id);
         if(tv!=null){
-            user.loadInformationToTextView(tv,content);
+            String ret = user.getFieldContent(content);
+            if(ret!=null){
+                tv.setText(ret);
+            }else{
+                Utils.debugMessage(this,"找不到属性"+content);
+            }
         }else{
-            Utils.debugMessage(Page_OthersInformation.this,"没有找到"+content);
+            Utils.debugMessage(Page_Information_Others.this,"没有找到"+content);
         }
     }
 
@@ -75,7 +82,7 @@ public class Page_OthersInformation extends ActionBarActivity {
 
     public void back_Click(View v)
     {
-        Utils.transPage(this, Utils.getBeforeActivity().getClass());
+        Utils.backPage(this);
     }
 
 }

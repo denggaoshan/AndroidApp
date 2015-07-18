@@ -120,7 +120,7 @@ public class Page_Registered extends ActionBarActivity {
     }
 
     public void back_Click(View v) {
-        Utils.transPage(this, Page_Main.class);
+        Utils.backPage(this);
     }
 
     public void register_Click(View v){

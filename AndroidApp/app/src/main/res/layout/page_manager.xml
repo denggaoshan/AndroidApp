@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.androidapp.page.Page_UserManager"
+    tools:context="com.example.administrator.androidapp.page.Page_Manage_Activity"
     android:background="#ffffffff">
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:src="@drawable/icon_close"
             android:layout_weight="0.126"
             android:padding="10dp"
-            android:onClick="close_Click" />
+            android:onClick="back_Click" />
 
         <TextView
             android:layout_width="0dp"
@@ -112,7 +112,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:text="参与"
+                android:text="正在参与"
                 android:id="@+id/textView16"
                 android:gravity="center"
                 android:layout_weight="0.5" />
@@ -138,7 +138,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:text="申请中"
+                android:text="申请参加"
                 android:id="@+id/textView17"
                 android:gravity="center"
                 android:layout_weight="0.5" />

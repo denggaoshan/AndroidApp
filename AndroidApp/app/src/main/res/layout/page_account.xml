@@ -2,9 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="com.example.administrator.androidapp.page.Page_Information_User"
-    android:orientation="vertical">
-
+    tools:context="com.example.administrator.androidapp.page.Page_Account">
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -31,7 +29,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="我的资料"
+                android:text="账户管理"
                 android:id="@+id/textView28"
                 android:gravity="center"
                 android:textColor="#ffffff"
@@ -100,12 +98,12 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="昵称"
+                    android:text="用户名"
                     android:layout_weight="0.3"
                     android:textSize="20dp"
                     android:textColor="#000000"
                     android:paddingLeft="10dp"
-                   />
+                     />
 
                 <EditText
                     android:layout_width="0dp"
@@ -338,6 +336,5 @@
         android:textSize="25dp"
         android:layout_margin="10dp"
         android:onClick="submit_Click" />
-
 
 </RelativeLayout>

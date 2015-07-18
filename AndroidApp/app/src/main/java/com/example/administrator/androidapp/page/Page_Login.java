@@ -38,7 +38,7 @@ public class Page_Login extends ActionBarActivity {
                 return;
             }
         }
-        setContentView(R.layout.page_main);
+        setContentView(R.layout.page_login);
     }
 
     private void getInput(){
@@ -75,6 +75,7 @@ public class Page_Login extends ActionBarActivity {
     public void landing_Click(View v) {
         //获得输入框文本
         getInput();
+
         Utils.showMessage(this, "登录中");
 
         if(!"OK".equals(PatternValid.validUsername(username))){
@@ -84,7 +85,6 @@ public class Page_Login extends ActionBarActivity {
         }else {
             if( "OK".equals(checkUser(username, password))){
                 //登陆成功
-                Toast.makeText(Page_Login.this, "登陆成功", Toast.LENGTH_LONG).show();
                 Utils.showMessage(this, "登陆成功");
                 Utils.transPage(this,Page_TotalActivity.class);
             }else{
@@ -95,7 +95,20 @@ public class Page_Login extends ActionBarActivity {
 
     //切换到注册界面
     public void registered_Click(View v) {
-        Utils.transPage(this,Page_Registered.class);
+        Utils.transPage(this, Page_Registered.class);
+    }
+
+    public void tourist_Click(View v){
+        username = "Tourist";
+        password = "*";
+
+        if( "OK".equals(checkUser(username, password))){
+            //登陆成功
+            Utils.showMessage(this, "游客登陆成功");
+            Utils.transPage(this,Page_TotalActivity.class);
+        }else{
+        }
+
     }
 
     @Override

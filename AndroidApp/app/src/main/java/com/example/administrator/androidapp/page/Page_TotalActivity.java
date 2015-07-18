@@ -345,7 +345,14 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
         @Override
         public int getCount() {
-            return allItem.size();
+            if(allItem!=null && allItem.size()>1){
+                //有活动
+                return allItem.size();
+            }else{
+                //没活动
+                return 1;
+            }
+
         }
 
         @Override
@@ -360,53 +367,62 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = new LinearLayout(parent.getContext());
 
+            convertView = new LinearLayout(parent.getContext());
             Context ctx = convertView.getContext();
             LayoutInflater nflater = LayoutInflater.from(ctx);
 
-            if (dateIndex.contains(position)) {
-                //显示日期
-                String date = (String) allItem.get(position);
-                convertView = nflater.inflate(R.layout.content_total_date, null);
-                if (convertView != null) {
-                    TextView tv = (TextView) convertView.findViewById(R.id.time);
-                    if (tv != null) {
-                        tv.setText(date);
+
+            if(allItem!=null && allItem.size()>1){
+                //有活动的话
+                if (dateIndex.contains(position)) {
+                    //显示日期
+                    String date = (String) allItem.get(position);
+                    convertView = nflater.inflate(R.layout.content_total_date, null);
+                    if (convertView != null) {
+                        TextView tv = (TextView) convertView.findViewById(R.id.time);
+                        if (tv != null) {
+                            tv.setText(date);
+                        }
+                    }
+                } else {
+                    final MyActivity activity = (MyActivity) allItem.get(position);
+                    try {
+                        //内容
+                        convertView = nflater.inflate(R.layout.content_total_activity, null);
+                        TextView tv = (TextView) convertView.findViewById(R.id.title);
+                        tv.setText(activity.getTitle());
+                        tv = (TextView) convertView.findViewById(R.id.time);
+                        tv.setText(activity.getStartTime());
+                        tv = (TextView) convertView.findViewById(R.id.position);
+                        tv.setText(activity.getPlace());
+                        tv = (TextView) convertView.findViewById(R.id.attending);
+                        tv.setText(activity.getUserCount());
+
+
+                        ImageView iv = (ImageView) convertView.findViewById(R.id.image);
+                        Bitmap bm = Cache.getBitmap(activity.getAvatar());
+                        iv.setImageBitmap(bm);
+
+                        //监听事件
+                        convertView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MyActivity.setCurrentActivity(activity);
+                                Utils.transPage(Page_TotalActivity.this, Page_Information_Activity.class);
+                            }
+                        });
+                    } catch (NullPointerException e) {
+                        Utils.debugMessage(Page_TotalActivity.this, "空指针" + e.getMessage());
                     }
                 }
-            } else {
-
-            final MyActivity activity = (MyActivity) allItem.get(position);
-            try {
-                //内容
-                convertView = nflater.inflate(R.layout.content_total_activity, null);
-                TextView tv = (TextView) convertView.findViewById(R.id.title);
-                tv.setText(activity.getTitle());
-                tv = (TextView) convertView.findViewById(R.id.time);
-                tv.setText(activity.getStartTime());
-                tv = (TextView) convertView.findViewById(R.id.position);
-                tv.setText(activity.getPlace());
-                tv = (TextView) convertView.findViewById(R.id.attending);
-                tv.setText(activity.getUserCount());
-
-
-                ImageView iv = (ImageView) convertView.findViewById(R.id.image);
-                Bitmap bm = Cache.getBitmap(activity.getAvatar());
-                iv.setImageBitmap(bm);
-
-                //监听事件
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MyActivity.setCurrentActivity(activity);
-                        Utils.transPage(Page_TotalActivity.this, Page_Information_Activity.class);
-                    }
-                });
-            } catch (NullPointerException e) {
-                Utils.debugMessage(Page_TotalActivity.this, "空指针" + e.getMessage());
+            }else{
+                //没活动的话
+                convertView = nflater.inflate(R.layout.content_tips, null);
+                TextView tv = (TextView) convertView.findViewById(R.id.content);
+                tv.setText("当前分类下没有活动");
             }
-            }
+
             return convertView;
         }
     }
@@ -470,6 +486,10 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
     //个人资料
     public void   userInfo_Click(View v){
+        Utils.transPage(this,Page_Information_User.class);
+    }
+    //账户管理
+    public void account_Click(View v){
         Utils.transPage(this,Page_Information_User.class);
     }
     //活动管理

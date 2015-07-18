@@ -61,6 +61,10 @@
             android:name=".page.Page_Information_Others"
             android:label="@string/title_activity_page__others_information" >
         </activity>
+        <activity
+            android:name=".page.Page_Account"
+            android:label="@string/title_activity_page__account" >
+        </activity>
     </application>
 
 </manifest>

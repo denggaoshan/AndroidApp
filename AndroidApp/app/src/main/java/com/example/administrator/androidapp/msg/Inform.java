@@ -11,7 +11,8 @@ import java.lang.reflect.Field;
 public class Inform {
     private String InformID;
     private String TargetID;
-    private String Form;public String getForm(){return Form;}
+    private String Form;
+    private User UserSource;public User getUserSource(){return UserSource;}
     private String Time;public String getTime(){return Time;}
     private String Type;public String getType(){return Type;}
     private String Title;public String getTitle(){return Title;}
@@ -29,6 +30,17 @@ public class Inform {
                 temp.setProperty(val, jsonObject);
             }
         }
+
+        Message msg = ToolClass.getUserInfo(temp.TargetID,temp.Form);
+        if(msg!=null){
+            User user = msg.getUser();
+            if(user != null){
+                temp.UserSource = user;
+            }else{
+                //找不到通知来源的人
+            }
+        }
+
 
         return temp;
     }

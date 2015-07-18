@@ -11,4 +11,5 @@
     <string name="title_activity_page__message">Page_Message</string>
     <string name="title_activity_page__member_manager">Page_MemberManager</string>
     <string name="title_activity_page__others_information">Page_OthersInformation</string>
+    <string name="title_activity_page__account">Page_Account</string>
 </resources>

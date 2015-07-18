@@ -29,72 +29,70 @@ public class Page_Message extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_message);
 
-        loadMessage("0");
+        currentUser = User.getCurrentUser();
+
+        showSystemMessage();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_page__message, menu);
-
         return true;
     }
 
     User currentUser ;
+
     InformArray informsArr;
-    Inform[] informs;
 
-    /*加载系统消息*/
-    private void loadMessage(String type) {
+    ArrayList<Inform> systemInforms = new ArrayList<>();
+    ArrayList<Inform> activityInforms= new ArrayList<>();
+    ArrayList<Inform> privatedInforms= new ArrayList<>();
+    boolean ifLoadInforms = false;
 
-        currentUser = User.getCurrentUser();
-
+    //重新加载所有的消息
+    private void loadAllMessages() {
         if(currentUser!=null){
             if(informsArr==null){
                 informsArr = ToolClass.getInform(currentUser.getUserID());
             }
-            if(informsArr!=null){
-                informs = informsArr.getInforms();
+            if(informsArr!=null) {
 
-                //筛选类型为type的
-                ArrayList<Inform> tmps = new ArrayList<Inform>();
-                for(Inform info:informs){
-                    if(info.getType().equals(type)){
-                        tmps.add(info);
+                Inform[] allInforms = informsArr.getInforms();
+
+                for(Inform inform:allInforms){
+                    if(inform.getType().equals("0")){
+                        systemInforms.add(inform);
+                    }else if(inform.getType().equals("1")){
+                        activityInforms.add(inform);
+                    }else if(inform.getType().equals("2")){
+                        privatedInforms.add(inform);
+                    }else{
+                        Utils.debugMessage(this,"消息类型有问题");
                     }
                 }
-                informs = new Inform[tmps.size()];
-                for(int i=0;i<informs.length;i++){
-                    informs[i] = tmps.get(i);
-                }
-
-                //加载活动适配器
-                ListView vi = (ListView)findViewById(R.id.content);
-                if(vi!=null){
-                    MyAdapter myAdapter = new MyAdapter(informs);
-                    vi.setAdapter(myAdapter);
-                }else{
-                    Utils.debugMessage(Page_Message.this,"没有content");
-                }
-            }else{
-                Utils.debugMessage(Page_Message.this,"当前用户没有消息");
             }
-        }else{
-            Utils.debugMessage(Page_Message.this,"当前的用户为空");
         }
-
+        ifLoadInforms = true;
     }
 
 
     private class MyAdapter extends BaseAdapter{
-        Inform[] informs;
+        ArrayList<Inform> informs;
 
-        public MyAdapter(Inform[] infs){
+        public MyAdapter(ArrayList<Inform> infs){
             informs = infs;
         }
+
         @Override
         public int getCount() {
-            return informs.length;
+            if(informs!=null){
+                return informs.size();
+            }else{
+                //没有消息
+                return 1;
+            }
+
         }
         @Override
         public Object getItem(int position) {
@@ -113,26 +111,38 @@ public class Page_Message extends ActionBarActivity {
 
             Context ctx = convertView.getContext() ;
             LayoutInflater nflater = LayoutInflater.from(ctx);
-            Inform inform = informs[position];
 
-            convertView= nflater.inflate(R.layout.content_message, null);
-            if(convertView!=null){
-                try{
-                    TextView tv = (TextView) convertView.findViewById(R.id.name);
-                    String tmp = ToolClass.getUserInfo(currentUser.getUserID(), inform.getForm()).getUser().getNickName();
-                    tv.setText(tmp);
+            if(informs!=null ){
+                Inform inform = informs.get(position);
 
-                    tv = (TextView)convertView.findViewById(R.id.time);
-                    tmp=inform.getTime();
-                    tv.setText(tmp);
+                convertView= nflater.inflate(R.layout.content_message, null);
+                if(convertView!=null){
+                    try{
+                        TextView tv = (TextView) convertView.findViewById(R.id.name);
 
-                    tv = (TextView)convertView.findViewById(R.id.content);
-                    tmp=inform.getContent() ;
-                    tv.setText(tmp);
-                }catch (NullPointerException e){
-                    Utils.debugMessage(Page_Message.this,"界面上存在空指针");
+                        String tmp = inform.getUserSource().getNickName();
+                        tv.setText(tmp);
+
+                        tv = (TextView)convertView.findViewById(R.id.time);
+                        tmp=inform.getTime();
+                        tv.setText(tmp);
+
+                        tv = (TextView)convertView.findViewById(R.id.content);
+                        tmp=inform.getContent() ;
+                        tv.setText(tmp);
+                    }catch (NullPointerException e){
+                        Utils.debugMessage(Page_Message.this,"界面上存在空指针");
+                    }
                 }
+            }else{
+                //空的消息
+                //没活动的话
+                convertView = nflater.inflate(R.layout.content_tips, null);
+                TextView tv = (TextView) convertView.findViewById(R.id.content);
+                tv.setText("没有任何消息");
             }
+
+
             return convertView;
         }
     }
@@ -161,24 +171,57 @@ public class Page_Message extends ActionBarActivity {
         }
     }
 
-    /* 点击事件 */
+    //显示系统消息
+    private void showSystemMessage(){
+        if(ifLoadInforms ==false){
+            loadAllMessages();
+        }
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        MyAdapter adapter = new MyAdapter(systemInforms);
+        vi.setAdapter(adapter);
+    }
 
+    //显示活动消息
+    private void showActivityMessage(){
+        if(ifLoadInforms ==false){
+            loadAllMessages();
+        }
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        MyAdapter adapter = new MyAdapter(activityInforms);
+        vi.setAdapter(adapter);
+    }
+
+    //显示私人消息
+    private void showPrivateMessage(){
+        if(ifLoadInforms ==false){
+            loadAllMessages();
+        }
+        ListView vi=(ListView) findViewById(R.id.content);
+        vi.removeAllViewsInLayout();
+        MyAdapter adapter = new MyAdapter(privatedInforms);
+        vi.setAdapter(adapter);
+    }
+
+
+    /* 点击事件 */
     //点击系统消息
     public void system_Click(View v){
         cleanContent();
-        loadMessage("0");
+        showSystemMessage();
     }
 
     //点击私信
     public void private_Click(View v){
         cleanContent();
-        loadMessage("1");
+        showPrivateMessage();
     }
 
     //点击活动消息
     public void activity_Click(View v){
         cleanContent();
-        loadMessage("2");
+        showActivityMessage();
     }
 
     //返回上级

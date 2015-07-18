@@ -1,10 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     android:background="#ffffff"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Welcome">
+    tools:context=".Welcome"
+    android:padding="10dp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,9 +23,9 @@
             android:textColor="#A8A8AA"
             android:background="@null"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:gravity="right"
             android:id="@+id/registeredButton"
-            android:onClick="registered_Click" />
+            android:onClick="registered_Click"
+            android:gravity="center|right" />
 
         <ImageView
             android:layout_width="194dp"
@@ -52,7 +51,7 @@
                 android:id="@+id/textView"
                 android:singleLine="true"
                 android:focusableInTouchMode="false"
-                android:layout_marginTop="20px"
+                android:layout_marginTop="20dp"
                 android:focusable="false" />
 
             <EditText
@@ -118,18 +117,26 @@
                 android:onClick="landing_Click">
             </Button>
 
-            <Button
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="10dp"
-                android:text="游客登陆"
-                android:textColor="#A8A8AA"
-                android:background="@null"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:textSize="20dp"
-                android:gravity="right"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
+                android:layout_height="match_parent"
+                android:gravity="right">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="10dp"
+                    android:text="游客登陆"
+                    android:textColor="#A8A8AA"
+                    android:background="#ffffff"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:textSize="20dp"
+                    android:gravity="right"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:onClick="tourist_Click" />
+            </LinearLayout>
 
 
         </LinearLayout>

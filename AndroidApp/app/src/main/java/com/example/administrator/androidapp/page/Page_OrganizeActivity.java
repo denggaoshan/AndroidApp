@@ -19,7 +19,7 @@ import android.widget.TimePicker;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.DateFactory;
-import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.tool.Utils;
 
@@ -198,9 +198,9 @@ public class Page_OrganizeActivity extends ActionBarActivity {
     }
 
     private void commit(){
-        Message msg = Message.getCurrentMessage();
+        MyMessage msg = MyMessage.getCurrentMyMessage();
 
-        Message reflect =  ToolClass.launchActivity(msg.getUser().getUserID(), title, content, startTime, endTime, place, type);
+        MyMessage reflect =  ToolClass.launchActivity(msg.getUser().getUserID(), title, content, startTime, endTime, place, type);
         if(checkMess(reflect.getMess())){
             Utils.showMessage(this,"添加活动成功");
             Utils.transPage(this, Page_TotalActivity.class);

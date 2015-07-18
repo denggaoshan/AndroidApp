@@ -1,6 +1,5 @@
 package com.example.administrator.androidapp.page;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
@@ -20,14 +19,13 @@ import android.widget.TextView;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.DateFactory;
-import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.AsynImageLoader;
 import com.example.administrator.androidapp.tool.Utils;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class Page_Manage_Activity extends ActionBarActivity {
@@ -75,7 +73,7 @@ public class Page_Manage_Activity extends ActionBarActivity {
     /**********   装载信息   *************/
     //装载用户名和头像
     private void loadUserInformation(){
-        Message msg = Message.getCurrentMessage();
+        MyMessage msg = MyMessage.getCurrentMyMessage();
         TextView account = (TextView)findViewById(R.id.Account);
         account.setText(msg.getUser().getAccount());
         try {
@@ -93,21 +91,21 @@ public class Page_Manage_Activity extends ActionBarActivity {
 
     //重新装载发起活动
     private void loadLauncheActivities(){
-        Message msg = ToolClass.getLaunchedActivity(User.getCurrentUser().getUserID());
+        MyMessage msg = ToolClass.getLaunchedActivity(User.getCurrentUser().getUserID());
         allLauncheActivities = msg.getActivities();
         ifLoadLauncheActivities = true;
     }
 
     //重新装载参与活动
     private void loadParticipatedActivities(){
-        Message msg = ToolClass.getParticipatedActivity(User.getCurrentUser().getUserID());
+        MyMessage msg = ToolClass.getParticipatedActivity(User.getCurrentUser().getUserID());
         allParticipatedActivities = msg.getActivities();
         ifLoadPartactivityActivities = true;
     }
 
     //重新装载申请中
     private void loadApplicatedActivities(){
-        Message msg = ToolClass.getApplicatedActivity(User.getCurrentUser().getUserID());
+        MyMessage msg = ToolClass.getApplicatedActivity(User.getCurrentUser().getUserID());
         allApplyingActivities = msg.getActivities();
         ifLoadAppliactivityActivities = true;
     }

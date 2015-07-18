@@ -7,35 +7,35 @@ import org.json.JSONObject;
 /**
  * Created by admin on 2015/7/3.
  */
-public class Message {
+public class MyMessage {
 
     private String mess;
     private User user;
     private User[] users;
     private MyActivity activity;
     private MyActivity[] activities;
-    private static Message currentMessage;
+    private static MyMessage currentMyMessage;
     private static String tempJsonString;
     public String getJsonString()
     {
         return tempJsonString;
     }
 
-    public static void setCurrentMessage(Message msg)
+    public static void setCurrentMyMessage(MyMessage msg)
     {
-        currentMessage = msg;
+        currentMyMessage = msg;
     }
 
-    public static Message getCurrentMessage()
+    public static MyMessage getCurrentMyMessage()
     {
-        return currentMessage;
+        return currentMyMessage;
     }
 
 
-    public static Message createMessage(String jsonString, int userCount, int activityCount)
+    public static MyMessage createMessage(String jsonString, int userCount, int activityCount)
     {
         tempJsonString = jsonString;
-        Message temp = new Message();
+        MyMessage temp = new MyMessage();
 
         JSONObject allMsg = temp.getAllMsg(jsonString);
         if (allMsg != null)

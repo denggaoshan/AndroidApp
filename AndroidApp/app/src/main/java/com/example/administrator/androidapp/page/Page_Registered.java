@@ -1,37 +1,29 @@
 package com.example.administrator.androidapp.page;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.ToolClass;
-import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.tool.Utils;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -129,11 +121,11 @@ public class Page_Registered extends ActionBarActivity {
                 avatar = DEFAULTIMG;
             else
                 avatar = ToolClass.uploadFile(picPath);
-             Message msg = ToolClass.register(account, password, sex, phone, mailbox, avatar);
+             MyMessage msg = ToolClass.register(account, password, sex, phone, mailbox, avatar);
 
             if(checkMess(msg.getMess())){
                 Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
-                Message.setCurrentMessage(msg);
+                MyMessage.setCurrentMyMessage(msg);
                 User.setCurrentUser(msg.getUser());
                 //登陆
                 Toast.makeText(Page_Registered.this, "", Toast.LENGTH_LONG).show();

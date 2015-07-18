@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
-import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
@@ -88,7 +88,7 @@ public class Page_Information_User extends ActionBarActivity {
         try {
             getInput();
 
-            Message msg = ToolClass.updateuserbaseinfo(User.getCurrentUser().getUserID(),nickName,sex, age, constellation,
+            MyMessage msg = ToolClass.updateuserbaseinfo(User.getCurrentUser().getUserID(),nickName,sex, age, constellation,
                     profession, liveplace, description, phone, mailBox);
             if(msg!=null){
                 Utils.showMessage(this,msg.getMess());

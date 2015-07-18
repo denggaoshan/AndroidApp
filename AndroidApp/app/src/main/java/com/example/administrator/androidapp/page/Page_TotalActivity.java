@@ -23,21 +23,16 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
-import com.example.administrator.androidapp.msg.DateFactory;
 import com.example.administrator.androidapp.msg.MyActivity;
-import com.example.administrator.androidapp.msg.Message;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Page_TotalActivity extends ActionBarActivity implements OnTouchListener{
-
-
 
     /*************  侧边栏滑动的效果 ****************/
     public static final int SNAP_VELOCITY = 100;//滚动显示和隐藏menu时，手指滑动需要达到的速度。

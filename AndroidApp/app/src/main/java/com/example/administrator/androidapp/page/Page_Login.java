@@ -1,5 +1,6 @@
 package com.example.administrator.androidapp.page;
 
+import android.os.Handler;
 import android.os.StrictMode;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,14 +8,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
 
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.ToolClass;
-import com.example.administrator.androidapp.msg.Message;
+import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.tool.Utils;
+
 
 
 public class Page_Login extends ActionBarActivity {
@@ -30,10 +33,10 @@ public class Page_Login extends ActionBarActivity {
         String jsonMsg = Utils.getLogData();
         if (jsonMsg != null && !jsonMsg.equals(""))
         {
-            Message tempMsg = Message.createMessage(jsonMsg, 1, 2);
+            MyMessage tempMsg = MyMessage.createMessage(jsonMsg, 1, 2);
             User.setCurrentUser(tempMsg.getUser());
             if (checkMess(tempMsg.getMess())) {
-                Message.setCurrentMessage(tempMsg);
+                MyMessage.setCurrentMyMessage(tempMsg);
                 Utils.transPage(this, Page_TotalActivity.class);
                 return;
             }
@@ -49,14 +52,14 @@ public class Page_Login extends ActionBarActivity {
     }
 
     private String checkUser(String username,String password){
-        Message msg =  ToolClass.load(username, password);
+        MyMessage msg =  ToolClass.load(username, password);
         if(msg == null){
             return "NO";
         }
         if (checkMess(msg.getMess()))
         {
             Utils.storeLogData(msg.getJsonString());
-            Message.setCurrentMessage(msg);
+            MyMessage.setCurrentMyMessage(msg);
             User.setCurrentUser(msg.getUser());
             return "OK";
         }
@@ -75,8 +78,7 @@ public class Page_Login extends ActionBarActivity {
     public void landing_Click(View v) {
         //获得输入框文本
         getInput();
-
-        Utils.showMessage(this, "登录中");
+        Utils.showMessage(Page_Login.this, "登录中");
 
         if(!"OK".equals(PatternValid.validUsername(username))){
             Utils.showMessage(this, "用户名格式不正确");

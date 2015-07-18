@@ -31,7 +31,7 @@ public class Inform {
             }
         }
 
-        Message msg = ToolClass.getUserInfo(temp.TargetID,temp.Form);
+        MyMessage msg = ToolClass.getUserInfo(temp.TargetID,temp.Form);
         if(msg!=null){
             User user = msg.getUser();
             if(user != null){

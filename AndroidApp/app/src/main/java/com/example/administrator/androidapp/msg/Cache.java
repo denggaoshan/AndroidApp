@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 
 /**
  * Created by admin on 2015/7/15.
@@ -27,13 +26,52 @@ public class Cache {
         return userAvater;
     }
 
-
-    /**
-     * ***********************   存储消息的缓存  ************************
-     */
     private static HashMap<String, ArrayList<Inform>> systemInformsCache = new HashMap<>();
     private static HashMap<String, ArrayList<Inform>> activityInformsCache = new HashMap<>();
     private static HashMap<String, ArrayList<Inform>> privatedInformsCache = new HashMap<>();
+    private static HashMap<String,User[]> activityMember = new HashMap<>();
+    private static HashMap<String,Comment[]> activityComments = new HashMap<>();
+    private static HashMap<String,Photo[]> activityPhotos = new HashMap<>();
+    private static Map<String, List<MyActivity>> activitiesCache = null;
+    private static HashMap<String,User> userCache = new HashMap<>();
+    private static HashMap<String,MyActivity> activityCache = new HashMap<>();
+
+    //更新所有的Cache
+    private static void updateAllCache() {
+        //更新用户的Cache
+        for(Map.Entry<String,User> item:userCache.entrySet()){
+            String userId = item.getKey();
+            MyMessage msg = ToolClass.getUserInfo(User.getCurrentUser().getUserID(), userId);
+            User user = msg.getUser();
+            if(user!=null){
+                item.setValue(msg.getUser());
+            }
+        }
+
+        //更新活动的Cache
+         activitiesCache=null;
+         loadActivitiesMap("A");
+    }
+
+    /*开一个线程专门用来在后台更新缓存数据*/
+    public static void beginDownLoad(){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int i = 0;
+                //不断更新各种缓存
+                while (true){
+                    i++;
+                    updateAllCache();
+
+                }
+            }
+
+        }).start();
+
+    }
+
 
 
     /*获得当前用户的系统消息*/
@@ -102,7 +140,6 @@ public class Cache {
         }
     }
 
-
     //存储图片
     private static HashMap<String, Bitmap> bitmapCache = new HashMap<>();
 
@@ -123,10 +160,6 @@ public class Cache {
         bitmapCache.put(url, bm);
     }
 
-
-
-    /************** 活动的缓存 ***************/
-    private static Map<String, List<MyActivity>> activitiesCache = null;
 
     //主页面的活动缓存
     public static Map<String, List<MyActivity>> loadActivitiesMap(String type) {
@@ -156,7 +189,7 @@ public class Cache {
             }
         } else {
             //下载所有活动
-            Message msg = ToolClass.getActivityList("" + 1, "" + -1, "" + 1);
+            MyMessage msg = ToolClass.getActivityList("" + 1, "" + -1, "" + 1);
             MyActivity[] activities = msg.getActivities();
             if (activities != null) {
                 for (MyActivity act : activities) {
@@ -179,17 +212,12 @@ public class Cache {
     }
 
 
-
-    private static HashMap<String,User[]> activityMember = new HashMap<>();
-    private static HashMap<String,Comment[]> activityComments = new HashMap<>();
-    private static HashMap<String,Photo[]> activityPhotos = new HashMap<>();
-
     //活动的成员
     public static User[] loadAllUsers(String id){
         if(activityMember.containsKey(id)){
             return activityMember.get(id);
         }else{
-            Message msg = ToolClass.getParticipation(User.getCurrentUser().getUserID(), id);
+            MyMessage msg = ToolClass.getParticipation(User.getCurrentUser().getUserID(), id);
             User[] allUsers = msg.getUsers();
             activityMember.put(id,allUsers);
             return allUsers;
@@ -227,26 +255,18 @@ public class Cache {
     }
 
 
-
-    /************** 用户信息缓存 **************/
-    //存储用户信息
-    private static HashMap<String,User> userCache = new HashMap<>();
-
-
     //根据ID获得用户
     public static User getUserById(String id){
         if(userCache.containsKey(id)){
             return userCache.get(id);
         }else{
-            Message msg = ToolClass.getUserInfo(User.getCurrentUser().getUserID(), id);
+            MyMessage msg = ToolClass.getUserInfo(User.getCurrentUser().getUserID(), id);
             User user = msg.getUser();
             userCache.put(id,user);
             return user;
         }
     }
 
-    //存储活动信息
-    private static HashMap<String,MyActivity> activityCache = new HashMap<>();
 
     //根据ID获得用户
     public static MyActivity getActivityById(String id){
@@ -257,10 +277,5 @@ public class Cache {
         }
     }
 
-
-
-    public static void beginDownLoad(){
-
-    }
 
 }

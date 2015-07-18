@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Button;
 import android.widget.EditText;
@@ -188,8 +189,22 @@ public class Utils {
     }
 
     //弹出提示窗口
-    public static void showMessage(ActionBarActivity parent,String message){
-        Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
+    public static void showMessage(final ActionBarActivity parent, final String message){
+
+        final Handler handler = new Handler();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }).start();
+
     }
 
     //弹出Debug窗口
@@ -216,7 +231,7 @@ public class Utils {
     public static String showInputDialog(String title,Context ctx){
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setTitle(title);
-        builder.setMessage("Message");
+        builder.setMessage("MyMessage");
 
         return null;
     }

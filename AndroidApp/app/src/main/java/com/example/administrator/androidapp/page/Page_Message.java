@@ -1,6 +1,9 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -24,7 +27,9 @@ import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
 
-public class Page_Message extends ActionBarActivity {
+public class Page_Message extends ActionBarActivity{
+
+    private User currentUser ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,6 @@ public class Page_Message extends ActionBarActivity {
         setContentView(R.layout.page_message);
 
         currentUser = User.getCurrentUser();
-
         showSystemMessage();
     }
 
@@ -42,16 +46,6 @@ public class Page_Message extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_page__message, menu);
         return true;
     }
-
-    User currentUser ;
-
-
-
-
-    boolean ifLoadInforms = false;
-
-
-
 
     private class MyAdapter extends BaseAdapter{
         ArrayList<Inform> informs;

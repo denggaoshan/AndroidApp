@@ -86,10 +86,15 @@ public class MyMessage {
         }
     }
 
+
+
+
     private void setUser(JSONObject jsonObject)
     {
         try {
             user = User.createUser(jsonObject.getJSONObject("user"));
+            user.setGood(jsonObject);
+            user.setIsgood(jsonObject);
         }
         catch (JSONException e)
         {
@@ -115,6 +120,8 @@ public class MyMessage {
                 try
                 {
                     users[i] = User.createUser(jsonArray.getJSONObject(i));
+                    users[i].setGood(jsonObject);
+                    users[i].setIsgood(jsonObject);
                 }
                 catch (JSONException E)
                 {

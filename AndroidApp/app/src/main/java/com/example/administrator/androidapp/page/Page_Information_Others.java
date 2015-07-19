@@ -42,6 +42,7 @@ public class Page_Information_Others extends ActionBarActivity {
         loadOne(user, R.id.Description, "Description");
         loadOne(user, R.id.Phone, "Phone");
         loadOne(user, R.id.Mailbox, "Mailbox");
+        loadOne(user,R.id.good, "good");
     }
 
     private void loadOne(User user,int id,String content){
@@ -79,6 +80,13 @@ public class Page_Information_Others extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //点赞
+    public void good_Click(View v)
+    {
+        String str = User.getCurrentUser().createGood(User.getOtherUser().getUserID());
+        Utils.showMessage(this,str);
     }
 
     public void back_Click(View v)

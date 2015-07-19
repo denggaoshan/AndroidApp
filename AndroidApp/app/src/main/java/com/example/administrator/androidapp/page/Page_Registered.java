@@ -67,10 +67,14 @@ public class Page_Registered extends ActionBarActivity {
     private String picPath = null;
     public void choose_Click(View v)
     {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, TAKE_PICTURE);
+        try{
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, TAKE_PICTURE);
+        }catch (Exception e){
+            Utils.showMessage(this,"上传头像失败"+e.toString());
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -122,19 +126,19 @@ public class Page_Registered extends ActionBarActivity {
             else
                 avatar = ToolClass.uploadFile(picPath);
              MyMessage msg = ToolClass.register(account, password, sex, phone, mailbox, avatar);
-
             if(checkMess(msg.getMess())){
-                Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
+                Utils.showMessage(this, "注册成功");
                 MyMessage.setCurrentMyMessage(msg);
-                User.setCurrentUser(msg.getUser());
-                //登陆
-                Toast.makeText(Page_Registered.this, "", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.setClass(Page_Registered.this, Page_TotalActivity.class);
-                Page_Registered.this.startActivity(intent);
-                Page_Registered.this.finish();
+                User user = msg.getUser();
+                if(user!=null){
+                    User.setCurrentUser(msg.getUser());
+                    //登陆
+                    Utils.transPage(this,Page_TotalActivity.class);
+                }else{
+                    Utils.debugMessage(this,"debug 0001 user为空");
+                }
             }else{
-                Toast.makeText(this, "注册失败", Toast.LENGTH_LONG).show();
+                Utils.showMessage(this, "注册失败");
                 return;
             }
         }
@@ -142,10 +146,11 @@ public class Page_Registered extends ActionBarActivity {
 
     private boolean checkMess(String mess)
     {
-        if (mess == null || mess.equals("register") || mess.equals(""))
+        if(mess.equals("ok")){
+        return true;
+        }else{
             return false;
-        else
-            return true;
+        }
     }
 
     private String getInput() {

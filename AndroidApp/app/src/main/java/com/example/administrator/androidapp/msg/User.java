@@ -41,6 +41,36 @@ public class User {
     public static void setCurrentUser(User user){currentUser = user;}
 
 
+    public String getUserType(){
+        if(UserID.equals("00000001")){
+            return "游客";
+        }else if(IsCheckedMailbox.equals("0")){
+            return "普通用户";
+        }else {
+            return "认证用户";
+        }
+    }
+
+    public boolean isLauncher(User[] allUsers){
+        if(allUsers!=null){
+            if(UserID.equals(allUsers[0].getUserID())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //给别人点赞
+    public String createGood(String toid){
+        if(isgood=="0"){
+            String ret = ToolClass.addOrDeleteGood(this.getUserID(), toid, "1");
+            isgood="1";
+            return ret;
+        }else{
+            return "已经赞过了";
+        }
+    }
+
     public static User createUser(JSONObject jsonObject)
     {
         try {
@@ -59,8 +89,6 @@ public class User {
                 temp.setProperty(val, jsonObject);
             }
         }
-        temp.setGood(jsonObject);
-        temp.setIsgood(jsonObject);
 
         return temp;
     }
@@ -83,25 +111,25 @@ public class User {
             Field  fs= this.getClass().getDeclaredField(fieldName);
             fs.setAccessible(true);
             ret = (String)fs.get(this);
-            if(ret != null || !ret.equals("null")){
+            if(ret != null && !ret.equals("null")){
                 //转换性别
                 if(fieldName.equals("Sex")){
                     ret = Utils.changeSex(ret);
                 }
             }else{
-                ret = null;
+                ret = "";
             }
 
         } catch (NoSuchFieldException e) {
-            return null;
+            return "";
         }  catch (IllegalAccessException e) {
-            return  null;
+            return  "";
         }
 
         return ret;
     }
 
-    private void setGood(JSONObject jsonObject)
+    public void setGood(JSONObject jsonObject)
     {
         try
         {
@@ -112,7 +140,7 @@ public class User {
         }
     }
 
-    private void setIsgood(JSONObject jsonObject)
+    public void setIsgood(JSONObject jsonObject)
     {
         try
         {

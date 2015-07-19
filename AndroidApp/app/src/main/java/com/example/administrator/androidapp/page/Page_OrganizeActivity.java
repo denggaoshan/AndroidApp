@@ -176,7 +176,7 @@ public class Page_OrganizeActivity extends ActionBarActivity {
             }
         });
 
-        type.setOnTouchListener(new Spinner.OnTouchListener(){
+        type.setOnTouchListener(new Spinner.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 return false;
             }
@@ -205,16 +205,16 @@ public class Page_OrganizeActivity extends ActionBarActivity {
             Utils.showMessage(this,"添加活动成功");
             Utils.transPage(this, Page_TotalActivity.class);
         }else{
-            Utils.showMessage(this, "添加活动失败");
+            Utils.showMessage(this, "添加活动失败"+reflect.getMess());
         }
     }
 
     private boolean checkMess(String mess)
     {
-        if (mess == null || mess.equals("error") || mess.equals(""))
-            return false;
-        else
+        if(mess.equals("ok")){
             return true;
+        }
+        return false;
     }
 
     //获得输入

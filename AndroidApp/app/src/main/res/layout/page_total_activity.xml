@@ -10,7 +10,9 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:background="#50d2c2"
-        android:paddingTop="20dp">
+        android:paddingTop="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -32,6 +34,15 @@
             android:layout_height="wrap_content"
             android:text="花千骨"
             android:id="@+id/name"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="普通用户"
+            android:id="@+id/identity"
             android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="20dp" />
@@ -94,7 +105,7 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="账户管理"
+                android:text="修改密码"
                 android:id="@+id/button3"
                 android:background="#50d2c2"
                 android:textSize="20dp"

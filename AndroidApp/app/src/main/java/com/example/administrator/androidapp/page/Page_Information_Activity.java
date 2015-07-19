@@ -45,6 +45,10 @@ public class Page_Information_Activity extends ActionBarActivity {
         //加载当前的活动信息
         loadCurrentActivity();
 
+        //加载活动成员
+        allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
+        isLauncher=User.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
+
         showActivityDetail();
 
         ImageView iv = ((ImageView) findViewById(R.id.Edit));
@@ -77,8 +81,8 @@ public class Page_Information_Activity extends ActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = new LinearLayout(parent.getContext());
             if(position == 0){
-                convertView = new LinearLayout(parent.getContext());
                 if(convertView!=null){
                     Context ctx = convertView.getContext();
                     LayoutInflater nflater = LayoutInflater.from(ctx);
@@ -98,23 +102,62 @@ public class Page_Information_Activity extends ActionBarActivity {
                     }
                 }
             }else{
-                //显示最后的按钮
-                convertView = new LinearLayout(parent.getContext());
-                if (convertView != null) {
-                    Context ctx = convertView.getContext();
-                    LayoutInflater nflater = LayoutInflater.from(ctx);
-                    convertView = nflater.inflate(R.layout.content_button, null);
-                    Button btn = (Button) convertView.findViewById(R.id.btn);
-                    btn.setText("报名参加");
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //
-                        }
-                    });
-                }
-            }
 
+                if(isLauncher){
+                    //如果是活动管理员，显示群发消息按钮
+                    //显示最后的按钮
+                    convertView = new LinearLayout(parent.getContext());
+                    if (convertView != null) {
+                        Context ctx = convertView.getContext();
+                        LayoutInflater nflater = LayoutInflater.from(ctx);
+                        convertView = nflater.inflate(R.layout.content_button, null);
+                        Button btn = (Button) convertView.findViewById(R.id.btn);
+                        btn.setText("群发消息");
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sendActivityMessage();
+                            }
+                        });
+                    }
+
+                }else if(currentUser.getUserType().equals("游客")){
+                    //显示最后的按钮
+                    convertView = new LinearLayout(parent.getContext());
+                    if (convertView != null) {
+                        Context ctx = convertView.getContext();
+                        LayoutInflater nflater = LayoutInflater.from(ctx);
+                        convertView = nflater.inflate(R.layout.content_button, null);
+                        Button btn = (Button) convertView.findViewById(R.id.btn);
+                        btn.setText("赶快注册！");
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Utils.transPage(Page_Information_Activity.this,Page_Registered.class);
+                            }
+                        });
+                    }
+                }else{
+                    //显示最后的按钮
+                    convertView = new LinearLayout(parent.getContext());
+                    if (convertView != null) {
+                        Context ctx = convertView.getContext();
+                        LayoutInflater nflater = LayoutInflater.from(ctx);
+                        convertView = nflater.inflate(R.layout.content_button, null);
+                        Button btn = (Button) convertView.findViewById(R.id.btn);
+                        btn.setText("报名参加");
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //活动报名
+                                Utils.showMessage(Page_Information_Activity.this,"报名中");
+                                joinActivity();
+                            }
+                        });
+                    }
+                }
+
+            }
             return convertView;
         }
     }
@@ -129,7 +172,7 @@ public class Page_Information_Activity extends ActionBarActivity {
             if(allUsers!=null){
                 return allUsers.length+1;
             }else {
-                return 0;
+                return 1;
             }
 
         }
@@ -146,9 +189,10 @@ public class Page_Information_Activity extends ActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+
+            convertView = new LinearLayout(parent.getContext());
             if(position < getCount()-1){
                 //如果是正常内容
-                convertView = new LinearLayout(parent.getContext());
 
                 final User user = allUsers[position];
 
@@ -183,19 +227,30 @@ public class Page_Information_Activity extends ActionBarActivity {
                     Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
             }else{
-                convertView = new LinearLayout(parent.getContext());
-                if(convertView!=null ) {
+                if( isLauncher ){
+                    //如果是获得发起人，则可以看到成员管理按钮
+                    convertView = new LinearLayout(parent.getContext());
+                    if(convertView!=null ) {
+                        Context ctx = convertView.getContext();
+                        LayoutInflater nflater = LayoutInflater.from(ctx);
+                        convertView = nflater.inflate(R.layout.content_button,null);
+                        Button btn = (Button)convertView.findViewById(R.id.btn);
+                        btn.setText("成员管理");
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Page_Information_Activity.this.memberMana_Click();
+                            }
+                        });
+                    }
+                } else if(User.getCurrentUser().getUserType().equals("游客")){
+                    //如果是游客，显示提示消息
                     Context ctx = convertView.getContext();
                     LayoutInflater nflater = LayoutInflater.from(ctx);
                     convertView = nflater.inflate(R.layout.content_button,null);
-                    Button btn = (Button)convertView.findViewById(R.id.btn);
-                    btn.setText("成员管理");
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Page_Information_Activity.this.memberMana_Click();
-                        }
-                    });
+                    convertView = nflater.inflate(R.layout.content_tips, null);
+                    TextView tv = (TextView) convertView.findViewById(R.id.content);
+                    tv.setText("对不起，您无权查看这里的内容");
                 }
             }
             return convertView;
@@ -209,8 +264,7 @@ public class Page_Information_Activity extends ActionBarActivity {
             if(allComments!=null){
                 return allComments.length+1;
             }else {
-                Utils.debugMessage(Page_Information_Activity.this,"评论为空");
-                return 0;
+                return 1;
             }
         }
 
@@ -226,10 +280,8 @@ public class Page_Information_Activity extends ActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
+            convertView = new LinearLayout(parent.getContext());
             if(position<getCount()-1){
-                convertView = new LinearLayout(parent.getContext());
-
                 Comment comment = allComments[position];
 
                 if(convertView!=null && comment!= null){
@@ -345,39 +397,53 @@ public class Page_Information_Activity extends ActionBarActivity {
 
     //显示活动详情
     private void showActivityDetail(){
-        ListView vi=(ListView) findViewById(R.id.content);
-        if(currentActivity!=null){
-            DetailAdapter adapter = new DetailAdapter(currentActivity);
-            vi.setAdapter(adapter);
-        }else{
-            Utils.debugMessage(this,"当前活动为空");
+        try {
+            ListView vi=(ListView) findViewById(R.id.content);
+            if(currentActivity!=null){
+                DetailAdapter adapter = new DetailAdapter(currentActivity);
+                vi.setAdapter(adapter);
+            }else{
+                Utils.debugMessage(this,"当前活动为空");
+            }
+        }catch (Exception e){
+            Utils.debugMessage(Page_Information_Activity.this,"加载适配器遇到空指针");
         }
     }
 
     //显示活动成员
     private void showActivityMember() {
-        ListView vi=(ListView) findViewById(R.id.content);
-        AllUsersAdapter adapter = new AllUsersAdapter();
-        vi.setAdapter(adapter);
+        try{
+            ListView vi=(ListView) findViewById(R.id.content);
+            AllUsersAdapter adapter = new AllUsersAdapter();
+            vi.setAdapter(adapter);
+        }catch (Exception e){
+            Utils.debugMessage(Page_Information_Activity.this,"加载适配器遇到空指针");
+        }
+
     }
 
     //显示活动评论
     private void showActivityComment() {
-        ListView vi=(ListView) findViewById(R.id.content);
-        CommentsAdapter adapter = new CommentsAdapter();
-        vi.setAdapter(adapter);
+        try{
+            ListView vi=(ListView) findViewById(R.id.content);
+            CommentsAdapter adapter = new CommentsAdapter();
+            vi.setAdapter(adapter);
+        }catch (Exception e){
+            Utils.debugMessage(Page_Information_Activity.this,"加载适配器遇到空指针");
+        }
     }
 
     //显示活动相册
     private void showActivityAlbum(){
-        ListView vi=(ListView) findViewById(R.id.content);
-        PhotosAdapter  adapter = new PhotosAdapter();
-        vi.setAdapter(adapter);
+        try{
+            ListView vi=(ListView) findViewById(R.id.content);
+            PhotosAdapter  adapter = new PhotosAdapter();
+            vi.setAdapter(adapter);
+        }catch (Exception e){
+            Utils.debugMessage(Page_Information_Activity.this,"加载适配器遇到空指针");
+        }
+
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -412,25 +478,44 @@ public class Page_Information_Activity extends ActionBarActivity {
         rn.setBackgroundColor(0xFF50d2c2);
     }
 
+
+    //群发消息接口
+    private void sendActivityMessage(){
+
+    }
+
+    //活动报名
     private void joinActivity() {
         String ret = ToolClass.applyParticipation(currentUser.getUserID(),currentActivity.getActivityID(),"我想参加");
-        Utils.showMessage(this, ret);
+        if(ret!=null){
+            if(ret.equals("OK")){
+                Utils.showMessage(this, "报名成功，审核中");
+            }else{
+                Utils.showMessage(this, "已经报名过了");
+            }
+        }
     }
 
     /**************       导航栏点击事件           *************/
     //点击评论
     public void comment_Click(View v) {
         changeFocus(3);
-        if(!ifLoadComments){
-            allComments = Cache.loadAllComments(currentActivity.getActivityID());
+        if(!User.getCurrentUser().getUserType().equals("游客")){
+            if(!ifLoadComments){
+                allComments = Cache.loadAllComments(currentActivity.getActivityID());
+            }
+        }else{
+            allComments = null;
         }
         showActivityComment();
     }
     //点击相册
     public void album_Click(View v) {
         changeFocus(2);
-        if(!ifLoadPhotos){
-           allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
+        if(!User.getCurrentUser().getUserType().equals("游客")) {
+            if (!ifLoadPhotos) {
+                allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
+            }
         }
         showActivityAlbum();
     }
@@ -442,11 +527,17 @@ public class Page_Information_Activity extends ActionBarActivity {
         }
         showActivityDetail();
     }
+
+    private  boolean isLauncher = false;
+
     //点击活动成员
     public void member_Click(View v) {
         changeFocus(1);
-        if(!ifLoadMembers){
-            allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
+        if(!User.getCurrentUser().getUserType().equals("游客")) {
+            if (!ifLoadMembers) {
+                allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
+                isLauncher=User.getCurrentUser().isLauncher(allUsers);
+            }
         }
         showActivityMember();
     }

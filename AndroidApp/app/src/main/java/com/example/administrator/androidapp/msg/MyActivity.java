@@ -47,26 +47,32 @@ public class MyActivity {
         return temp;
     }
 
+
+    //从userMsg中装载同名的属性，注意 data跟userMsg中大小写必须一致 我干
     private void setProperty(String data,JSONObject userMsg){
         Field fs = null;
         try
         {
             fs= this.getClass().getDeclaredField(data);
             fs.setAccessible(true);
-            String value = userMsg.getString(data);
-            fs.set(this,value);
+
+            String value= null;
+            try {
+                value = userMsg.getString(data);
+            }catch (Exception e){
+                //如果第一个字母大小写不一致 尝试改下
+                String tmp = Character.toLowerCase(data.charAt(0)) + data.substring(1,data.length());
+                try {
+                    value = userMsg.getString(tmp);
+                } catch (JSONException e1) {
+
+                }
+            }
+            fs.set(this, value);
         }
         catch (NoSuchFieldException e)//没找到对应属性
         {
             return;
-        }
-        catch (JSONException e)//没找到JSON
-        {
-            try {
-                fs.set(this,"");
-            } catch (IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
         }
         catch (IllegalAccessException e)//不允许设置属性
         {

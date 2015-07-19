@@ -68,6 +68,7 @@ public class Page_Information_User extends ActionBarActivity {
         loadOne(R.id.Description, "Description");
         loadOne(R.id.Phone, "Phone");
         loadOne(R.id.Mailbox, "Mailbox");
+        loadOne(R.id.good, "good");
     }
 
 

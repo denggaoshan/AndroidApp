@@ -39,7 +39,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     private int screenWidth;   //屏幕宽度值。
     private int leftEdge;  //menu最多可以滑动到的左边缘。值由menu布局的宽度来定，marginLeft到达此值之后，不能再减少。
     private int rightEdge = 0;//menu最多可以滑动到的右边缘。值恒为0，即marginLeft到达0之后，不能增加。
-    private int menuPadding = 500; //menu完全显示时，留给content的宽度值。
+    private int menuPadding = 400; //menu完全显示时，留给content的宽度值。
     private View content;   //主内容的布局。
     private View menu; //menu的布局。
     private LinearLayout.LayoutParams menuParams;//menu布局的参数，通过此参数来更改leftMargin的值。
@@ -215,12 +215,17 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_total_activity);
         initValues();
+
         content.setOnTouchListener(this);
 
         loadActivities("A");
 
         TextView tv = (TextView)findViewById(R.id.name);
         tv.setText(User.getCurrentUser().getNickName());
+
+        tv = (TextView)findViewById(R.id.identity);
+        String type = User.getCurrentUser().getUserType();
+        tv.setText(type);
 
         Thread tempThread = new Thread(){
             public void run(){
@@ -429,7 +434,11 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     //发起活动
     public void add_Click(View v){
-        Utils.transPage(this, Page_OrganizeActivity.class);
+        if(User.getCurrentUser().getUserType().equals("认证用户")){
+            Utils.transPage(this, Page_OrganizeActivity.class);
+        }else{
+            Utils.showMessage(this,"只有认证用户才能发起活动");
+        }
     }
 
     /*************************左侧菜单栏*************************/
@@ -439,25 +448,42 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
     //查看消息
     public void  message_Click(View v){
-        Utils.transPage(this, Page_Message.class);
+        if(!User.getCurrentUser().getUserType().equals("游客")){
+            Utils.transPage(this, Page_Message.class);
+        }else{
+            Utils.showMessage(this,"您还没有注册");
+        }
     }
     //个人资料
     public void   userInfo_Click(View v){
-        Utils.transPage(this,Page_Information_User.class);
+        if(!User.getCurrentUser().getUserType().equals("游客")){
+            Utils.transPage(this,Page_Information_User.class);
+        }else{
+            Utils.showMessage(this,"您还没有注册");
+        }
     }
     //账户管理
     public void account_Click(View v){
-        Utils.transPage(this,Page_Information_User.class);
+        if(!User.getCurrentUser().getUserType().equals("游客")){
+            Utils.transPage(this,Page_Account.class);
+        }else{
+            Utils.showMessage(this,"您还没有注册");
+        }
     }
     //活动管理
     public void manage_Click(View v) {
-        Utils.transPage(this,Page_Manage_Activity.class);
+        if(!User.getCurrentUser().getUserType().equals("游客")){
+            Utils.transPage(this,Page_Manage_Activity.class);
+        }else{
+            Utils.showMessage(this,"您还没有注册");
+        }
     }
     //退出登录
     public void logout_Click(View v){
         Utils.clearLogData();
         Utils.transPage(this,Page_Login.class);
     }
+
 
 
     /*********************导航栏 *****************************/

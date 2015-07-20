@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.page.*;
 
 //import org.apache.commons.codec.binary.Base64;
@@ -46,7 +48,8 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
 /**
- * Created by Administrator on 2015/7/3.
+ * Created by denggaoshan on 2015/7/3.
+ * 存储一些常用的工具函数
  */
 public class Utils {
 
@@ -163,6 +166,9 @@ public class Utils {
         return ret;
     }
 
+
+    /* 页面有关的 */
+
     private static Stack<Class> historyPages = new Stack<Class>();
 
     //切换页面
@@ -213,6 +219,7 @@ public class Utils {
         Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
     }
 
+
     //返回复选框的内容
     public static long getSpinnerById(ActionBarActivity parent,int id){
         return ((Spinner) parent.findViewById(id)).getSelectedItemId();
@@ -224,7 +231,7 @@ public class Utils {
     }
 
     //返回文本框的内容
-    public static String getEditTextById(ActionBarActivity parent,int id){
+    public static String getValueOfEditText(ActionBarActivity parent, int id){
        return ((EditText) parent.findViewById(id)).getText().toString();
     }
 
@@ -313,7 +320,8 @@ public class Utils {
     }
 
 
-    public static void setTextView(Page_MessageDetail parent, int id, String value) {
+
+    public static void setTextView(ActionBarActivity parent, int id, String value) {
         TextView tv = (TextView)parent.findViewById(id);
         if(tv!=null){
             tv.setText(value);
@@ -321,4 +329,39 @@ public class Utils {
             Utils.debugMessage(parent,"没找到textview "+value);
         }
     }
+
+    public static void setTextView(View parent, int id, String value) {
+        TextView tv = (TextView)parent.findViewById(id);
+        if(tv!=null){
+            tv.setText(value);
+        }else{
+        }
+    }
+
+
+
+    /**
+     * 装载用户信息到parent中相应的TextView中去
+     * @param parent 含有很多TextView的页面
+     * @param user 用户信息类
+     * @param ids   TextView的id数组
+     * @param attributes 跟数组对应的相应的属性
+     */
+    public static void loadUserInformation(ActionBarActivity parent,User user,int[] ids,String[] attributes){
+
+        if(parent!=null && user!=null &&ids!=null && attributes!=null){
+            for(int i=0;i<ids.length;i++){
+                String ret = user.getFieldContent(attributes[i]);
+                if(ret!=null){
+                    Utils.setTextView(parent, ids[i],ret);
+                }else{
+                    Utils.debugMessage(parent,"找不到属性"+attributes[i]);
+                }
+            }
+        }else{
+            Utils.debugMessage(parent,"Utils.loadUserInformation输入的数据有错误");
+        }
+
+    }
+
 }

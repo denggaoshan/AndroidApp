@@ -33,32 +33,14 @@ public class Page_Information_Others extends ActionBarActivity {
     }
 
     private void LoadUserInformation(User user){
-        loadOne(user,R.id.NickName,"NickName");
-        loadOne(user,R.id.Sex,"Sex");
-        loadOne(user,R.id.Age,"Age");
-        loadOne(user,R.id.Constellation, "Constellation");
-        loadOne(user,R.id.Profession, "Profession");
-        loadOne(user,R.id.LivePlace,"LivePlace");
-        loadOne(user, R.id.Description, "Description");
-        loadOne(user, R.id.Phone, "Phone");
-        loadOne(user, R.id.Mailbox, "Mailbox");
-        loadOne(user,R.id.good, "good");
-    }
 
-    private void loadOne(User user,int id,String content){
-        TextView tv = (TextView)findViewById(id);
-        if(tv!=null){
-            String ret = user.getFieldContent(content);
-            if(ret!=null){
-                tv.setText(ret);
-            }else{
-                Utils.debugMessage(this,"找不到属性"+content);
-            }
-        }else{
-            Utils.debugMessage(Page_Information_Others.this,"没有找到"+content);
-        }
-    }
+        int[] ids={R.id.NickName,R.id.Sex,R.id.Age,R.id.Constellation,R.id.Profession,R.id.LivePlace,
+                R.id.Description,R.id.Phone, R.id.Mailbox, R.id.good,
+        };
+        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","good"};
 
+        Utils.loadUserInformation(this,user,ids,attribute);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -219,12 +219,12 @@ public class Page_OrganizeActivity extends ActionBarActivity {
 
     //获得输入
     private String getInput() {
-        title = Utils.getEditTextById(this,R.id.title);
+        title = Utils.getValueOfEditText(this, R.id.title);
         if(title.equals("")){
             return "请输入活动标题";
         }
 
-        content = Utils.getEditTextById(this,R.id.content);
+        content = Utils.getValueOfEditText(this, R.id.content);
         if(content.equals("")){
             return "请输入活动内容";
         }
@@ -246,7 +246,7 @@ public class Page_OrganizeActivity extends ActionBarActivity {
         tmp = DateFactory.createDateByString(endTime);
         endTime = DateFactory.createStringByDate(tmp);
 
-        place = Utils.getEditTextById(this,R.id.place);
+        place = Utils.getValueOfEditText(this, R.id.place);
         if (place.equals("")){
             return "请输入地点";
         }

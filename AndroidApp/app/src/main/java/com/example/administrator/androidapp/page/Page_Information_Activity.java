@@ -22,7 +22,7 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.*;
 import com.example.administrator.androidapp.tool.Utils;
 
-public class Page_Information_Activity extends ActionBarActivity {
+public class Page_Information_Activity extends BasePage {
 
     private int currentSelect = 0 ; //当前所选择的标签 0详情 1成员 2相册 3评论
     private MyActivity currentActivity;
@@ -247,7 +247,6 @@ public class Page_Information_Activity extends ActionBarActivity {
                     //如果是游客，显示提示消息
                     Context ctx = convertView.getContext();
                     LayoutInflater nflater = LayoutInflater.from(ctx);
-                    convertView = nflater.inflate(R.layout.content_button,null);
                     convertView = nflater.inflate(R.layout.content_tips, null);
                     TextView tv = (TextView) convertView.findViewById(R.id.content);
                     tv.setText("对不起，您无权查看这里的内容");
@@ -560,22 +559,9 @@ public class Page_Information_Activity extends ActionBarActivity {
                 showActivityComment();
             }
         }else{
-            Utils.debugMessage(this,"没找到comment");
+            Utils.debugMessage(this, "没找到comment");
         }
     }
 
-    /****************     返回      ****************/
-    public void back_Click(View v) {
-        Utils.backPage(this);
-    }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

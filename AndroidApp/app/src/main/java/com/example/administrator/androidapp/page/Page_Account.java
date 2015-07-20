@@ -6,7 +6,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
@@ -16,7 +15,7 @@ import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.tool.Utils;
 
-public class Page_Account extends ActionBarActivity {
+public class Page_Account extends BasePage {
 
     User currentUser;
 
@@ -40,11 +39,9 @@ public class Page_Account extends ActionBarActivity {
 
 
     private void loadOne(int id,String content){
-        TextView tv = (TextView)findViewById(id);
-
         String val  = currentUser.getFieldContent(content);
         if(val !=null){
-            tv.setText(val);
+            Utils.setTextView(this,id,val);
         }else{
             Utils.debugMessage(this, "找不到属性" + content);
         }
@@ -90,14 +87,11 @@ public class Page_Account extends ActionBarActivity {
     }
 
     private boolean input() {
-        EditText tv = (EditText) findViewById(R.id.Old);
-        oldPassword = tv.getText().toString();
+        oldPassword = Utils.getValueOfEditText(this, R.id.Old);
         if (PatternValid.validPassword(oldPassword).equals("OK")) {
-            tv = (EditText) findViewById(R.id.New);
-            newPassWord = tv.getText().toString();
+            newPassWord = Utils.getValueOfEditText(this, R.id.New);
             if (PatternValid.validPassword(newPassWord).equals("OK")) {
-                tv = (EditText) findViewById(R.id.New2);
-                String tmp = tv.getText().toString();
+                String tmp = Utils.getValueOfEditText(this, R.id.New2);
                 if (tmp.equals(newPassWord)) {
                     return true;
                 } else {
@@ -113,17 +107,4 @@ public class Page_Account extends ActionBarActivity {
         return  false;
     }
 
-    public void back_Click(View v) {
-        Utils.backPage(this);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

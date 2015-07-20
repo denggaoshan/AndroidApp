@@ -59,30 +59,12 @@ public class Page_Information_User extends ActionBarActivity {
     }
 
     private void LoadInformation(){
-        loadOne(R.id.NickName,"NickName");
-        loadOne(R.id.Sex,"Sex");
-        loadOne(R.id.Age,"Age");
-        loadOne(R.id.Constellation, "Constellation");
-        loadOne(R.id.Profession, "Profession");
-        loadOne(R.id.LivePlace,"LivePlace");
-        loadOne(R.id.Description, "Description");
-        loadOne(R.id.Phone, "Phone");
-        loadOne(R.id.Mailbox, "Mailbox");
-        loadOne(R.id.good, "good");
+        int[] ids={R.id.NickName,R.id.Sex,R.id.Age,R.id.Constellation,R.id.Profession,R.id.LivePlace,
+                R.id.Description,R.id.Phone, R.id.Mailbox, R.id.good,
+        };
+        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","good"};
+        Utils.loadUserInformation(this,currentUser,ids,attribute);
     }
-
-
-    private void loadOne(int id,String content){
-        TextView tv = (TextView)findViewById(id);
-
-        String val  = currentUser.getFieldContent(content);
-        if(val !=null){
-            tv.setText(val);
-        }else{
-            Utils.debugMessage(this, "找不到属性" + content);
-        }
-    }
-
 
     //点击提交个人信息
     public void submit_Click(View v) {

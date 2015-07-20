@@ -82,8 +82,8 @@ public class Page_SendMessage extends ActionBarActivity {
 
 
     public void submit_Click(View v){
-        String title = Utils.getEditTextById(this,R.id.title);
-        String content = Utils.getEditTextById(this, R.id.content);
+        String title = Utils.getValueOfEditText(this, R.id.title);
+        String content = Utils.getValueOfEditText(this, R.id.content);
         if(title!=null && content!=null){
             if(content.replace(" ","").equals("") || title.replace(" ","").equals("")){
                 Utils.showMessage(this,"标题或者内容不能为空");

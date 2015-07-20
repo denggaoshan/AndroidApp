@@ -56,10 +56,9 @@ public class Page_Manage_Member extends BasePage {
 
     private MyActivity currentActivity;
 
-
-
     private UserAndExplain[] allRequests ; //所有请求
 
+    //适配器
     private class MyAdapter extends BaseAdapter {
 
         UserAndExplain[] allRequests;

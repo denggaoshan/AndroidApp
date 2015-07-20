@@ -36,6 +36,9 @@ public class Cache {
     private static HashMap<String,User> userCache = new HashMap<>();
     private static HashMap<String,MyActivity> activityCache = new HashMap<>();
 
+    private static HashMap<String,UserAndExplain[]> activityRequests = new HashMap<>();//活动申请
+
+
     //更新所有的Cache
     private static void updateAllCache() {
         //更新用户的Cache
@@ -211,6 +214,13 @@ public class Cache {
         return allActivitiesByDayOrder;
     }
 
+
+    public static User[] updateLoadAllUsers(String id){
+        MyMessage msg = ToolClass.getParticipation(User.getCurrentUser().getUserID(), id);
+        User[] allUsers = msg.getUsers();
+        activityMember.put(id,allUsers);
+        return allUsers;
+    }
 
     //活动的成员
     public static User[] loadAllUsers(String id){

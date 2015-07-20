@@ -166,6 +166,9 @@ public class Page_Information_Activity extends BasePage {
     private class AllUsersAdapter extends BaseAdapter{
         @Override
         public int getCount() {
+            if(User.getCurrentUser().getUserType().equals("游客")){
+                return 1;
+            }
             if(allUsers!=null){
                 return allUsers.length+1;
             }else {
@@ -381,7 +384,6 @@ public class Page_Information_Activity extends BasePage {
         }
     }
 
-
     //装载当前的活动信息
     private void loadCurrentActivity() {
         //当前活动
@@ -389,7 +391,6 @@ public class Page_Information_Activity extends BasePage {
         //当前用户
         currentUser = User.getCurrentUser();
     }
-
 
     //显示活动详情
     private void showActivityDetail(){

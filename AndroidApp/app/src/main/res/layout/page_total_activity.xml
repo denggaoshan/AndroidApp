@@ -238,7 +238,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:onClick="naviAll_Click">
+                    android:onClick="naviAll_Click"
+                    android:id="@+id/all">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -258,7 +259,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:onClick="naviOutSide_Click">
+                    android:onClick="naviOutSide_Click"
+                    android:id="@+id/out">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -278,7 +280,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:onClick="naviSport_Click">
+                    android:onClick="naviSport_Click"
+                    android:id="@+id/sport">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -299,7 +302,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:onClick="naviPlay_Click">
+                    android:onClick="naviPlay_Click"
+                    android:id="@+id/play">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -319,7 +323,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:onClick="naviTravel_Click">
+                    android:onClick="naviTravel_Click"
+                    android:id="@+id/travel">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -339,7 +344,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:onClick="naviMusic_Click">
+                    android:onClick="naviMusic_Click"
+                    android:id="@+id/music">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -359,7 +365,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:onClick="naviOther_Click">
+                    android:onClick="naviOther_Click"
+                    android:id="@+id/other">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"

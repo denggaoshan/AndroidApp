@@ -169,16 +169,15 @@ public class Utils {
 
     /* 页面有关的 */
 
-    private static Stack<Class> historyPages = new Stack<Class>();
+    private static Stack<Class> historyPages = new Stack<Class>(){};
 
     //切换页面
     public static void transPage(ActionBarActivity before,Class after){
-        //存储之前的页面
         historyPages.push(before.getClass());
         Intent intent = new Intent();
-        intent.setClass(before,after);
-        before.startActivity(intent);
-        before.finish();
+           intent.setClass(before,after);
+           before.startActivity(intent);
+           before.finish();
     }
 
     //返回上一个页面
@@ -230,7 +229,8 @@ public class Utils {
         return ((Button) parent.findViewById(id)).getText().toString();
     }
 
-    //返回文本框的内容
+
+    //返回文本框的内容 level
     public static String getValueOfEditText(ActionBarActivity parent, int id){
        return ((EditText) parent.findViewById(id)).getText().toString();
     }

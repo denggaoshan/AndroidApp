@@ -1,5 +1,6 @@
 package com.example.administrator.androidapp.page;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
@@ -37,7 +40,7 @@ public class Page_Information_Others extends BasePage {
         int[] ids={R.id.NickName,R.id.Sex,R.id.Age,R.id.Constellation,R.id.Profession,R.id.LivePlace,
                 R.id.Description,R.id.Phone, R.id.Mailbox, R.id.good,
         };
-        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","good"};
+        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","Good"};
 
         Utils.loadUserInformation(this,user,ids,attribute);
     }
@@ -73,8 +76,22 @@ public class Page_Information_Others extends BasePage {
     //点赞
     public void good_Click(View v)
     {
-        String str = User.getCurrentUser().createGood(User.getOtherUser().getUserID());
-        Utils.showMessage(this,str);
+        String str = User.getCurrentUser().createGood(User.getOtherUser());
+        if(str.equals("ok")){
+            //点赞成功
+            String tmp  = ((TextView)findViewById(R.id.good)).getText().toString();
+            if(tmp!=null){
+                String good = String.valueOf(1 + Integer.parseInt(tmp));
+                Cache.updateLoadAllUsers(MyActivity.getCurrentActivity().getActivityID());
+                Utils.setTextView(this,R.id.good,good);
+                Utils.showMessage(this,str);
+            }else{
+                Utils.showMessage(this,"good为空");
+            }
+
+        }else{
+            Utils.showMessage(this,str);
+        }
     }
 
 }

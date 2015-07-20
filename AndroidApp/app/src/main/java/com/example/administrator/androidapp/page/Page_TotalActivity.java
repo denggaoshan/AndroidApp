@@ -285,17 +285,13 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         return super.onOptionsItemSelected(item);
     }
 
-    private MyActivity[] activities; //存储所有的活动
 
     /********** 活动列表适配器 **************/
     private class MyAdapter extends BaseAdapter {
 
         ArrayList<Integer> dateIndex = new ArrayList<Integer>();
-
         ArrayList<Object> allItem = new ArrayList<Object>();
-
         public MyAdapter(Map<String, List<MyActivity>> allActivitiesByDayOrder) {
-
             for (Map.Entry<String, List<MyActivity>> entry : allActivitiesByDayOrder.entrySet()) {
                 dateIndex.add(allItem.size());//记录日期的位置
                 allItem.add(entry.getKey());
@@ -315,7 +311,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                 //没活动
                 return 1;
             }
-
         }
 
         @Override
@@ -394,15 +389,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         ListView vi=(ListView) findViewById(R.id.content);
         MyAdapter myAdapter = new MyAdapter( Cache.loadActivitiesMap(type));
         vi.setAdapter(myAdapter);
-    }
-
-    private void cleanContent(){
-        ListView lv = (ListView)findViewById(R.id.content);
-        if(lv!=null){
-            lv.removeAllViewsInLayout();
-        }else{
-            Utils.debugMessage(this,"没有找到content");
-        }
     }
 
 
@@ -502,32 +488,25 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     /*********************导航栏 *****************************/
     public void naviAll_Click(View v) {
-        cleanContent();
         loadActivities("A");
     }
 
     public void naviOutSide_Click(View v) {
-        cleanContent();
         loadActivities("0");
     }
     public void naviSport_Click(View v) {
-        cleanContent();
         loadActivities("1");
     }
     public void naviPlay_Click(View v) {
-        cleanContent();
         loadActivities("2");
     }
     public void naviTravel_Click(View v) {
-        cleanContent();
         loadActivities("3");
     }
     public void naviMusic_Click(View v) {
-        cleanContent();
         loadActivities("4");
     }
     public void naviOther_Click(View v) {
-        cleanContent();
         loadActivities("5");
     }
 

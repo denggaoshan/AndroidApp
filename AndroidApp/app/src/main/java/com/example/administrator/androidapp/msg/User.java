@@ -1,8 +1,5 @@
 package com.example.administrator.androidapp.msg;
 
-import android.widget.TextView;
-
-import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.tool.Utils;
 
 import org.json.JSONException;
@@ -33,8 +30,8 @@ public class User {
     private String RoleID;
     private String RegisterTime;
 
-    private String good;
-    private String isgood;
+    private String Good;
+    private String IsGood;
 
     private static User currentUser;
     public static User getCurrentUser(){return currentUser;}
@@ -61,11 +58,16 @@ public class User {
     }
 
     //给别人点赞
-    public String createGood(String toid){
-        if(isgood=="0"){
-            String ret = ToolClass.addOrDeleteGood(this.getUserID(), toid, "1");
-            isgood="1";
-            return ret;
+    public String createGood(User touser){
+
+        if(touser.IsGood.equals("0")){
+            String ret = ToolClass.addOrDeleteGood(this.getUserID(), touser.getUserID(), "1");
+            touser.IsGood ="1";
+            if(ret.equals("ok")){
+                return ret;
+            }else{
+                return "失败";
+            }
         }else{
             return "已经赞过了";
         }
@@ -73,23 +75,16 @@ public class User {
 
     public static User createUser(JSONObject jsonObject)
     {
-        try {
-            String id = jsonObject.getString("UserID");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         User temp = new User();
         String[] tmp = {"UserID","Account","Avatar","NickName","Sex","Age",
                 "Constellation","Profession","LivePlace","Description","Phone",
-                "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime"};
+                "Mailbox","IsCheckedMailbox","QQ","WeiBo","RoleID","RegisterTime","Good","IsGood"};
 
         if (jsonObject != null) {
             for(String val :tmp){
                 temp.setProperty(val, jsonObject);
             }
         }
-
         return temp;
     }
 
@@ -127,28 +122,6 @@ public class User {
         }
 
         return ret;
-    }
-
-    public void setGood(JSONObject jsonObject)
-    {
-        try
-        {
-            good = jsonObject.getString("good");
-        }
-        catch (JSONException e) {
-            good = "";
-        }
-    }
-
-    public void setIsgood(JSONObject jsonObject)
-    {
-        try
-        {
-            isgood = jsonObject.getString("isgood");
-        }
-        catch (JSONException e) {
-            isgood = "";
-        }
     }
 
 

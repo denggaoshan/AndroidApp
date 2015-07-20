@@ -193,7 +193,16 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=getparticipation"
                 + "&userid=" + userid + "&activityid=" + activityid;
 
-        return MyMessage.createMessage(httpGet(getUrl), 2, 0);
+        MyMessage msg = null;
+
+        String ret = httpGet(getUrl);
+        if(ret!=null){
+            msg =  MyMessage.createMessage(ret, 2, 0);
+            if(msg!=null){
+                return msg;
+            }
+        }
+        return null;
     }
 
     public static InformArray getInform(String userid)

@@ -62,7 +62,7 @@ public class Page_Information_User extends BasePage {
         int[] ids={R.id.NickName,R.id.Sex,R.id.Age,R.id.Constellation,R.id.Profession,R.id.LivePlace,
                 R.id.Description,R.id.Phone, R.id.Mailbox, R.id.good,
         };
-        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","good"};
+        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","Good"};
         Utils.loadUserInformation(this,currentUser,ids,attribute);
     }
 

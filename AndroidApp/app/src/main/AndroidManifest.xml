@@ -65,6 +65,14 @@
             android:name=".page.Page_Account"
             android:label="@string/title_activity_page__account" >
         </activity>
+        <activity
+            android:name=".page.Page_SendMessage"
+            android:label="@string/title_activity_page__send_message" >
+        </activity>
+        <activity
+            android:name=".page.Page_MessageDetail"
+            android:label="@string/title_activity_page__message_detail" >
+        </activity>
     </application>
 
 </manifest>

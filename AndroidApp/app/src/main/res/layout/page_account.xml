@@ -11,7 +11,7 @@
         android:id="@+id/Head"
         android:background="#50d2c2">
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -34,7 +34,7 @@
                 android:gravity="center"
                 android:textColor="#ffffff"
                 android:textSize="30dp" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <ImageView
             android:layout_width="fill_parent"
@@ -70,7 +70,8 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:layout_width="0dp"

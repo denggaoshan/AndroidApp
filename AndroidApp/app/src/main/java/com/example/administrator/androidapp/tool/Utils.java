@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.androidapp.R;
@@ -309,5 +310,15 @@ public class Utils {
         // 执行解密操作
         //return new String(cipher.doFinal(Base64.decodeBase64(data)));
         return new String(cipher.doFinal(Base64.decode(data, Base64.DEFAULT)));
+    }
+
+
+    public static void setTextView(Page_MessageDetail parent, int id, String value) {
+        TextView tv = (TextView)parent.findViewById(id);
+        if(tv!=null){
+            tv.setText(value);
+        }else{
+            Utils.debugMessage(parent,"没找到textview "+value);
+        }
     }
 }

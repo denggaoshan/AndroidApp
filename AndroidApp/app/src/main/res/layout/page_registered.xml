@@ -3,10 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:paddingLeft="15dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="10dp">
+    android:background="#ffffff">
 
 
     <RelativeLayout
@@ -20,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -38,16 +35,15 @@
                     android:nestedScrollingEnabled="false" />
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
                     android:layout_weight="0.8"
                     android:text="注册"
                     android:textSize="25dp"
                     android:gravity="center"
-                    android:id="@+id/textView4"
-                    android:layout_marginLeft="-20dp" />
+                    android:id="@+id/textView4" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <RelativeLayout
@@ -70,10 +66,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView3"
                     android:layout_marginTop="0dp"
-                    android:layout_marginLeft="250dp"
+                    android:layout_marginLeft="230dp"
                     android:src="@drawable/plus"
                     android:layout_gravity="center"
-                    android:layout_marginRight="-10dp"
                     android:onClick="choose_Click" />
 
             </RelativeLayout>
@@ -92,7 +87,9 @@
             android:layout_below="@id/imglayout"
             android:scrollbars="none"
             android:paddingBottom="50dp"
-            android:id="@+id/content">
+            android:id="@+id/content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <LinearLayout
                 android:orientation="vertical"

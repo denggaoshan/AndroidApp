@@ -32,6 +32,7 @@ public class Inform {
         }
 
         MyMessage msg = ToolClass.getUserInfo(temp.TargetID,temp.Form);
+
         if(msg!=null){
             User user = msg.getUser();
             if(user != null){
@@ -71,4 +72,11 @@ public class Inform {
             e.printStackTrace();
         }
     }
+
+
+
+    private static Inform currentInform;
+
+    public static Inform getCurrentInform(){return currentInform;}
+    public static void setCurrentInform(Inform msg){currentInform=msg;}
 }

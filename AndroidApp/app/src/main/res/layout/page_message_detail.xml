@@ -1,0 +1,152 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.example.administrator.androidapp.page.Page_MessageDetail">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#50d2c2"
+        android:gravity="center"
+        android:id="@+id/head">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageView12"
+            android:src="@drawable/icon_close"
+            android:layout_marginLeft="10dp"
+            android:onClick="back_Click" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="消息详情"
+            android:id="@+id/textView22"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:id="@+id/source">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView15"
+                android:src="@drawable/icon_user"
+                android:layout_weight="0.3"
+                android:padding="20dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="left|center"
+                android:paddingLeft="20dp"
+                android:layout_weight="0.7">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="消息标题"
+                    android:id="@+id/title_source"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="07月02日 10:00"
+                    android:id="@+id/time_source"
+                    android:layout_marginTop="5dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩好玩"
+            android:id="@+id/content_source"
+            android:paddingLeft="70dp"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/source"
+        android:background="#dcdcdc"
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.1"
+            android:text="标题"
+            android:id="@+id/title" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.33"
+            android:text="内容"
+            android:id="@+id/content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.06"
+            android:padding="20dp" >
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="回复"
+                android:id="@+id/button4"
+                android:layout_weight="0.5"
+                android:textSize="25dp"
+                android:background="#50d2c2"
+                android:textColor="#ffffff"
+                android:layout_marginRight="20dp"
+                android:onClick="submit_Click" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="取消"
+                android:id="@+id/button9"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.5"
+                android:textSize="25dp"
+                android:background="#50d2c2"
+                android:textColor="#ffffff"
+                android:onClick="back_Click" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

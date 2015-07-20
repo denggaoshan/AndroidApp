@@ -12,4 +12,6 @@
     <string name="title_activity_page__member_manager">Page_MemberManager</string>
     <string name="title_activity_page__others_information">Page_OthersInformation</string>
     <string name="title_activity_page__account">Page_Account</string>
+    <string name="title_activity_page__send_message">Page_SendMessage</string>
+    <string name="title_activity_page__message_detail">Page_MessageDetail</string>
 </resources>

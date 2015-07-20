@@ -4,7 +4,7 @@
     tools:context="com.example.administrator.androidapp.page.Page_Manage_Activity"
     android:background="#ffffff">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
             android:id="@+id/imageView6"
             android:src="@drawable/icon_close"
@@ -23,7 +23,7 @@
             android:onClick="back_Click" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="管理"
             android:id="@+id/textView10"
@@ -31,7 +31,7 @@
             android:textSize="25dp"
             android:gravity="center" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:orientation="vertical"

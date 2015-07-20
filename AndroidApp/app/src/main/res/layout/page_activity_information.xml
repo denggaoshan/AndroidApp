@@ -4,18 +4,17 @@
     android:background="#ffffff"
     tools:context="com.example.administrator.androidapp.page.Page_Information_Activity">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/head"
-        android:paddingLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:id="@+id/imageView6"
             android:src="@drawable/icon_close"
@@ -24,7 +23,7 @@
             android:onClick="back_Click" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="活动信息"
             android:id="@+id/textView10"
@@ -37,8 +36,10 @@
             android:layout_height="40dp"
             android:id="@+id/Edit"
             android:src="@drawable/icon_user"
-            android:layout_weight="0.126" />
-    </LinearLayout>
+            android:layout_weight="0.126"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:orientation="horizontal"

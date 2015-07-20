@@ -21,6 +21,7 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Inform;
 import com.example.administrator.androidapp.msg.InformArray;
+import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
@@ -83,7 +84,7 @@ public class Page_Message extends ActionBarActivity{
             LayoutInflater nflater = LayoutInflater.from(ctx);
 
             if(informs!=null ){
-                Inform inform = informs.get(position);
+                final Inform inform = informs.get(position);
 
                 convertView= nflater.inflate(R.layout.content_message, null);
                 if(convertView!=null){
@@ -98,8 +99,23 @@ public class Page_Message extends ActionBarActivity{
                         tv.setText(tmp);
 
                         tv = (TextView)convertView.findViewById(R.id.content);
-                        tmp=inform.getContent() ;
+                        tmp=inform.getTitle() ;
                         tv.setText(tmp);
+
+                        convertView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                User source =  inform.getUserSource();
+                                if(source!=null){
+                                    User.setOtherUser(source);
+                                    Inform.setCurrentInform(inform);
+                                    Utils.transPage(Page_Message.this,Page_MessageDetail.class);
+                                }else{
+                                    Utils.debugMessage(Page_Message.this,"0001 找不到通知来源User");
+                                }
+                            }
+                        });
+
                     }catch (NullPointerException e){
                         Utils.debugMessage(Page_Message.this,"界面上存在空指针");
                     }

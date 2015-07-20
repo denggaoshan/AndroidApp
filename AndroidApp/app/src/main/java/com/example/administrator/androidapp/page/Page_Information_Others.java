@@ -82,6 +82,12 @@ public class Page_Information_Others extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //发私信
+    public void message_Click(View v)
+    {
+        Utils.transPage(this,Page_SendMessage.class);
+    }
+
     //点赞
     public void good_Click(View v)
     {

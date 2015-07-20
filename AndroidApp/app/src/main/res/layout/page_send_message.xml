@@ -4,13 +4,44 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <TextView
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="评论"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout2"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" >
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageView29"
+            android:src="@drawable/icon_close"
+            android:padding="10dp"
+            android:onClick="back_Click"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="发消息"
+            android:id="@+id/textView19"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_alignParentLeft="true" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
         android:id="@+id/title"
-        android:gravity="center"
-        android:textSize="20dp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.1"
+        android:text="标题" />
 
     <EditText
         android:layout_width="match_parent"
@@ -20,7 +51,7 @@
         android:id="@+id/content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.33"
-        android:text="请在此输入您的内容" />
+        android:text="内容" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -39,7 +70,8 @@
             android:textSize="25dp"
             android:background="#50d2c2"
             android:textColor="#ffffff"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:onClick="submit_Click" />
 
         <Button
             android:layout_width="0dp"
@@ -50,6 +82,7 @@
             android:layout_weight="0.5"
             android:textSize="25dp"
             android:background="#50d2c2"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:onClick="back_Click" />
     </LinearLayout>
 </LinearLayout>

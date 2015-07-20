@@ -4,7 +4,7 @@
     tools:context="com.example.administrator.androidapp.page.Page_Message"
     android:background="#ffffff">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -29,7 +29,7 @@
             android:textColor="#ffffff"
             android:textSize="30dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ListView
         android:layout_width="fill_parent"

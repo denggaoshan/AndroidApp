@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageView;
 
-import com.example.administrator.androidapp.R;
-import com.example.administrator.androidapp.page.Page_TotalActivity;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -54,7 +52,7 @@ public class Cache {
         if(activityRequests.containsKey(currentActivity.getActivityID())){
             return activityRequests.get(currentActivity.getActivityID());
         }else{
-            UserAndExplainArray msg = ToolClass.getApplication(User.getCurrentUser().getUserID(), currentActivity.getActivityID());
+            UserAndExplainArray msg = ToolClass.getApplication(Current.getCurrentUser().getUserID(), currentActivity.getActivityID());
             if(msg!=null){
                 UserAndExplain[] ret = msg.getUserAndExplains();
                 if(ret!=null){
@@ -73,7 +71,7 @@ public class Cache {
         //更新用户的Cache
         for(Map.Entry<String,User> item:userCache.entrySet()){
             String userId = item.getKey();
-            MyMessage msg = ToolClass.getUserInfo(User.getCurrentUser().getUserID(), userId);
+            MyMessage msg = ToolClass.getUserInfo(Current.getCurrentUser().getUserID(), userId);
             User user = msg.getUser();
             if(user!=null){
                 item.setValue(msg.getUser());
@@ -103,8 +101,6 @@ public class Cache {
         }).start();
 
     }
-
-
 
     /*获得当前用户的系统消息*/
     public static ArrayList<Inform> getSystemInforms(String id) {
@@ -245,7 +241,7 @@ public class Cache {
 
 
     public static User[] updateLoadAllUsers(String id){
-        MyMessage msg = ToolClass.getParticipation(User.getCurrentUser().getUserID(), id);
+        MyMessage msg = ToolClass.getParticipation(Current.getCurrentUser().getUserID(), id);
         User[] allUsers = msg.getUsers();
         activityMember.put(id,allUsers);
         return allUsers;
@@ -256,7 +252,7 @@ public class Cache {
         if(activityMember.containsKey(id)){
             return activityMember.get(id);
         }else{
-            MyMessage msg = ToolClass.getParticipation(User.getCurrentUser().getUserID(), id);
+            MyMessage msg = ToolClass.getParticipation(Current.getCurrentUser().getUserID(), id);
             User[] allUsers = msg.getUsers();
             activityMember.put(id,allUsers);
             return allUsers;
@@ -274,7 +270,7 @@ public class Cache {
         if(activityComments.containsKey(id)){
             return activityComments.get(id);
         }else{
-            ActivityInfo info = ToolClass.getActivityInfo(User.getCurrentUser().getUserID(), id);
+            ActivityInfo info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
             Comment[] allComments = info.getComments();
             activityComments.put(id,allComments);
             return allComments;
@@ -286,7 +282,7 @@ public class Cache {
         if(activityPhotos.containsKey(id)){
             return activityPhotos.get(id);
         }else{
-            ActivityInfo info = ToolClass.getActivityInfo(User.getCurrentUser().getUserID(), id);
+            ActivityInfo info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
             Photo[] allPhotos = info.getPhoto();
             activityPhotos.put(id,allPhotos);
             return allPhotos;
@@ -299,13 +295,12 @@ public class Cache {
         if(userCache.containsKey(id)){
             return userCache.get(id);
         }else{
-            MyMessage msg = ToolClass.getUserInfo(User.getCurrentUser().getUserID(), id);
+            MyMessage msg = ToolClass.getUserInfo(Current.getCurrentUser().getUserID(), id);
             User user = msg.getUser();
             userCache.put(id,user);
             return user;
         }
     }
-
 
     //根据ID获得用户
     public static MyActivity getActivityById(String id){
@@ -315,8 +310,6 @@ public class Cache {
             return null;
         }
     }
-
-
 
 
     private static class AnotherTask extends AsyncTask<String, Void, String> {

@@ -1,14 +1,13 @@
 package com.example.administrator.androidapp.page;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
@@ -23,8 +22,8 @@ public class Page_SendMessage extends BasePage {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_send_message);
 
-        source = User.getCurrentUser();
-        dest = User.getOtherUser();
+        source = Current.getCurrentUser();
+        dest = Current.getOtherUser();
         if(source==null || dest==null){
             Utils.debugMessage(this,"0001 source 或者 dest 为空");
         }

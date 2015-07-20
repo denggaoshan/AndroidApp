@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
@@ -23,7 +24,7 @@ public class Page_Information_User extends BasePage {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_information);
-        currentUser = User.getCurrentUser();
+        currentUser = Current.getCurrentUser();
         LoadInformation();
         try {
             ImageView iv = (ImageView)findViewById(R.id.image);
@@ -60,7 +61,7 @@ public class Page_Information_User extends BasePage {
                 R.id.Description,R.id.Phone, R.id.Mailbox, R.id.good,
         };
         String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","Good"};
-        Utils.loadUserInformation(this,currentUser,ids,attribute);
+        Utils.loadUserInformation(this, currentUser, ids, attribute);
         Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
     }
 
@@ -69,14 +70,14 @@ public class Page_Information_User extends BasePage {
         try {
             getInput();
 
-            MyMessage msg = ToolClass.updateuserbaseinfo(User.getCurrentUser().getUserID(),nickName,sex, age, constellation,
+            MyMessage msg = ToolClass.updateuserbaseinfo(Current.getCurrentUser().getUserID(),nickName,sex, age, constellation,
                     profession, liveplace, description, phone, mailBox);
             if(msg!=null){
                 Utils.showMessage(this,msg.getMess());
                 User user = msg.getUser();
                 if(user!=null){
                     currentUser = user;
-                    User.setCurrentUser(currentUser);
+                    Current.setCurrentUser(currentUser);
                     Utils.backPage(this);
                 }
             }

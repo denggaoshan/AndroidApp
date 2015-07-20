@@ -1,12 +1,7 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,10 +14,8 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.Inform;
-import com.example.administrator.androidapp.msg.InformArray;
-import com.example.administrator.androidapp.msg.MyMessage;
-import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
@@ -37,7 +30,7 @@ public class Page_Message extends BasePage{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_message);
 
-        currentUser = User.getCurrentUser();
+        currentUser = Current.getCurrentUser();
         showSystemMessage();
     }
 
@@ -110,8 +103,8 @@ public class Page_Message extends BasePage{
                             public void onClick(View v) {
                                 User source =  inform.getUserSource();
                                 if(source!=null){
-                                    User.setOtherUser(source);
-                                    Inform.setCurrentInform(inform);
+                                    Current.setOtherUser(source);
+                                    Current.setCurrentInform(inform);
                                     Utils.transPage(Page_Message.this,Page_MessageDetail.class);
                                 }else{
                                     Utils.debugMessage(Page_Message.this,"0001 找不到通知来源User");
@@ -164,7 +157,7 @@ public class Page_Message extends BasePage{
     private void showSystemMessage(){
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(Cache.getSystemInforms(User.getCurrentUser().getUserID()));
+        MyAdapter adapter = new MyAdapter(Cache.getSystemInforms(Current.getCurrentUser().getUserID()));
         vi.setAdapter(adapter);
     }
 
@@ -172,7 +165,7 @@ public class Page_Message extends BasePage{
     private void showActivityMessage(){
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(Cache.getActivityInforms(User.getCurrentUser().getUserID()));
+        MyAdapter adapter = new MyAdapter(Cache.getActivityInforms(Current.getCurrentUser().getUserID()));
         vi.setAdapter(adapter);
     }
 
@@ -180,7 +173,7 @@ public class Page_Message extends BasePage{
     private void showPrivateMessage(){
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(Cache.getPrivatedInforms(User.getCurrentUser().getUserID()));
+        MyAdapter adapter = new MyAdapter(Cache.getPrivatedInforms(Current.getCurrentUser().getUserID()));
         vi.setAdapter(adapter);
     }
 

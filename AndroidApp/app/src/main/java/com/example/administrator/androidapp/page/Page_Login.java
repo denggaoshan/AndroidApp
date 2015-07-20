@@ -1,17 +1,13 @@
 package com.example.administrator.androidapp.page;
 
-import android.os.Handler;
 import android.os.StrictMode;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
 
-import com.example.administrator.androidapp.msg.Cache;
-import com.example.administrator.androidapp.msg.User;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.ToolClass;
@@ -34,9 +30,9 @@ public class Page_Login extends ActionBarActivity {
         if (jsonMsg != null && !jsonMsg.equals(""))
         {
             MyMessage tempMsg = MyMessage.createMessage(jsonMsg, 1, 2);
-            User.setCurrentUser(tempMsg.getUser());
+            Current.setCurrentUser(tempMsg.getUser());
             if (checkMess(tempMsg.getMess())) {
-                MyMessage.setCurrentMyMessage(tempMsg);
+                Current.setCurrentMyMessage(tempMsg);
                 Utils.transPage(this, Page_TotalActivity.class);
                 return;
             }
@@ -57,8 +53,8 @@ public class Page_Login extends ActionBarActivity {
         if (checkMess(msg.getMess()))
         {
             Utils.storeLogData(msg.getJsonString());
-            MyMessage.setCurrentMyMessage(msg);
-            User.setCurrentUser(msg.getUser());
+            Current.setCurrentMyMessage(msg);
+            Current.setCurrentUser(msg.getUser());
             return "OK";
         }
         else

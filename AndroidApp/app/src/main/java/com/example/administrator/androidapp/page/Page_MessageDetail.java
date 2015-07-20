@@ -1,8 +1,6 @@
 package com.example.administrator.androidapp.page;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +8,7 @@ import android.widget.EditText;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.Inform;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
@@ -29,9 +28,9 @@ public class Page_MessageDetail extends BasePage {
     }
 
     private void loadMessageDetail() {
-        dest = User.getOtherUser();
-        source = User.getCurrentUser();
-        currentInform = Inform.getCurrentInform();
+        dest = Current.getOtherUser();
+        source = Current.getCurrentUser();
+        currentInform = Current.getCurrentInform();
 
         if(currentInform!=null){
             Utils.setTextView(this,R.id.title_source,currentInform.getTitle());

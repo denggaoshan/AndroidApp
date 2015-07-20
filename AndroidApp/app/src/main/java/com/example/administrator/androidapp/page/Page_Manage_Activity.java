@@ -9,24 +9,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.DateFactory;
 import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
-import com.example.administrator.androidapp.tool.AsynImageLoader;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Page_Manage_Activity extends BasePage {
 
@@ -72,7 +70,7 @@ public class Page_Manage_Activity extends BasePage {
     //装载用户名和头像
     private void loadUserInformation(){
 
-        currentUser = User.getCurrentUser();
+        currentUser = Current.getCurrentUser();
         Utils.setTextView(this, R.id.Account,currentUser.getNickName());//装载用户名
 
         Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
@@ -83,9 +81,9 @@ public class Page_Manage_Activity extends BasePage {
     private void loadActivities(int id){
         MyMessage msg = null;
         switch (id){
-            case R.id.running: msg = ToolClass.getLaunchedActivity(User.getCurrentUser().getUserID()); break;
-            case R.id.history:  msg = ToolClass.getParticipatedActivity(User.getCurrentUser().getUserID());break;
-            case R.id.applying: msg = ToolClass.getApplicatedActivity(User.getCurrentUser().getUserID());break;
+            case R.id.running: msg = ToolClass.getLaunchedActivity(Current.getCurrentUser().getUserID()); break;
+            case R.id.history:  msg = ToolClass.getParticipatedActivity(Current.getCurrentUser().getUserID());break;
+            case R.id.applying: msg = ToolClass.getApplicatedActivity(Current.getCurrentUser().getUserID());break;
         }
         if(msg!=null){
             allActivities.put(id,msg.getActivities());
@@ -188,7 +186,7 @@ public class Page_Manage_Activity extends BasePage {
                 @Override
                 public void onClick(View v) {
                    if(activity!=null){
-                       MyActivity.setCurrentActivity(activity);
+                       Current.setCurrentActivity(activity);
                        Utils.transPage(Page_Manage_Activity.this,Page_Information_Activity.class);
                    }
                 }

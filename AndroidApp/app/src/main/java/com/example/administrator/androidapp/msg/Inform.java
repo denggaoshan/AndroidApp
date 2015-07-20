@@ -8,11 +8,10 @@ import java.lang.reflect.Field;
 /**
  * Created by admin on 2015/7/6.
  */
-public class Inform {
+public class Inform extends BaseType{
     private String InformID;
     private String TargetID;
     private String Form;
-    private User UserSource;public User getUserSource(){return UserSource;}
     private String Time;public String getTime(){return Time;}
     private String Type;public String getType(){return Type;}
     private String Title;public String getTitle(){return Title;}
@@ -22,61 +21,12 @@ public class Inform {
     public static Inform createInform(JSONObject jsonObject)
     {
         Inform temp = new Inform();
-        String[] tmp = {"InformID", "TargetID", "Form", "Time",
-                "Type", "Title", "Content", "IsRead"};
-
-        if (jsonObject != null) {
-            for(String val :tmp){
-                temp.setProperty(val, jsonObject);
-            }
-        }
-
-        MyMessage msg = ToolClass.getUserInfo(temp.TargetID,temp.Form);
-
-        if(msg!=null){
-            User user = msg.getUser();
-            if(user != null){
-                temp.UserSource = user;
-            }else{
-                //找不到通知来源的人
-            }
-        }
-
-
+        temp.loadAllPropertyFromJSON(jsonObject);
         return temp;
     }
 
-    private void setProperty(String data,JSONObject userMsg){
-        Field fs = null;
-        try
-        {
-            fs= this.getClass().getDeclaredField(data);
-            fs.setAccessible(true);
-            String value = userMsg.getString(data);
-            fs.set(this,value);
-        }
-        catch (NoSuchFieldException e)//没找到对应属性
-        {
-            return;
-        }
-        catch (JSONException e)//没找到JSON
-        {
-            try {
-                fs.set(this,"");
-            } catch (IllegalAccessException e1) {
-                e1.printStackTrace();
-            }
-        }
-        catch (IllegalAccessException e)//不允许设置属性
-        {
-            e.printStackTrace();
-        }
+    public User getUserSource(){
+        return Cache.getUserById(Form);
     }
 
-
-
-    private static Inform currentInform;
-
-    public static Inform getCurrentInform(){return currentInform;}
-    public static void setCurrentInform(Inform msg){currentInform=msg;}
 }

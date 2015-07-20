@@ -1,9 +1,6 @@
 package com.example.administrator.androidapp.page;
 
-import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +8,7 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
-import com.example.administrator.androidapp.msg.MyActivity;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
@@ -27,7 +24,7 @@ public class Page_Information_Others extends BasePage {
     User user ;
 
     private void loadInformation() {
-        user = User.getOtherUser();
+        user = Current.getOtherUser();
         if(user!=null){
             LoadUserInformation(user);
         }else{
@@ -78,13 +75,13 @@ public class Page_Information_Others extends BasePage {
     //点赞
     public void good_Click(View v)
     {
-        String str = User.getCurrentUser().createGood(User.getOtherUser());
+        String str = Current.getCurrentUser().createGood(Current.getOtherUser());
         if(str.equals("ok")){
             //点赞成功
             String tmp  = ((TextView)findViewById(R.id.good)).getText().toString();
             if(tmp!=null){
                 String good = String.valueOf(1 + Integer.parseInt(tmp));
-                Cache.updateLoadAllUsers(MyActivity.getCurrentActivity().getActivityID());
+                Cache.updateLoadAllUsers(Current.getCurrentActivity().getActivityID());
                 Utils.setTextView(this,R.id.good,good);
                 Utils.showMessage(this,str);
             }else{

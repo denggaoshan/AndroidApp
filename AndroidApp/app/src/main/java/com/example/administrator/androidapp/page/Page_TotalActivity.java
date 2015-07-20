@@ -1,7 +1,6 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -24,9 +22,8 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.MyActivity;
-import com.example.administrator.androidapp.msg.ToolClass;
-import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -222,13 +219,13 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         loadActivities("A");
 
         //用户名
-        Utils.setTextView(this, R.id.name, User.getCurrentUser().getNickName());
+        Utils.setTextView(this, R.id.name, Current.getCurrentUser().getNickName());
         //用户的身份
-        String type = User.getCurrentUser().getUserType();
+        String type = Current.getCurrentUser().getUserType();
         Utils.setTextView(this, R.id.identity, type);
 
         //加载用户头像
-        String url = User.getCurrentUser().getAvatar();
+        String url = Current.getCurrentUser().getAvatar();
         Cache.loadImg(this,url,R.id.img_head);
         Cache.loadImg(this,url,R.id.img_head2);
 
@@ -334,7 +331,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                         convertView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                MyActivity.setCurrentActivity(activity);
+                                Current.setCurrentActivity(activity);
                                 Utils.transPage(Page_TotalActivity.this, Page_Information_Activity.class);
                             }
                         });
@@ -389,7 +386,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     //发起活动
     public void add_Click(View v){
-        if(User.getCurrentUser().getUserType().equals("认证用户")){
+        if(Current.getCurrentUser().getUserType().equals("认证用户")){
             Utils.transPage(this, Page_OrganizeActivity.class);
         }else{
             Utils.showMessage(this,"只有认证用户才能发起活动");
@@ -407,7 +404,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
     //查看消息
     public void  message_Click(View v){
-        if(!User.getCurrentUser().getUserType().equals("游客")){
+        if(!Current.getCurrentUser().getUserType().equals("游客")){
             Utils.transPage(this, Page_Message.class);
         }else{
             Utils.showMessage(this,"您还没有注册");
@@ -415,7 +412,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
     //个人资料
     public void   userInfo_Click(View v){
-        if(!User.getCurrentUser().getUserType().equals("游客")){
+        if(!Current.getCurrentUser().getUserType().equals("游客")){
             Utils.transPage(this,Page_Information_User.class);
         }else{
             Utils.showMessage(this,"您还没有注册");
@@ -423,7 +420,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
     //账户管理
     public void account_Click(View v){
-        if(!User.getCurrentUser().getUserType().equals("游客")){
+        if(!Current.getCurrentUser().getUserType().equals("游客")){
             Utils.transPage(this,Page_Account.class);
         }else{
             Utils.showMessage(this,"您还没有注册");
@@ -431,7 +428,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     }
     //活动管理
     public void manage_Click(View v) {
-        if(!User.getCurrentUser().getUserType().equals("游客")){
+        if(!Current.getCurrentUser().getUserType().equals("游客")){
             Utils.transPage(this,Page_Manage_Activity.class);
         }else{
             Utils.showMessage(this,"您还没有注册");

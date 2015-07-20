@@ -7,9 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
@@ -128,10 +127,10 @@ public class Page_Registered extends BasePage {
              MyMessage msg = ToolClass.register(account, password, sex, phone, mailbox, avatar);
             if(checkMess(msg.getMess())){
                 Utils.showMessage(this, "注册成功");
-                MyMessage.setCurrentMyMessage(msg);
+                Current.setCurrentMyMessage(msg);
                 User user = msg.getUser();
                 if(user!=null){
-                    User.setCurrentUser(msg.getUser());
+                    Current.setCurrentUser(msg.getUser());
                     //登陆
                     Utils.transPage(this,Page_TotalActivity.class);
                 }else{

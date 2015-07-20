@@ -2,9 +2,7 @@ package com.example.administrator.androidapp.page;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -18,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.DateFactory;
 import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
@@ -198,7 +197,7 @@ public class Page_OrganizeActivity extends BasePage {
     }
 
     private void commit(){
-        MyMessage msg = MyMessage.getCurrentMyMessage();
+        MyMessage msg = Current.getCurrentMyMessage();
 
         MyMessage reflect =  ToolClass.launchActivity(msg.getUser().getUserID(), title, content, startTime, endTime, place, type);
         if(checkMess(reflect.getMess())){

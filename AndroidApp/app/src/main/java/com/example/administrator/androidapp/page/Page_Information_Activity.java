@@ -2,9 +2,7 @@ package com.example.administrator.androidapp.page;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,7 +45,7 @@ public class Page_Information_Activity extends BasePage {
 
         //加载活动成员
         allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
-        isLauncher= User.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
+        isLauncher= Current.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
 
         showActivityDetail();
     }
@@ -179,7 +176,7 @@ public class Page_Information_Activity extends BasePage {
     private class AllUsersAdapter extends BaseAdapter{
         @Override
         public int getCount() {
-            if(User.getCurrentUser().getUserType().equals("游客")){
+            if(Current.getCurrentUser().getUserType().equals("游客")){
                 return 1;
             }
             if(allUsers!=null){
@@ -233,7 +230,7 @@ public class Page_Information_Activity extends BasePage {
                     convertView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            User.setOtherUser(user);
+                            Current.setOtherUser(user);
                             Utils.transPage(Page_Information_Activity.this,Page_Information_Others.class);
                         }
                     });
@@ -258,7 +255,7 @@ public class Page_Information_Activity extends BasePage {
                             }
                         });
                     }
-                } else if(User.getCurrentUser().getUserType().equals("游客")){
+                } else if(Current.getCurrentUser().getUserType().equals("游客")){
                     //如果是游客，显示提示消息
                     Context ctx = convertView.getContext();
                     LayoutInflater nflater = LayoutInflater.from(ctx);
@@ -403,9 +400,9 @@ public class Page_Information_Activity extends BasePage {
     //装载当前的活动信息
     private void loadCurrentActivity() {
         //当前活动
-        currentActivity = MyActivity.getCurrentActivity();
+        currentActivity = Current.getCurrentActivity();
         //当前用户
-        currentUser = User.getCurrentUser();
+        currentUser = Current.getCurrentUser();
     }
 
     //显示活动详情
@@ -429,10 +426,10 @@ public class Page_Information_Activity extends BasePage {
 
     //显示活动成员
     private void showActivityMember() {
-        if(!User.getCurrentUser().getUserType().equals("游客")) {
+        if(!Current.getCurrentUser().getUserType().equals("游客")) {
             if (!ifLoadMembers) {
                 allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
-                isLauncher=User.getCurrentUser().isLauncher(allUsers);
+                isLauncher= Current.getCurrentUser().isLauncher(allUsers);
             }
         }
         try{
@@ -447,7 +444,7 @@ public class Page_Information_Activity extends BasePage {
     //显示活动评论
     private void showActivityComment() {
 
-        if(!User.getCurrentUser().getUserType().equals("游客")){
+        if(!Current.getCurrentUser().getUserType().equals("游客")){
             if(!ifLoadComments){
                 allComments = Cache.loadAllComments(currentActivity.getActivityID());
             }
@@ -467,7 +464,7 @@ public class Page_Information_Activity extends BasePage {
     //显示活动相册
     private void showActivityAlbum(){
 
-        if(!User.getCurrentUser().getUserType().equals("游客")) {
+        if(!Current.getCurrentUser().getUserType().equals("游客")) {
             if (!ifLoadPhotos) {
                 allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
             }
@@ -535,7 +532,7 @@ public class Page_Information_Activity extends BasePage {
     //点击导航栏
     public void navi_Click(View v) {
         int id = v.getId();
-        String userType = User.getCurrentUser().getUserType();
+        String userType = Current.getCurrentUser().getUserType();
 
         changeFocus(id);//切换焦点到此标签
 
@@ -559,7 +556,7 @@ public class Page_Information_Activity extends BasePage {
         if(et!=null){
             String str = et.getText().toString();
             if(str!=null && !str.replace(" ","").equals("")){
-                String ret = ToolClass.addCommment(User.getCurrentUser().getUserID(), MyActivity.getCurrentActivity().getActivityID(),str);
+                String ret = ToolClass.addCommment(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(),str);
                 Utils.showMessage(this,ret);
                 //////////提示Cache更新评论
                 allComments = Cache.updateAndLoadComments(currentActivity.getActivityID());

@@ -14,22 +14,20 @@ public class MyMessage {
     private User[] users;
     private MyActivity activity;
     private MyActivity[] activities;
-    private static MyMessage currentMyMessage;
-    private static String tempJsonString;
-    public String getJsonString()
+
+    private static String tempJsonString;public String getJsonString()
     {
         return tempJsonString;
     }
 
-    public static void setCurrentMyMessage(MyMessage msg)
-    {
-        currentMyMessage = msg;
-    }
 
-    public static MyMessage getCurrentMyMessage()
-    {
-        return currentMyMessage;
+    public String getMess() { return mess; }
+    public MyActivity getActivity() { return activity; }
+    public MyActivity[] getActivities() { return activities; }
+    public User getUser() {
+        return user;
     }
+    public User[] getUsers() { return users; }
 
 
     public static MyMessage createMessage(String jsonString, int userCount, int activityCount)
@@ -86,6 +84,7 @@ public class MyMessage {
         }
     }
 
+
     private void setUser(JSONObject jsonObject)
     {
         try {
@@ -96,6 +95,7 @@ public class MyMessage {
             user = null;
         }
     }
+
 
     private void setUsers(JSONObject jsonObject) {
         JSONArray jsonArray;
@@ -172,15 +172,6 @@ public class MyMessage {
     }
 
 
-    public String getMess() { return mess; }
-    public MyActivity getActivity() { return activity; }
-    public MyActivity[] getActivities() { return activities; }
-
-    public User getUser() {
-        return user;
-    }
-
-    public User[] getUsers() { return users; }
 
 
 }

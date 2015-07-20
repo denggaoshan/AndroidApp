@@ -1,9 +1,7 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,11 +15,11 @@ import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.msg.UserAndExplain;
-import com.example.administrator.androidapp.msg.UserAndExplainArray;
 import com.example.administrator.androidapp.tool.Utils;
 
 public class Page_Manage_Member extends BasePage {
@@ -111,7 +109,7 @@ public class Page_Manage_Member extends BasePage {
                     public void onClick(View v) {
                         User other = request.getUser();
                         if (other != null) {
-                            User.setOtherUser(other);
+                            Current.setOtherUser(other);
                             Utils.transPage(Page_Manage_Member.this, Page_Information_Others.class);
                         } else {
                             Utils.debugMessage(Page_Manage_Member.this, "requset中User为空");
@@ -132,7 +130,7 @@ public class Page_Manage_Member extends BasePage {
                     public void onClick(View v) {
                         User other = request.getUser();
                         if (other != null) {
-                            User.setOtherUser(other);
+                            Current.setOtherUser(other);
                             Utils.transPage(Page_Manage_Member.this, Page_Information_Others.class);
                         } else {
                             Utils.debugMessage(Page_Manage_Member.this, "requset中User为空");
@@ -157,7 +155,7 @@ public class Page_Manage_Member extends BasePage {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String ret = ToolClass.handleApplication(User.getCurrentUser().getUserID(),MyActivity.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1");
+                        String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1");
                         Utils.showMessage(Page_Manage_Member.this, ret);
                         allRequests = Cache.updateLoadRequest(currentActivity);
                     }
@@ -172,7 +170,7 @@ public class Page_Manage_Member extends BasePage {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String ret = ToolClass.handleApplication(User.getCurrentUser().getUserID(),MyActivity.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0");
+                        String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0");
                         Utils.showMessage(Page_Manage_Member.this, ret);
                         allRequests = Cache.updateLoadRequest(currentActivity);
                     }
@@ -188,7 +186,7 @@ public class Page_Manage_Member extends BasePage {
 
     //装载所有活动
     private void loadActivity(){
-        currentActivity  = MyActivity.getCurrentActivity();
+        currentActivity  = Current.getCurrentActivity();
 
         allRequests = Cache.getUserAndExplains(currentActivity);
 

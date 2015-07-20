@@ -221,19 +221,18 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
         loadActivities("A");
 
-        TextView tv = (TextView)findViewById(R.id.name);
-        tv.setText(User.getCurrentUser().getNickName());
-
-        tv = (TextView)findViewById(R.id.identity);
+        //用户名
+        Utils.setTextView(this, R.id.name, User.getCurrentUser().getNickName());
+        //用户的身份
         String type = User.getCurrentUser().getUserType();
-        tv.setText(type);
+        Utils.setTextView(this, R.id.identity, type);
 
-        Thread tempThread = new Thread(){
+        new Thread(){
             public void run(){
                 new AnotherTask().execute("none");
             }
-        };
-        tempThread.start();
+        }.start();
+
     }
 
     private class AnotherTask extends AsyncTask<String, Void, String>{
@@ -340,29 +339,27 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             if(allItem!=null && allItem.size()>1){
                 //有活动的话
                 if (dateIndex.contains(position)) {
-                    //显示日期
+                    //日期标签
                     String date = (String) allItem.get(position);
                     convertView = nflater.inflate(R.layout.content_total_date, null);
-                    if (convertView != null) {
-                        TextView tv = (TextView) convertView.findViewById(R.id.time);
-                        if (tv != null) {
-                            tv.setText(date);
-                        }
-                    }
+                    Utils.setTextView(convertView,R.id.time,date);
+
                 } else {
                     final MyActivity activity = (MyActivity) allItem.get(position);
                     try {
-                        //内容
+                        //活动内容
                         convertView = nflater.inflate(R.layout.content_total_activity, null);
-                        TextView tv = (TextView) convertView.findViewById(R.id.title);
-                        tv.setText(activity.getTitle());
-                        tv = (TextView) convertView.findViewById(R.id.time);
-                        tv.setText(activity.getStartTime());
-                        tv = (TextView) convertView.findViewById(R.id.position);
-                        tv.setText(activity.getPlace());
-                        tv = (TextView) convertView.findViewById(R.id.attending);
-                        tv.setText(activity.getUserCount());
+                        int ids[]={R.id.title,R.id.time,R.id.position,R.id.attending};
+                        String[] vals={
+                                activity.getTitle(),
+                                activity.getStartTime(),
+                                activity.getPlace(),
+                                activity.getUserCount()
+                        };
 
+                        for (int i=0;i<ids.length;i++){
+                            Utils.setTextView(convertView,ids[i],vals[i]);
+                        }
 
                         ImageView iv = (ImageView) convertView.findViewById(R.id.image);
                         Bitmap bm = Cache.getBitmap(activity.getAvatar());
@@ -376,6 +373,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                                 Utils.transPage(Page_TotalActivity.this, Page_Information_Activity.class);
                             }
                         });
+
                     } catch (NullPointerException e) {
                         Utils.debugMessage(Page_TotalActivity.this, "空指针" + e.getMessage());
                     }

@@ -18,7 +18,7 @@ import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 
-public class Page_Information_User extends ActionBarActivity {
+public class Page_Information_User extends BasePage {
 
     User currentUser;
 
@@ -125,19 +125,5 @@ public class Page_Information_User extends ActionBarActivity {
         mailBox = getInfoFromViewById(R.id.Mailbox);
         description = getInfoFromViewById(R.id.description);
     }
-
-    public void back_Click(View v) {
-        Utils.backPage(this);
-    }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 
 }

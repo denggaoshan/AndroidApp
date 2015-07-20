@@ -28,7 +28,7 @@ import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.Date;
 
-public class Page_Manage_Activity extends ActionBarActivity {
+public class Page_Manage_Activity extends BasePage {
 
     private MyActivity[] allLauncheActivities;
     private MyActivity[] allParticipatedActivities;
@@ -39,13 +39,13 @@ public class Page_Manage_Activity extends ActionBarActivity {
     private boolean ifLoadAppliactivityActivities =false;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_manager);
+
         loadUserInformation();
-        shoLauncheActivities();
+        showLauncheActivities();
     }
 
     @Override
@@ -74,8 +74,9 @@ public class Page_Manage_Activity extends ActionBarActivity {
     //装载用户名和头像
     private void loadUserInformation(){
         MyMessage msg = MyMessage.getCurrentMyMessage();
-        TextView account = (TextView)findViewById(R.id.Account);
-        account.setText(msg.getUser().getAccount());
+
+        Utils.setTextView(this,R.id.Account,msg.getUser().getAccount());
+
         try {
             ImageView iv = (ImageView)findViewById(R.id.imageView8);
             if (Cache.getUserAvater() != null)
@@ -109,7 +110,6 @@ public class Page_Manage_Activity extends ActionBarActivity {
         allApplyingActivities = msg.getActivities();
         ifLoadAppliactivityActivities = true;
     }
-
 
 
     private void changeFocus(int i){
@@ -173,13 +173,11 @@ public class Page_Manage_Activity extends ActionBarActivity {
             String status = activity.getIsChecked();
             if(status!=null){
                 TextView tv = (TextView)convertView.findViewById(R.id.status);
-
                 if(tv!=null){
                     if(status.equals("0")){
                         tv.setText("审核中");
                         tv.setBackgroundColor(0xFFc8c8a9);
                     }else if(status.equals("1")){
-
                         String startTimeString = activity.getStartTime();
                         Date startTime = DateFactory.createDateByString(startTimeString);
                         String endTimeString = activity.getEndTime();
@@ -189,7 +187,6 @@ public class Page_Manage_Activity extends ActionBarActivity {
                         if(now.compareTo(startTime)<0){
                             tv.setText("尚未开始");
                             tv.setBackgroundColor(0xff83af9b);
-
                         }else if(now.compareTo(startTime)>0 && now.compareTo(endTime)< 0){
                             tv.setText("正在进行中");
                             tv.setBackgroundColor(0xfffc9d9a);
@@ -219,7 +216,7 @@ public class Page_Manage_Activity extends ActionBarActivity {
 
     /*******************   显示内容   ********************/
     //显示我发起的活动
-    private void shoLauncheActivities(){
+    private void showLauncheActivities(){
         if(ifLoadLauncheActivities ==false){
             loadLauncheActivities();
         }
@@ -259,7 +256,7 @@ public class Page_Manage_Activity extends ActionBarActivity {
 
     public void launched_Click(View v) {
         changeFocus(0);
-        shoLauncheActivities();
+        showLauncheActivities();
     }
 
     public void participated_Click(View v) {
@@ -272,18 +269,4 @@ public class Page_Manage_Activity extends ActionBarActivity {
          changeFocus(2);
         shoAppliactivityActivities();
     }
-
-    public void back_Click(View v) {
-        Utils.backPage(this);
-    }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 }

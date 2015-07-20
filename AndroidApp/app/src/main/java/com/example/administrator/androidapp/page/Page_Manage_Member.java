@@ -23,7 +23,7 @@ import com.example.administrator.androidapp.msg.UserAndExplain;
 import com.example.administrator.androidapp.msg.UserAndExplainArray;
 import com.example.administrator.androidapp.tool.Utils;
 
-public class Page_Manage_Member extends ActionBarActivity {
+public class Page_Manage_Member extends BasePage {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,20 +194,6 @@ public class Page_Manage_Member extends ActionBarActivity {
         MyAdapter myAdapter = new MyAdapter(allRequests);
         vi.setAdapter(myAdapter);
 
-    }
-
-    //返回上级
-    public void back_Click(View v) {
-        Utils.backPage(this);
-    }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
 }

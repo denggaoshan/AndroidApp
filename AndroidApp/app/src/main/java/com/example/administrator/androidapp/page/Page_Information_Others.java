@@ -12,7 +12,7 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
-public class Page_Information_Others extends ActionBarActivity {
+public class Page_Information_Others extends BasePage {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class Page_Information_Others extends ActionBarActivity {
     //发私信
     public void message_Click(View v)
     {
-        Utils.transPage(this,Page_SendMessage.class);
+        Utils.transPage(this, Page_SendMessage.class);
     }
 
     //点赞
@@ -75,20 +75,6 @@ public class Page_Information_Others extends ActionBarActivity {
     {
         String str = User.getCurrentUser().createGood(User.getOtherUser().getUserID());
         Utils.showMessage(this,str);
-    }
-
-    public void back_Click(View v)
-    {
-        Utils.backPage(this);
-    }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
 }

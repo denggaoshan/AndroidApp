@@ -13,7 +13,7 @@ import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
-public class Page_SendMessage extends ActionBarActivity {
+public class Page_SendMessage extends BasePage {
 
 
     User source,dest;
@@ -98,19 +98,4 @@ public class Page_SendMessage extends ActionBarActivity {
             }
         }
     }
-
-    public void back_Click(View v){
-        Utils.backPage(this);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 }

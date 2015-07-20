@@ -45,10 +45,8 @@ public class Page_Login extends ActionBarActivity {
     }
 
     private void getInput(){
-        EditText us=(EditText) findViewById(R.id.username);
-        EditText pw=(EditText) findViewById(R.id.password);
-        username=us.getText().toString();
-        password=pw.getText().toString();
+        username= Utils.getValueOfEditText(this,R.id.username);
+        password= Utils.getValueOfEditText(this,R.id.password);
     }
 
     private String checkUser(String username,String password){

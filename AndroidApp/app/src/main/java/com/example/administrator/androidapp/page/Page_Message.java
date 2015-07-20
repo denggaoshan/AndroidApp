@@ -28,7 +28,7 @@ import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
 
-public class Page_Message extends ActionBarActivity{
+public class Page_Message extends BasePage{
 
     private User currentUser ;
 
@@ -201,18 +201,4 @@ public class Page_Message extends ActionBarActivity{
         showActivityMessage();
     }
 
-    //返回上级
-    public void back_Click(View v) {
-        Utils.backPage(this);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

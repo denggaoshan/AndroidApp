@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Page_OrganizeActivity extends ActionBarActivity {
+public class Page_OrganizeActivity extends BasePage {
 
     private List<String> list = new ArrayList<String>();
     private ArrayAdapter<String> adapter;
@@ -255,20 +255,4 @@ public class Page_OrganizeActivity extends ActionBarActivity {
 
         return "提交中";
     }
-
-    public void back_Click(View v){
-        Utils.backPage(this);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Utils.backPage(this);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-
 }

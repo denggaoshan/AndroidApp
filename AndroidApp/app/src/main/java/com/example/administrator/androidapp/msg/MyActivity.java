@@ -49,19 +49,19 @@ public class MyActivity {
 
 
     //从userMsg中装载同名的属性，注意 data跟userMsg中大小写必须一致 我干
+    // 别乱改这个函数，否则整个系统就他妈崩了
     private void setProperty(String data,JSONObject userMsg){
         Field fs = null;
         try
         {
             fs= this.getClass().getDeclaredField(data);
             fs.setAccessible(true);
-
             String value= null;
             try {
                 value = userMsg.getString(data);
             }catch (Exception e){
                 //如果第一个字母大小写不一致 尝试改下
-                String tmp = Character.toLowerCase(data.charAt(0)) + data.substring(1,data.length());
+                String tmp = data.toLowerCase();
                 try {
                     value = userMsg.getString(tmp);
                 } catch (JSONException e1) {

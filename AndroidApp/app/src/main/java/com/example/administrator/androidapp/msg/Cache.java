@@ -41,8 +41,32 @@ public class Cache {
     private static HashMap<String,User> userCache = new HashMap<>();
     private static HashMap<String,MyActivity> activityCache = new HashMap<>();
 
+
     private static HashMap<String,UserAndExplain[]> activityRequests = new HashMap<>();//活动申请
 
+    //先更新缓存再获得
+    public static UserAndExplain[] updateLoadRequest(MyActivity currentActivity) {
+        activityRequests.remove(currentActivity.getActivityID());
+        return getUserAndExplains(currentActivity);
+    }
+
+    public static UserAndExplain[] getUserAndExplains(MyActivity currentActivity){
+        if(activityRequests.containsKey(currentActivity.getActivityID())){
+            return activityRequests.get(currentActivity.getActivityID());
+        }else{
+            UserAndExplainArray msg = ToolClass.getApplication(User.getCurrentUser().getUserID(), currentActivity.getActivityID());
+            if(msg!=null){
+                UserAndExplain[] ret = msg.getUserAndExplains();
+                if(ret!=null){
+                    activityRequests.put(currentActivity.getActivityID(),ret);
+                    return ret;
+                }
+            }else{
+                return null;
+            }
+        }
+        return null;
+    }
 
     //更新所有的Cache
     private static void updateAllCache() {
@@ -293,25 +317,23 @@ public class Cache {
     }
 
 
+
+
     private static class AnotherTask extends AsyncTask<String, Void, String> {
         private ActionBarActivity parent;
         private String url;
         private int id;
-        private int width,height;
 
-
-        public AnotherTask(ActionBarActivity parent, String url, int id, int width, int height) {
+        public AnotherTask(ActionBarActivity parent, String url, int id) {
             this.parent =  parent;
             this.url =  url;
             this.id =  id;
-            this.width =  width;
-            this.height =  height;
         }
 
         @Override
         protected void onPostExecute(String result) {
             //对UI组件的更新操作
-            putImgs(parent,id,url,width,height);
+            putImgs(parent,id,url);
         }
         @Override
         protected String doInBackground(String... params) {
@@ -320,11 +342,11 @@ public class Cache {
         }
     }
 
-    private static void putImgs(ActionBarActivity parent,int id,String url,int width,int height){
+    private static void putImgs(ActionBarActivity parent,int id,String url){
         Bitmap bm = Cache.getBitmap(url);
         if (bm != null)
         {
-            ((ImageView) parent.findViewById(id)).setImageBitmap(ToolClass.resizeBitmap(bm, parent, width, height));
+            ((ImageView) parent.findViewById(id)).setImageBitmap(bm);
         }
     }
 
@@ -333,15 +355,20 @@ public class Cache {
      * @param parent
      * @param url
      * @param id
-     * @param width
-     * @param height
      */
-    public static void loadImg(final ActionBarActivity parent, final String url, final int id, final int width, final int height) {
+    public static void loadImg(final ActionBarActivity parent, final String url, final int id) {
+        if(url==null || url.equals("null")){
+            return;
+        }
+        try {
+            new Thread(){
+                public void run(){
+                    new AnotherTask(parent,url,id).execute("none");
+                }
+            }.start();
+        }catch (Exception e){
+            Utils.debugMessage(parent,"头像BUG url="+url);
+        }
 
-        new Thread(){
-            public void run(){
-                new AnotherTask(parent,url,id,width,height).execute("none");
-            }
-        }.start();
     }
 }

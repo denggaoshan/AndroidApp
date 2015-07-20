@@ -41,7 +41,7 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="100dp"
-            android:id="@+id/imageView13"
+            android:id="@+id/image"
             android:src="@drawable/icon_user"
             android:layout_alignParentTop="false"
             android:layout_alignParentLeft="false"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="false"
-            android:layout_alignBottom="@+id/imageView13">
+            android:layout_alignBottom="@+id/image">
 
             <ImageView
                 android:layout_width="20dp"

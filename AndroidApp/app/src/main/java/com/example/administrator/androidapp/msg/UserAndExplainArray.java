@@ -27,7 +27,7 @@ public class UserAndExplainArray {
                 temp.setMess(allMsg);
                 JSONArray jsonArray;
                 try{
-                    jsonArray = allMsg.getJSONArray("users");
+                    jsonArray = allMsg.getJSONArray("usersandexplain");
                     temp.userAndExplains = new UserAndExplain[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++){
                         temp.userAndExplains[i] = UserAndExplain.createUserAndExplain(jsonArray.getJSONObject(i));

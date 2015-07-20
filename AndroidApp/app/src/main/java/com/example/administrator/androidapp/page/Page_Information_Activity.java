@@ -51,10 +51,6 @@ public class Page_Information_Activity extends BasePage {
         isLauncher= User.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
 
         showActivityDetail();
-
-        ImageView iv = ((ImageView) findViewById(R.id.Edit));
-        iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getLayoutParams().width, iv.getLayoutParams().height));
-
     }
 
     /* 活动详情适配器 */
@@ -89,18 +85,35 @@ public class Page_Information_Activity extends BasePage {
                     LayoutInflater nflater = LayoutInflater.from(ctx);
                     convertView = nflater.inflate(R.layout.content_activity_detail, null);
 
-                    int[] ids = {R.id.title,R.id.startTime,R.id.endTime,R.id.position,R.id.attending,R.id.type,R.id.description};
-                    String[] vals = {currentActivity.getTitle(),currentActivity.getStartTime(),currentActivity.getEndTime(),currentActivity.getPlace(),
-                            currentActivity.getUserCount(),currentActivity.getType(),currentActivity.getContent()};
+                    int[] ids = {R.id.title,
+                            R.id.startTime,
+                            R.id.endTime,
+                            R.id.position,
+                            R.id.attending,
+                            R.id.type,
+                            R.id.description};
+                    String[] vals = {currentActivity.getTitle(),
+                            currentActivity.getStartTime(),
+                            currentActivity.getEndTime(),
+                            currentActivity.getPlace(),
+                            currentActivity.getUserCount(),
+                            currentActivity.getType(),
+                            currentActivity.getContent()};
 
-                    for(int i=0;i<ids.length;i++){
-                        TextView tv = (TextView)convertView.findViewById(ids[i]);
-                        if(ids[i] != R.id.type){
-                            tv.setText(vals[i]);
-                        }else {
-                            tv.setText(Utils.changeType(vals[i]));
+                    try{
+                        for(int i=0;i<ids.length;i++){
+                            TextView tv = (TextView)convertView.findViewById(ids[i]);
+                            if(ids[i] != R.id.type){
+                                tv.setText(vals[i]);
+                            }else {
+                                tv.setText(Utils.changeType(vals[i]));
+                            }
                         }
+                    }catch (Exception e){
+                        Utils.debugMessage(Page_Information_Activity.this,"debug 0010 ");
                     }
+
+
                 }
             }else{
 
@@ -212,6 +225,9 @@ public class Page_Information_Activity extends BasePage {
                            tv.setText(Utils.changeSex(vals[i]));
                         }
                     }
+
+                    //成员头像
+                    Cache.loadImg(Page_Information_Activity.this,user.getAvatar(),R.id.image );
 
                     //添加点击事件
                     convertView.setOnClickListener(new View.OnClickListener() {

@@ -67,24 +67,16 @@ public class Page_Manage_Activity extends BasePage {
         return super.onOptionsItemSelected(item);
     }
 
+    private User currentUser;
 
     //装载用户名和头像
     private void loadUserInformation(){
 
-        MyMessage msg = MyMessage.getCurrentMyMessage();
-        Utils.setTextView(this, R.id.Account, msg.getUser().getAccount());//装载用户名
+        currentUser = User.getCurrentUser();
+        Utils.setTextView(this, R.id.Account,currentUser.getNickName());//装载用户名
 
-        try {
-            ImageView iv = (ImageView)findViewById(R.id.imageView8);
-            if (Cache.getUserAvater() != null)
-                iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
-            else{
-                AsynImageLoader asynImageLoader = new AsynImageLoader();
-                asynImageLoader.showImageAsyn(((ImageView)findViewById(R.id.imageView8)), User.getCurrentUser().getAvatar(), 0);
-            }
-        }catch (Exception e){
-            Utils.debugMessage(this,"头像这里有BUG啊");
-        }
+        Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
+
     }
 
     //重新装载该类型的活动，不管有没有装载过
@@ -158,6 +150,9 @@ public class Page_Manage_Activity extends BasePage {
                 TextView tv = (TextView)convertView.findViewById(ids[i]);
                 tv.setText(vals[i]);
             }
+
+            //活动图片
+            Cache.loadImg(Page_Manage_Activity.this,activity.getAvatar(),R.id.image);
 
             String status = activity.getIsChecked();
             if(status!=null){

@@ -140,5 +140,5 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon_user"
         android:layout_weight="0.15"
-        android:id="@+id/avater" />
+        android:id="@+id/image" />
 </LinearLayout>

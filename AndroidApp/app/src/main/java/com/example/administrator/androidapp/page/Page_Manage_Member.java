@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
@@ -99,6 +100,7 @@ public class Page_Manage_Member extends BasePage {
             //装载请求信息
             convertView= nflater.inflate(R.layout.content_member_request, null);
 
+            Cache.loadImg(Page_Manage_Member.this,request.getUser().getAvatar(),R.id.image);
 
             TextView tv = (TextView) convertView.findViewById(R.id.NickName);
             if(tv!=null){
@@ -157,6 +159,7 @@ public class Page_Manage_Member extends BasePage {
                     public void onClick(View v) {
                         String ret = ToolClass.handleApplication(User.getCurrentUser().getUserID(),MyActivity.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1");
                         Utils.showMessage(Page_Manage_Member.this, ret);
+                        allRequests = Cache.updateLoadRequest(currentActivity);
                     }
                 });
             }else{
@@ -171,6 +174,7 @@ public class Page_Manage_Member extends BasePage {
                     public void onClick(View v) {
                         String ret = ToolClass.handleApplication(User.getCurrentUser().getUserID(),MyActivity.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0");
                         Utils.showMessage(Page_Manage_Member.this, ret);
+                        allRequests = Cache.updateLoadRequest(currentActivity);
                     }
                 });
             }else{
@@ -185,14 +189,14 @@ public class Page_Manage_Member extends BasePage {
     //装载所有活动
     private void loadActivity(){
         currentActivity  = MyActivity.getCurrentActivity();
-        UserAndExplainArray ret = ToolClass.getApplication(User.getCurrentUser().getUserID(), currentActivity.getActivityID());
 
-        allRequests = ret.getUserAndExplains();
+        allRequests = Cache.getUserAndExplains(currentActivity);
 
         ListView vi=(ListView) findViewById(R.id.requests);
         MyAdapter myAdapter = new MyAdapter(allRequests);
         vi.setAdapter(myAdapter);
 
+        Cache.loadImg(this,currentActivity.getAvatar(),R.id.image);
     }
 
 }

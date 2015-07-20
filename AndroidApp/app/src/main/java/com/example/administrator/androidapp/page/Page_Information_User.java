@@ -1,14 +1,11 @@
 package com.example.administrator.androidapp.page;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
@@ -29,7 +26,7 @@ public class Page_Information_User extends BasePage {
         currentUser = User.getCurrentUser();
         LoadInformation();
         try {
-            ImageView iv = (ImageView)findViewById(R.id.imageView13);
+            ImageView iv = (ImageView)findViewById(R.id.image);
             iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
         }catch (Exception e){
             Utils.debugMessage(this,"个人页面头像有BUG啊");
@@ -64,6 +61,7 @@ public class Page_Information_User extends BasePage {
         };
         String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","Good"};
         Utils.loadUserInformation(this,currentUser,ids,attribute);
+        Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
     }
 
     //点击提交个人信息

@@ -428,8 +428,9 @@ public class ToolClass {
     {
         URL myFileUrl = null;
         Bitmap bitmap = null;
-        if (url == null)
+        if (url == null || url.equals("null"))
             return null;
+
         try
         {
             myFileUrl = new URL(url);
@@ -438,9 +439,9 @@ public class ToolClass {
         {
             E.printStackTrace();
         }
+
         try {
-            HttpURLConnection conn = (HttpURLConnection) myFileUrl
-                    .openConnection();
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
             conn.setDoInput(true);
             conn.connect();
             InputStream is = conn.getInputStream();

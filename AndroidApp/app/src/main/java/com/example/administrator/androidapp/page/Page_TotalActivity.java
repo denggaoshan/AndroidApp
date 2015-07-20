@@ -229,8 +229,8 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
         //加载用户头像
         String url = User.getCurrentUser().getAvatar();
-        Cache.loadImg(this,url,R.id.img_head,100,100);
-        Cache.loadImg(this,url,R.id.img_head2,60,60);
+        Cache.loadImg(this,url,R.id.img_head);
+        Cache.loadImg(this,url,R.id.img_head2);
 
     }
 
@@ -326,9 +326,9 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                         for (int i=0;i<ids.length;i++){
                             Utils.setTextView(convertView,ids[i],vals[i]);
                         }
-                        ImageView iv = (ImageView) convertView.findViewById(R.id.image);
-                        Bitmap bm = Cache.getBitmap(activity.getAvatar());
-                        iv.setImageBitmap(bm);
+
+
+                        Cache.loadImg(Page_TotalActivity.this,activity.getAvatar(),R.id.image);
 
                         //监听事件
                         convertView.setOnClickListener(new View.OnClickListener() {

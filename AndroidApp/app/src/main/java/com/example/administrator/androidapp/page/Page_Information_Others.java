@@ -43,6 +43,8 @@ public class Page_Information_Others extends BasePage {
         String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","Good"};
 
         Utils.loadUserInformation(this,user,ids,attribute);
+
+        Cache.loadImg(this,user.getAvatar(),R.id.image);
     }
 
     @Override

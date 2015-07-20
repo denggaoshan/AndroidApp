@@ -45,7 +45,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageView8"
+            android:id="@+id/image"
             android:src="@drawable/icon_user" />
 
         <TextView

@@ -46,7 +46,7 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:id="@+id/imageView15"
+                android:id="@+id/image"
                 android:src="@drawable/icon_user"
                 android:layout_weight="0.3"
                 android:padding="20dp" />

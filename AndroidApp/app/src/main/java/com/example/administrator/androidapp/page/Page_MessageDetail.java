@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Inform;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
@@ -40,6 +41,7 @@ public class Page_MessageDetail extends BasePage {
             Utils.debugMessage(this,"currentInform为空");
         }
 
+        Cache.loadImg(this,currentInform.getUserSource().getAvatar(),R.id.image);
 
         final EditText tx = (EditText)findViewById(R.id.title);
 

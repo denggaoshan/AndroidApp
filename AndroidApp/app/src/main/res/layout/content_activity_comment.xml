@@ -16,7 +16,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageView15"
+                android:id="@+id/image"
                 android:src="@drawable/icon_user" />
 
             <LinearLayout

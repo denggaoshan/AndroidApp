@@ -56,6 +56,7 @@ public class Page_Login extends ActionBarActivity {
         }
         if (checkMess(msg.getMess()))
         {
+            Utils.clearLogData();
             Utils.storeLogData(msg.getJsonString());
             MyMessage.setCurrentMyMessage(msg);
             User.setCurrentUser(msg.getUser());

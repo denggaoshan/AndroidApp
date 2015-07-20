@@ -54,7 +54,7 @@ import javax.crypto.spec.DESKeySpec;
 public class Utils {
 
     public static final String KEY_ALGORITHM = "DES";
-    public static final String CIPHER_ALGORITHM = "DES/ECB/NoPadding";
+    public static final String CIPHER_ALGORITHM = "DES/ECB/PKCS5Padding";
     public static final String SCRETEKEY = "A1B553D4E5F60758";
     private static String LOGADRESS = "userLog.dat";
 

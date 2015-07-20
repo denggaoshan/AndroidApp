@@ -29,7 +29,7 @@ public class Page_Login extends ActionBarActivity {
         String jsonMsg = Utils.getLogData();
         if (jsonMsg != null && !jsonMsg.equals(""))
         {
-            MyMessage tempMsg = MyMessage.createMessage(jsonMsg, 1, 2);
+            MyMessage tempMsg = MyMessage.createMessage(jsonMsg);
             Current.setCurrentUser(tempMsg.getUser());
             if (checkMess(tempMsg.getMess())) {
                 Current.setCurrentMyMessage(tempMsg);

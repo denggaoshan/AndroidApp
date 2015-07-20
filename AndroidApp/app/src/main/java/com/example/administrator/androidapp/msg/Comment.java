@@ -17,12 +17,4 @@ public class Comment extends BaseType
     private String Time;public String getTime(){return Time;}
     private String NickName;public String getNickName(){return NickName;}
     private String Avatar;
-
-    public static Comment createComment(JSONObject jsonObject)
-    {
-        Comment temp = new Comment();
-        temp.loadAllPropertyFromJSON(jsonObject);
-        return temp;
-    }
-
 }

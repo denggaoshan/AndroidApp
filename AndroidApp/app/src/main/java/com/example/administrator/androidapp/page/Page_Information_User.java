@@ -20,6 +20,29 @@ public class Page_Information_User extends BasePage {
 
     User currentUser;
 
+    String nickName,sex,age,constellation,profession,liveplace,description,phone,mailBox;
+
+    private void getInput() {
+        sex = getInfoFromViewById(R.id.Sex);
+        nickName = getInfoFromViewById(R.id.NickName);
+        age = getInfoFromViewById(R.id.Age);
+        profession = getInfoFromViewById(R.id.Profession);
+        liveplace = getInfoFromViewById(R.id.LivePlace);
+        constellation = getInfoFromViewById(R.id.Constellation);
+        phone = getInfoFromViewById(R.id.Phone );
+        mailBox = getInfoFromViewById(R.id.Mailbox);
+        description = getInfoFromViewById(R.id.description);
+    }
+
+    private void LoadInformation(){
+        int[] ids={R.id.NickName,R.id.Sex,R.id.Age,R.id.Constellation,R.id.Profession,R.id.LivePlace,
+                R.id.Description,R.id.Phone, R.id.Mailbox, R.id.good,
+        };
+        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","Good"};
+        Utils.loadUserInformation(this, currentUser, ids, attribute);
+        Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +79,7 @@ public class Page_Information_User extends BasePage {
         return super.onOptionsItemSelected(item);
     }
 
-    private void LoadInformation(){
-        int[] ids={R.id.NickName,R.id.Sex,R.id.Age,R.id.Constellation,R.id.Profession,R.id.LivePlace,
-                R.id.Description,R.id.Phone, R.id.Mailbox, R.id.good,
-        };
-        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","Good"};
-        Utils.loadUserInformation(this, currentUser, ids, attribute);
-        Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
-    }
+
 
     //点击提交个人信息
     public void submit_Click(View v) {
@@ -86,7 +102,6 @@ public class Page_Information_User extends BasePage {
         }
     }
 
-    String nickName,sex,age,constellation,profession,liveplace,description,phone,mailBox;
 
     private String getInfoFromViewById(int id){
         EditText ed = (EditText)findViewById(id);
@@ -113,16 +128,6 @@ public class Page_Information_User extends BasePage {
         return ret;
     }
 
-    private void getInput() {
-        sex = getInfoFromViewById(R.id.Sex);
-        nickName = getInfoFromViewById(R.id.NickName);
-        age = getInfoFromViewById(R.id.Age);
-        profession = getInfoFromViewById(R.id.Profession);
-        liveplace = getInfoFromViewById(R.id.LivePlace);
-        constellation = getInfoFromViewById(R.id.Constellation);
-        phone = getInfoFromViewById(R.id.Phone );
-        mailBox = getInfoFromViewById(R.id.Mailbox);
-        description = getInfoFromViewById(R.id.description);
-    }
+
 
 }

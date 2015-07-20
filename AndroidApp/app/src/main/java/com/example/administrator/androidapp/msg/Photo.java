@@ -22,10 +22,4 @@ public class Photo extends BaseType
     private String NickName; public String getNickName(){return NickName;}
     private String Avatar; public String getAvatar(){return Avatar;}
 
-    public static Photo createPhoto(JSONObject jsonObject)
-    {
-        Photo temp = new Photo();
-        temp.loadAllPropertyFromJSON(jsonObject);
-        return temp;
-    }
 }

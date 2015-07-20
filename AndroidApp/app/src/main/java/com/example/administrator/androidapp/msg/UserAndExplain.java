@@ -32,7 +32,7 @@ public class UserAndExplain {
 
     private void setUser(JSONObject jsonObject){
         try {
-            user = User.createUser(jsonObject.getJSONObject("user"));
+            user = (User) User.create(User.class, jsonObject.getJSONObject("user"));
         } catch (JSONException e){
             user = null;
         }

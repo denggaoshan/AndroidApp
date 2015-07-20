@@ -18,13 +18,6 @@ public class Inform extends BaseType{
     private String Content;public String getContent(){return  Content;}
     private String IsRead;
 
-    public static Inform createInform(JSONObject jsonObject)
-    {
-        Inform temp = new Inform();
-        temp.loadAllPropertyFromJSON(jsonObject);
-        return temp;
-    }
-
     public User getUserSource(){
         return Cache.getUserById(Form);
     }

@@ -85,7 +85,7 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=login"
                 + "&account=" + account + "&password=" + pass_MD;
 
-        MyMessage ret =  MyMessage.createMessage(httpGet(getUrl), 1, 2);
+        MyMessage ret =  MyMessage.createMessage(httpGet(getUrl));
 
         return ret;
     }
@@ -100,7 +100,7 @@ public class ToolClass {
                 + "&sex=" + sex + "&phone=" + phone + "&mailbox=" + mailBox
                 + "&avatar=" + avatar;
 
-        return MyMessage.createMessage(httpGet(getUrl), 1, 2);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
 
@@ -114,7 +114,7 @@ public class ToolClass {
                 + "&constellation=" + constellation + "&profession=" + profession
                 + "&liveplace=" + liveplace + "&description=" + description
                 + "&phone=" + phone + "&mailbox=" + mailBox+"&nickname="+nickname;
-        return MyMessage.createMessage(httpGet(getUrl), 1, 0);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
     //修改密码
@@ -126,7 +126,7 @@ public class ToolClass {
                 + "&userid=" + userid + "&oldpassword=" + oldPassword_MD
                 + "&newpassword=" + newPassword_MD;
 
-        return MyMessage.createMessage(httpGet(getUrl), 1, 0);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
 
@@ -136,7 +136,7 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=getlaunchedactivitybyuserid"
                 + "&userid=" + userid;
 
-        return MyMessage.createMessage(httpGet(getUrl), 0, 2);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
     public static MyMessage getParticipatedActivity(String userid)
@@ -144,7 +144,7 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=getpartactivitybyuserid"
                 + "&userid=" + userid;
 
-        return MyMessage.createMessage(httpGet(getUrl), 0, 2);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
     public static MyMessage getApplicatedActivity(String userid)
@@ -152,7 +152,7 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=getappliactivitybyuserid"
                 + "&userid=" + userid;
 
-        return MyMessage.createMessage(httpGet(getUrl), 0, 2);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
     public static MyMessage launchActivity(String userid, String title, String content,
@@ -163,7 +163,7 @@ public class ToolClass {
                 + "&content=" + content + "&starttime=" + starttime
                 + "&endtime=" + endtime + "&place=" + place + "&type=" + type;
 
-        return MyMessage.createMessage(httpGet(getUrl), 0, 1);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
     public static MyMessage getActivityList(String page, String type, String applyable)
@@ -171,7 +171,7 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=getactivitylist"
                 + "&page=" + page + "&type=" + type
                 + "&applyable=" + applyable;
-        return MyMessage.createMessage(httpGet(getUrl), 0, 2);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
     public static MyMessage getActivityList(String page, String type, String applyable, String keyword)
     {
@@ -179,7 +179,7 @@ public class ToolClass {
                 + "&page=" + page + "&type=" + type
                 + "applyable=" + applyable + "&keyword=" + keyword;
 
-        return MyMessage.createMessage(httpGet(getUrl), 0, 2);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
     /**
@@ -197,7 +197,7 @@ public class ToolClass {
 
         String ret = httpGet(getUrl);
         if(ret!=null){
-            msg =  MyMessage.createMessage(ret, 2, 0);
+            msg =  MyMessage.createMessage(ret);
             if(msg!=null){
                 return msg;
             }
@@ -273,7 +273,7 @@ public class ToolClass {
                 + "&content=" + content + "&starttime=" + starttime
                 + "&endtime=" + endtime + "&place=" + place + "&type=" + type;
 
-        return MyMessage.createMessage(httpGet(getUrl), 0, 1);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
     public static MyMessage getUserInfo(String userid, String searchid)
@@ -281,7 +281,7 @@ public class ToolClass {
         String getUrl = MSGSERVERURL + "?" + "oper=getuserinfobyid"
                 + "&userid=" + userid + "&searchid=" + searchid;
 
-        return MyMessage.createMessage(httpGet(getUrl), 1, 0);
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
     public static String addOrDeleteGood(String userid, String toid, String good)

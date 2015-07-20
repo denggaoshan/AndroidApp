@@ -63,7 +63,7 @@ public class ActivityInfo {
             for (int i = 0; i < jsonArray.length(); i++)
             {
                 try {
-                    photos[i] = Photo.createPhoto(jsonArray.getJSONObject(i));
+                    photos[i] = (Photo) BaseType.create(Photo.class,jsonArray.getJSONObject(i));
                 }
                 catch (JSONException e)
                 {
@@ -91,7 +91,7 @@ public class ActivityInfo {
             for (int i = 0; i < jsonArray.length(); i++)
             {
                 try {
-                    comments[i] = Comment.createComment(jsonArray.getJSONObject(i));
+                    comments[i] = (Comment) BaseType.create(Comment.class,jsonArray.getJSONObject(i));
                 }
                 catch (JSONException e)
                 {

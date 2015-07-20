@@ -39,12 +39,6 @@ public class User extends BaseType{
     private String IsGood;
 
 
-    public static User createUser(JSONObject jsonObject){
-        User temp = new User();
-        temp.loadAllPropertyFromJSON(jsonObject);
-        return temp;
-    }
-
     //获得用户认证级别
     public String getUserType(){
         if(UserID.equals("00000001")){
@@ -55,7 +49,6 @@ public class User extends BaseType{
             return "认证用户";
         }
     }
-
     //是否是活动的发起人
     public boolean isLauncher(User[] allUsers){
         if(allUsers!=null){

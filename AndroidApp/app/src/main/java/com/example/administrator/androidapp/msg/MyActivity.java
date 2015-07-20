@@ -23,11 +23,4 @@ public class MyActivity extends BaseType{
     private String NickName;
     private String Avatar;public String getAvatar(){return Avatar;}
 
-    public static MyActivity createActivity(JSONObject jsonObject)
-    {
-        MyActivity temp = new MyActivity();
-        temp.loadAllPropertyFromJSON(jsonObject);
-        return temp;
-    }
-
 }

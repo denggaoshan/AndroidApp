@@ -40,7 +40,7 @@ public class InformArray {
             for (int i = 0; i < jsonArray.length(); i++)
             {
                 try {
-                    informs[i] = Inform.createInform(jsonArray.getJSONObject(i));
+                    informs[i] = (Inform) BaseType.create(Inform.class, jsonArray.getJSONObject(i));
                 }
                 catch (JSONException e)
                 {

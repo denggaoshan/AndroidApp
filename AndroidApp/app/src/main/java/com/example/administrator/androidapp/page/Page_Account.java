@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
@@ -28,11 +29,11 @@ public class Page_Account extends BasePage {
     private void loadUserInformation() {
         currentUser = Current.getCurrentUser();
         LoadInformation();
-
     }
 
     private void LoadInformation(){
         loadOne(R.id.Account,"Account");
+        Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
     }
 
 

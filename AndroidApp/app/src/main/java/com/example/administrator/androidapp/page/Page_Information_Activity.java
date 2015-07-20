@@ -24,6 +24,7 @@ import com.example.administrator.androidapp.tool.Utils;
 
 public class Page_Information_Activity extends BasePage {
 
+    private int currentSelect = 0 ; //当前所选择的标签 0详情 1成员 2相册 3评论
     private MyActivity currentActivity;
 
     private User currentUser;
@@ -36,8 +37,6 @@ public class Page_Information_Activity extends BasePage {
     private boolean ifLoadPhotos=false;
     private boolean ifLoadComments=false;
 
-    private  boolean isLauncher = false;  //当前用户是不是活动发起人
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +47,7 @@ public class Page_Information_Activity extends BasePage {
 
         //加载活动成员
         allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
-        isLauncher= User.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
+        isLauncher=User.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
 
         showActivityDetail();
 
@@ -164,6 +163,10 @@ public class Page_Information_Activity extends BasePage {
     }
     /*  活动成员适配器 */
     private class AllUsersAdapter extends BaseAdapter{
+
+        public AllUsersAdapter(){
+        }
+
         @Override
         public int getCount() {
             if(allUsers!=null){
@@ -171,6 +174,7 @@ public class Page_Information_Activity extends BasePage {
             }else {
                 return 1;
             }
+
         }
 
         @Override
@@ -390,13 +394,8 @@ public class Page_Information_Activity extends BasePage {
         currentUser = User.getCurrentUser();
     }
 
-
     //显示活动详情
     private void showActivityDetail(){
-        //如果没有装载的话
-        if(currentActivity==null){
-            loadCurrentActivity();
-        }
         try {
             ListView vi=(ListView) findViewById(R.id.content);
             if(currentActivity!=null){
@@ -412,12 +411,6 @@ public class Page_Information_Activity extends BasePage {
 
     //显示活动成员
     private void showActivityMember() {
-        if(!User.getCurrentUser().getUserType().equals("游客")) {
-            if (!ifLoadMembers) {
-                allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
-                isLauncher=User.getCurrentUser().isLauncher(allUsers);
-            }
-        }
         try{
             ListView vi=(ListView) findViewById(R.id.content);
             AllUsersAdapter adapter = new AllUsersAdapter();
@@ -425,19 +418,11 @@ public class Page_Information_Activity extends BasePage {
         }catch (Exception e){
             Utils.debugMessage(Page_Information_Activity.this,"加载适配器遇到空指针");
         }
+
     }
 
     //显示活动评论
     private void showActivityComment() {
-
-        if(!User.getCurrentUser().getUserType().equals("游客")){
-            if(!ifLoadComments){
-                allComments = Cache.loadAllComments(currentActivity.getActivityID());
-            }
-        }else{
-            allComments = null;
-        }
-
         try{
             ListView vi=(ListView) findViewById(R.id.content);
             CommentsAdapter adapter = new CommentsAdapter();
@@ -449,13 +434,6 @@ public class Page_Information_Activity extends BasePage {
 
     //显示活动相册
     private void showActivityAlbum(){
-
-        if(!User.getCurrentUser().getUserType().equals("游客")) {
-            if (!ifLoadPhotos) {
-                allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
-            }
-        }
-
         try{
             ListView vi=(ListView) findViewById(R.id.content);
             PhotosAdapter  adapter = new PhotosAdapter();
@@ -488,23 +466,26 @@ public class Page_Information_Activity extends BasePage {
         return super.onOptionsItemSelected(item);
     }
 
-    private void changeFocus(int id){
+    private void changeFocus(int i){
+        currentSelect = i ;
         int[] ids = {R.id.details,R.id.member,R.id.album,R.id.comment};
-        for(int i:ids){
-            LinearLayout layout=(LinearLayout) findViewById(i);
+        for(int id:ids){
+            LinearLayout layout=(LinearLayout) findViewById(id);
             layout.setBackgroundColor(Color.WHITE);
         }
-        LinearLayout rn=(LinearLayout) findViewById(id);
+        LinearLayout rn=(LinearLayout) findViewById(ids[i]);
         rn.setBackgroundColor(0xFF50d2c2);
     }
 
+
     //群发消息接口
     private void sendActivityMessage(){
+
     }
 
     //活动报名
     private void joinActivity() {
-        String ret = ToolClass.applyParticipation(currentUser.getUserID(), currentActivity.getActivityID(), "我想参加");
+        String ret = ToolClass.applyParticipation(currentUser.getUserID(),currentActivity.getActivityID(),"我想参加");
         if(ret!=null){
             if(ret.equals("OK")){
                 Utils.showMessage(this, "报名成功，审核中");
@@ -514,22 +495,51 @@ public class Page_Information_Activity extends BasePage {
         }
     }
 
-
-    //点击导航栏
-    public void navi_Click(View v) {
-        int id = v.getId();
-        String userType = User.getCurrentUser().getUserType();
-
-        changeFocus(id);//切换焦点到此标签
-
-        switch (v.getId()){ //显示相应内容
-            case R.id.details:showActivityDetail();;break;
-            case R.id.member:showActivityMember(); ;break;
-            case R.id.album:showActivityAlbum();break;
-            case R.id.comment:showActivityComment();break;
+    /**************       导航栏点击事件           *************/
+    //点击评论
+    public void comment_Click(View v) {
+        changeFocus(3);
+        if(!User.getCurrentUser().getUserType().equals("游客")){
+            if(!ifLoadComments){
+                allComments = Cache.loadAllComments(currentActivity.getActivityID());
+            }
+        }else{
+            allComments = null;
         }
+        showActivityComment();
+    }
+    //点击相册
+    public void album_Click(View v) {
+        changeFocus(2);
+        if(!User.getCurrentUser().getUserType().equals("游客")) {
+            if (!ifLoadPhotos) {
+                allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
+            }
+        }
+        showActivityAlbum();
+    }
+    //点击活动详情
+    public void details_Click(View v) {
+        changeFocus(0);
+        if(currentActivity==null){
+            loadCurrentActivity();
+        }
+        showActivityDetail();
     }
 
+    private  boolean isLauncher = false;
+
+    //点击活动成员
+    public void member_Click(View v) {
+        changeFocus(1);
+        if(!User.getCurrentUser().getUserType().equals("游客")) {
+            if (!ifLoadMembers) {
+                allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
+                isLauncher=User.getCurrentUser().isLauncher(allUsers);
+            }
+        }
+        showActivityMember();
+    }
 
     /**************       底部功能           *************/
     //转到成员管理

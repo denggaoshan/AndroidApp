@@ -56,7 +56,7 @@
             android:padding="20dp"
             android:id="@+id/details"
             android:background="#50d2c2"
-            android:onClick="navi_Click">
+            android:onClick="details_Click">
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -79,7 +79,7 @@
             android:layout_weight="0.25"
             android:padding="20dp"
             android:id="@+id/member"
-            android:onClick="navi_Click">
+            android:onClick="member_Click">
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -104,7 +104,7 @@
             android:layout_weight="0.25"
             android:padding="20dp"
             android:id="@+id/album"
-            android:onClick="navi_Click">
+            android:onClick="album_Click">
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -130,7 +130,7 @@
             android:padding="20dp"
             android:nestedScrollingEnabled="false"
             android:id="@+id/comment"
-            android:onClick="navi_Click">
+            android:onClick="comment_Click">
 
             <ImageView
                 android:layout_width="fill_parent"

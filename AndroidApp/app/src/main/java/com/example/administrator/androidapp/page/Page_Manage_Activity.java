@@ -2,9 +2,7 @@ package com.example.administrator.androidapp.page;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,25 +25,24 @@ import com.example.administrator.androidapp.tool.AsynImageLoader;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Page_Manage_Activity extends BasePage {
 
-    private MyActivity[] allLauncheActivities;
-    private MyActivity[] allParticipatedActivities;
-    private MyActivity[] allApplyingActivities;
 
-    private boolean ifLoadLauncheActivities =false;
-    private boolean ifLoadPartactivityActivities =false;
-    private boolean ifLoadAppliactivityActivities =false;
+    //分页显示要展示的活动， key为导航栏的id
+    private HashMap<Integer,MyActivity[]> allActivities = new HashMap<Integer,MyActivity[]>();
 
+    private String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.page_manager);
+        setContentView(R.layout.page_activity_manager);
 
         loadUserInformation();
-        showLauncheActivities();
+        showActivities(R.id.running);
     }
 
     @Override
@@ -70,12 +67,12 @@ public class Page_Manage_Activity extends BasePage {
         return super.onOptionsItemSelected(item);
     }
 
-    /**********   装载信息   *************/
+
     //装载用户名和头像
     private void loadUserInformation(){
-        MyMessage msg = MyMessage.getCurrentMyMessage();
 
-        Utils.setTextView(this,R.id.Account,msg.getUser().getAccount());
+        MyMessage msg = MyMessage.getCurrentMyMessage();
+        Utils.setTextView(this, R.id.Account, msg.getUser().getAccount());//装载用户名
 
         try {
             ImageView iv = (ImageView)findViewById(R.id.imageView8);
@@ -90,41 +87,33 @@ public class Page_Manage_Activity extends BasePage {
         }
     }
 
-    //重新装载发起活动
-    private void loadLauncheActivities(){
-        MyMessage msg = ToolClass.getLaunchedActivity(User.getCurrentUser().getUserID());
-        allLauncheActivities = msg.getActivities();
-        ifLoadLauncheActivities = true;
+    //重新装载该类型的活动，不管有没有装载过
+    private void loadActivities(int id){
+        MyMessage msg = null;
+        switch (id){
+            case R.id.running: msg = ToolClass.getLaunchedActivity(User.getCurrentUser().getUserID()); break;
+            case R.id.history:  msg = ToolClass.getParticipatedActivity(User.getCurrentUser().getUserID());break;
+            case R.id.applying: msg = ToolClass.getApplicatedActivity(User.getCurrentUser().getUserID());break;
+        }
+        if(msg!=null){
+            allActivities.put(id,msg.getActivities());
+           }else{
+            Utils.debugMessage(this,"msg返回为空");
+           }
     }
 
-    //重新装载参与活动
-    private void loadParticipatedActivities(){
-        MyMessage msg = ToolClass.getParticipatedActivity(User.getCurrentUser().getUserID());
-        allParticipatedActivities = msg.getActivities();
-        ifLoadPartactivityActivities = true;
-    }
-
-    //重新装载申请中
-    private void loadApplicatedActivities(){
-        MyMessage msg = ToolClass.getApplicatedActivity(User.getCurrentUser().getUserID());
-        allApplyingActivities = msg.getActivities();
-        ifLoadAppliactivityActivities = true;
-    }
-
-
-    private void changeFocus(int i){
+    private void changeFocus(int id){
         int[] ids = {R.id.running,R.id.history,R.id.applying};
 
-        for(int id:ids){
-            LinearLayout layout=(LinearLayout) findViewById(id);
+        for(int i:ids){
+            LinearLayout layout=(LinearLayout) findViewById(i);
             layout.setBackgroundColor(Color.WHITE);
         }
-
-        LinearLayout rn=(LinearLayout) findViewById(ids[i]);
+        LinearLayout rn=(LinearLayout) findViewById(id);
         rn.setBackgroundColor(0xFF50d2c2);
     }
 
-    /***************** 所有适配器类  ****************/
+    // 所有适配器类
     private class MyAdapter extends BaseAdapter{
 
         MyActivity[] allData;
@@ -214,59 +203,24 @@ public class Page_Manage_Activity extends BasePage {
     }
 
 
-    /*******************   显示内容   ********************/
-    //显示我发起的活动
-    private void showLauncheActivities(){
-        if(ifLoadLauncheActivities ==false){
-            loadLauncheActivities();
+    //显示活动
+    private void showActivities(int id){
+        if(!allActivities.containsKey(id)){
+            loadActivities(id);
         }
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(allLauncheActivities);
-        vi.setAdapter(adapter);
-    }
-
-    //显示我参与的活动
-    private void showPartactivityActivities(){
-        if(ifLoadPartactivityActivities ==false){
-            loadParticipatedActivities();
-        }
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(allParticipatedActivities);
-        vi.setAdapter(adapter);
-    }
-
-    //显示我申请的活动
-    private void shoAppliactivityActivities(){
-        if(ifLoadAppliactivityActivities ==false){
-            loadApplicatedActivities();
-        }
-        ListView vi=(ListView) findViewById(R.id.content);
-        vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(allApplyingActivities);
+        MyAdapter adapter = new MyAdapter(allActivities.get(id));
         vi.setAdapter(adapter);
     }
 
 
-    private String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
+    //导航栏点击事件
+    public void navi_Click(View v) {
+        int id = v.getId();
 
-    /***************  点击事件 **************/
+        changeFocus(id);//切换焦点
 
-
-    public void launched_Click(View v) {
-        changeFocus(0);
-        showLauncheActivities();
-    }
-
-    public void participated_Click(View v) {
-       changeFocus(1);
-        showPartactivityActivities();
-    }
-
-
-    public void applyed_Click(View v) {
-         changeFocus(2);
-        shoAppliactivityActivities();
+        showActivities(id);//显示活动
     }
 }

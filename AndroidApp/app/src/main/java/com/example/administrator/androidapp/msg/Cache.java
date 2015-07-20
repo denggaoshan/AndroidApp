@@ -1,7 +1,12 @@
 package com.example.administrator.androidapp.msg;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.ImageView;
 
+import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.page.Page_TotalActivity;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
@@ -288,4 +293,55 @@ public class Cache {
     }
 
 
+    private static class AnotherTask extends AsyncTask<String, Void, String> {
+        private ActionBarActivity parent;
+        private String url;
+        private int id;
+        private int width,height;
+
+
+        public AnotherTask(ActionBarActivity parent, String url, int id, int width, int height) {
+            this.parent =  parent;
+            this.url =  url;
+            this.id =  id;
+            this.width =  width;
+            this.height =  height;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //对UI组件的更新操作
+            putImgs(parent,id,url,width,height);
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            //耗时的操作
+            return params[0];
+        }
+    }
+
+    private static void putImgs(ActionBarActivity parent,int id,String url,int width,int height){
+        Bitmap bm = Cache.getBitmap(url);
+        if (bm != null)
+        {
+            ((ImageView) parent.findViewById(id)).setImageBitmap(ToolClass.resizeBitmap(bm, parent, width, height));
+        }
+    }
+
+    /**
+     * 往parent的id中装载图片 url
+     * @param parent
+     * @param url
+     * @param id
+     * @param width
+     * @param height
+     */
+    public static void loadImg(final ActionBarActivity parent, final String url, final int id, final int width, final int height) {
+
+        new Thread(){
+            public void run(){
+                new AnotherTask(parent,url,id,width,height).execute("none");
+            }
+        }.start();
+    }
 }

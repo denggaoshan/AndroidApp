@@ -227,43 +227,14 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         String type = User.getCurrentUser().getUserType();
         Utils.setTextView(this, R.id.identity, type);
 
-        new Thread(){
-            public void run(){
-                new AnotherTask().execute("none");
-            }
-        }.start();
+        //加载用户头像
+        String url = User.getCurrentUser().getAvatar();
+        Cache.loadImg(this,url,R.id.img_head,100,100);
+        Cache.loadImg(this,url,R.id.img_head2,60,60);
 
     }
 
-    private class AnotherTask extends AsyncTask<String, Void, String>{
-        @Override
-        protected void onPostExecute(String result) {
-            //对UI组件的更新操作
-            putImgs();
-        }
-        @Override
-        protected String doInBackground(String... params) {
-            //耗时的操作
-            return params[0];
-        }
-    }
 
-    void putImgs(){
-        String ava;
-        if (User.getCurrentUser().getAvatar() == null
-                || User.getCurrentUser().getAvatar().equals("")
-                || User.getCurrentUser().getAvatar().equals("null"))
-            ava = ToolClass.DEFAULTAVATER;
-        else
-            ava = User.getCurrentUser().getAvatar();
-        Bitmap bm = Cache.getBitmap(ava);
-        if (bm != null)
-        {
-            Cache.setUserAvater(bm);
-            ((ImageView) findViewById(R.id.imageView20)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 100, 100));
-            ((ImageView) findViewById(R.id.imageView4)).setImageBitmap(ToolClass.resizeBitmap(bm, this, 60, 60));
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -355,7 +326,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                         for (int i=0;i<ids.length;i++){
                             Utils.setTextView(convertView,ids[i],vals[i]);
                         }
-
                         ImageView iv = (ImageView) convertView.findViewById(R.id.image);
                         Bitmap bm = Cache.getBitmap(activity.getAvatar());
                         iv.setImageBitmap(bm);

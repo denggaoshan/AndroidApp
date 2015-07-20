@@ -24,7 +24,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/imageView20"
+                android:id="@+id/img_head"
                 android:src="@drawable/icon_user" />
 
         </LinearLayout>
@@ -192,7 +192,7 @@
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:id="@+id/imageView4"
+                android:id="@+id/img_head2"
                 android:src="@drawable/icon_user"
                 android:layout_weight="0.126"
                 android:onClick="head_Click"

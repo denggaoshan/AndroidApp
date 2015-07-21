@@ -13,21 +13,15 @@ public class UserAndExplain {
     private String time; public String getTime(){ return time; }
 
     public static UserAndExplain createUserAndExplain(JSONObject jsonObject){
-        UserAndExplain temp = new UserAndExplain();
-        if (jsonObject != null){
+        try {
+            UserAndExplain temp = new UserAndExplain();
             temp.setUser(jsonObject);
-            try {
-                temp.expain = jsonObject.getString("explain");
-            } catch (JSONException e){
-                temp.expain = null;
-            }
-            try {
-                temp.time = jsonObject.getString("time");
-            } catch (JSONException e){
-                temp.time = null;
-            }
+            temp.expain = jsonObject.getString("explain");
+            temp.time = jsonObject.getString("time");
+            return temp;
+        } catch (JSONException e) {
+            return null;
         }
-        return temp;
     }
 
     private void setUser(JSONObject jsonObject){

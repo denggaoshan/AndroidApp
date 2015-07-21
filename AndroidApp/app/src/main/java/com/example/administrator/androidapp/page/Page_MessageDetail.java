@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
@@ -63,6 +64,16 @@ public class Page_MessageDetail extends BasePage {
                 }
             }
         });
+
+
+        if(dest.getUserID().equals("00000000")){
+            LinearLayout layout=(LinearLayout)findViewById(R.id.response);
+            if(layout!=null){
+                layout.setVisibility(View.GONE);
+            }else{
+                Utils.debugMessage(this,"找不到response");
+            }
+        }
     }
 
 

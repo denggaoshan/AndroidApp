@@ -417,7 +417,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                     source = Page_Information_User.class;
                     break;
                 case R.id.confirm:
-                    source = Page_Information_User.class;
+                    source = Page_MailBox.class;
                     break;
                 case R.id.account:
                     source = Page_Account.class;

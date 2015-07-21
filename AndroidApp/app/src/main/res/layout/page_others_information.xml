@@ -81,7 +81,8 @@
         android:layout_height="match_parent"
         android:id="@+id/scrollView2"
         android:layout_below="@id/Head"
-        android:layout_gravity="center_horizontal" >
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="90dp">
 
         <LinearLayout
             android:orientation="vertical"

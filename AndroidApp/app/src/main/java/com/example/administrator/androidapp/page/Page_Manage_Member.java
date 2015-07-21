@@ -156,8 +156,11 @@ public class Page_Manage_Member extends BasePage {
                     @Override
                     public void onClick(View v) {
                         String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1");
-                        Utils.showMessage(Page_Manage_Member.this, ret);
-                        allRequests = Cache.updateLoadRequest(currentActivity);
+                        if(ret.equals("ok")){
+                            Utils.showMessage(Page_Manage_Member.this,"已同意");
+                            allRequests = Cache.updateLoadRequest(currentActivity);
+                        }
+                        loadActivity();
                     }
                 });
             }else{
@@ -172,7 +175,11 @@ public class Page_Manage_Member extends BasePage {
                     public void onClick(View v) {
                         String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0");
                         Utils.showMessage(Page_Manage_Member.this, ret);
-                        allRequests = Cache.updateLoadRequest(currentActivity);
+                        if(ret.equals("ok")){
+                            allRequests = Cache.updateLoadRequest(currentActivity);
+                            Utils.showMessage(Page_Manage_Member.this,"已拒绝");
+                        }
+                        loadActivity();
                     }
                 });
             }else{
@@ -193,8 +200,6 @@ public class Page_Manage_Member extends BasePage {
         ListView vi=(ListView) findViewById(R.id.requests);
         MyAdapter myAdapter = new MyAdapter(allRequests);
         vi.setAdapter(myAdapter);
-
-        Cache.loadImg(this,currentActivity.getAvatar(),R.id.image);
     }
 
 }

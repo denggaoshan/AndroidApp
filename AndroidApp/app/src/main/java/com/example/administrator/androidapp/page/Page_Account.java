@@ -96,7 +96,6 @@ public class Page_Account extends BasePage {
                 } else {
                     Utils.showMessage(this, "两次输入不一致");
                 }
-
             } else {
                 Utils.showMessage(this, "密码格式有问题");
             }

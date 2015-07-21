@@ -89,6 +89,7 @@ public class Page_Registered extends BasePage {
                 if(user!=null){
                     Current.setCurrentUser(msg.getUser());
                     //登陆
+                    Utils.storeLogData(msg.getJsonString());
                     Utils.transPage(this,Page_TotalActivity.class);
                 }else{
                     Utils.debugMessage(this,"debug 0001 user为空");

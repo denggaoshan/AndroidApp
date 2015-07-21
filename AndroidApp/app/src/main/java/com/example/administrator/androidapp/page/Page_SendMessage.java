@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
@@ -17,13 +18,27 @@ public class Page_SendMessage extends BasePage {
 
     User source,dest;
 
+    private static String sendMessageType; //发消息的类型 1为给别人 2为群发
+
+    public static void setMessageType(String type){
+        sendMessageType = type;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_send_message);
 
-        source = Current.getCurrentUser();
-        dest = Current.getOtherUser();
+        if(sendMessageType.equals("1")){
+            //给某人发
+            source = Current.getCurrentUser();
+            dest = Current.getOtherUser();
+        }else{
+            //群发消息
+            source = Current.getCurrentUser();
+        }
+
+
         if(source==null || dest==null){
             Utils.debugMessage(this,"0001 source 或者 dest 为空");
         }
@@ -38,7 +53,6 @@ public class Page_SendMessage extends BasePage {
                 }
             }
         });
-
 
         final EditText tx2 = (EditText)findViewById(R.id.content);
 
@@ -83,16 +97,32 @@ public class Page_SendMessage extends BasePage {
     public void submit_Click(View v){
         String title = Utils.getValueOfEditText(this, R.id.title);
         String content = Utils.getValueOfEditText(this, R.id.content);
+
         if(title!=null && content!=null){
             if(content.replace(" ","").equals("") || title.replace(" ","").equals("")){
                 Utils.showMessage(this,"标题或者内容不能为空");
                 Utils.backPage(this);
             }else{
-               String ret = ToolClass.sendPrivateMess(source.getUserID(),dest.getUserID(),title,content);
-                if(ret!=null){
-                    Utils.showMessage(this,ret);
+                String ret = null;
+                //发消息
+                if(sendMessageType.equals("1")){
+                    ret = ToolClass.sendPrivateMess(source.getUserID(),dest.getUserID(),title,content);
                 }else{
-                    Utils.debugMessage(this,"0002 ret为空");
+                    ret =ToolClass.fsendMess(source.getUserID(),Current.getCurrentActivity().getActivityID(),title,content);
+                }
+                //结果
+                if(ret!=null){
+
+                    if(ret.equals("ok")){
+                        Utils.showMessage(this, "已发送");
+                        Cache.updateAllMessages(source.getUserID());
+                        Utils.backPage(this);
+                    }else{
+                        Utils.showMessage(this, "发送失败");
+                    }
+
+                }else{
+                    Utils.debugMessage(this, "0002 ret为空");
                 }
             }
         }

@@ -190,6 +190,12 @@ public class Cache {
         }
     }
 
+
+    //更新
+    public static void updateAllMessages(String id) {
+        loadAllMessages(id);
+    }
+
     //重新加载用户为id的所有消息
     private static void loadAllMessages(String id) {
 

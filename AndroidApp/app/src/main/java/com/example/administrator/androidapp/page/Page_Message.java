@@ -123,8 +123,6 @@ public class Page_Message extends BasePage{
                 TextView tv = (TextView) convertView.findViewById(R.id.content);
                 tv.setText("没有任何消息");
             }
-
-
             return convertView;
         }
     }

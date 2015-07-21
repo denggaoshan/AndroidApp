@@ -3,39 +3,51 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:id="@+id/body">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="fill_parent"
             android:id="@+id/image"
             android:src="@drawable/icon_user"
             android:padding="10dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="花千骨"
-            android:id="@+id/name"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="fill_parent"
             android:text="男"
             android:id="@+id/sex"
-            android:gravity="center" />
+            android:gravity="center"
+            android:layout_toRightOf="@+id/image" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:text="20岁"
+            android:id="@+id/age"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/sex" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:text="20岁"
-            android:id="@+id/age"
-            android:gravity="center" />
+            android:text="花千骨"
+            android:id="@+id/name"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/age" />
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/manager"
+            android:src="@drawable/icon_manager"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="-40dp" />
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -71,8 +72,10 @@ public class Page_Information_Activity extends BasePage {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = new LinearLayout(parent.getContext());
+
             if(position == 0){
                 if(convertView!=null){
+
                     Context ctx = convertView.getContext();
                     LayoutInflater nflater = LayoutInflater.from(ctx);
                     convertView = nflater.inflate(R.layout.content_activity_detail, null);
@@ -84,6 +87,7 @@ public class Page_Information_Activity extends BasePage {
                             R.id.attending,
                             R.id.type,
                             R.id.description};
+
                     String[] vals = {currentActivity.getTitle(),
                             currentActivity.getStartTime(),
                             currentActivity.getEndTime(),
@@ -105,10 +109,8 @@ public class Page_Information_Activity extends BasePage {
                         Utils.debugMessage(Page_Information_Activity.this,"debug 0010 ");
                     }
 
-
                 }
             }else{
-
                 if(isLauncher){
                     //如果是活动管理员，显示群发消息按钮
                     //显示最后的按钮
@@ -200,6 +202,7 @@ public class Page_Information_Activity extends BasePage {
 
                 final User user = allUsers[position];
 
+
                 if(convertView!=null && user!= null){
 
                     Context ctx = convertView.getContext();
@@ -207,7 +210,7 @@ public class Page_Information_Activity extends BasePage {
                     convertView = nflater.inflate(R.layout.content_activity_member, null);
 
                     int[] ids = {R.id.name,R.id.age,R.id.sex};
-                    String[] vals = {user.getNickName(),"年龄： "+user.getAge(),user.getSex()};
+                    String[] vals = {user.getNickName(),user.getAge(),user.getSex()};
 
                     for(int i=0;i<ids.length;i++){
                         TextView tv = (TextView)convertView.findViewById(ids[i]);
@@ -218,8 +221,24 @@ public class Page_Information_Activity extends BasePage {
                         }
                     }
 
+                    //年龄为空就隐藏
+                    if(user.getAge().equals("null")){
+                        TextView tv = (TextView)convertView.findViewById(R.id.age);
+                        tv.setVisibility(View.GONE);
+                    }
+
                     //成员头像
                     Cache.loadImg(convertView,user.getAvatar(),R.id.image );
+
+                    //管理员变颜色
+                    if(position!=0){
+                        ImageView imageView = (ImageView) convertView.findViewById(R.id.manager);
+                        if(imageView!=null){
+                            imageView.setVisibility(View.GONE);
+                        }else {
+                            Utils.debugMessage(Page_Information_Activity.this,"没有manager");
+                        }
+                    }
 
                     //添加点击事件
                     convertView.setOnClickListener(new View.OnClickListener() {
@@ -516,6 +535,8 @@ public class Page_Information_Activity extends BasePage {
 
     //群发消息接口
     private void sendActivityMessage(){
+        Page_SendMessage.setMessageType("2");
+        Utils.transPage(this,Page_SendMessage.class);
     }
 
     //活动报名

@@ -127,7 +127,10 @@ public class Utils {
     public static void backPage(ActionBarActivity now){
         Class after = historyPages.pop();
         if(after!=null){
-            transPage(now,after);
+            Intent intent = new Intent();
+            intent.setClass(now,after);
+            now.startActivity(intent);
+            now.finish();
         }else{
             Utils.debugMessage(now,"返回上个页面的页面为空");
         }

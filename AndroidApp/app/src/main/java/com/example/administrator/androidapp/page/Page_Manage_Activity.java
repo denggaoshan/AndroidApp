@@ -78,7 +78,7 @@ public class Page_Manage_Activity extends BasePage {
         currentUser = Current.getCurrentUser();
         Utils.setTextView(this, R.id.Account,currentUser.getNickName());//装载用户名
 
-        Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
+        Cache.loadImg(this,currentUser.getAvatar(),R.id.img_head);
         MyMessage msg = Current.getCurrentMyMessage();
         Utils.setTextView(this,R.id.Account,msg.getUser().getAccount());
     }

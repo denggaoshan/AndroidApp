@@ -1,9 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'android.keystore'
+            keyPassword '123456'
+            storeFile file('./android.keystore')
+            storePassword '123456'
+        }
+        release {
+            keyAlias 'android.keystore'
+            keyPassword '123456'
+            storeFile file('./android.keystore')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-
     defaultConfig {
         applicationId "com.example.administrator.androidapp"
         minSdkVersion 15
@@ -23,4 +36,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile files('src/main/libs/commons-codec-1.10.jar')
+    compile files('libs/BaiduLBS_Android.jar')
 }

@@ -32,15 +32,24 @@ public class Cache {
     private static HashMap<String, ArrayList<Inform>> systemInformsCache = new HashMap<>();
     private static HashMap<String, ArrayList<Inform>> activityInformsCache = new HashMap<>();
     private static HashMap<String, ArrayList<Inform>> privatedInformsCache = new HashMap<>();
+
     private static HashMap<String,User[]> activityMember = new HashMap<>();
     private static HashMap<String,Comment[]> activityComments = new HashMap<>();
     private static HashMap<String,Photo[]> activityPhotos = new HashMap<>();
+
     private static Map<String, List<MyActivity>> activitiesCache = null;
     private static HashMap<String,User> userCache = new HashMap<>();
     private static HashMap<String,MyActivity> activityCache = new HashMap<>();
 
 
     private static HashMap<String,UserAndExplain[]> activityRequests = new HashMap<>();//活动申请
+
+    private static HashMap<String,MyActivity[]> launchedActivity = new HashMap<>();//用户发起的互动
+    private static HashMap<String,MyActivity[]> participatedActivity = new HashMap<>();//用户参与的活动
+    private static HashMap<String,MyActivity[]> applicatedActivity = new HashMap<>();//
+
+    public static MyActivity[] get
+
 
     //先更新缓存再获得
     public static UserAndExplain[] updateLoadRequest(MyActivity currentActivity) {
@@ -309,6 +318,10 @@ public class Cache {
         }else{
             return null;
         }
+    }
+
+    public static HashMap<Integer, MyActivity[]> getLaunchedActivity(String userID) {
+        return null;
     }
 
 

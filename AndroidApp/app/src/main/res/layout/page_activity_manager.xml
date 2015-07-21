@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.androidapp.page.Page_Manage_Activity"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:onClick="navi_Click">
 
     <RelativeLayout
         android:orientation="horizontal"

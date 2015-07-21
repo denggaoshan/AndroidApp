@@ -6,7 +6,17 @@
     <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="524dp"
         android:clickable="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="确定"
+        android:id="@+id/button5"
+        android:background="#50d2c2"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:onClick="ok_Click" />
 
 </LinearLayout>

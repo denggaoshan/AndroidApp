@@ -108,6 +108,10 @@
             android:name=".page.Page_MailBox"
             android:label="@string/title_activity_page__mail_box" >
         </activity>
+        <activity
+            android:name=".page.Page_Map"
+            android:label="@string/title_activity_page__mail_box" >
+        </activity>
     </application>
 
 </manifest>

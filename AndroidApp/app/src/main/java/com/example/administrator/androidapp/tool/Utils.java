@@ -231,6 +231,14 @@ public class Utils {
     }
 
 
+    public static void setEditView(ActionBarActivity parent, int id, String value) {
+        EditText tv = (EditText)parent.findViewById(id);
+        if(tv!=null){
+            tv.setText(value);
+        }else{
+            Utils.debugMessage(parent,"没找到edittext "+value);
+        }
+    }
 
     public static void setTextView(ActionBarActivity parent, int id, String value) {
         TextView tv = (TextView)parent.findViewById(id);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.baidu.lbsapi.BMapManager;
@@ -33,19 +34,20 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.nplatform.comapi.map.MapController;
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.tool.Utils;
 
 /**
  * Created by admin on 2015/7/21.
  */
-public class Page_Map extends ActionBarActivity {
+public class Page_Map extends BasePage {
 
     MapView mMapView = null;
     BaiduMap mBaiduMap = null;
     LocationClient mLocClient = null;
     MapController mapController = null;
-    String resultAdress = "";
-    String resultLatitude = "";
-    String resultLontitude = "";
+    static String resultAdress = ""; public static String getResultAdress(){return resultAdress;}
+    static String resultLatitude = "";
+    static String resultLontitude = "";
     BMapManager mBMapManager = null;
     GeoCoder geocoder = null;
     MapStatus mapStatus = null;
@@ -240,5 +242,9 @@ public class Page_Map extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void ok_Click(View v){
+        Utils.backPage(this);
     }
 }

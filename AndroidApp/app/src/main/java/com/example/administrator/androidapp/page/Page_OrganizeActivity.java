@@ -46,8 +46,15 @@ public class Page_OrganizeActivity extends BasePage {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_organize);
 
+
+        String position = Page_Map.getResultAdress();
+
+        if(position==null || position.equals("")) {
+            Utils.transPage(this, Page_Map.class);
+        }else{
+            Utils.setEditView(this, R.id.place, position);
+        }
         createActivityTypeSpinner();
-        ((EditText)findViewById(R.id.place)).setText(ToolClass.getCurLocation());
         initCurTime();
     }
 
@@ -68,6 +75,7 @@ public class Page_OrganizeActivity extends BasePage {
         ((Button)findViewById(R.id.startHour)).setText(curHour);
         ((Button)findViewById(R.id.endHour)).setText(curHour);
     }
+
     public void setStartTime(View v){
         Calendar c = Calendar.getInstance();
         new DatePickerDialog(Page_OrganizeActivity.this,
@@ -187,8 +195,6 @@ public class Page_OrganizeActivity extends BasePage {
         });
     }
 
-
-
     public void sure_Click(View v){
         Utils.showMessage(this, getInput());
         if (!getInput().equals("提交中"))
@@ -254,4 +260,10 @@ public class Page_OrganizeActivity extends BasePage {
 
         return "提交中";
     }
+
+
+    public void position_Click(View v){
+
+    }
+
 }

@@ -212,6 +212,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_total_activity);
+
         initValues();
 
         content.setOnTouchListener(this);
@@ -230,8 +231,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         Cache.loadImg(this,url,R.id.img_head2);
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -324,7 +323,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                             Utils.setTextView(convertView,ids[i],vals[i]);
                         }
 
-
                         Cache.loadImg(convertView,activity.getAvatar(),R.id.image);
 
                         //监听事件
@@ -402,43 +400,62 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             scrollToMenu();
         }
     }
-    //查看消息
-    public void  message_Click(View v){
-        if(!Current.getCurrentUser().getUserType().equals("游客")){
-            Utils.transPage(this, Page_Message.class);
+
+
+    //点击左边的栏目事件
+    public void  left_Click(View v){
+
+        Class source = null;
+        String type = Current.getCurrentUser().getUserType();
+
+        if(!type.equals("游客")){
+            switch (v.getId()){
+                case R.id.message:
+                    source = Page_Message.class;
+                    break;
+                case R.id.information:
+                    source = Page_Information_User.class;
+                    break;
+                case R.id.confirm:
+                    source = Page_Information_User.class;
+                    break;
+                case R.id.account:
+                    source = Page_Account.class;
+                    break;
+                case R.id.manage:
+                    source = Page_Manage_Activity.class;
+                    break;
+                case R.id.exit:
+                    Utils.clearLogData();//清楚本地用户数据
+                    source = Page_Login.class;
+            }
+            Utils.transPage(this, source);
         }else{
-            Utils.showMessage(this,"您还没有注册");
+            //如果是游客
+            if(v.getId()==R.id.exit){
+                Utils.transPage(this,Page_Login.class);
+            }else{
+                Utils.showMessage(this,"您还没有注册");
+            }
         }
     }
-    //个人资料
-    public void   userInfo_Click(View v){
-        if(!Current.getCurrentUser().getUserType().equals("游客")){
-            Utils.transPage(this,Page_Information_User.class);
-        }else{
-            Utils.showMessage(this,"您还没有注册");
+
+
+    //点击导航栏
+    public void navi_Click(View v) {
+        String type = "A";
+        switch (v.getId()){
+            case R.id.all: type = "A";break;
+            case R.id.out:type = "0";break;
+            case R.id.sport:type = "1";break;
+            case R.id.play:type = "2";break;
+            case R.id.travel:type = "3";break;
+            case R.id.music:type = "4";break;
+            case R.id.other:type = "5";break;
         }
+        loadActivities(type);
     }
-    //账户管理
-    public void account_Click(View v){
-        if(!Current.getCurrentUser().getUserType().equals("游客")){
-            Utils.transPage(this,Page_Account.class);
-        }else{
-            Utils.showMessage(this,"您还没有注册");
-        }
-    }
-    //活动管理
-    public void manage_Click(View v) {
-        if(!Current.getCurrentUser().getUserType().equals("游客")){
-            Utils.transPage(this,Page_Manage_Activity.class);
-        }else{
-            Utils.showMessage(this,"您还没有注册");
-        }
-    }
-    //退出登录
-    public void logout_Click(View v){
-        Utils.clearLogData();
-        Utils.transPage(this,Page_Login.class);
-    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -450,31 +467,6 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-
-    /*********************导航栏 *****************************/
-    public void naviAll_Click(View v) {
-        loadActivities("A");
-    }
-
-    public void naviOutSide_Click(View v) {
-        loadActivities("0");
-    }
-    public void naviSport_Click(View v) {
-        loadActivities("1");
-    }
-    public void naviPlay_Click(View v) {
-        loadActivities("2");
-    }
-    public void naviTravel_Click(View v) {
-        loadActivities("3");
-    }
-    public void naviMusic_Click(View v) {
-        loadActivities("4");
-    }
-    public void naviOther_Click(View v) {
-        loadActivities("5");
     }
 
 }

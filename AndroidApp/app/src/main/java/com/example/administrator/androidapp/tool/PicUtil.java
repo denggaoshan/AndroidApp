@@ -1,6 +1,9 @@
 package com.example.administrator.androidapp.tool;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -15,7 +18,14 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.ImageView;
+
+import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.page.BasePage;
+import com.example.administrator.androidapp.page.Page_Registered;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -131,7 +141,6 @@ public class PicUtil {
     /**
      * 下载图片 同时写道本地缓存文件中
      *
-     * @param context
      * @param imageUri
      * @return
      * @throws MalformedURLException
@@ -337,4 +346,88 @@ public class PicUtil {
         return bitmapWithReflection;
     }
 
+    /**
+     *     获取文件的路径
+     *
+     * @param context
+     * @param uri
+     * @return the file path or null
+     */
+    public static String getRealFilePath( final Context context, final Uri uri ) {
+        if ( null == uri ) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if ( scheme == null )
+            data = uri.getPath();
+        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+            data = uri.getPath();
+        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
+            if ( null != cursor ) {
+                if ( cursor.moveToFirst() ) {
+                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
+                    if ( index > -1 ) {
+                        data = cursor.getString( index );
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
+
+
+
+    /*
+
+    private static int TAKE_PICTURE = 1234;
+    private static String picPath = null;
+
+    public static void chooseImg(BasePage parent){
+        try{
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            parent.startActivityForResult(intent,TAKE_PICTURE);
+        }catch (Exception e){
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK){
+            switch (requestCode) {
+                case 1234:
+                    Bitmap bitmap;
+                    Uri originalUri = data.getData();
+                    ContentResolver resolver = getContentResolver();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+                    } catch (IOException e){
+                        bitmap = null;
+                    }
+                    int width = bitmap.getWidth();
+                    int height = bitmap.getHeight();
+                    float density = getResources().getDisplayMetrics().density;
+                    float newWidth = 130 * density;
+                    float newHeight = 130 * density;
+                    float scaleWidth = ((float)newWidth) / width;
+                    float scaleHeight = ((float)newHeight) / height;
+                    Matrix matrix = new Matrix();
+                    matrix.postScale(scaleWidth, scaleHeight);
+                    Bitmap resizeBitmap = Bitmap.createBitmap(bitmap, 0, 0, width,
+                            height, matrix, true);
+                    ((ImageView) findViewById(R.id.imageView2)).setImageBitmap(resizeBitmap);
+
+                    String[] proj = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = managedQuery(originalUri, proj, null, null, null);
+                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    String path = cursor.getString(column_index);
+                    picPath = path;
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    */
 }

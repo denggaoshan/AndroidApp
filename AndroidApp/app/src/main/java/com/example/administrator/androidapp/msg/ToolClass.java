@@ -20,6 +20,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,37 +37,30 @@ public class ToolClass {
 
     public static String IMGSERVERURL = "http://chenranzhen.xyz/UpLoadFile.php";
     public static String MSGSERVERURL = "http://chenranzhen.xyz/privateinterface.php";
-    public static String DEFAULTAVATER = "http://chenranzhen.xyz/Upload/Avatar/Default.png";
     public static String AK = "3Ne7OXKQwUIDLiD9UF6IM90g";
     public static String IPAPI = "http://api.map.baidu.com/location/ip";
+    private static final String TAG = "uploadFile";
+    private static final int TIME_OUT = 10 * 1000; // 超时时间
+    private static final String CHARSET = "utf-8"; // 设置编码
+
 
     public static String getCurLocation(){
         String getUrl = IPAPI + "?" + "ak=" + AK;
         String jsonString = httpGet(getUrl);
         String result = "";
-
-        JSONObject jsonObject;
         try {
-            jsonObject = new JSONObject(jsonString).getJSONObject("content");
-        }
-        catch (JSONException e){
-            jsonObject = null;
-        }
-        if (jsonObject != null){
-            try {
-                result = jsonObject.getString("address");
-            }
-            catch (JSONException e){
-                result = "";
-            }
+            JSONObject jsonObject = new JSONObject(jsonString).getJSONObject("content");
+            result = jsonObject.getString("address");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return result;
     }
+
     private String convert(String utfString){
         StringBuilder sb = new StringBuilder();
         int i = -1;
         int pos = 0;
-
         while((i=utfString.indexOf("\\u", pos)) != -1){
             sb.append(utfString.substring(pos, i));
             if(i+5 < utfString.length()){
@@ -74,10 +68,10 @@ public class ToolClass {
                 sb.append((char)Integer.parseInt(utfString.substring(i+2, i+6), 16));
             }
         }
-
         return sb.toString();
     }
 
+    /*      返回MyMessage的接口 */
     //登陆
     public static MyMessage load(String account, String password)
     {
@@ -107,13 +101,13 @@ public class ToolClass {
     //更新用户的信息
     public static MyMessage updateuserbaseinfo(String userid,String nickname,String sex, String age, String constellation,
                                           String profession, String liveplace, String description,
-                                          String phone, String mailBox)
+                                          String phone)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=updateuserbaseinfo"
                 + "&userid=" + userid +"&sex=" + sex + "&age=" + age
                 + "&constellation=" + constellation + "&profession=" + profession
                 + "&liveplace=" + liveplace + "&description=" + description
-                + "&phone=" + phone + "&mailbox=" + mailBox+"&nickname="+nickname;
+                + "&phone=" + phone +"&nickname="+nickname;
         return MyMessage.createMessage(httpGet(getUrl));
     }
 
@@ -182,18 +176,13 @@ public class ToolClass {
         return MyMessage.createMessage(httpGet(getUrl));
     }
 
-    /**
-     * 查看活动参与人员
-     * @param userid
-     * @param activityid
-     * @return
-     */
+
     public static MyMessage getParticipation(String userid, String activityid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getparticipation"
                 + "&userid=" + userid + "&activityid=" + activityid;
 
-        MyMessage msg = null;
+        MyMessage msg;
 
         String ret = httpGet(getUrl);
         if(ret!=null){
@@ -284,6 +273,9 @@ public class ToolClass {
         return MyMessage.createMessage(httpGet(getUrl));
     }
 
+
+    /*只返回String的接口*/
+
     public static String addOrDeleteGood(String userid, String toid, String good)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=addordeletegood"
@@ -336,32 +328,19 @@ public class ToolClass {
         url = url.replaceAll("\\[", "%5B");
         url = url.replaceAll("\\]", "%5D");
         url = url.replaceAll("\"", "%22");
-
         HttpGet getMethod = new HttpGet(url);
         HttpClient httpClient = new DefaultHttpClient();
-        try
-        {
+
+        try{
             HttpResponse response = httpClient.execute(getMethod);
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK
                     || response.getStatusLine().getStatusCode() == 200
-                    || response.getStatusLine().getStatusCode() == 302)
+                    || response.getStatusLine().getStatusCode() == 302){
                 resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
-            else
-            {
-                String temp = EntityUtils.toString(response.getEntity(), "utf-8");//WTF?
-                int cc = response.getStatusLine().getStatusCode();
-                String ss = temp;
             }
-        }
-        catch (ClientProtocolException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException ee)
-        {
-            ee.printStackTrace();
-        }
+        } catch (Exception e){
 
+        }
         return resultStr;
     }
 
@@ -386,76 +365,53 @@ public class ToolClass {
             byte[] inputByteArray = str.getBytes();
             messageDigest.update(inputByteArray);
             byte[] resultByteArray = messageDigest.digest();
-
             result = byteArrayToHex(resultByteArray);
         }
         catch (NoSuchAlgorithmException e)
         {
 
         }
-
         return result;
     }
 
+
+    //只返回Mess的内容
     private static String onlyGetMess(String jsonString)
     {
-        JSONObject jsonObject;
-        String mess;
         try {
-            jsonObject = new JSONObject(jsonString);
+            JSONObject jsonObject = new JSONObject(jsonString);
+            String mess = jsonObject.getString("mess");
+            return mess;
+        } catch (JSONException e) {
+            return null;
         }
-        catch (JSONException e)
-        {
-            jsonObject = null;
-        }
-        if (jsonObject != null)
-        {
-            try {
-                mess = jsonObject.getString("mess");
-            }
-            catch (JSONException e)
-            {
-                mess = null;
-            }
-        }
-        else
-            mess = null;
-
-        return mess;
     }
 
+    //根据url获得图片
     public static Bitmap returnBitMap(String url)
     {
-        URL myFileUrl = null;
-        Bitmap bitmap = null;
-        if (url == null || url.equals("null"))
-            return null;
-
-        try
-        {
-            myFileUrl = new URL(url);
-        }
-        catch (MalformedURLException E)
-        {
-            E.printStackTrace();
-        }
-
         try {
-            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
-            conn.setDoInput(true);
-            conn.connect();
-            InputStream is = conn.getInputStream();
-            bitmap = BitmapFactory.decodeStream(is);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if(url!=null && url!="" && url!="null"){
+                URL myFileUrl = new URL(url);
+                HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream is = conn.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                is.close();
+                return bitmap;
+            }else{
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
         }
-        return bitmap;
     }
 
-    private static final String TAG = "uploadFile";
-    private static final int TIME_OUT = 10 * 1000; // 超时时间
-    private static final String CHARSET = "utf-8"; // 设置编码
+
+
+
+    //上传文件
     public static String uploadFile(String fileUrl)
     {
         if (fileUrl == null)

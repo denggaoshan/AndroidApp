@@ -73,6 +73,10 @@
             android:name=".page.Page_MessageDetail"
             android:label="@string/title_activity_page__message_detail" >
         </activity>
+        <activity
+            android:name=".page.Page_MailBox"
+            android:label="@string/title_activity_page__mail_box" >
+        </activity>
     </application>
 
 </manifest>

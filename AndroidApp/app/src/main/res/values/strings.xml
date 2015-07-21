@@ -14,4 +14,5 @@
     <string name="title_activity_page__account">Page_Account</string>
     <string name="title_activity_page__send_message">Page_SendMessage</string>
     <string name="title_activity_page__message_detail">Page_MessageDetail</string>
+    <string name="title_activity_page__mail_box">Page_MailBox</string>
 </resources>

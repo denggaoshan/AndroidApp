@@ -1,0 +1,118 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.example.administrator.androidapp.page.Page_Account">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:id="@+id/Head"
+        android:background="#50d2c2">
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:id="@+id/linearLayout" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView26"
+                android:src="@drawable/icon_close"
+                android:layout_marginLeft="10dp"
+                android:onClick="back_Click" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="邮箱认证"
+                android:id="@+id/textView28"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="30dp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:id="@+id/image"
+            android:src="@drawable/icon_user"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@+id/linearLayout"
+            android:layout_alignParentEnd="false" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2"
+        android:layout_below="@id/Head"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="80dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="邮箱"
+                    android:layout_weight="0.6"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:paddingLeft="10dp"
+                    android:id="@+id/Mailbox" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="test1234@qq.com"
+                    android:layout_weight="0.7"
+                    android:textSize="20dp"
+                    android:id="@+id/Account" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="成为认证用户，可以发起活动。 申请方法：申请邮箱认证之后，请到您输入的邮箱中，点击我要认证。"
+                android:id="@+id/textView27"
+                android:layout_marginTop="30dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="修改"
+        android:id="@+id/Ok"
+        android:layout_alignParentBottom="true"
+        android:background="#ff50d2c3"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:layout_margin="10dp"
+        android:onClick="submit_Click" />
+
+</RelativeLayout>

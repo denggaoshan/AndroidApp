@@ -28,11 +28,6 @@ public class Page_Information_Activity extends BasePage {
     private Comment[]  allComments;
     private Photo[] allPhotos;
 
-
-    private boolean ifLoadMembers=false;
-    private boolean ifLoadPhotos=false;
-    private boolean ifLoadComments=false;
-
     private  boolean isLauncher = false;  //当前用户是不是活动发起人
 
     @Override
@@ -357,7 +352,7 @@ public class Page_Information_Activity extends BasePage {
             if(allPhotos!=null){
                 return allPhotos.length+1;
             }else {
-                return 0;
+                return 1;
             }
         }
 
@@ -374,25 +369,36 @@ public class Page_Information_Activity extends BasePage {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = new LinearLayout(parent.getContext());
-
-            Photo photo = allPhotos[position];
-
-            if(convertView!=null && photo!= null){
-
+            if(allPhotos==null){
                 Context ctx = convertView.getContext();
                 LayoutInflater nflater = LayoutInflater.from(ctx);
-                convertView = nflater.inflate(R.layout.content_activity_album, null);
-
-                int[] ids = {R.id.name,R.id.time};
-                String[] vals = {photo.getNickName(),photo.getTime()};
-
-                for(int i=0;i<ids.length;i++){
-                    TextView tv = (TextView)convertView.findViewById(ids[i]);
-                    tv.setText(vals[i]);
-                }
-
+                convertView = nflater.inflate(R.layout.content_button, null);
+                Button btn = (Button) convertView.findViewById(R.id.btn);
+                btn.setText("添加相册");
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      //添加相册
+                    }
+                });
             }else{
-                Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
+
+                Photo photo = allPhotos[position];
+                if(convertView!=null && photo!= null){
+
+                    Context ctx = convertView.getContext();
+                    LayoutInflater nflater = LayoutInflater.from(ctx);
+                    convertView = nflater.inflate(R.layout.content_activity_album, null);
+
+                    int[] ids = {R.id.name,R.id.time};
+                    String[] vals = {photo.getNickName(),photo.getTime()};
+
+                    for(int i=0;i<ids.length;i++){
+                        Utils.setTextView(Page_Information_Activity.this, ids[i], vals[i]);
+                    }
+                }else{
+                    Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
+                }
             }
             return convertView;
 
@@ -429,10 +435,8 @@ public class Page_Information_Activity extends BasePage {
     //显示活动成员
     private void showActivityMember() {
         if(!Current.getCurrentUser().getUserType().equals("游客")) {
-            if (!ifLoadMembers) {
-                allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
-                isLauncher= Current.getCurrentUser().isLauncher(allUsers);
-            }
+            allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
+            isLauncher= Current.getCurrentUser().isLauncher(allUsers);
         }
         try{
             ListView vi=(ListView) findViewById(R.id.content);
@@ -447,9 +451,7 @@ public class Page_Information_Activity extends BasePage {
     private void showActivityComment() {
 
         if(!Current.getCurrentUser().getUserType().equals("游客")){
-            if(!ifLoadComments){
-                allComments = Cache.loadAllComments(currentActivity.getActivityID());
-            }
+            allComments = Cache.loadAllComments(currentActivity.getActivityID());
         }else{
             allComments = null;
         }
@@ -467,9 +469,7 @@ public class Page_Information_Activity extends BasePage {
     private void showActivityAlbum(){
 
         if(!Current.getCurrentUser().getUserType().equals("游客")) {
-            if (!ifLoadPhotos) {
-                allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
-            }
+            allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
         }
 
         try{

@@ -87,7 +87,7 @@ public class Page_Information_User extends BasePage {
             getInput();
 
             MyMessage msg = ToolClass.updateuserbaseinfo(Current.getCurrentUser().getUserID(),nickName,sex, age, constellation,
-                    profession, liveplace, description, phone, mailBox);
+                    profession, liveplace, description, phone);
             if(msg!=null){
                 Utils.showMessage(this,msg.getMess());
                 User user = msg.getUser();

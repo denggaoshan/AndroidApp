@@ -33,15 +33,16 @@ public class Page_SendMessage extends BasePage {
             //给某人发
             source = Current.getCurrentUser();
             dest = Current.getOtherUser();
+
+            if(source==null || dest==null){
+                Utils.debugMessage(this,"0001 source 或者 dest 为空");
+            }
         }else{
             //群发消息
             source = Current.getCurrentUser();
         }
 
 
-        if(source==null || dest==null){
-            Utils.debugMessage(this,"0001 source 或者 dest 为空");
-        }
 
         final EditText tx = (EditText)findViewById(R.id.title);
 

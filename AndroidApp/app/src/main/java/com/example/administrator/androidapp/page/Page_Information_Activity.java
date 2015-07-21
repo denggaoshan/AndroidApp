@@ -21,7 +21,6 @@ import com.example.administrator.androidapp.tool.Utils;
 
 public class Page_Information_Activity extends BasePage {
 
-    private int currentSelect = 0 ; //当前所选择的标签 0详情 1成员 2相册 3评论
     private MyActivity currentActivity;
 
     private User currentUser;
@@ -34,8 +33,7 @@ public class Page_Information_Activity extends BasePage {
     private boolean ifLoadPhotos=false;
     private boolean ifLoadComments=false;
 
-
-    private  boolean isLauncher = false;
+    private  boolean isLauncher = false;  //当前用户是不是活动发起人
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +45,6 @@ public class Page_Information_Activity extends BasePage {
 
         //加载活动成员
         allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
-
         isLauncher= Current.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
 
         showActivityDetail();
@@ -177,10 +174,6 @@ public class Page_Information_Activity extends BasePage {
     }
     /*  活动成员适配器 */
     private class AllUsersAdapter extends BaseAdapter{
-
-        public AllUsersAdapter(){
-        }
-
         @Override
         public int getCount() {
             if(Current.getCurrentUser().getUserType().equals("游客")){
@@ -191,7 +184,6 @@ public class Page_Information_Activity extends BasePage {
             }else {
                 return 1;
             }
-
         }
 
         @Override
@@ -227,7 +219,7 @@ public class Page_Information_Activity extends BasePage {
                         if(ids[i] != R.id.sex){
                             tv.setText(vals[i]);
                         }else{
-                           tv.setText(Utils.changeSex(vals[i]));
+                            tv.setText(Utils.changeSex(vals[i]));
                         }
                     }
 
@@ -415,6 +407,10 @@ public class Page_Information_Activity extends BasePage {
 
     //显示活动详情
     private void showActivityDetail(){
+        //如果没有装载的话
+        if(currentActivity==null){
+            loadCurrentActivity();
+        }
         try {
             ListView vi=(ListView) findViewById(R.id.content);
             if(currentActivity!=null){
@@ -443,11 +439,11 @@ public class Page_Information_Activity extends BasePage {
         }catch (Exception e){
             Utils.debugMessage(Page_Information_Activity.this,"加载适配器遇到空指针");
         }
-
     }
 
     //显示活动评论
     private void showActivityComment() {
+
         if(!Current.getCurrentUser().getUserType().equals("游客")){
             if(!ifLoadComments){
                 allComments = Cache.loadAllComments(currentActivity.getActivityID());
@@ -473,6 +469,7 @@ public class Page_Information_Activity extends BasePage {
                 allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
             }
         }
+
         try{
             ListView vi=(ListView) findViewById(R.id.content);
             PhotosAdapter  adapter = new PhotosAdapter();
@@ -482,7 +479,6 @@ public class Page_Information_Activity extends BasePage {
         }
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -506,26 +502,23 @@ public class Page_Information_Activity extends BasePage {
         return super.onOptionsItemSelected(item);
     }
 
-    private void changeFocus(int i){
-        currentSelect = i ;
+    private void changeFocus(int id){
         int[] ids = {R.id.details,R.id.member,R.id.album,R.id.comment};
-        for(int id:ids){
-            LinearLayout layout=(LinearLayout) findViewById(id);
+        for(int i:ids){
+            LinearLayout layout=(LinearLayout) findViewById(i);
             layout.setBackgroundColor(Color.WHITE);
         }
-        LinearLayout rn=(LinearLayout) findViewById(ids[i]);
+        LinearLayout rn=(LinearLayout) findViewById(id);
         rn.setBackgroundColor(0xFF50d2c2);
     }
 
-
     //群发消息接口
     private void sendActivityMessage(){
-
     }
 
     //活动报名
     private void joinActivity() {
-        String ret = ToolClass.applyParticipation(currentUser.getUserID(),currentActivity.getActivityID(),"我想参加");
+        String ret = ToolClass.applyParticipation(currentUser.getUserID(), currentActivity.getActivityID(), "我想参加");
         if(ret!=null){
             if(ret.equals("OK")){
                 Utils.showMessage(this, "报名成功，审核中");
@@ -535,7 +528,7 @@ public class Page_Information_Activity extends BasePage {
         }
     }
 
-    /**************       导航栏点击事件           *************/
+
     //点击导航栏
     public void navi_Click(View v) {
         int id = v.getId();
@@ -543,9 +536,13 @@ public class Page_Information_Activity extends BasePage {
 
         changeFocus(id);//切换焦点到此标签
 
+        switch (v.getId()){ //显示相应内容
+            case R.id.details:showActivityDetail();;break;
+            case R.id.member:showActivityMember(); ;break;
+            case R.id.album:showActivityAlbum();break;
+            case R.id.comment:showActivityComment();break;
+        }
     }
-
-
 
 
     /**************       底部功能           *************/
@@ -569,6 +566,4 @@ public class Page_Information_Activity extends BasePage {
             Utils.debugMessage(this, "没找到comment");
         }
     }
-
-
 }

@@ -61,19 +61,17 @@ public class Page_Registered extends BasePage {
         return super.onOptionsItemSelected(item);
     }
 
-
-    private String picturePath = null;
-
-
     public void choose_Click(View v)
     {
-        picturePath = this.showPictureSelect();
+       this.showPictureSelect();
     }
 
 
 
     public void register_Click(View v){
         if("OK".equals(getInput())){
+
+            String picturePath =Current.getCurrentPicture();
 
             if (picturePath == null){
                 avatar = DEFAULTIMG;

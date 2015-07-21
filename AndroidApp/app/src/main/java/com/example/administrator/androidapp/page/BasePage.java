@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.tool.PicUtil;
 import com.example.administrator.androidapp.tool.Utils;
 
@@ -25,9 +26,6 @@ public abstract class BasePage extends ActionBarActivity {
 
 
     private static final int TAKE_PICTURE = 1;
-
-    private String picPath = null;
-
 
     //返回上级按钮
     public void back_Click(View v) {
@@ -63,13 +61,13 @@ public abstract class BasePage extends ActionBarActivity {
 
                     String path = PicUtil.getRealFilePath(this, originalUri);
                     if(path!=null){
-                        picPath = path;
+                        Current.setCurrentPicture(path);
                     }
 
                 }else{
                     Utils.debugMessage(this,"没找到imageView");
                 }
-            }catch (IOException e){
+            }catch (Exception e){
                 Utils.showMessage(this,"获取图片失败");
                 return;
             }
@@ -79,7 +77,6 @@ public abstract class BasePage extends ActionBarActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
     //显示图片选择页面,返回所选择的图片的路径
     public String showPictureSelect() {
@@ -91,6 +88,12 @@ public abstract class BasePage extends ActionBarActivity {
         }catch (Exception e){
 
         }
-        return picPath;
+        String path = Current.getCurrentPicture();
+        if(path!=null){
+            return path;
+        }else{
+            Utils.debugMessage(this,"path 为 null");
+            return null;
+        }
     }
 }

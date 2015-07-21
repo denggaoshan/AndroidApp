@@ -29,7 +29,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="1VtvQE0z6dGFrNpWfSIAX3dc" />
         <activity
-            android:name=".page.Page_Map"
+            android:name=".page.Page_Login"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

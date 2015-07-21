@@ -316,8 +316,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/title_sport"
-                        android:layout_weight="0.8"
-                        android:onClick="naviSport_Click" />
+                        android:layout_weight="0.8" />
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -395,7 +394,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:onClick="naviOther_Click"
+                    android:onClick="navi_Click"
                     android:id="@+id/other">
                     <ImageView
                         android:layout_width="80dp"

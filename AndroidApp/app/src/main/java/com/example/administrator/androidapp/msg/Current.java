@@ -14,6 +14,11 @@ public class Current {
     private static Inform currentInform;
     private static MyMessage currentMyMessage;
 
+    private static String picPath;
+
+    public static String getCurrentPicture(){return picPath;}
+    public static String setCurrentPicture(String picturePath){return picPath=picturePath;}
+
     public static User getOtherUser() {
         return otherUser;
     }

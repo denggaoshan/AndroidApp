@@ -16,5 +16,5 @@ public class Comment extends BaseType
     private String Content;public String getContent(){return Content;}
     private String Time;public String getTime(){return Time;}
     private String NickName;public String getNickName(){return NickName;}
-    private String Avatar;
+    private String Avatar;public String getAvatar(){return Avatar;}
 }

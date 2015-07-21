@@ -325,7 +325,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                         }
 
 
-                        Cache.loadImg(Page_TotalActivity.this,activity.getAvatar(),R.id.image);
+                        Cache.loadImg(convertView,activity.getAvatar(),R.id.image);
 
                         //监听事件
                         convertView.setOnClickListener(new View.OnClickListener() {

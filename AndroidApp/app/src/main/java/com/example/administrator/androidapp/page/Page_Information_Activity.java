@@ -224,7 +224,7 @@ public class Page_Information_Activity extends BasePage {
                     }
 
                     //成员头像
-                    Cache.loadImg(Page_Information_Activity.this,user.getAvatar(),R.id.image );
+                    Cache.loadImg(convertView,user.getAvatar(),R.id.image );
 
                     //添加点击事件
                     convertView.setOnClickListener(new View.OnClickListener() {
@@ -303,6 +303,8 @@ public class Page_Information_Activity extends BasePage {
 
                     int[] ids = {R.id.name,R.id.time,R.id.comment};
                     String[] vals = {comment.getNickName(),comment.getTime(),comment.getContent()};
+
+                    Cache.loadImg(convertView,comment.getAvatar(),R.id.image);
 
                     try{
                         for(int i=0;i<ids.length;i++){
@@ -552,14 +554,16 @@ public class Page_Information_Activity extends BasePage {
     }
     //添加评论
     public void addComment_Click(EditText et){
-
         if(et!=null){
             String str = et.getText().toString();
             if(str!=null && !str.replace(" ","").equals("")){
                 String ret = ToolClass.addCommment(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(),str);
-                Utils.showMessage(this,ret);
-                //////////提示Cache更新评论
-                allComments = Cache.updateAndLoadComments(currentActivity.getActivityID());
+                if(ret.equals("ok")){
+                    Utils.showMessage(this,"添加成功");
+                    allComments = Cache.updateAndLoadComments(currentActivity.getActivityID());
+                }else{
+                    Utils.showMessage(this,"您还没有参加，快去报名吧");
+                }
                 showActivityComment();
             }
         }else{

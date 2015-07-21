@@ -69,23 +69,18 @@ public class Page_Manage_Activity extends BasePage {
 
     //装载用户名和头像
     private void loadUserInformation(){
-
         currentUser = Current.getCurrentUser();
         Utils.setTextView(this, R.id.Account,currentUser.getNickName());//装载用户名
-
-        Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
-
+        Cache.loadImg(this,currentUser.getAvatar(),R.id.img_head);
     }
 
     //重新装载该类型的活动，不管有没有装载过
     private void loadActivities(int id){
-        MyMessage msg = null;
         switch (id){
             case R.id.running: allActivities = Cache.getLaunchedActivity(Current.getCurrentUser().getUserID()); break;
             case R.id.history:  allActivities = Cache.getParticipatedActivity(Current.getCurrentUser().getUserID());break;
             case R.id.applying: allActivities = Cache.getApplicatedActivity(Current.getCurrentUser().getUserID());break;
         }
-
     }
 
     private void changeFocus(int id){
@@ -191,11 +186,10 @@ public class Page_Manage_Activity extends BasePage {
         }
     }
 
+
     //显示活动
     private void showActivities(int id){
-        if(!allActivities.containsKey(id)){
-            loadActivities(id);
-        }
+        loadActivities(id);
         ListView vi=(ListView) findViewById(R.id.content);
         MyAdapter adapter = new MyAdapter(allActivities);
         vi.setAdapter(adapter);
@@ -205,9 +199,7 @@ public class Page_Manage_Activity extends BasePage {
     //导航栏点击事件
     public void navi_Click(View v) {
         int id = v.getId();
-
         changeFocus(id);//切换焦点
-
         showActivities(id);//显示活动
     }
 }

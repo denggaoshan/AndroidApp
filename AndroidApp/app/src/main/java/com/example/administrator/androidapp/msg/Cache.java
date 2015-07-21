@@ -3,6 +3,7 @@ package com.example.administrator.androidapp.msg;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.administrator.androidapp.tool.Utils;
@@ -48,7 +49,55 @@ public class Cache {
     private static HashMap<String,MyActivity[]> participatedActivity = new HashMap<>();//用户参与的活动
     private static HashMap<String,MyActivity[]> applicatedActivity = new HashMap<>();//
 
-    public static MyActivity[] get
+    public static MyActivity[] getLaunchedActivity(String id) {
+        if(launchedActivity.containsKey(id)){
+            return launchedActivity.get(id);
+        }else{
+            MyMessage msg = ToolClass.getLaunchedActivity(id);
+            MyActivity[] ret = msg.getActivities();
+            if(ret!=null){
+                launchedActivity.put(id,ret);
+                return ret;
+            }else{
+                launchedActivity.put(id,new MyActivity[0]);
+            }
+        }
+        return null;
+    }
+
+    public static MyActivity[] getParticipatedActivity(String id) {
+        if(participatedActivity.containsKey(id)){
+            return participatedActivity.get(id);
+        }else{
+            MyMessage msg = ToolClass.getParticipatedActivity(id);
+            MyActivity[] ret = msg.getActivities();
+            if(ret!=null){
+                participatedActivity.put(id,ret);
+                return ret;
+            }else{
+                participatedActivity.put(id,null);
+            }
+        }
+        return null;
+    }
+
+    public static MyActivity[] getApplicatedActivity(String id) {
+        if(applicatedActivity.containsKey(id)){
+            return applicatedActivity.get(id);
+        }else{
+            MyMessage msg = ToolClass.getApplicatedActivity(id);
+            MyActivity[] ret = msg.getActivities();
+            if(ret!=null){
+                applicatedActivity.put(id,ret);
+                return ret;
+            }else{
+                applicatedActivity.put(id,null);
+            }
+        }
+        return null;
+
+    }
+
 
 
     //先更新缓存再获得
@@ -320,15 +369,13 @@ public class Cache {
         }
     }
 
-    public static HashMap<Integer, MyActivity[]> getLaunchedActivity(String userID) {
-        return null;
-    }
 
 
     private static class AnotherTask extends AsyncTask<String, Void, String> {
         private ActionBarActivity parent;
         private String url;
         private int id;
+        private View parentView;
 
         public AnotherTask(ActionBarActivity parent, String url, int id) {
             this.parent =  parent;
@@ -336,10 +383,21 @@ public class Cache {
             this.id =  id;
         }
 
+        public AnotherTask(View parent, String url, int id) {
+            this.parentView =  parent;
+            this.url =  url;
+            this.id =  id;
+        }
+
         @Override
         protected void onPostExecute(String result) {
             //对UI组件的更新操作
-            putImgs(parent,id,url);
+            if(parent!=null){
+                putImgs(parent,id,url);
+            }else{
+                putImgs(parentView,id,url);
+            }
+
         }
         @Override
         protected String doInBackground(String... params) {
@@ -349,10 +407,38 @@ public class Cache {
     }
 
     private static void putImgs(ActionBarActivity parent,int id,String url){
-        Bitmap bm = Cache.getBitmap(url);
-        if (bm != null)
-        {
-            ((ImageView) parent.findViewById(id)).setImageBitmap(bm);
+        try{
+            Bitmap bm = Cache.getBitmap(url);
+            if (bm != null)
+            {
+                if(parent != null){
+                    ImageView imageView = ((ImageView) parent.findViewById(id));
+                    if(imageView!=null){
+                        imageView.setImageBitmap(bm);
+                    }else {
+                        Utils.debugMessage(parent,"imageView没找到");
+                    }
+                }
+            }
+        }catch (Exception e){
+            Utils.debugMessage(parent,"Img bug " +e.getCause());
+        }
+    }
+
+    private static void putImgs(View parent,int id,String url){
+        try{
+            Bitmap bm = Cache.getBitmap(url);
+            if (bm != null)
+            {
+                if(parent != null){
+                    ImageView imageView = ((ImageView) parent.findViewById(id));
+                    if(imageView!=null){
+                        imageView.setImageBitmap(bm);
+                    }else {
+                    }
+                }
+            }
+        }catch (Exception e){
         }
     }
 
@@ -375,6 +461,19 @@ public class Cache {
         }catch (Exception e){
             Utils.debugMessage(parent,"头像BUG url="+url);
         }
+    }
 
+    public static void loadImg(final View parent, final String url, final int id) {
+        if(url==null || url.equals("null")){
+            return;
+        }
+        try {
+            new Thread(){
+                public void run(){
+                    new AnotherTask(parent,url,id).execute("none");
+                }
+            }.start();
+        }catch (Exception e){
+        }
     }
 }

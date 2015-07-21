@@ -40,6 +40,7 @@ public class UserAndExplainArray {
         return temp;
     }
 
+
     private void setMess(JSONObject jsonObject){
         try {
             mess = jsonObject.getString("mess");

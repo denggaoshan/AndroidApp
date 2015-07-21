@@ -24,18 +24,19 @@ public class Page_Login extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
+
+        //如果已经登陆
         String jsonMsg = Utils.getLogData();
         if (jsonMsg != null && !jsonMsg.equals(""))
         {
             MyMessage tempMsg = MyMessage.createMessage(jsonMsg);
             Current.setCurrentUser(tempMsg.getUser());
-            if (checkMess(tempMsg.getMess())) {
-                Current.setCurrentMyMessage(tempMsg);
-                Utils.transPage(this, Page_TotalActivity.class);
-                return;
-            }
+            Current.setCurrentMyMessage(tempMsg);
+            Utils.transPage(this, Page_TotalActivity.class);
+            return;
         }
         setContentView(R.layout.page_login);
     }
@@ -52,7 +53,6 @@ public class Page_Login extends ActionBarActivity {
         }
         if (checkMess(msg.getMess()))
         {
-            Utils.clearLogData();
             Utils.storeLogData(msg.getJsonString());
             Current.setCurrentMyMessage(msg);
             Current.setCurrentUser(msg.getUser());

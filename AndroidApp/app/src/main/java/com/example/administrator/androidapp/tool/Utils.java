@@ -59,111 +59,54 @@ public class Utils {
     private static String LOGADRESS = "userLog.dat";
 
 
+
+    //将当前的用户信息存到本地
     public static void storeLogData(String jsonString)
     {
-        File extDir = Environment.getExternalStorageDirectory();
         try {
+            clearLogData();//清楚当前的数据
+            File extDir = Environment.getExternalStorageDirectory();
             DataOutputStream out=new DataOutputStream(new FileOutputStream(new File(extDir, LOGADRESS)));
-            try {
-                String encryptData = "";
-                try
-                {
-                    encryptData = encrypt(jsonString, SCRETEKEY);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-                out.writeUTF(encryptData);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            try {
-                out.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+            String encryptData = "";
+            encryptData = encrypt(jsonString, SCRETEKEY);
+            out.writeUTF(encryptData);
+            out.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+    //清除登陆缓存
     public static void clearLogData()
     {
-        File extDir = Environment.getExternalStorageDirectory();
         try {
+            File extDir = Environment.getExternalStorageDirectory();
             DataOutputStream out=new DataOutputStream(new FileOutputStream(new File(extDir, LOGADRESS)));
-            try {
-                out.writeUTF("");
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            try {
-                out.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            out.writeUTF("");
+            out.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    //获取本地用户信息
     public static String getLogData()
     {
-        File extDir = Environment.getExternalStorageDirectory();
-        String result = "";
-        try {
-            DataInputStream in=new DataInputStream(
-                    new BufferedInputStream(
-                            new FileInputStream(new File(extDir, LOGADRESS))));
-            try {
-/*                byte[] tempBuffer;
-                in.read(tempBuffer);*/
-                result = in.readUTF();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            try {
-                in.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            return null;
-            //e.printStackTrace();
+        try{
+            File extDir = Environment.getExternalStorageDirectory();
+            String result = "";
+            DataInputStream in=new DataInputStream(new BufferedInputStream(new FileInputStream(new File(extDir, LOGADRESS))));
+            result = in.readUTF();
+            in.close();
+            String decryptData = "";
+            decryptData = decrypt(result, SCRETEKEY);
+            return decryptData;
+        }  catch (Exception e) {
+            return "";
         }
-
-        String decryptData = "";
-        if (result != null && !result.equals("")) {
-            try {
-                decryptData = decrypt(result, SCRETEKEY);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return decryptData;
-    }
-
-
-    //在parent中提取字段为key的子JSON
-    public static JSONObject getJSONObject(JSONObject parent,String key){
-        JSONObject ret;
-        try {
-            ret = parent.getJSONObject("user");
-        }
-        catch (JSONException e) {
-            ret = null;
-        }
-        return ret;
     }
 
 
@@ -184,33 +127,15 @@ public class Utils {
     public static void backPage(ActionBarActivity now){
         Class after = historyPages.pop();
         if(after!=null){
-            Intent intent = new Intent();
-            intent.setClass(now,after);
-            now.startActivity(intent);
-            now.finish();
+            transPage(now,after);
         }else{
             Utils.debugMessage(now,"返回上个页面的页面为空");
         }
-
     }
 
     //弹出提示窗口
     public static void showMessage(final ActionBarActivity parent, final String message){
-
-        final Handler handler = new Handler();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        }).start();
-
+        Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
     }
 
     //弹出Debug窗口
@@ -218,15 +143,9 @@ public class Utils {
         Toast.makeText(parent,message, Toast.LENGTH_LONG).show();
     }
 
-
     //返回复选框的内容
     public static long getSpinnerById(ActionBarActivity parent,int id){
         return ((Spinner) parent.findViewById(id)).getSelectedItemId();
-    }
-
-    //返回按钮的内容
-    public static String getButtonTextById(ActionBarActivity parent,int id){
-        return ((Button) parent.findViewById(id)).getText().toString();
     }
 
 
@@ -235,16 +154,7 @@ public class Utils {
        return ((EditText) parent.findViewById(id)).getText().toString();
     }
 
-    /* 弹出输入框 */
-    public static String showInputDialog(String title,Context ctx){
-        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        builder.setTitle(title);
-        builder.setMessage("MyMessage");
 
-        return null;
-    }
-
-    /******************* 适配器接口 *******************/
     //性别
     public static String changeSex(String val){
         if(val.equals("0")){
@@ -255,7 +165,6 @@ public class Utils {
         }
         return "出错";
     }
-
     //活动类型
     public static String changeType(String val){
         //0户外 1运动 2玩乐 3旅行 4音乐 5其他
@@ -263,6 +172,8 @@ public class Utils {
         int index = Integer.parseInt(val);
         return data[index];
     }
+
+
 
     private static SecretKey keyGenerator(String keyStr) throws Exception {
         byte input[] = HexString2Bytes(keyStr);
@@ -278,7 +189,6 @@ public class Utils {
         if (c >= 'A') return (c - 'A' + 10) & 0x0f;
         return (c - '0') & 0x0f;
     }
-
     // 从十六进制字符串到字节数组转换
     private static byte[] HexString2Bytes(String hexstr) {
         byte[] b = new byte[hexstr.length() / 2];
@@ -290,7 +200,6 @@ public class Utils {
         }
         return b;
     }
-
     private static String encrypt(String data, String key) throws Exception {
         Key deskey = keyGenerator(key);
         // 实例化Cipher对象，它用于完成实际的加密操作
@@ -308,7 +217,6 @@ public class Utils {
         //return Base64.encodeBase64String(results);
         return Base64.encodeToString(results, Base64.DEFAULT);
     }
-
     private static String decrypt(String data, String key) throws Exception {
         Key deskey = keyGenerator(key);
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
@@ -334,10 +242,8 @@ public class Utils {
         TextView tv = (TextView)parent.findViewById(id);
         if(tv!=null){
             tv.setText(value);
-        }else{
         }
     }
-
 
 
     /**

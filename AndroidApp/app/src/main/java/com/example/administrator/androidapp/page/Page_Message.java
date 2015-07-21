@@ -96,7 +96,7 @@ public class Page_Message extends BasePage{
                         tv.setText(tmp);
 
                         //图片
-                        Cache.loadImg(Page_Message.this,inform.getUserSource().getAvatar(),R.id.image);
+                        Cache.loadImg(convertView,inform.getUserSource().getAvatar(),R.id.image);
 
                         convertView.setOnClickListener(new View.OnClickListener() {
                             @Override

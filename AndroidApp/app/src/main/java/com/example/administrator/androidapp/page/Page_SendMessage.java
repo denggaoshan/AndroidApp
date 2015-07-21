@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Current;
+import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
@@ -34,12 +35,15 @@ public class Page_SendMessage extends BasePage {
             source = Current.getCurrentUser();
             dest = Current.getOtherUser();
 
+            Utils.setTextView(this,R.id.dest,"发给"+dest+"的消息");
+
             if(source==null || dest==null){
                 Utils.debugMessage(this,"0001 source 或者 dest 为空");
             }
         }else{
             //群发消息
             source = Current.getCurrentUser();
+            Utils.setTextView(this,R.id.dest,"发给"+ Current.getCurrentActivity().getTitle()+"所有成员的消息");
         }
 
 

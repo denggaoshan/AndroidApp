@@ -33,8 +33,15 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:text="发给XXX的消息"
+        android:id="@+id/dest"
+        android:gravity="left|center" />
+
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"

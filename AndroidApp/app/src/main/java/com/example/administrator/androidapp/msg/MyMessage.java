@@ -14,7 +14,26 @@ public class MyMessage {
     /**
      * 解释 allData存储消息中的信息以及对象
      */
-    HashMap<String,Object> allData= new HashMap<>();
+    protected HashMap<String,Object> allData= new HashMap<>();
+
+    public static MyMessage createMessage(String jsonString)
+    {
+        tempJsonString = jsonString;
+        MyMessage temp = new MyMessage();
+        JSONObject allMsg = temp.createJSONObjectByString(jsonString);
+        if (allMsg != null) {
+            temp.setMess(allMsg);
+            temp.setUser(allMsg);
+            temp.setUsers(allMsg);
+            temp.setActivity(allMsg);
+            temp.setActivities(allMsg);
+            temp.setPhotos(allMsg);
+            temp.setComments(allMsg);
+        }
+        return temp;
+    }
+
+
 
     private static String tempJsonString;public String getJsonString()
     {
@@ -61,20 +80,7 @@ public class MyMessage {
         }}
 
 
-    public static MyMessage createMessage(String jsonString)
-    {
-        tempJsonString = jsonString;
-        MyMessage temp = new MyMessage();
-        JSONObject allMsg = temp.createJSONObjectByString(jsonString);
-        if (allMsg != null) {
-            temp.setMess(allMsg);
-            temp.setUser(allMsg);
-            temp.setUsers(allMsg);
-            temp.setActivity(allMsg);
-            temp.setActivities(allMsg);
-        }
-        return temp;
-    }
+
 
     private JSONObject createJSONObjectByString(String jsonString)
     {
@@ -163,6 +169,51 @@ public class MyMessage {
         }
     }
 
+    private void setComments(JSONObject jsonObject) {
+        try{
+            JSONArray jsonArray = jsonObject.getJSONArray("comments");
+            if (jsonArray != null && jsonArray.length() != 0)
+            {
+                Comment[] comments = new Comment[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    try
+                    {
+                        comments[i] = (Comment) Comment.create(Comment.class, jsonArray.getJSONObject(i));
+                    }
+                    catch (JSONException E)
+                    {
+                        comments[i] = null;
+                    }
+                }
+                allData.put("comments",comments);
+            }
+        }catch (JSONException e) {
+        }
+    }
+
+    private void setPhotos(JSONObject jsonObject) {
+        try{
+            JSONArray jsonArray = jsonObject.getJSONArray("photos");
+            if (jsonArray != null && jsonArray.length() != 0)
+            {
+                Photo[] photos = new Photo[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    try
+                    {
+                        photos[i] = (Photo) Photo.create(Photo.class, jsonArray.getJSONObject(i));
+                    }
+                    catch (JSONException E)
+                    {
+                        photos[i] = null;
+                    }
+                }
+                allData.put("photos",photos);
+            }
+        }catch (JSONException e) {
+        }
+    }
 
 
 

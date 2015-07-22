@@ -40,7 +40,6 @@ public class Cache {
 
     private static Map<String, List<MyActivity>> activitiesCache = null;
     private static HashMap<String,User> userCache = new HashMap<>();
-    private static HashMap<String,MyActivity> activityCache = new HashMap<>();
 
 
     private static HashMap<String,UserAndExplain[]> activityRequests = new HashMap<>();//活动申请
@@ -341,6 +340,13 @@ public class Cache {
         }
     }
 
+
+    public static void updateAllPhotos(String id){
+        ActivityInfo info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
+        Photo[] allPhotos = info.getPhoto();
+        activityPhotos.put(id,allPhotos);
+    }
+
     //活动相册
     public static Photo[] loadAllPhotos(String id){
         if(activityPhotos.containsKey(id)){
@@ -363,15 +369,6 @@ public class Cache {
             User user = msg.getUser();
             userCache.put(id,user);
             return user;
-        }
-    }
-
-    //根据ID获得用户
-    public static MyActivity getActivityById(String id){
-        if(activityCache.containsKey(id)){
-            return activityCache.get(id);
-        }else{
-            return null;
         }
     }
 

@@ -398,6 +398,7 @@ public class Page_Information_Activity extends BasePage {
                     @Override
                     public void onClick(View v) {
                       //添加相册
+                        Utils.transPage(Page_Information_Activity.this,Page_Album.class);
                     }
                 });
             }else{

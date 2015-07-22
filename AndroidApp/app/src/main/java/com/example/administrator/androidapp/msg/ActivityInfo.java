@@ -13,6 +13,7 @@ public class ActivityInfo {
     private Comment[] comments;public Comment[] getComments(){return comments;}
     private Photo[] photos;public Photo[] getPhoto(){return photos;}
 
+
     public static ActivityInfo createActivityInfo(String jsonString)
     {
         ActivityInfo temp = new ActivityInfo();

@@ -43,6 +43,7 @@ public abstract class BasePage extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     //文件管理的回调函数
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -54,7 +55,7 @@ public abstract class BasePage extends ActionBarActivity {
 
                 if(bitmap!=null){
                     //设置图片界面
-                    ImageView iv =  ((ImageView) findViewById(R.id.img_head));
+                    ImageView iv =  ((ImageView) findViewById(R.id.img_show));
                     if(iv!=null){
                         iv.setImageBitmap(bitmap);
                     }
@@ -80,6 +81,7 @@ public abstract class BasePage extends ActionBarActivity {
 
     //显示图片选择页面,返回所选择的图片的路径
     public String showPictureSelect() {
+        Current.setCurrentPicture("");
         try{
             Intent intent = new Intent();
             intent.setType("image/*");

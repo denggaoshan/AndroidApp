@@ -3,6 +3,7 @@ package com.example.administrator.androidapp.page;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,6 +25,7 @@ import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class Page_OrganizeActivity extends BasePage {
     private String type;
     private String place;
 
-    private String[] types = {"户外","运动","玩乐","旅行","音乐","其他"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,14 @@ public class Page_OrganizeActivity extends BasePage {
         }else{
             Utils.setEditView(this, R.id.place, position);
         }
-        createActivityTypeSpinner();
+
+
+        //多选框
+        String[] types = {"户外","运动","玩乐","旅行","音乐","其他"};
+        Utils.createActivityTypeSpinner(this,R.id.type,types);
+
         initCurTime();
+
     }
 
     private void initCurTime(){
@@ -159,41 +167,7 @@ public class Page_OrganizeActivity extends BasePage {
         return super.onOptionsItemSelected(item);
     }
 
-    private void createActivityTypeSpinner(){
-        //第一步：添加一个下拉列表项的list，这里添加的项就是下拉列表的菜单项
-        for(String item : types){
-            list.add(item);
-        }
 
-        Spinner type = (Spinner)findViewById(R.id.type);
-        //第二步：为下拉列表定义一个适配器，这里就用到里前面定义的list。
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
-        //第三步：为适配器设置下拉列表下拉时的菜单样式。
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //第四步：将适配器添加到下拉列表上
-        type.setAdapter(adapter);
-        //第五步：为下拉列表设置各种事件的响应，这个事响应菜单被选中
-        type.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                arg0.setVisibility(View.VISIBLE);
-            }
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-                arg0.setVisibility(View.VISIBLE);
-            }
-        });
-
-        type.setOnTouchListener(new Spinner.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-
-        type.setOnFocusChangeListener(new Spinner.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-            }
-        });
-    }
 
     public void sure_Click(View v){
         Utils.showMessage(this, getInput());

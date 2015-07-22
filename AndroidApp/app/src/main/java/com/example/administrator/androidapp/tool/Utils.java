@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -37,7 +40,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Stack;
 
 import javax.crypto.Cipher;
@@ -276,9 +281,34 @@ public class Utils {
                 }
             }
         }else{
-            Utils.debugMessage(parent,"Utils.loadUserInformation输入的数据有错误");
+            Utils.debugMessage(parent, "Utils.loadUserInformation输入的数据有错误");
         }
 
     }
 
+
+    //为parent的Spinner添加内容 list中存放内容
+    public static void createActivityTypeSpinner(ActionBarActivity parent,int id,String[] datas){
+        ArrayList<String> list  = new ArrayList<>();
+        Collections.addAll(list, datas);
+
+        Spinner type = (Spinner)parent.findViewById(id);
+        if(type!=null){
+            ArrayAdapter adapter = new ArrayAdapter<>(parent, android.R.layout.simple_spinner_item, list);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            type.setAdapter(adapter);
+            type.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    arg0.setVisibility(View.VISIBLE);
+                }
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    arg0.setVisibility(View.VISIBLE);
+                }
+            });
+
+        }else{
+            return;
+        }
+
+    }
 }

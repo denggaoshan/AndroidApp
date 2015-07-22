@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
@@ -23,23 +24,38 @@ public class Page_Information_User extends BasePage {
     String nickName,sex,age,constellation,profession,liveplace,description,phone,mailBox;
 
     private void getInput() {
-        sex = getInfoFromViewById(R.id.Sex);
+
+        if( Utils.isSelectedRadioButton(this, R.id.girl)){
+            sex = "1";
+        }else{
+            sex = "0";
+        }
+
         nickName = getInfoFromViewById(R.id.NickName);
         age = getInfoFromViewById(R.id.Age);
         profession = getInfoFromViewById(R.id.Profession);
         liveplace = getInfoFromViewById(R.id.LivePlace);
         constellation = getInfoFromViewById(R.id.Constellation);
         phone = getInfoFromViewById(R.id.Phone );
-        mailBox = getInfoFromViewById(R.id.Mailbox);
-        description = getInfoFromViewById(R.id.description);
+        mailBox = Current.getCurrentUser().getMailbox();
+        description = getInfoFromViewById(R.id.Description);
     }
 
     private void LoadInformation(){
-        int[] ids={R.id.NickName,R.id.Sex,R.id.Age,R.id.Constellation,R.id.Profession,R.id.LivePlace,
-                R.id.Description,R.id.Phone, R.id.Mailbox, R.id.good,
+        int[] ids={R.id.NickName,R.id.Age,R.id.Constellation,R.id.Profession,R.id.LivePlace,
+                R.id.Description,R.id.Phone, R.id.good,
         };
-        String[] attribute={"NickName","Sex","Age","Constellation","Profession","LivePlace","Description","Phone","Mailbox","Good"};
+        String[] attribute={"NickName","Age","Constellation","Profession","LivePlace","Description","Phone","Good"};
         Utils.loadUserInformation(this, currentUser, ids, attribute);
+
+        if(currentUser.getSex().equals("0")){
+            Utils.setSelect(this,R.id.boy,true);
+            Utils.setSelect(this,R.id.girl,false);
+        }else {
+            Utils.setSelect(this,R.id.boy,false);
+            Utils.setSelect(this,R.id.girl,true);
+        }
+
         Cache.loadImg(this,currentUser.getAvatar(),R.id.image);
     }
 
@@ -49,12 +65,6 @@ public class Page_Information_User extends BasePage {
         setContentView(R.layout.page_information);
         currentUser = Current.getCurrentUser();
         LoadInformation();
-        try {
-            ImageView iv = (ImageView)findViewById(R.id.image);
-            iv.setImageBitmap(ToolClass.resizeBitmap(Cache.getUserAvater(), this, iv.getWidth(), iv.getHeight()));
-        }catch (Exception e){
-            Utils.debugMessage(this,"个人页面头像有BUG啊");
-        }
     }
 
     @Override

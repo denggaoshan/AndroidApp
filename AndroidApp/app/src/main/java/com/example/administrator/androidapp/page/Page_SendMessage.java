@@ -30,23 +30,23 @@ public class Page_SendMessage extends BasePage {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_send_message);
 
-        if(sendMessageType.equals("1")){
-            //给某人发
-            source = Current.getCurrentUser();
-            dest = Current.getOtherUser();
+        if(sendMessageType !=null){
+            if(sendMessageType.equals("1")){
+                //给某人发
+                source = Current.getCurrentUser();
+                dest = Current.getOtherUser();
 
-            Utils.setTextView(this,R.id.dest,"发给"+dest+"的消息");
+                Utils.setTextView(this,R.id.dest,"发给"+dest.getNickName()+"的消息");
 
-            if(source==null || dest==null){
-                Utils.debugMessage(this,"0001 source 或者 dest 为空");
+                if(source==null || dest==null){
+                    Utils.debugMessage(this,"0001 source 或者 dest 为空");
+                }
+            }else{
+                //群发消息
+                source = Current.getCurrentUser();
+                Utils.setTextView(this,R.id.dest,"发给"+ Current.getCurrentActivity().getTitle()+"所有成员的消息");
             }
-        }else{
-            //群发消息
-            source = Current.getCurrentUser();
-            Utils.setTextView(this,R.id.dest,"发给"+ Current.getCurrentActivity().getTitle()+"所有成员的消息");
         }
-
-
 
         final EditText tx = (EditText)findViewById(R.id.title);
 

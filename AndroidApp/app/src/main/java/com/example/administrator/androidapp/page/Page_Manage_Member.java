@@ -28,7 +28,7 @@ public class Page_Manage_Member extends BasePage {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_member_manager);
-        loadActivity();
+        loadRequest();
     }
 
     @Override
@@ -148,7 +148,6 @@ public class Page_Manage_Member extends BasePage {
                 Utils.debugMessage(Page_Manage_Member.this,"没有content标签");
             }
 
-
             //同意按钮
             Button btn = (Button)convertView.findViewById(R.id.agree);
             if(btn!=null){
@@ -159,8 +158,10 @@ public class Page_Manage_Member extends BasePage {
                         if(ret.equals("ok")){
                             Utils.showMessage(Page_Manage_Member.this,"已同意");
                             allRequests = Cache.updateLoadRequest(currentActivity);
+                            Cache.updateMembers(Current.getCurrentActivity().getActivityID());
+                            Cache.updateActivityDetail(Current.getCurrentUser().getUserID(),Current.getCurrentActivity().getActivityID());
                         }
-                        loadActivity();
+                        loadRequest();
                     }
                 });
             }else{
@@ -179,7 +180,7 @@ public class Page_Manage_Member extends BasePage {
                             allRequests = Cache.updateLoadRequest(currentActivity);
                             Utils.showMessage(Page_Manage_Member.this,"已拒绝");
                         }
-                        loadActivity();
+                        loadRequest();
                     }
                 });
             }else{
@@ -192,11 +193,9 @@ public class Page_Manage_Member extends BasePage {
     }
 
     //装载所有活动
-    private void loadActivity(){
+    private void loadRequest(){
         currentActivity  = Current.getCurrentActivity();
-
         allRequests = Cache.getUserAndExplains(currentActivity);
-
         ListView vi=(ListView) findViewById(R.id.requests);
         MyAdapter myAdapter = new MyAdapter(allRequests);
         vi.setAdapter(myAdapter);

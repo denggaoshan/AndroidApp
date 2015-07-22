@@ -1,41 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:id="@+id/image"
-        android:src="@drawable/icon_activity" />
-
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="130dp">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="路易"
-            android:id="@+id/name" />
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:id="@+id/image"
+            android:src="@drawable/icon_activity" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="2015 07 25 "
-            android:id="@+id/time" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/image"
+            android:layout_alignBottom="@+id/image"
+            android:layout_alignTop="@+id/image">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="贤哥"
-            android:id="@+id/title" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="贤哥"
+                android:id="@+id/title"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:layout_weight="0.4"
+                android:singleLine="true" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="哈哈哈哈哈"
-            android:id="@+id/describe" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="2015 07 25 "
+                android:id="@+id/time"
+                android:layout_weight="0.25"
+                android:singleLine="true" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="路易"
+                android:id="@+id/name"
+                android:layout_weight="0.25"
+                android:singleLine="true" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="分享给所有人"
+                android:id="@+id/level"
+                android:layout_weight="0.25"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="哈哈哈哈哈"
+        android:id="@+id/describe"
+        android:textSize="20dp"
+        android:padding="20dp" />
+
 </LinearLayout>

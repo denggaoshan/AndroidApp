@@ -12,7 +12,6 @@ public class Current {
     private static User otherUser; //存放用户查看别人信息时候的那个人
     private static MyActivity currentActivity;
     private static Inform currentInform;
-    private static MyMessage currentMyMessage;
 
     private static String picPath;
 
@@ -41,13 +40,5 @@ public class Current {
     public static Inform getCurrentInform(){return currentInform;}
     public static void setCurrentInform(Inform msg){currentInform=msg;}
 
-    public static MyMessage getCurrentMyMessage()
-    {
-        return currentMyMessage;
-    }
-    public static void setCurrentMyMessage(MyMessage msg)
-    {
-        currentMyMessage = msg;
-    }
 
 }

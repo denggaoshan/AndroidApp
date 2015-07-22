@@ -71,7 +71,8 @@ public class MyMessage {
         }else if(allType.containsKey(str)){
             setValue(str, (Class) allType.get(str),JsonString);
         }else if(allArrayType.containsKey(str)){
-            setValues(str, (Class) allArrayType.get(str),JsonString);
+            Class type = (Class) allArrayType.get(str);
+            setValues(str, type,JsonString);
         }else{
             //有BUG
         }
@@ -104,7 +105,13 @@ public class MyMessage {
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
                     Object instance = BaseType.create(type,(JSONObject) jsonArray.get(i));
-                    data.add(instance);
+                    if(instance!=null){
+                        data.add(instance);
+                    }else if(type==UserAndExplain.class){
+                        Object explain =  UserAndExplain.createUserAndExplain((JSONObject) jsonArray.get(i));
+                        data.add(explain);
+                    }
+
                 }
                 allData.put(str,data);
             }
@@ -120,7 +127,11 @@ public class MyMessage {
     }
 
     public String getMess() {
-        return (String)allData.get("mess");
+        if(allData!=null){
+            return (String)allData.get("mess");
+        }else{
+            return null;
+        }
     }
 
     public MyActivity getActivity() {

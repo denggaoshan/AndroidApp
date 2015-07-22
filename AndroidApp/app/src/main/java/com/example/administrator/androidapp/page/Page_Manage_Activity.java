@@ -84,14 +84,18 @@ public class Page_Manage_Activity extends BasePage {
     }
 
     private void changeFocus(int id){
-        int[] ids = {R.id.running,R.id.history,R.id.applying};
+        try{
+            int[] ids = {R.id.running,R.id.history,R.id.applying};
+            for(int i:ids){
+                LinearLayout layout=(LinearLayout) findViewById(i);
+                layout.setBackgroundColor(Color.WHITE);
+            }
+            LinearLayout rn=(LinearLayout) findViewById(id);
+            rn.setBackgroundColor(0xFF50d2c2);
+        }catch (Exception e){
 
-        for(int i:ids){
-            LinearLayout layout=(LinearLayout) findViewById(i);
-            layout.setBackgroundColor(Color.WHITE);
         }
-        LinearLayout rn=(LinearLayout) findViewById(id);
-        rn.setBackgroundColor(0xFF50d2c2);
+
     }
 
     // 所有适配器类

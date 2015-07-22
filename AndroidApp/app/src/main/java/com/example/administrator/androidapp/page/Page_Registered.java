@@ -84,7 +84,6 @@ public class Page_Registered extends BasePage {
 
             if(checkMess(msg.getMess())){
                 Utils.showMessage(this, "注册成功");
-                Current.setCurrentMyMessage(msg);
                 User user = msg.getUser();
                 if(user!=null){
                     Current.setCurrentUser(msg.getUser());

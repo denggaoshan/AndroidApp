@@ -88,7 +88,8 @@
                 android:gravity="left|center"
                 android:paddingLeft="10dp"
                 android:textSize="15dp"
-                android:id="@+id/position" />
+                android:id="@+id/position"
+                android:singleLine="true" />
 
         </LinearLayout>
 
@@ -125,8 +126,9 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/icon_people"
-                android:padding="5dp" />
+                android:src="@drawable/icon_type"
+                android:padding="5dp"
+                />
 
             <TextView
                 android:layout_width="match_parent"

@@ -207,18 +207,21 @@ public class Cache {
 
                 Inform[] allInforms = msg.getInforms();
 
+
                 ArrayList<Inform> systemInforms = new ArrayList<>();
                 ArrayList<Inform> activityInforms = new ArrayList<>();
                 ArrayList<Inform> privatedInforms = new ArrayList<>();
 
-                for (Inform inform : allInforms) {
-                    if (inform.getType().equals("0")) {
-                        systemInforms.add(inform);
-                    } else if (inform.getType().equals("1")) {
-                        activityInforms.add(inform);
-                    } else if (inform.getType().equals("2")) {
-                        privatedInforms.add(inform);
-                    } else {
+                if(allInforms!=null){
+                    for (Inform inform : allInforms) {
+                        if (inform.getType().equals("0")) {
+                            systemInforms.add(inform);
+                        } else if (inform.getType().equals("1")) {
+                            activityInforms.add(inform);
+                        } else if (inform.getType().equals("2")) {
+                            privatedInforms.add(inform);
+                        } else {
+                        }
                     }
                 }
 
@@ -226,6 +229,7 @@ public class Cache {
                 systemInformsCache.put(id, systemInforms);
                 activityInformsCache.put(id, activityInforms);
                 privatedInformsCache.put(id, privatedInforms);
+
             }
         }
     }
@@ -309,6 +313,14 @@ public class Cache {
         return allUsers;
     }
 
+
+    public static void updateMembers(String id) {
+        MyMessage msg = ToolClass.getParticipation(Current.getCurrentUser().getUserID(), id);
+        User[] allUsers = msg.getUsers();
+        activityMember.put(id,allUsers);
+    }
+
+
     //活动的成员
     public static User[] loadAllUsers(String id){
         if(activityMember.containsKey(id)){
@@ -372,6 +384,15 @@ public class Cache {
         }
     }
 
+    public static MyActivity updateActivityDetail(String userId,String activityId) {
+        MyMessage msg = ToolClass.getActivityInfo(userId,activityId);
+        if(msg!=null){
+            MyActivity ret = msg.getActivity();
+            Current.setCurrentActivity(ret);
+            return ret;
+        }
+        return null;
+    }
 
 
     private static class AnotherTask extends AsyncTask<String, Void, String> {

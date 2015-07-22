@@ -37,11 +37,13 @@ public class ToolClass {
 
     public static String IMGSERVERURL = "http://chenranzhen.xyz/UpLoadFile.php";
     public static String MSGSERVERURL = "http://chenranzhen.xyz/privateinterface.php";
-    public static String AK = "3Ne7OXKQwUIDLiD9UF6IM90g";
-    public static String IPAPI = "http://api.map.baidu.com/location/ip";
     private static final String TAG = "uploadFile";
     private static final int TIME_OUT = 10 * 1000; // 超时时间
     private static final String CHARSET = "utf-8"; // 设置编码
+
+    public static String AK = "3Ne7OXKQwUIDLiD9UF6IM90g";
+    public static String IPAPI = "http://api.map.baidu.com/location/ip";
+
 
 
     public static String getCurLocation(){
@@ -416,8 +418,6 @@ public class ToolClass {
             return null;
         }
     }
-
-
 
     //上传文件
     public static String uploadFile(String fileUrl)

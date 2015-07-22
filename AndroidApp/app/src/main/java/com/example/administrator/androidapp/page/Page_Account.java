@@ -81,7 +81,12 @@ public class Page_Account extends BasePage {
     private void submit() {
         MyMessage msg = ToolClass.updateuserpassword(currentUser.getUserID(),oldPassword,newPassWord);
         if(msg!=null){
-            Utils.showMessage(this, msg.getMess());
+            if(msg.getMess().equals("ok")){
+                Utils.showMessage(this,"修改成功！");
+                Utils.backPage(this);
+            }else{
+                Utils.showMessage(this, "失败了");
+            }
         }
     }
 

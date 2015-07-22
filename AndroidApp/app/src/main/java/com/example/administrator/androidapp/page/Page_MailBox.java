@@ -10,6 +10,7 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
+import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.Currency;
@@ -20,6 +21,8 @@ public class Page_MailBox extends BasePage {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_mail_box);
+
+        Utils.setEditView(this,R.id.Mailbox,Current.getCurrentUser().getMailbox());
     }
 
     @Override
@@ -48,8 +51,13 @@ public class Page_MailBox extends BasePage {
         String mailbox = Utils.getValueOfEditText(this, R.id.Mailbox);
         if(mailbox!=null){
             MyMessage msg = ToolClass.verify(Current.getCurrentUser().getUserID(), mailbox);
-            if(msg.getMess().equals("ok")){
-                Utils.showMessage(this,"验证邮件已发送，请登陆邮箱验证");
+            if(msg!=null){
+                if(msg.getMess().equals("ok")){
+                    Utils.showMessage(this, "验证邮件已发送，请登陆邮箱验证");
+                    Utils.backPage(this);
+                }
+            }else{
+                Utils.debugMessage(this,"Page_Mialbox msg为空");
             }
         }
     }

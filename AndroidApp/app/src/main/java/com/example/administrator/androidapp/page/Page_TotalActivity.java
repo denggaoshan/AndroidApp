@@ -33,11 +33,11 @@ import java.util.Map;
 public class Page_TotalActivity extends ActionBarActivity implements OnTouchListener{
 
     /*************  侧边栏滑动的效果 ****************/
-    public static final int SNAP_VELOCITY = 100;//滚动显示和隐藏menu时，手指滑动需要达到的速度。
+    public static final int SNAP_VELOCITY = 50;//滚动显示和隐藏menu时，手指滑动需要达到的速度。
     private int screenWidth;   //屏幕宽度值。
     private int leftEdge;  //menu最多可以滑动到的左边缘。值由menu布局的宽度来定，marginLeft到达此值之后，不能再减少。
     private int rightEdge = 0;//menu最多可以滑动到的右边缘。值恒为0，即marginLeft到达0之后，不能增加。
-    private int menuPadding = 400; //menu完全显示时，留给content的宽度值。
+    private int menuPadding = 600; //menu完全显示时，留给content的宽度值。
     private View content;   //主内容的布局。
     private View menu; //menu的布局。
     private LinearLayout.LayoutParams menuParams;//menu布局的参数，通过此参数来更改leftMargin的值。
@@ -50,13 +50,14 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     //初始化一些关键性数据。包括获取屏幕的宽度，给content布局重新设置宽度，给menu布局重新设置宽度和偏移距离等。
     private void initValues() {
+
         WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         screenWidth = window.getDefaultDisplay().getWidth();
         content = findViewById(R.id.main_content);
         menu = findViewById(R.id.menu);
         menuParams = (LinearLayout.LayoutParams) menu.getLayoutParams();
         // 将menu的宽度设置为屏幕宽度减去menuPadding
-        menuParams.width = screenWidth - menuPadding;
+        menuParams.width = (int) (screenWidth * 0.7);
         // 左边缘的值赋值为menu宽度的负数
         leftEdge = -menuParams.width;
         // menu的leftMargin设置为左边缘的值，这样初始化时menu就变为不可见
@@ -359,28 +360,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     private PopupWindow popupWindow;
 
-    /***************************   右上菜单栏  ************************ */
 
-    //菜单点击事件
-    public void func_Click(View v){
-        // 获取自定义布局文件activity_popupwindow_left.xml的视图
-        View popupWindow_view = getLayoutInflater().inflate(R.layout.menu_total, null,false);
-        // 创建PopupWindow实例,200,LayoutParams.MATCH_PARENT分别是宽度和高度
-        popupWindow = new PopupWindow(popupWindow_view, 300, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        // 这里是位置显示方式,在屏幕的左侧
-        popupWindow.showAsDropDown(v, 0, 0);
-        // 点击其他地方消失
-        popupWindow_view.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (popupWindow != null && popupWindow.isShowing()) {
-                    popupWindow.dismiss();
-                    popupWindow = null;
-                }
-                return false;
-            }
-        });
-    }
 
     //发起活动
     public void add_Click(View v){

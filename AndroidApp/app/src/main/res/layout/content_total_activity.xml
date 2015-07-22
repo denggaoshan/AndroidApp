@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/border_3"
         android:paddingTop="5dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="20dp"
         android:nestedScrollingEnabled="false">
 
 
@@ -51,7 +51,8 @@
                     android:gravity="left|center"
                     android:paddingLeft="10dp"
                     android:textSize="15dp"
-                    android:id="@+id/time" />
+                    android:id="@+id/time"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -75,7 +76,8 @@
                     android:gravity="left|center"
                     android:paddingLeft="10dp"
                     android:textSize="15dp"
-                    android:id="@+id/position" />
+                    android:id="@+id/position"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -99,7 +101,8 @@
                     android:gravity="left|center"
                     android:paddingLeft="10dp"
                     android:textSize="15dp"
-                    android:id="@+id/attending" />
+                    android:id="@+id/attending"
+                    android:singleLine="true" />
 
             </LinearLayout>
 

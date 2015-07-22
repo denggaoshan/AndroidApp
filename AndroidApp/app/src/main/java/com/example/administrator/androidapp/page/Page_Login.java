@@ -34,7 +34,6 @@ public class Page_Login extends ActionBarActivity {
         {
             MyMessage tempMsg = MyMessage.createMessage(jsonMsg);
             Current.setCurrentUser(tempMsg.getUser());
-            Current.setCurrentMyMessage(tempMsg);
             Utils.transPage(this, Page_TotalActivity.class);
             return;
         }
@@ -54,7 +53,6 @@ public class Page_Login extends ActionBarActivity {
         if (checkMess(msg.getMess()))
         {
             Utils.storeLogData(msg.getJsonString());
-            Current.setCurrentMyMessage(msg);
             Current.setCurrentUser(msg.getUser());
             return "OK";
         }

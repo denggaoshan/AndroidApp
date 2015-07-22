@@ -69,6 +69,7 @@ public class Page_Information_Others extends BasePage {
     //发私信
     public void message_Click(View v)
     {
+        Page_SendMessage.setMessageType("1");
         Utils.transPage(this, Page_SendMessage.class);
     }
 

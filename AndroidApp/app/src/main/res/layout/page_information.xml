@@ -81,8 +81,7 @@
         android:layout_height="match_parent"
         android:id="@+id/scrollView2"
         android:layout_below="@id/Head"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="80dp">
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
             android:orientation="vertical"
@@ -133,13 +132,26 @@
                     android:textColor="#000000"
                     android:paddingLeft="10dp" />
 
-                <EditText
+                <RadioGroup
+                    android:id="@+id/gendergroup"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="女"
-                    android:layout_weight="0.7"
-                    android:textSize="20dp"
-                    android:id="@+id/Sex" />
+                    android:orientation="horizontal"
+                    android:layout_weight="0.7">
+                    <RadioButton
+                        android:id="@+id/girl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="女" />
+                    <RadioButton
+                        android:id="@+id/boy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="男"
+                        android:layout_marginLeft="50dp"
+                        android:checked="true" />
+                </RadioGroup>
+
             </LinearLayout>
 
             <LinearLayout
@@ -279,32 +291,6 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="10dp" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="邮箱"
-                    android:layout_weight="0.3"
-                    android:textSize="20dp"
-                    android:textColor="#000000"
-                    android:paddingLeft="10dp" />
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="狮子座"
-                    android:layout_weight="0.7"
-                    android:textSize="20dp"
-                    android:id="@+id/Mailbox" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:paddingBottom="10dp">
 
                 <TextView
@@ -324,20 +310,20 @@
                     android:textSize="20dp"
                     android:id="@+id/Description" />
             </LinearLayout>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                android:id="@+id/Ok"
+                android:layout_alignParentBottom="true"
+                android:background="#ff50d2c3"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_margin="10dp"
+                android:onClick="submit_Click" />
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="确定"
-        android:id="@+id/Ok"
-        android:layout_alignParentBottom="true"
-        android:background="#ff50d2c3"
-        android:textColor="#ffffff"
-        android:textSize="25dp"
-        android:layout_margin="10dp"
-        android:onClick="submit_Click" />
 
 
 </RelativeLayout>

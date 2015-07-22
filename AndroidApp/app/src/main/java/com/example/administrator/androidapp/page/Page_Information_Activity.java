@@ -30,6 +30,7 @@ public class Page_Information_Activity extends BasePage {
     private Photo[] allPhotos;
 
     private  boolean isLauncher = false;  //当前用户是不是活动发起人
+    private boolean isInActivity = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class Page_Information_Activity extends BasePage {
         //加载活动成员
         allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
         isLauncher= Current.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
+        isInActivity =  Current.getCurrentUser().isInActivity(allUsers);
 
         showActivityDetail();
     }
@@ -145,7 +147,7 @@ public class Page_Information_Activity extends BasePage {
                             }
                         });
                     }
-                }else{
+                }else if(!isInActivity){
                     //显示最后的按钮
                     convertView = new LinearLayout(parent.getContext());
                     if (convertView != null) {
@@ -158,8 +160,24 @@ public class Page_Information_Activity extends BasePage {
                             @Override
                             public void onClick(View v) {
                                 //活动报名
-                                Utils.showMessage(Page_Information_Activity.this,"报名中");
                                 joinActivity();
+                            }
+                        });
+                    }
+                }else{
+                    //显示最后的按钮
+                    convertView = new LinearLayout(parent.getContext());
+                    if (convertView != null) {
+                        Context ctx = convertView.getContext();
+                        LayoutInflater nflater = LayoutInflater.from(ctx);
+                        convertView = nflater.inflate(R.layout.content_button, null);
+                        Button btn = (Button) convertView.findViewById(R.id.btn);
+                        btn.setText("退出报名");
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //活动报名
+                                exitActivity();
                             }
                         });
                     }
@@ -199,9 +217,7 @@ public class Page_Information_Activity extends BasePage {
             convertView = new LinearLayout(parent.getContext());
             if(position < getCount()-1){
                 //如果是正常内容
-
                 final User user = allUsers[position];
-
 
                 if(convertView!=null && user!= null){
 
@@ -252,8 +268,7 @@ public class Page_Information_Activity extends BasePage {
                 }else{
                     Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
-            }else{
-                if( isLauncher ){
+            }else if( isLauncher ){
                     //如果是获得发起人，则可以看到成员管理按钮
                     convertView = new LinearLayout(parent.getContext());
                     if(convertView!=null ) {
@@ -269,18 +284,18 @@ public class Page_Information_Activity extends BasePage {
                             }
                         });
                     }
-                } else if(Current.getCurrentUser().getUserType().equals("游客")){
-                    //如果是游客，显示提示消息
-                    Context ctx = convertView.getContext();
-                    LayoutInflater nflater = LayoutInflater.from(ctx);
-                    convertView = nflater.inflate(R.layout.content_tips, null);
-                    TextView tv = (TextView) convertView.findViewById(R.id.content);
-                    tv.setText("对不起，您无权查看这里的内容");
-                }
+                }else if(Current.getCurrentUser().getUserType().equals("游客")){
+                Context ctx = convertView.getContext();
+                LayoutInflater nflater = LayoutInflater.from(ctx);
+                convertView = nflater.inflate(R.layout.content_tips, null);
+                TextView tv = (TextView) convertView.findViewById(R.id.content);
+                tv.setText("您没有权限查看这里的内容");
             }
+
             return convertView;
         }
     }
+
     /* 活动评论适配器 */
     private class CommentsAdapter extends BaseAdapter{
 
@@ -306,6 +321,8 @@ public class Page_Information_Activity extends BasePage {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = new LinearLayout(parent.getContext());
+
+
             if(position<getCount()-1){
                 Comment comment = allComments[position];
 
@@ -332,7 +349,7 @@ public class Page_Information_Activity extends BasePage {
                 }else{
                     Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
-            }else {
+            }else if(!Current.getCurrentUser().getUserType().equals("游客")){
                 //显示最后的按钮
                 convertView = new LinearLayout(parent.getContext());
                 if (convertView != null) {
@@ -357,7 +374,6 @@ public class Page_Information_Activity extends BasePage {
                     }else{
                         Utils.debugMessage(Page_Information_Activity.this,"btn没找到");
                     }
-
                 }
             }
             return convertView;
@@ -404,13 +420,16 @@ public class Page_Information_Activity extends BasePage {
                         Utils.setTextView(convertView, ids[i], vals[i]);
                     }
 
+                    String level = photo.getLevel();
+                    Utils.setTextView(convertView,R.id.level,Utils.changeLevel(level));
+
                     Cache.loadImg(convertView,photo.getAddress(),R.id.image);
 
                 }else{
                     Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
 
-            }else{
+            }else if(!Current.getCurrentUser().getUserType().equals("游客")){
                 //显示添加相册按钮
                     Context ctx = convertView.getContext();
                     LayoutInflater nflater = LayoutInflater.from(ctx);
@@ -475,11 +494,7 @@ public class Page_Information_Activity extends BasePage {
     //显示活动评论
     private void showActivityComment() {
 
-        if(!Current.getCurrentUser().getUserType().equals("游客")){
-            allComments = Cache.loadAllComments(currentActivity.getActivityID());
-        }else{
-            allComments = null;
-        }
+        allComments = Cache.loadAllComments(currentActivity.getActivityID());
 
         try{
             ListView vi=(ListView) findViewById(R.id.content);
@@ -493,9 +508,7 @@ public class Page_Information_Activity extends BasePage {
     //显示活动相册
     private void showActivityAlbum(){
 
-        if(!Current.getCurrentUser().getUserType().equals("游客")) {
-            allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
-        }
+        allPhotos = Cache.loadAllPhotos(currentActivity.getActivityID());
 
         try{
             ListView vi=(ListView) findViewById(R.id.content);
@@ -542,20 +555,38 @@ public class Page_Information_Activity extends BasePage {
     //群发消息接口
     private void sendActivityMessage(){
         Page_SendMessage.setMessageType("2");
-        Utils.transPage(this,Page_SendMessage.class);
+        Utils.transPage(this, Page_SendMessage.class);
     }
 
     //活动报名
     private void joinActivity() {
         String ret = ToolClass.applyParticipation(currentUser.getUserID(), currentActivity.getActivityID(), "我想参加").getMess();
         if(ret!=null){
-            if(ret.equals("OK")){
+            if(ret.equals("ok")){
                 Utils.showMessage(this, "报名成功，审核中");
             }else{
                 Utils.showMessage(this, "已经报名过了");
             }
         }
     }
+
+
+    //退出报名
+    private void exitActivity() {
+        MyMessage ret = ToolClass.kick("00000000", currentActivity.getActivityID(), currentUser.getUserID());
+        if(ret!=null){
+            if(ret.getMess().equals("ok")){
+                Utils.showMessage(this, "退出成功");
+                isInActivity = false;
+                Cache.updateMembers(currentActivity.getActivityID());
+                currentActivity = Cache.updateActivityDetail(currentUser.getUserID(),currentActivity.getActivityID());
+                showActivityDetail();
+            }else{
+                Utils.showMessage(this, "退出失败");
+            }
+        }
+    }
+
 
 
     //点击导航栏

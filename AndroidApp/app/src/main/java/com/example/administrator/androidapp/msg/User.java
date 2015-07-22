@@ -29,7 +29,7 @@ public class User extends BaseType{
     private String LivePlace;
     private String Description;
     private String Phone;
-    private String Mailbox;
+    private String Mailbox;public String getMailbox(){return Mailbox;}
     private String IsCheckedMailbox;
     private String QQ;
     private String WeiBo;
@@ -73,5 +73,14 @@ public class User extends BaseType{
         }
     }
 
-
+    public boolean isInActivity(User[] allUsers) {
+        if(allUsers!=null){
+            for(User user: allUsers){
+                if(user.getUserID().equals(this.getUserID())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

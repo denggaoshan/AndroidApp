@@ -86,7 +86,7 @@
             android:layout_weight="0.4"
             android:layout_below="@id/imglayout"
             android:scrollbars="none"
-            android:paddingBottom="50dp"
+            android:paddingBottom="80dp"
             android:id="@+id/content"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
@@ -123,8 +123,7 @@
                     android:inputType="textPassword"
                     android:ems="10"
                     android:id="@+id/password_RegTxt"
-                    android:singleLine="true"
-                    android:text="12345" />
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -138,8 +137,7 @@
                     android:inputType="textPassword"
                     android:ems="10"
                     android:id="@+id/repassword_RegTxt"
-                    android:singleLine="true"
-                    android:text="12345" />
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -161,7 +159,9 @@
                         android:id="@+id/boy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="男" />
+                        android:text="男"
+                        android:layout_marginLeft="50dp"
+                        android:checked="true" />
                 </RadioGroup>
 
 
@@ -176,8 +176,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/phone_RegTxt"
-                    android:singleLine="true"
-                    android:text="12345678900" />
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -190,8 +189,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/email_RegTxt"
-                    android:singleLine="true"
-                    android:text="821465068@qq.com" />
+                    android:singleLine="true" />
 
             </LinearLayout>
         </ScrollView>
@@ -216,7 +214,10 @@
                 android:textSize="50px"
                 android:textColorHighlight="#ffffffff"
                 android:onClick="register_Click"
-                android:nestedScrollingEnabled="false" />
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
 
         </LinearLayout>
     </RelativeLayout>

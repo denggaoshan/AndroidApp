@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:id="@+id/menu"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:background="#50d2c2"
@@ -19,7 +19,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:paddingLeft="20dp">
+            android:paddingLeft="20dp"
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="100dp"
@@ -36,7 +37,8 @@
             android:id="@+id/name"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -45,18 +47,21 @@
             android:id="@+id/identity"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="18dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp" />
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:id="@+id/message"
             android:onClick="left_Click"
-            android:clickable="true">
+            android:clickable="true"
+            android:paddingBottom="10dp">
 
             <ImageView
-                android:layout_width="30dp"
+                android:layout_width="20dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView21"
                 android:src="@drawable/icon_message" />
@@ -67,20 +72,21 @@
                 android:text="查看消息"
                 android:gravity="center"
                 android:textColor="#ffffff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/information"
             android:nestedScrollingEnabled="false"
             android:onClick="left_Click"
-            android:clickable="true">
+            android:clickable="true"
+            android:paddingBottom="10dp">
 
             <ImageView
-                android:layout_width="30dp"
+                android:layout_width="20dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView22"
                 android:src="@drawable/icon_person" />
@@ -91,22 +97,23 @@
                 android:text="个人资料"
                 android:gravity="center"
                 android:textColor="#ffffff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/confirm"
             android:onClick="left_Click"
-            android:clickable="true">
+            android:clickable="true"
+            android:paddingBottom="10dp">
 
             <ImageView
-                android:layout_width="30dp"
+                android:layout_width="20dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView4"
-                android:src="@drawable/icon_person" />
+                android:src="@drawable/icon_mailvalid" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -114,22 +121,23 @@
                 android:text="邮箱认证"
                 android:gravity="center"
                 android:textColor="#ffffff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/account"
             android:onClick="left_Click"
-            android:clickable="true">
+            android:clickable="true"
+            android:paddingBottom="10dp">
 
             <ImageView
-                android:layout_width="30dp"
+                android:layout_width="20dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView28"
-                android:src="@drawable/icon_manage" />
+                android:src="@drawable/icon_password" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -137,22 +145,23 @@
                 android:text="修改密码"
                 android:gravity="center"
                 android:textColor="#ffffff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/manage"
             android:onClick="left_Click"
-            android:clickable="true">
+            android:clickable="true"
+            android:paddingBottom="10dp">
 
             <ImageView
-                android:layout_width="30dp"
+                android:layout_width="20dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView23"
-                android:src="@drawable/icon_manage" />
+                android:src="@drawable/icon_activitymana" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -160,20 +169,21 @@
                 android:text="活动管理"
                 android:gravity="center"
                 android:textColor="#ffffff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/exit"
             android:onClick="left_Click"
-            android:clickable="true">
+            android:clickable="true"
+            android:paddingBottom="10dp">
 
             <ImageView
-                android:layout_width="30dp"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView24"
                 android:src="@drawable/icon_exit" />
@@ -184,16 +194,17 @@
                 android:text="退出登录"
                 android:gravity="center"
                 android:textColor="#ffffff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:id="@+id/imageView25"
                 android:src="@drawable/main_logo"
                 android:layout_alignParentBottom="true" />
@@ -207,7 +218,7 @@
         android:id="@+id/main_content">
 
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -228,7 +239,7 @@
                 android:nestedScrollingEnabled="false" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="活动"
                 android:id="@+id/title_activity"
@@ -238,15 +249,15 @@
                 android:textSize="20dp" />
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="30dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/func"
                 android:src="@drawable/icon_ellipses"
                 android:layout_weight="0.126"
-                android:paddingRight="20dp"
-                android:onClick="func_Click" />
+                android:onClick="add_Click"
+                android:layout_alignParentRight="true" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <HorizontalScrollView
@@ -357,7 +368,7 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/title_play"
+                        android:src="@drawable/title_travel"
                         android:layout_weight="0.8" />
 
                     <TextView

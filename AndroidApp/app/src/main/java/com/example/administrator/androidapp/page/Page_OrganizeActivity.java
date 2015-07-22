@@ -169,15 +169,20 @@ public class Page_OrganizeActivity extends BasePage {
 
     public void sure_Click(View v){
         Utils.showMessage(this, getInput());
-        if (!getInput().equals("提交中"))
-            return;
-        commit();
+        try {
+            if (getInput().equals("提交中")){
+                commit();
+            }else{
+                return;
+            }
+        }catch (Exception e){
+            Utils.showMessage(this,"发起活动失败");
+        }
+
     }
 
     private void commit(){
-        MyMessage msg = Current.getCurrentMyMessage();
-
-        MyMessage reflect =  ToolClass.launchActivity(msg.getUser().getUserID(), title, content, startTime, endTime, place, type);
+        MyMessage reflect =  ToolClass.launchActivity(Current.getCurrentUser().getUserID(), title, content, startTime, endTime, place, type);
         if(checkMess(reflect.getMess())){
             Utils.showMessage(this,"添加活动成功");
             Utils.transPage(this, Page_TotalActivity.class);
@@ -201,13 +206,14 @@ public class Page_OrganizeActivity extends BasePage {
             return "请输入活动标题";
         }
         content = Utils.getValueOfEditText(this, R.id.content);
-        if(content.equals("")){
+        if(content==null ||content.equals("")){
             return "请输入活动内容";
         }
-        startTime = Utils.getTimeBox(this,R.id.startTime,R.id.endTime);
+        startTime = Utils.getTimeBox(this,R.id.startTime,R.id.startHour);
         endTime = Utils.getTimeBox(this,R.id.endTime,R.id.endHour);
+
         place = Utils.getValueOfEditText(this, R.id.place);
-        if (place.equals("")){
+        if (place== null || place.equals("")){
             return "请输入地点";
         }
         type = "" + Utils.getSpinnerById(this, R.id.type);
@@ -215,7 +221,11 @@ public class Page_OrganizeActivity extends BasePage {
     }
 
     public void position_Click(View v){
-        getInput();//保存输入内容
+        try {
+            getInput();//保存输入内容
+        }catch (Exception e){
+
+        }
         Utils.transPage(this,Page_Map.class);
     }
 

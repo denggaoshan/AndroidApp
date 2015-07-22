@@ -60,8 +60,7 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/title"
-                android:text="约炮" />
+                android:id="@+id/title" />
         </LinearLayout>
 
             <LinearLayout
@@ -95,8 +94,7 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/content"
-                android:text="约炮" />
+                android:id="@+id/content" />
         </LinearLayout>
 
             <LinearLayout
@@ -187,8 +185,7 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/place"
-                android:text="海运" />
+                android:id="@+id/place" />
 
                 <Button
                     android:layout_width="wrap_content"

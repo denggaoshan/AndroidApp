@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -182,6 +183,13 @@ public class Utils {
         return data[index];
     }
 
+    public static String changeLevel(String level) {
+        String[] data = {"活动内所有","站内分享","完全分享"};
+        int index = Integer.parseInt(level);
+        return data[index];
+
+    }
+
 
 
     private static SecretKey keyGenerator(String keyStr) throws Exception {
@@ -318,10 +326,33 @@ public class Utils {
         Button btn1 = (Button)parent.findViewById(dateId);
         Button btn2 = (Button)parent.findViewById(timeId);
         String btn2_text =  btn2.getText().toString();
-        btn2_text = btn2_text.replace(" ","");
-        String ret = btn1.getText().toString()+" " + btn2_text;
+        String btn1_text =  btn1.getText().toString();
+
+        btn2_text = btn2_text.replace(" ", "");
+        btn1_text = btn1_text.replace(" ", "");
+
+        String ret = btn1_text +" " + btn2_text;
         Date tmp = DateFactory.createDateByString(ret);
         ret = DateFactory.createStringByDate(tmp);
         return ret;
+    }
+
+
+    public static void setSelect(BasePage parent, int id,boolean flag) {
+        RadioButton btn = (RadioButton)parent.findViewById(id);
+        if(btn!=null){
+            btn.setChecked(flag);
+        }else{
+            Utils.debugMessage(parent,"no RadioButton");
+        }
+    }
+
+    public static boolean isSelectedRadioButton(BasePage parent, int id) {
+        RadioButton btn = (RadioButton)parent.findViewById(id);
+        if(btn!=null){
+            return  btn.isChecked();
+        }else{
+            return false;
+        }
     }
 }

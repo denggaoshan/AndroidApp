@@ -56,8 +56,7 @@
         android:layout_height="match_parent"
         android:id="@+id/scrollView2"
         android:layout_below="@id/Head"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="80dp">
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
             android:orientation="vertical"
@@ -172,19 +171,19 @@
                     android:id="@+id/New2" />
             </LinearLayout>
 
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="修改"
+                android:id="@+id/Ok"
+                android:layout_alignParentBottom="true"
+                android:background="#ff50d2c3"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_margin="10dp"
+                android:onClick="submit_Click" />
+
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="修改"
-        android:id="@+id/Ok"
-        android:layout_alignParentBottom="true"
-        android:background="#ff50d2c3"
-        android:textColor="#ffffff"
-        android:textSize="25dp"
-        android:layout_margin="10dp"
-        android:onClick="submit_Click" />
 
 </RelativeLayout>

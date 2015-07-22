@@ -97,8 +97,6 @@ public class Page_SendMessage extends BasePage {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     public void submit_Click(View v){
         String title = Utils.getValueOfEditText(this, R.id.title);
         String content = Utils.getValueOfEditText(this, R.id.content);
@@ -111,9 +109,9 @@ public class Page_SendMessage extends BasePage {
                 String ret = null;
                 //发消息
                 if(sendMessageType.equals("1")){
-                    ret = ToolClass.sendPrivateMess(source.getUserID(),dest.getUserID(),title,content);
+                    ret = ToolClass.sendPrivateMess(source.getUserID(),dest.getUserID(),title,content).getMess();
                 }else{
-                    ret =ToolClass.fsendMess(source.getUserID(),Current.getCurrentActivity().getActivityID(),title,content);
+                    ret =ToolClass.fsendMess(source.getUserID(),Current.getCurrentActivity().getActivityID(),title,content).getMess();
                 }
                 //结果
                 if(ret!=null){
@@ -125,7 +123,6 @@ public class Page_SendMessage extends BasePage {
                     }else{
                         Utils.showMessage(this, "发送失败");
                     }
-
                 }else{
                     Utils.debugMessage(this, "0002 ret为空");
                 }

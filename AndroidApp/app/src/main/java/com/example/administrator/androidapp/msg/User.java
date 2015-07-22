@@ -61,7 +61,7 @@ public class User extends BaseType{
     //给别人点赞
     public String createGood(User touser){
         if(touser.IsGood.equals("0")){
-            String ret = ToolClass.addOrDeleteGood(this.getUserID(), touser.getUserID(), "1");
+            String ret = ToolClass.addOrDeleteGood(this.getUserID(), touser.getUserID(), "1").getMess();
             touser.IsGood ="1";
             if(ret.equals("ok")){
                 return ret;

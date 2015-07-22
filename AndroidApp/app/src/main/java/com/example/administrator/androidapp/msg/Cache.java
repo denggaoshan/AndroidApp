@@ -109,7 +109,7 @@ public class Cache {
         if(activityRequests.containsKey(currentActivity.getActivityID())){
             return activityRequests.get(currentActivity.getActivityID());
         }else{
-            UserAndExplainArray msg = ToolClass.getApplication(Current.getCurrentUser().getUserID(), currentActivity.getActivityID());
+            MyMessage msg = ToolClass.getApplication(Current.getCurrentUser().getUserID(), currentActivity.getActivityID());
             if(msg!=null){
                 UserAndExplain[] ret = msg.getUserAndExplains();
                 if(ret!=null){
@@ -201,12 +201,11 @@ public class Cache {
         User user = Cache.getUserById(id);
 
         if (user != null) {
-            InformArray informsArr = ToolClass.getInform(user.getUserID());
-            ;
+            MyMessage msg = ToolClass.getInform(user.getUserID());
 
-            if (informsArr != null) {
+            if (msg != null) {
 
-                Inform[] allInforms = informsArr.getInforms();
+                Inform[] allInforms = msg.getInforms();
 
                 ArrayList<Inform> systemInforms = new ArrayList<>();
                 ArrayList<Inform> activityInforms = new ArrayList<>();
@@ -333,7 +332,8 @@ public class Cache {
         if(activityComments.containsKey(id)){
             return activityComments.get(id);
         }else{
-            ActivityInfo info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
+            MyMessage info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
+
             Comment[] allComments = info.getComments();
             activityComments.put(id,allComments);
             return allComments;
@@ -342,7 +342,7 @@ public class Cache {
 
 
     public static void updateAllPhotos(String id){
-        ActivityInfo info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
+        MyMessage info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
         Photo[] allPhotos = info.getPhoto();
         activityPhotos.put(id,allPhotos);
     }
@@ -352,7 +352,7 @@ public class Cache {
         if(activityPhotos.containsKey(id)){
             return activityPhotos.get(id);
         }else{
-            ActivityInfo info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
+            MyMessage info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
             Photo[] allPhotos = info.getPhoto();
             activityPhotos.put(id,allPhotos);
             return allPhotos;

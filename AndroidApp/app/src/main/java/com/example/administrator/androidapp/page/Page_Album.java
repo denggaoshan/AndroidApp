@@ -60,15 +60,19 @@ public class Page_Album extends BasePage {
         if(!picture.equals("")){
             String level = String.valueOf(Utils.getSpinnerById(this, R.id.level));
             String title = Utils.getValueOfEditText(this, R.id.title);
-            String describe = Utils.getValueOfEditText(this,R.id.describe);
-            String ret = ToolClass.addPhoto(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), picture, title, describe, level);
-            ToolClass.uploadFile(picture);
-            if(ret!=null && ret.equals("ok")){
-                Utils.showMessage(this,"添加照片完成");
-                Cache.updateAllPhotos(Current.getCurrentActivity().getActivityID());
-                Utils.backPage(this);
+            String describe = Utils.getValueOfEditText(this, R.id.describe);
+            String path = ToolClass.uploadFile(picture);
+            if(path!=null){
+                String ret = ToolClass.addPhoto(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), path, title, describe, level).getMess();
+                if(ret!=null && ret.equals("ok")){
+                    Utils.showMessage(this,"添加照片完成");
+                    Cache.updateAllPhotos(Current.getCurrentActivity().getActivityID());
+                    Utils.backPage(this);
+                }else{
+                    Utils.showMessage(this,"添加照片失败");
+                }
             }else{
-                Utils.showMessage(this,"添加照片失败");
+                Utils.showMessage(this,"服务器遇到问题");
             }
         }
     }

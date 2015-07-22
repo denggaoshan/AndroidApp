@@ -22,25 +22,29 @@ public abstract class BaseType {
                     String value = json.getString(name);
                     property.setAccessible(true);
                     property.set(this,value);
-                }catch (JSONException e){
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                     try {
                         property.set(this,"");
-                    } catch (IllegalAccessException e1) {
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
                     }
-                } catch (IllegalAccessException e) {
-                    //权限不够，不存在
                 }
             }
     }
 
     public static BaseType create(Class source,JSONObject json){
-       try {
-           BaseType ret = (BaseType)source.newInstance();
+        BaseType ret = null;
+        try {
+           ret = (BaseType)source.newInstance();
            ret.loadAllPropertyFromJSON(json);
            return ret;
        } catch (Exception e) {
+            e.printStackTrace();
+           return ret;
        }
-      return null;
     }
 
     //获得用户属性fieldName的值

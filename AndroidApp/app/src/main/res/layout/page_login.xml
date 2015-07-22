@@ -94,7 +94,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="忘记密码？"
                     android:id="@+id/textView3"
                     android:layout_gravity="center_horizontal"
                     android:focusable="true"

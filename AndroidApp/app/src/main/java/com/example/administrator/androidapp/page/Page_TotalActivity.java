@@ -387,7 +387,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         if(Current.getCurrentUser().getUserType().equals("认证用户")){
             Utils.transPage(this, Page_OrganizeActivity.class);
         }else{
-            Utils.showMessage(this,"只有认证用户才能发起活动");
+            Utils.showMessage(this, "只有认证用户才能发起活动");
         }
     }
 
@@ -424,7 +424,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                     break;
                 case R.id.manage:
                     source = Page_Manage_Activity.class;
-                    break;
+                    break; 
                 case R.id.exit:
                     Utils.clearLogData();//清楚本地用户数据
                     source = Page_Login.class;
@@ -433,6 +433,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         }else{
             //如果是游客
             if(v.getId()==R.id.exit){
+                Utils.clearLogData();
                 Utils.transPage(this,Page_Login.class);
             }else{
                 Utils.showMessage(this,"您还没有注册");

@@ -12,6 +12,7 @@ public class UserAndExplain {
     private String expain; public String getExpain(){ return expain; }
     private String time; public String getTime(){ return time; }
 
+
     public static UserAndExplain createUserAndExplain(JSONObject jsonObject){
         try {
             UserAndExplain temp = new UserAndExplain();

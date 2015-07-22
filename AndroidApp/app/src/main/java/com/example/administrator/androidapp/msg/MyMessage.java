@@ -1,10 +1,18 @@
 package com.example.administrator.androidapp.msg;
 
+import android.app.Activity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admin on 2015/7/3.
@@ -16,23 +24,94 @@ public class MyMessage {
      */
     protected HashMap<String,Object> allData= new HashMap<>();
 
+
     public static MyMessage createMessage(String jsonString)
     {
         tempJsonString = jsonString;
         MyMessage temp = new MyMessage();
         JSONObject allMsg = temp.createJSONObjectByString(jsonString);
-        if (allMsg != null) {
-            temp.setMess(allMsg);
-            temp.setUser(allMsg);
-            temp.setUsers(allMsg);
-            temp.setActivity(allMsg);
-            temp.setActivities(allMsg);
-            temp.setPhotos(allMsg);
-            temp.setComments(allMsg);
+
+        try{
+            Iterator<String> val = allMsg.keys();
+            while(val.hasNext()){
+                String str = val.next();
+                String value = allMsg.getString(str);
+                temp.addToMessage(str, value);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return temp;
     }
 
+
+    private static HashMap allType = new HashMap (){
+        {
+            put("user", User.class);
+            put("activity", MyActivity.class);
+        }
+    };
+
+    private static HashMap allArrayType = new HashMap (){
+        {
+            put("users", User.class);
+            put("activities", MyActivity.class);
+            put("comments", Comment.class);
+            put("photos", Photo.class);
+            put("informs", Inform.class);
+            put("usersandexplain", UserAndExplain.class);
+        }
+    };
+
+
+    //根据key值添加相应的Message
+    private void addToMessage(String str, String JsonString) {
+        if(str.equals("mess")){
+            setMess(JsonString);
+        }else if(allType.containsKey(str)){
+            setValue(str, (Class) allType.get(str),JsonString);
+        }else if(allArrayType.containsKey(str)){
+            setValues(str, (Class) allArrayType.get(str),JsonString);
+        }else{
+            //有BUG
+        }
+    }
+
+    private void setMess(String  data)
+    {
+        allData.put("mess",data);
+    }
+
+
+    private void setValue(String key,Class type,String jsonString) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            Object instance = BaseType.create(type, jsonObject);
+            allData.put(key,instance);
+        } catch (Exception e) {
+        }
+    }
+
+
+    //塞入一个数组
+    private void setValues(String str, Class type, String jsonString) {
+        try{
+            JSONArray jsonArray = new JSONArray(jsonString);
+            if (jsonArray != null && jsonArray.length() != 0)
+            {
+                List<Object> data = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    Object instance = BaseType.create(type,(JSONObject) jsonArray.get(i));
+                    data.add(instance);
+                }
+                allData.put(str,data);
+            }
+        }catch (JSONException e) {
+
+        }
+    }
 
 
     private static String tempJsonString;public String getJsonString()
@@ -41,45 +120,96 @@ public class MyMessage {
     }
 
     public String getMess() {
-        if(allData.containsKey("mess")){
-            return (String)allData.get("mess");
-        }else{
-            return null;
-        }
+        return (String)allData.get("mess");
     }
 
     public MyActivity getActivity() {
-        if(allData.containsKey("activity")){
-            return (MyActivity)allData.get("activity");
-        }else{
-            return null;
-        }
+        return (MyActivity)allData.get("activity");
     }
 
-    public MyActivity[] getActivities() {
-        if(allData.containsKey("activities")){
-            return (MyActivity[])allData.get("activities");
-        }else{
-            return null;
-        }
-    }
 
     public User getUser() {
-        if(allData.containsKey("user")){
-            return (User)allData.get("user");
+        return (User)allData.get("user");
+    }
+
+
+    public MyActivity[] getActivities() {
+        List<Object> data = (List<Object>) allData.get("activities");
+        if(data!=null){
+            MyActivity[] ret = new MyActivity[data.size()];
+            for(int i=0;i<data.size();i++){
+                ret[i] = (MyActivity)data.get(i);
+            }
+            return ret;
         }else{
             return null;
         }
     }
 
     public User[] getUsers() {
-        if(allData.containsKey("users")){
-            return (User[])allData.get("users");
+        List<Object> data = (List<Object>) allData.get("users");
+        if(data!=null){
+            User[] ret = new User[data.size()];
+            for(int i=0;i<data.size();i++){
+                ret[i] = (User)data.get(i);
+            }
+            return ret;
+        }else {
+            return null;
+        }
+    }
+
+    public Comment[] getComments() {
+        List<Object> data = (List<Object>) allData.get("comments");
+        if(data!=null){
+            Comment[] ret = new Comment[data.size()];
+            for(int i=0;i<data.size();i++){
+                ret[i] = (Comment)data.get(i);
+            }
+            return ret;
         }else{
             return null;
-        }}
+        }
+    }
 
+    public Photo[] getPhoto() {
+        List<Object> data = (List<Object>) allData.get("photos");
+        if(data!=null){
+            Photo[] ret = new Photo[data.size()];
+            for(int i=0;i<data.size();i++){
+                ret[i] = (Photo)data.get(i);
+            }
+            return ret;
+        }else{
+            return null;
+        }
+    }
 
+    public Inform[] getInforms() {
+        List<Object> data = (List<Object>) allData.get("informs");
+        if(data!=null){
+            Inform[] ret = new Inform[data.size()];
+            for(int i=0;i<data.size();i++){
+                ret[i] = (Inform)data.get(i);
+            }
+            return ret;
+        }else {
+            return null;
+        }
+    }
+
+    public UserAndExplain[] getUserAndExplains() {
+        List<Object> data = (List<Object>) allData.get("usersandexplain");
+        if(data!=null){
+            UserAndExplain[] ret = new UserAndExplain[data.size()];
+            for(int i=0;i<data.size();i++){
+                ret[i] = (UserAndExplain)data.get(i);
+            }
+            return ret;
+        }else{
+            return null;
+        }
+    }
 
 
     private JSONObject createJSONObjectByString(String jsonString)
@@ -89,132 +219,14 @@ public class MyMessage {
             return null;
         try {
             allMsg = new JSONObject(jsonString);
+            return allMsg;
         }
         catch (JSONException e)
         {
             allMsg = null;
+            return allMsg;
         }
-        return allMsg;
+
     }
-
-    private void setMess(JSONObject jsonObject)
-    {
-        try {
-            String mess = (String)jsonObject.getString("mess");
-            allData.put("mess",mess);
-        } catch (JSONException e) {
-
-        }
-    }
-
-    private void setUser(JSONObject jsonObject)
-    {
-        try {
-            User user = (User) User.create(User.class, jsonObject.getJSONObject("user"));
-            allData.put("user",user);
-        } catch (JSONException e) {
-        }
-    }
-
-    private void setUsers(JSONObject jsonObject) {
-        try{
-            JSONArray jsonArray = jsonObject.getJSONArray("users");
-            if (jsonArray != null && jsonArray.length() != 0)
-            {
-                User[] users = new User[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++)
-                {
-                    try
-                    {
-                        users[i] = (User) User.create(User.class, jsonArray.getJSONObject(i));
-                    }
-                    catch (JSONException E)
-                    {
-                        users[i] = null;
-                    }
-                }
-                allData.put("users",users);
-            }
-        }catch (JSONException e) {
-        }
-    }
-
-    private void setActivity(JSONObject jsonObject) {
-        try {
-            MyActivity activity = (MyActivity) BaseType.create(MyActivity.class,jsonObject.getJSONObject("activity"));
-            allData.put("activity",activity);
-        }
-        catch (JSONException e)
-        {
-        }
-    }
-
-    private void setActivities(JSONObject jsonObject) {
-        try {
-            JSONArray jsonArray = jsonObject.getJSONArray("activities");
-            if (jsonArray != null && jsonArray.length() != 0)
-            {
-                MyActivity[] activities = new MyActivity[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++)
-                {
-                   try {
-                    activities[i] = (MyActivity) MyActivity.create(MyActivity.class,jsonArray.getJSONObject(i));
-                   } catch (JSONException E) {
-                    activities[i] = null;
-                   }
-                }
-                allData.put("activities",activities);
-            }
-        } catch (JSONException E){
-        }
-    }
-
-    private void setComments(JSONObject jsonObject) {
-        try{
-            JSONArray jsonArray = jsonObject.getJSONArray("comments");
-            if (jsonArray != null && jsonArray.length() != 0)
-            {
-                Comment[] comments = new Comment[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++)
-                {
-                    try
-                    {
-                        comments[i] = (Comment) Comment.create(Comment.class, jsonArray.getJSONObject(i));
-                    }
-                    catch (JSONException E)
-                    {
-                        comments[i] = null;
-                    }
-                }
-                allData.put("comments",comments);
-            }
-        }catch (JSONException e) {
-        }
-    }
-
-    private void setPhotos(JSONObject jsonObject) {
-        try{
-            JSONArray jsonArray = jsonObject.getJSONArray("photos");
-            if (jsonArray != null && jsonArray.length() != 0)
-            {
-                Photo[] photos = new Photo[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++)
-                {
-                    try
-                    {
-                        photos[i] = (Photo) Photo.create(Photo.class, jsonArray.getJSONObject(i));
-                    }
-                    catch (JSONException E)
-                    {
-                        photos[i] = null;
-                    }
-                }
-                allData.put("photos",photos);
-            }
-        }catch (JSONException e) {
-        }
-    }
-
-
 
 }

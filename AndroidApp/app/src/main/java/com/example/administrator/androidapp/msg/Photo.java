@@ -15,8 +15,8 @@ public class Photo extends BaseType
     private String UserID;
     private String ActivityID;
     private String Address; public String getAddress(){return Address;}
-    private String Title;
-    private String Describe;
+    private String Title;public String getTitle(){return Title;}
+    private String Describe;public String getDescribe(){return Describe;}
     private String Level;
     private String Time; public String getTime(){return Time;}
     private String NickName; public String getNickName(){return NickName;}

@@ -194,65 +194,31 @@ public class ToolClass {
         return null;
     }
 
-    public static InformArray getInform(String userid)
+    public static MyMessage getInform(String userid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getinformbyuserid"
                 + "&userid=" + userid;
 
-        return InformArray.createInformArray(httpGet(getUrl));
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
-    public static String applyParticipation(String userid, String activityid, String explain)
+    public static MyMessage applyParticipation(String userid, String activityid, String explain)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=applyparticipation"
                 + "&userid=" + userid + "&activityid=" + activityid
                 + "&explain=" + explain;
 
-        return onlyGetMess(httpGet(getUrl));
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
-    public static UserAndExplainArray getApplication(String userid, String activityid)
+    public static MyMessage getApplication(String userid, String activityid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=getapplication"
                 + "&userid=" + userid + "&activityid=" + activityid;
 
-        return UserAndExplainArray.createUserAndExplainArray(httpGet(getUrl));
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
-    public static String handleApplication(String userid, String activityid, String applyid, String isallow)
-    {
-        String getUrl = MSGSERVERURL + "?" + "oper=handleapplication"
-                + "&userid=" + userid + "&activityid="+activityid+"&applyid=" + applyid
-                + "&isallow=" + isallow;
-
-        return onlyGetMess(httpGet(getUrl));
-    }
-
-    public static String fsendMess(String userid, String activityid, String title, String content)
-    {
-        String getUrl = MSGSERVERURL + "?" + "oper=fsendmess"
-                + "&userid=" + userid + "&activityid=" + activityid
-                + "&title=" + title + "&content=" + content;
-
-        return onlyGetMess(httpGet(getUrl));
-    }
-
-    public static String affirminform(String informid)
-    {
-        String getUrl = MSGSERVERURL + "?" + "oper=affirminform"
-                + "&informid=" + informid;
-
-        return onlyGetMess(httpGet(getUrl));
-    }
-
-    public static String sendPrivateMess(String userid, String toid, String title, String content)
-    {
-        String getUrl = MSGSERVERURL + "?" + "oper=sendprivatemess"
-                + "&userid=" + userid + "&toid=" + toid
-                + "&title=" + title + "&content=" + content;
-
-        return onlyGetMess(httpGet(getUrl));
-    }
 
     public static MyMessage updateActivityInfo(String activityid, String title, String content,
                                           String starttime, String endtime, String place, String type)
@@ -273,49 +239,92 @@ public class ToolClass {
         return MyMessage.createMessage(httpGet(getUrl));
     }
 
+    public static MyMessage getActivityInfo(String userid, String activityid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=getactivityinfo"
+                + "&userid=" + userid + "&activityid=" + activityid;
+
+        return MyMessage.createMessage(httpGet(getUrl));
+    }
+
 
     /*只返回String的接口*/
 
-    public static String addOrDeleteGood(String userid, String toid, String good)
+    public static MyMessage addOrDeleteGood(String userid, String toid, String good)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=addordeletegood"
                 + "&userid=" + userid + "&toid=" + toid + "&good=" + good;
 
-        return onlyGetMess(httpGet(getUrl));
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
-    public static String kick(String userid, String activityid, String kickid)
+    public static MyMessage kick(String userid, String activityid, String kickid)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=kick"
                 + "&userid=" + userid + "&activityid=" + activityid + "&kickid=" + kickid;
 
-        return onlyGetMess(httpGet(getUrl));
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
-    public static String addCommment(String userid, String activityid, String content)
+    public static MyMessage addCommment(String userid, String activityid, String content)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=addcomment"
                 + "&userid=" + userid + "&activityid=" + activityid + "&content=" + content;
 
-        return onlyGetMess(httpGet(getUrl));
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
-    public static String addPhoto(String userid, String activityid, String address,
+    public static MyMessage addPhoto(String userid, String activityid, String address,
                                 String title, String describe, String level)
     {
         String getUrl = MSGSERVERURL + "?" + "oper=addphoto"
                 + "&userid=" + userid + "&activityid=" + activityid + "&address=" + address
                 + "&title=" + title + "&describe=" + describe + "&level=" + level;
 
-        return onlyGetMess(httpGet(getUrl));
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
-    public static ActivityInfo getActivityInfo(String userid, String activityid)
+    public static MyMessage handleApplication(String userid, String activityid, String applyid, String isallow)
     {
-        String getUrl = MSGSERVERURL + "?" + "oper=getactivityinfo"
-                + "&userid=" + userid + "&activityid=" + activityid;
+        String getUrl = MSGSERVERURL + "?" + "oper=handleapplication"
+                + "&userid=" + userid + "&activityid="+activityid+"&applyid=" + applyid
+                + "&isallow=" + isallow;
 
-        return ActivityInfo.createActivityInfo(httpGet(getUrl));
+        return MyMessage.createMessage(httpGet(getUrl));
+    }
+
+    public static MyMessage fsendMess(String userid, String activityid, String title, String content)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=fsendmess"
+                + "&userid=" + userid + "&activityid=" + activityid
+                + "&title=" + title + "&content=" + content;
+
+        return MyMessage.createMessage(httpGet(getUrl));
+    }
+
+    public static MyMessage affirminform(String informid)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=affirminform"
+                + "&informid=" + informid;
+
+        return MyMessage.createMessage(httpGet(getUrl));
+    }
+
+    public static MyMessage sendPrivateMess(String userid, String toid, String title, String content)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=sendprivatemess"
+                + "&userid=" + userid + "&toid=" + toid
+                + "&title=" + title + "&content=" + content;
+
+        return MyMessage.createMessage(httpGet(getUrl));
+    }
+
+
+    public static MyMessage verify(String userid, String mailbox)
+    {
+        String getUrl = MSGSERVERURL + "?" + "oper=verify"
+                + "&userid=" + userid + "&mailbox=" + mailbox;
+        return MyMessage.createMessage(httpGet(getUrl));
     }
 
 
@@ -407,7 +416,6 @@ public class ToolClass {
             return null;
         }
     }
-
 
 
 

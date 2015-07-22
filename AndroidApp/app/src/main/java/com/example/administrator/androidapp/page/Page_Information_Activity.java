@@ -388,37 +388,42 @@ public class Page_Information_Activity extends BasePage {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = new LinearLayout(parent.getContext());
-            if(allPhotos==null){
-                Context ctx = convertView.getContext();
-                LayoutInflater nflater = LayoutInflater.from(ctx);
-                convertView = nflater.inflate(R.layout.content_button, null);
-                Button btn = (Button) convertView.findViewById(R.id.btn);
-                btn.setText("添加相册");
-                btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                      //添加相册
-                        Utils.transPage(Page_Information_Activity.this,Page_Album.class);
-                    }
-                });
-            }else{
 
+            if(position < getCount()-1){
+                //显示正常相册的地方
                 Photo photo = allPhotos[position];
                 if(convertView!=null && photo!= null){
-
                     Context ctx = convertView.getContext();
                     LayoutInflater nflater = LayoutInflater.from(ctx);
                     convertView = nflater.inflate(R.layout.content_activity_album, null);
 
-                    int[] ids = {R.id.name,R.id.time};
-                    String[] vals = {photo.getNickName(),photo.getTime()};
+                    int[] ids = {R.id.name,R.id.time,R.id.title,R.id.describe};
+                    String[] vals = {photo.getNickName(),photo.getTime(),photo.getTitle(),photo.getDescribe()};
 
                     for(int i=0;i<ids.length;i++){
-                        Utils.setTextView(Page_Information_Activity.this, ids[i], vals[i]);
+                        Utils.setTextView(convertView, ids[i], vals[i]);
                     }
+
+                    Cache.loadImg(convertView,photo.getAddress(),R.id.image);
+
                 }else{
                     Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
+
+            }else{
+                //显示添加相册按钮
+                    Context ctx = convertView.getContext();
+                    LayoutInflater nflater = LayoutInflater.from(ctx);
+                    convertView = nflater.inflate(R.layout.content_button, null);
+                    Button btn = (Button) convertView.findViewById(R.id.btn);
+                    btn.setText("添加相册");
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //添加相册
+                            Utils.transPage(Page_Information_Activity.this,Page_Album.class);
+                        }
+                    });
             }
             return convertView;
 
@@ -542,7 +547,7 @@ public class Page_Information_Activity extends BasePage {
 
     //活动报名
     private void joinActivity() {
-        String ret = ToolClass.applyParticipation(currentUser.getUserID(), currentActivity.getActivityID(), "我想参加");
+        String ret = ToolClass.applyParticipation(currentUser.getUserID(), currentActivity.getActivityID(), "我想参加").getMess();
         if(ret!=null){
             if(ret.equals("OK")){
                 Utils.showMessage(this, "报名成功，审核中");
@@ -579,7 +584,7 @@ public class Page_Information_Activity extends BasePage {
         if(et!=null){
             String str = et.getText().toString();
             if(str!=null && !str.replace(" ","").equals("")){
-                String ret = ToolClass.addCommment(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(),str);
+                String ret = ToolClass.addCommment(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(),str).getMess();
                 if(ret.equals("ok")){
                     Utils.showMessage(this,"添加成功");
                     allComments = Cache.updateAndLoadComments(currentActivity.getActivityID());

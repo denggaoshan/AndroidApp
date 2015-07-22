@@ -155,7 +155,7 @@ public class Page_Manage_Member extends BasePage {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1");
+                        String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1").getMess();
                         if(ret.equals("ok")){
                             Utils.showMessage(Page_Manage_Member.this,"已同意");
                             allRequests = Cache.updateLoadRequest(currentActivity);
@@ -173,7 +173,7 @@ public class Page_Manage_Member extends BasePage {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0");
+                        String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0").getMess();
                         Utils.showMessage(Page_Manage_Member.this, ret);
                         if(ret.equals("ok")){
                             allRequests = Cache.updateLoadRequest(currentActivity);

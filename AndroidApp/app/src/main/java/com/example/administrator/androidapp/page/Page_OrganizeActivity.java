@@ -34,12 +34,12 @@ public class Page_OrganizeActivity extends BasePage {
     private List<String> list = new ArrayList<String>();
     private ArrayAdapter<String> adapter;
 
-    private String title;
-    private String content;
-    private String startTime;
-    private String endTime;
-    private String type;
-    private String place;
+    private static String title;
+    private static String content;
+    private static String startTime;
+    private static String endTime;
+    private static String type;
+    private static String place;
 
 
 
@@ -48,23 +48,21 @@ public class Page_OrganizeActivity extends BasePage {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_organize);
 
-
-        String position = Page_Map.getResultAdress();
-
-        if(position==null || position.equals("")) {
-            Utils.transPage(this, Page_Map.class);
-        }else{
-            Utils.setEditView(this, R.id.place, position);
-        }
-
-
         //多选框
         String[] types = {"户外","运动","玩乐","旅行","音乐","其他"};
         Utils.createActivityTypeSpinner(this,R.id.type,types);
-
+        loadInformation();
         initCurTime();
-
     }
+
+    private void loadInformation() {
+        int[] ids = {R.id.title,R.id.content,R.id.place};
+        String[] vals = {title,content,Page_Map.getResultAdress()};
+        for(int i=0;i<ids.length;i++){
+            Utils.setEditView(this,ids[i],vals[i]);
+        }
+    }
+
 
     private void initCurTime(){
         String curTime = "";
@@ -202,42 +200,23 @@ public class Page_OrganizeActivity extends BasePage {
         if(title.equals("")){
             return "请输入活动标题";
         }
-
         content = Utils.getValueOfEditText(this, R.id.content);
         if(content.equals("")){
             return "请输入活动内容";
         }
-
-        Button btn1 = (Button)findViewById(R.id.startTime);
-        Button btn2 = (Button)findViewById(R.id.startHour);
-        String btn2_text =  btn2.getText().toString();
-        btn2_text = btn2_text.replace(" ","");
-        startTime = btn1.getText().toString()+" " + btn2_text;
-
-        Date tmp = DateFactory.createDateByString(startTime);
-        startTime = DateFactory.createStringByDate(tmp);
-
-        btn1 = (Button)findViewById(R.id.endTime);
-        btn2 = (Button)findViewById(R.id.endHour);
-        btn2_text =  btn2.getText().toString();
-        btn2_text = btn2_text.replace(" ", "");
-        endTime = btn1.getText().toString()+" " + btn2_text;
-        tmp = DateFactory.createDateByString(endTime);
-        endTime = DateFactory.createStringByDate(tmp);
-
+        startTime = Utils.getTimeBox(this,R.id.startTime,R.id.endTime);
+        endTime = Utils.getTimeBox(this,R.id.endTime,R.id.endHour);
         place = Utils.getValueOfEditText(this, R.id.place);
         if (place.equals("")){
             return "请输入地点";
         }
-
         type = "" + Utils.getSpinnerById(this, R.id.type);
-
         return "提交中";
     }
 
-
     public void position_Click(View v){
-
+        getInput();//保存输入内容
+        Utils.transPage(this,Page_Map.class);
     }
 
 }

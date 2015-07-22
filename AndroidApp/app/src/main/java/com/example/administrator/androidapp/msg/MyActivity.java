@@ -22,5 +22,4 @@ public class MyActivity extends BaseType{
     private String IsChecked;public String getIsChecked(){return IsChecked;}
     private String NickName;
     private String Avatar;public String getAvatar(){return Avatar;}
-
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.androidapp.R;
+import com.example.administrator.androidapp.msg.DateFactory;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.page.*;
 
@@ -310,5 +311,17 @@ public class Utils {
             return;
         }
 
+    }
+
+
+    public static String getTimeBox(BasePage parent,int dateId,int timeId) {
+        Button btn1 = (Button)parent.findViewById(dateId);
+        Button btn2 = (Button)parent.findViewById(timeId);
+        String btn2_text =  btn2.getText().toString();
+        btn2_text = btn2_text.replace(" ","");
+        String ret = btn1.getText().toString()+" " + btn2_text;
+        Date tmp = DateFactory.createDateByString(ret);
+        ret = DateFactory.createStringByDate(tmp);
+        return ret;
     }
 }

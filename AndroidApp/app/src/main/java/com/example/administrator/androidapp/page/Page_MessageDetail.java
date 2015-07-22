@@ -106,7 +106,7 @@ public class Page_MessageDetail extends BasePage {
             if(content.replace(" ","").equals("") || title.replace(" ","").equals("")){
                 Utils.showMessage(this,"标题或者内容不能为空");
             }else{
-                String ret = ToolClass.sendPrivateMess(source.getUserID(), dest.getUserID(), title, content);
+                String ret = ToolClass.sendPrivateMess(source.getUserID(), dest.getUserID(), title, content).getMess();
                 if(ret!=null){
                     Utils.showMessage(this,ret);
                     Utils.backPage(this);

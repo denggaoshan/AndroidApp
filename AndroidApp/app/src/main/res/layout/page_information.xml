@@ -24,7 +24,7 @@
                 android:layout_width="30dp"
                 android:layout_height="fill_parent"
                 android:id="@+id/imageView26"
-                android:src="@drawable/icon_close"
+                android:src="@drawable/icon_close2"
                 android:layout_marginLeft="10dp"
                 android:onClick="back_Click" />
 

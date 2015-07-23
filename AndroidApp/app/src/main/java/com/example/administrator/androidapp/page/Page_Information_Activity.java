@@ -42,8 +42,8 @@ public class Page_Information_Activity extends BasePage {
 
         //加载活动成员
         allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
-        isLauncher= Current.getCurrentUser().isLauncher(allUsers);//是否为活动发起人
-        isInActivity =  Current.getCurrentUser().isInActivity(allUsers);
+        isLauncher= Current.getUser().isLauncher(allUsers);//是否为活动发起人
+        isInActivity =  Current.getUser().isInActivity(allUsers);
 
         showActivityDetail();
     }
@@ -191,7 +191,7 @@ public class Page_Information_Activity extends BasePage {
     private class AllUsersAdapter extends BaseAdapter{
         @Override
         public int getCount() {
-            if(Current.getCurrentUser().getUserType().equals("游客")){
+            if(Current.getUser().getUserType().equals("游客")){
                 return 1;
             }
             if(allUsers!=null){
@@ -284,7 +284,7 @@ public class Page_Information_Activity extends BasePage {
                             }
                         });
                     }
-                }else if(Current.getCurrentUser().getUserType().equals("游客")){
+                }else if(Current.getUser().getUserType().equals("游客")){
                 Context ctx = convertView.getContext();
                 LayoutInflater nflater = LayoutInflater.from(ctx);
                 convertView = nflater.inflate(R.layout.content_tips, null);
@@ -349,7 +349,7 @@ public class Page_Information_Activity extends BasePage {
                 }else{
                     Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
-            }else if(!Current.getCurrentUser().getUserType().equals("游客")){
+            }else if(!Current.getUser().getUserType().equals("游客")){
                 //显示最后的按钮
                 convertView = new LinearLayout(parent.getContext());
                 if (convertView != null) {
@@ -429,7 +429,7 @@ public class Page_Information_Activity extends BasePage {
                     Utils.debugMessage(Page_Information_Activity.this,"某个用户为空");
                 }
 
-            }else if(!Current.getCurrentUser().getUserType().equals("游客")){
+            }else if(!Current.getUser().getUserType().equals("游客")){
                 //显示添加相册按钮
                     Context ctx = convertView.getContext();
                     LayoutInflater nflater = LayoutInflater.from(ctx);
@@ -452,9 +452,9 @@ public class Page_Information_Activity extends BasePage {
     //装载当前的活动信息
     private void loadCurrentActivity() {
         //当前活动
-        currentActivity = Current.getCurrentActivity();
+        currentActivity = Current.getActivity();
         //当前用户
-        currentUser = Current.getCurrentUser();
+        currentUser = Current.getUser();
     }
 
     //显示活动详情
@@ -478,9 +478,9 @@ public class Page_Information_Activity extends BasePage {
 
     //显示活动成员
     private void showActivityMember() {
-        if(!Current.getCurrentUser().getUserType().equals("游客")) {
+        if(!Current.getUser().getUserType().equals("游客")) {
             allUsers = Cache.loadAllUsers(currentActivity.getActivityID());
-            isLauncher= Current.getCurrentUser().isLauncher(allUsers);
+            isLauncher= Current.getUser().isLauncher(allUsers);
         }
         try{
             ListView vi=(ListView) findViewById(R.id.content);
@@ -592,7 +592,7 @@ public class Page_Information_Activity extends BasePage {
     //点击导航栏
     public void navi_Click(View v) {
         int id = v.getId();
-        String userType = Current.getCurrentUser().getUserType();
+        String userType = Current.getUser().getUserType();
 
         changeFocus(id);//切换焦点到此标签
 
@@ -610,12 +610,13 @@ public class Page_Information_Activity extends BasePage {
     private void memberMana_Click() {
         Utils.transPage(this, Page_Manage_Member.class);
     }
+
     //添加评论
     public void addComment_Click(EditText et){
         if(et!=null){
             String str = et.getText().toString();
             if(str!=null && !str.replace(" ","").equals("")){
-                String ret = ToolClass.addCommment(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(),str).getMess();
+                String ret = ToolClass.addCommment(Current.getUser().getUserID(), Current.getActivity().getActivityID(),str).getMess();
                 if(ret.equals("ok")){
                     Utils.showMessage(this,"添加成功");
                     allComments = Cache.updateAndLoadComments(currentActivity.getActivityID());

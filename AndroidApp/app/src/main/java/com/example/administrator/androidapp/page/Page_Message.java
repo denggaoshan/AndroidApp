@@ -1,6 +1,7 @@
 package com.example.administrator.androidapp.page;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,7 +31,8 @@ public class Page_Message extends BasePage{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_message);
 
-        currentUser = Current.getCurrentUser();
+        currentUser = Current.getUser();
+
         showSystemMessage();
     }
 
@@ -104,7 +106,7 @@ public class Page_Message extends BasePage{
                                 User source =  inform.getUserSource();
                                 if(source!=null){
                                     Current.setOtherUser(source);
-                                    Current.setCurrentInform(inform);
+                                    Current.setInform(inform);
                                     Utils.transPage(Page_Message.this,Page_MessageDetail.class);
                                 }else{
                                     Utils.debugMessage(Page_Message.this,"0001 找不到通知来源User");
@@ -153,28 +155,41 @@ public class Page_Message extends BasePage{
 
     //显示系统消息
     private void showSystemMessage(){
+        changeFocus(R.id.system);
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(Cache.getSystemInforms(Current.getCurrentUser().getUserID()));
+        MyAdapter adapter = new MyAdapter(Cache.getSystemInforms(Current.getUser().getUserID()));
         vi.setAdapter(adapter);
     }
 
     //显示活动消息
     private void showActivityMessage(){
+        changeFocus(R.id.activity);
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(Cache.getActivityInforms(Current.getCurrentUser().getUserID()));
+        MyAdapter adapter = new MyAdapter(Cache.getActivityInforms(Current.getUser().getUserID()));
         vi.setAdapter(adapter);
     }
 
     //显示私人消息
     private void showPrivateMessage(){
+        changeFocus(R.id.private_info);
         ListView vi=(ListView) findViewById(R.id.content);
         vi.removeAllViewsInLayout();
-        MyAdapter adapter = new MyAdapter(Cache.getPrivatedInforms(Current.getCurrentUser().getUserID()));
+        MyAdapter adapter = new MyAdapter(Cache.getPrivatedInforms(Current.getUser().getUserID()));
         vi.setAdapter(adapter);
     }
 
+
+    private void changeFocus(int id){
+        int[] ids = {R.id.system,R.id.activity,R.id.private_info};
+        for(int i:ids){
+            LinearLayout layout=(LinearLayout) findViewById(i);
+            layout.setBackgroundColor(Color.WHITE);
+        }
+        LinearLayout rn=(LinearLayout) findViewById(id);
+        rn.setBackgroundColor(0xFF50d2c2);
+    }
 
     /* 点击事件 */
     //点击系统消息

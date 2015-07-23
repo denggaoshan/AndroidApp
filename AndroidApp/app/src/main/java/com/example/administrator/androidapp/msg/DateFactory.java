@@ -65,12 +65,6 @@ public class DateFactory {
         return dates[0];
     }
 
-    public static void main(String[] args){
-        Date date = DateFactory.createDateByString("2010-04-10 12:33");
-
-        date = getCurrentTime();
-        String str = DateFactory.createStringByDate(date);
-    }
 
     public static Date getCurrentTime(){
         String curTime = "";

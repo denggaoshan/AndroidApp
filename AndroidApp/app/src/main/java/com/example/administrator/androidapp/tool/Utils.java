@@ -99,6 +99,7 @@ public class Utils {
         }
     }
 
+
     //获取本地用户信息
     public static String getLogData()
     {
@@ -118,7 +119,6 @@ public class Utils {
 
 
     /* 页面有关的 */
-
     private static Stack<Class> historyPages = new Stack<Class>(){};
 
     //切换页面
@@ -157,7 +157,6 @@ public class Utils {
     public static long getSpinnerById(ActionBarActivity parent,int id){
         return ((Spinner) parent.findViewById(id)).getSelectedItemId();
     }
-
 
     //返回文本框的内容 level
     public static String getValueOfEditText(ActionBarActivity parent, int id){
@@ -353,6 +352,13 @@ public class Utils {
             return  btn.isChecked();
         }else{
             return false;
+        }
+    }
+
+    public static void setButtonVisible(ActionBarActivity parent, int id,int value) {
+        Button btn = (Button)parent.findViewById(id);
+        if(btn!=null){
+            btn.setVisibility(value);
         }
     }
 }

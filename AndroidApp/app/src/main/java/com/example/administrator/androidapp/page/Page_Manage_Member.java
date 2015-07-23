@@ -28,6 +28,7 @@ public class Page_Manage_Member extends BasePage {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_member_manager);
+
         loadRequest();
     }
 
@@ -154,12 +155,12 @@ public class Page_Manage_Member extends BasePage {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "1").getMess();
+                        String ret = ToolClass.handleApplication(Current.getUser().getUserID(), Current.getActivity().getActivityID(), request.getUser().getUserID(), "1").getMess();
                         if(ret.equals("ok")){
                             Utils.showMessage(Page_Manage_Member.this,"已同意");
                             allRequests = Cache.updateLoadRequest(currentActivity);
-                            Cache.updateMembers(Current.getCurrentActivity().getActivityID());
-                            Cache.updateActivityDetail(Current.getCurrentUser().getUserID(),Current.getCurrentActivity().getActivityID());
+                            Cache.updateMembers(Current.getActivity().getActivityID());
+                            Cache.updateActivityDetail(Current.getUser().getUserID(),Current.getActivity().getActivityID());
                         }
                         loadRequest();
                     }
@@ -174,7 +175,7 @@ public class Page_Manage_Member extends BasePage {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String ret = ToolClass.handleApplication(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), request.getUser().getUserID(), "0").getMess();
+                        String ret = ToolClass.handleApplication(Current.getUser().getUserID(), Current.getActivity().getActivityID(), request.getUser().getUserID(), "0").getMess();
                         Utils.showMessage(Page_Manage_Member.this, ret);
                         if(ret.equals("ok")){
                             allRequests = Cache.updateLoadRequest(currentActivity);
@@ -194,7 +195,7 @@ public class Page_Manage_Member extends BasePage {
 
     //装载所有活动
     private void loadRequest(){
-        currentActivity  = Current.getCurrentActivity();
+        currentActivity  = Current.getActivity();
         allRequests = Cache.getUserAndExplains(currentActivity);
         ListView vi=(ListView) findViewById(R.id.requests);
         MyAdapter myAdapter = new MyAdapter(allRequests);

@@ -10,6 +10,7 @@ import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -33,20 +34,22 @@ public class Cache {
     private static HashMap<String, ArrayList<Inform>> systemInformsCache = new HashMap<>();
     private static HashMap<String, ArrayList<Inform>> activityInformsCache = new HashMap<>();
     private static HashMap<String, ArrayList<Inform>> privatedInformsCache = new HashMap<>();
-
     private static HashMap<String,User[]> activityMember = new HashMap<>();
     private static HashMap<String,Comment[]> activityComments = new HashMap<>();
     private static HashMap<String,Photo[]> activityPhotos = new HashMap<>();
-
-    private static Map<String, List<MyActivity>> activitiesCache = null;
+    private static Map<String, List<MyActivity>> activitiesCache = new HashMap<String, List<MyActivity>>();
     private static HashMap<String,User> userCache = new HashMap<>();
-
-
     private static HashMap<String,UserAndExplain[]> activityRequests = new HashMap<>();//活动申请
-
     private static HashMap<String,MyActivity[]> launchedActivity = new HashMap<>();//用户发起的互动
     private static HashMap<String,MyActivity[]> participatedActivity = new HashMap<>();//用户参与的活动
     private static HashMap<String,MyActivity[]> applicatedActivity = new HashMap<>();//
+
+
+    public static void updateAllActivity(){
+        launchedActivity=new HashMap<>();
+        participatedActivity = new HashMap<>();
+        applicatedActivity = new HashMap<>();
+    }
 
     public static MyActivity[] getLaunchedActivity(String id) {
         if(launchedActivity.containsKey(id)){
@@ -109,7 +112,7 @@ public class Cache {
         if(activityRequests.containsKey(currentActivity.getActivityID())){
             return activityRequests.get(currentActivity.getActivityID());
         }else{
-            MyMessage msg = ToolClass.getApplication(Current.getCurrentUser().getUserID(), currentActivity.getActivityID());
+            MyMessage msg = ToolClass.getApplication(Current.getUser().getUserID(), currentActivity.getActivityID());
             if(msg!=null){
                 UserAndExplain[] ret = msg.getUserAndExplains();
                 if(ret!=null){
@@ -124,40 +127,22 @@ public class Cache {
     }
 
     //更新所有的Cache
-    private static void updateAllCache() {
-        //更新用户的Cache
-        for(Map.Entry<String,User> item:userCache.entrySet()){
-            String userId = item.getKey();
-            MyMessage msg = ToolClass.getUserInfo(Current.getCurrentUser().getUserID(), userId);
-            User user = msg.getUser();
-            if(user!=null){
-                item.setValue(msg.getUser());
-            }
-        }
-
-        //更新活动的Cache
-         activitiesCache=null;
-         loadActivitiesMap("A");
+    public static void updateAllCache() {
+       systemInformsCache = new HashMap<>();
+       activityInformsCache = new HashMap<>();
+        privatedInformsCache = new HashMap<>();
+       activityMember = new HashMap<>();
+       activityComments = new HashMap<>();
+      activityPhotos = new HashMap<>();
+      activitiesCache = new HashMap<>();
+      userCache = new HashMap<>();
+        activityRequests = new HashMap<>();//活动申请
+       launchedActivity = new HashMap<>();//用户发起的互动
+        participatedActivity = new HashMap<>();//用户参与的活动
+        applicatedActivity = new HashMap<>();//
     }
 
-    /*开一个线程专门用来在后台更新缓存数据*/
-    public static void beginDownLoad(){
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int i = 0;
-                //不断更新各种缓存
-                while (true){
-                    i++;
-                    updateAllCache();
-
-                }
-            }
-
-        }).start();
-
-    }
 
     /*获得当前用户的系统消息*/
     public static ArrayList<Inform> getSystemInforms(String id) {
@@ -259,7 +244,8 @@ public class Cache {
     public static Map<String, List<MyActivity>> loadActivitiesMap(String type) {
 
         Map<String, List<MyActivity>> allActivitiesByDayOrder = new HashMap<String, List<MyActivity>>();
-        if (activitiesCache != null) {
+
+        if (activitiesCache != null && activitiesCache.size()!=0) {
             //缓存中有的话
             for (Map.Entry<String, List<MyActivity>> act : activitiesCache.entrySet()) {
                 String time = act.getKey();
@@ -307,7 +293,7 @@ public class Cache {
 
 
     public static User[] updateLoadAllUsers(String id){
-        MyMessage msg = ToolClass.getParticipation(Current.getCurrentUser().getUserID(), id);
+        MyMessage msg = ToolClass.getParticipation(Current.getUser().getUserID(), id);
         User[] allUsers = msg.getUsers();
         activityMember.put(id,allUsers);
         return allUsers;
@@ -315,7 +301,7 @@ public class Cache {
 
 
     public static void updateMembers(String id) {
-        MyMessage msg = ToolClass.getParticipation(Current.getCurrentUser().getUserID(), id);
+        MyMessage msg = ToolClass.getParticipation(Current.getUser().getUserID(), id);
         User[] allUsers = msg.getUsers();
         activityMember.put(id,allUsers);
     }
@@ -326,7 +312,7 @@ public class Cache {
         if(activityMember.containsKey(id)){
             return activityMember.get(id);
         }else{
-            MyMessage msg = ToolClass.getParticipation(Current.getCurrentUser().getUserID(), id);
+            MyMessage msg = ToolClass.getParticipation(Current.getUser().getUserID(), id);
             User[] allUsers = msg.getUsers();
             activityMember.put(id,allUsers);
             return allUsers;
@@ -344,7 +330,7 @@ public class Cache {
         if(activityComments.containsKey(id)){
             return activityComments.get(id);
         }else{
-            MyMessage info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
+            MyMessage info = ToolClass.getActivityInfo(Current.getUser().getUserID(), id);
 
             Comment[] allComments = info.getComments();
             activityComments.put(id,allComments);
@@ -354,7 +340,7 @@ public class Cache {
 
 
     public static void updateAllPhotos(String id){
-        MyMessage info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
+        MyMessage info = ToolClass.getActivityInfo(Current.getUser().getUserID(), id);
         Photo[] allPhotos = info.getPhoto();
         activityPhotos.put(id,allPhotos);
     }
@@ -364,7 +350,7 @@ public class Cache {
         if(activityPhotos.containsKey(id)){
             return activityPhotos.get(id);
         }else{
-            MyMessage info = ToolClass.getActivityInfo(Current.getCurrentUser().getUserID(), id);
+            MyMessage info = ToolClass.getActivityInfo(Current.getUser().getUserID(), id);
             Photo[] allPhotos = info.getPhoto();
             activityPhotos.put(id,allPhotos);
             return allPhotos;
@@ -377,7 +363,7 @@ public class Cache {
         if(userCache.containsKey(id)){
             return userCache.get(id);
         }else{
-            MyMessage msg = ToolClass.getUserInfo(Current.getCurrentUser().getUserID(), id);
+            MyMessage msg = ToolClass.getUserInfo(Current.getUser().getUserID(), id);
             User user = msg.getUser();
             userCache.put(id,user);
             return user;
@@ -388,7 +374,7 @@ public class Cache {
         MyMessage msg = ToolClass.getActivityInfo(userId,activityId);
         if(msg!=null){
             MyActivity ret = msg.getActivity();
-            Current.setCurrentActivity(ret);
+            Current.setActivity(ret);
             return ret;
         }
         return null;

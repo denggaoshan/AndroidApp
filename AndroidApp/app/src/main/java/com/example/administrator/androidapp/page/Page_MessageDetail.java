@@ -30,8 +30,8 @@ public class Page_MessageDetail extends BasePage {
 
     private void loadMessageDetail() {
         dest = Current.getOtherUser();
-        source = Current.getCurrentUser();
-        currentInform = Current.getCurrentInform();
+        source = Current.getUser();
+        currentInform = Current.getInform();
 
         if(currentInform!=null){
             Utils.setTextView(this,R.id.title_source,currentInform.getTitle());

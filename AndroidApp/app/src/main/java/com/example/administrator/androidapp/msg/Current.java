@@ -1,10 +1,9 @@
 package com.example.administrator.androidapp.msg;
 
-import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2015/7/20.
- * 专门用来存放当前的所有东西
+ * 专门用来存放在不同界面时传递的对象
  */
 public class Current {
 
@@ -15,8 +14,8 @@ public class Current {
 
     private static String picPath;
 
-    public static String getCurrentPicture(){return picPath;}
-    public static String setCurrentPicture(String picturePath){return picPath=picturePath;}
+    public static String getPicturePath(){return picPath;}
+    public static String setPicturePath(String picturePath){return picPath=picturePath;}
 
     public static User getOtherUser() {
         return otherUser;
@@ -25,20 +24,20 @@ public class Current {
         otherUser = other;
     }
 
-    public static User getCurrentUser(){return currentUser;}
-    public static void setCurrentUser(User user){currentUser = user;}
+    public static User getUser(){return currentUser;}
+    public static void setUser(User user){currentUser = user;}
 
 
-    public static MyActivity getCurrentActivity(){
+    public static MyActivity getActivity(){
         return currentActivity;
     }
-    public static void setCurrentActivity(MyActivity activity){
+    public static void setActivity(MyActivity activity){
         currentActivity = activity;
     }
 
 
-    public static Inform getCurrentInform(){return currentInform;}
-    public static void setCurrentInform(Inform msg){currentInform=msg;}
+    public static Inform getInform(){return currentInform;}
+    public static void setInform(Inform msg){currentInform=msg;}
 
 
 }

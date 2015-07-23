@@ -1,6 +1,5 @@
 package com.example.administrator.androidapp.page;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,9 +10,6 @@ import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.tool.Utils;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class Page_Album extends BasePage {
 
@@ -56,17 +52,17 @@ public class Page_Album extends BasePage {
 
     //上传照片
     public void submit_Click(View v){
-        String picture = Current.getCurrentPicture();
+        String picture = Current.getPicturePath();
         if(!picture.equals("")){
             String level = String.valueOf(Utils.getSpinnerById(this, R.id.level));
             String title = Utils.getValueOfEditText(this, R.id.title);
             String describe = Utils.getValueOfEditText(this, R.id.describe);
             String path = ToolClass.uploadFile(picture);
             if(path!=null){
-                String ret = ToolClass.addPhoto(Current.getCurrentUser().getUserID(), Current.getCurrentActivity().getActivityID(), path, title, describe, level).getMess();
+                String ret = ToolClass.addPhoto(Current.getUser().getUserID(), Current.getActivity().getActivityID(), path, title, describe, level).getMess();
                 if(ret!=null && ret.equals("ok")){
                     Utils.showMessage(this,"添加照片完成");
-                    Cache.updateAllPhotos(Current.getCurrentActivity().getActivityID());
+                    Cache.updateAllPhotos(Current.getActivity().getActivityID());
                     Utils.backPage(this);
                 }else{
                     Utils.showMessage(this,"添加照片失败");

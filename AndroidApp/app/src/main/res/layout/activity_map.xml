@@ -7,7 +7,34 @@
         android:id="@+id/bmapView"
         android:layout_width="fill_parent"
         android:layout_height="524dp"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_above="@+id/button5" />
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#50d2c2"
+        android:gravity="center"
+        android:id="@+id/head">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageView12"
+            android:src="@drawable/icon_close2"
+            android:layout_marginLeft="10dp"
+            android:onClick="back_Click" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="选择位置"
+            android:id="@+id/textView22"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="25dp" />
+    </RelativeLayout>
 
     <Button
         android:layout_width="fill_parent"
@@ -18,6 +45,10 @@
         android:textColor="#ffffff"
         android:textSize="25dp"
         android:onClick="ok_Click"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp" />
 
 </RelativeLayout>

@@ -30,7 +30,7 @@ public class User extends BaseType{
     private String Description;
     private String Phone;
     private String Mailbox;public String getMailbox(){return Mailbox;}
-    private String IsCheckedMailbox;
+    private String IsCheckedMailbox;public String getIsCheckedMailbox(){return IsCheckedMailbox;}
     private String QQ;
     private String WeiBo;
     private String RoleID;

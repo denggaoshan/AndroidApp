@@ -13,6 +13,10 @@ import java.lang.reflect.Field;
  */
 public abstract class BaseType {
 
+    /**
+     * 从Json串中加载此对象的所有属性
+     * @param json
+     */
     public void loadAllPropertyFromJSON(JSONObject json){
             Field[] allProperty = this.getClass().getDeclaredFields();
             for(Field property:allProperty){
@@ -35,6 +39,13 @@ public abstract class BaseType {
             }
     }
 
+
+    /**
+     * 抽象工厂类 把一个json对象转换成为相应的类对象
+     * @param source
+     * @param json
+     * @return
+     */
     public static BaseType create(Class source,JSONObject json){
         BaseType ret = null;
         try {

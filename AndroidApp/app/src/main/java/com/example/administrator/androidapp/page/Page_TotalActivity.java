@@ -221,13 +221,13 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
         loadActivities("A");
 
         //用户名
-        Utils.setTextView(this, R.id.name, Current.getCurrentUser().getNickName());
+        Utils.setTextView(this, R.id.name, Current.getUser().getNickName());
         //用户的身份
-        String type = Current.getCurrentUser().getUserType();
+        String type = Current.getUser().getUserType();
         Utils.setTextView(this, R.id.identity, type);
 
         //加载用户头像
-        String url = Current.getCurrentUser().getAvatar();
+        String url = Current.getUser().getAvatar();
         Cache.loadImg(this,url,R.id.img_head);
         Cache.loadImg(this,url,R.id.img_head2);
 
@@ -330,7 +330,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
                         convertView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Current.setCurrentActivity(activity);
+                                Current.setActivity(activity);
                                 Utils.transPage(Page_TotalActivity.this, Page_Information_Activity.class);
                             }
                         });
@@ -364,7 +364,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
 
     //发起活动
     public void add_Click(View v){
-        if(Current.getCurrentUser().getUserType().equals("认证用户")){
+        if(Current.getUser().getUserType().equals("认证用户")){
             Utils.transPage(this, Page_OrganizeActivity.class);
         }else{
             Utils.showMessage(this, "只有认证用户才能发起活动");
@@ -386,7 +386,7 @@ public class Page_TotalActivity extends ActionBarActivity implements OnTouchList
     public void  left_Click(View v){
 
         Class source = null;
-        String type = Current.getCurrentUser().getUserType();
+        String type = Current.getUser().getUserType();
 
         if(!type.equals("游客")){
             switch (v.getId()){

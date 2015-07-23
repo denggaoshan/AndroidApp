@@ -9,7 +9,6 @@ import android.widget.EditText;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Current;
-import com.example.administrator.androidapp.msg.MyActivity;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
@@ -33,7 +32,7 @@ public class Page_SendMessage extends BasePage {
         if(sendMessageType !=null){
             if(sendMessageType.equals("1")){
                 //给某人发
-                source = Current.getCurrentUser();
+                source = Current.getUser();
                 dest = Current.getOtherUser();
 
                 Utils.setTextView(this,R.id.dest,"发给"+dest.getNickName()+"的消息");
@@ -43,8 +42,8 @@ public class Page_SendMessage extends BasePage {
                 }
             }else{
                 //群发消息
-                source = Current.getCurrentUser();
-                Utils.setTextView(this,R.id.dest,"发给"+ Current.getCurrentActivity().getTitle()+"所有成员的消息");
+                source = Current.getUser();
+                Utils.setTextView(this,R.id.dest,"发给"+ Current.getActivity().getTitle()+"所有成员的消息");
             }
         }
 
@@ -111,7 +110,7 @@ public class Page_SendMessage extends BasePage {
                 if(sendMessageType.equals("1")){
                     ret = ToolClass.sendPrivateMess(source.getUserID(),dest.getUserID(),title,content).getMess();
                 }else{
-                    ret =ToolClass.fsendMess(source.getUserID(),Current.getCurrentActivity().getActivityID(),title,content).getMess();
+                    ret =ToolClass.fsendMess(source.getUserID(),Current.getActivity().getActivityID(),title,content).getMess();
                 }
                 //结果
                 if(ret!=null){

@@ -1,16 +1,10 @@
 package com.example.administrator.androidapp.page;
 
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.User;
@@ -18,10 +12,7 @@ import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.MyMessage;
-import com.example.administrator.androidapp.tool.PicUtil;
 import com.example.administrator.androidapp.tool.Utils;
-
-import java.io.IOException;
 
 
 public class Page_Registered extends BasePage {
@@ -71,7 +62,7 @@ public class Page_Registered extends BasePage {
     public void register_Click(View v){
         if("OK".equals(getInput())){
 
-            String picturePath =Current.getCurrentPicture();
+            String picturePath =Current.getPicturePath();
 
             if (picturePath == null){
                 avatar = DEFAULTIMG;
@@ -86,7 +77,7 @@ public class Page_Registered extends BasePage {
                 Utils.showMessage(this, "注册成功");
                 User user = msg.getUser();
                 if(user!=null){
-                    Current.setCurrentUser(msg.getUser());
+                    Current.setUser(msg.getUser());
                     //登陆
                     Utils.storeLogData(msg.getJsonString());
                     Utils.transPage(this,Page_TotalActivity.class);
@@ -139,7 +130,7 @@ public class Page_Registered extends BasePage {
         avatar = "";
 
         mailbox = ((EditText) findViewById(R.id.email_RegTxt)).getText().toString();
-        if(!"OK".equals(PatternValid.validPhone(mailbox))){
+        if(!"OK".equals(PatternValid.validEmail(mailbox))){
             Utils.showMessage(this,"邮箱格式不正确");
             return "NO";
         }

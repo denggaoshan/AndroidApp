@@ -7,7 +7,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:layout_weight="0.15">
 
         <TextView
@@ -22,7 +22,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="0.66">
 
         <TextView
@@ -140,7 +140,7 @@
 
     <ImageView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:src="@drawable/icon_user"
         android:layout_weight="0.15"
         android:id="@+id/image" />

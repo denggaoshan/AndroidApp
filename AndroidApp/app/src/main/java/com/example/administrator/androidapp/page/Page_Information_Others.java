@@ -76,13 +76,13 @@ public class Page_Information_Others extends BasePage {
     //点赞
     public void good_Click(View v)
     {
-        String str = Current.getCurrentUser().createGood(Current.getOtherUser());
+        String str = Current.getUser().createGood(Current.getOtherUser());
         if(str.equals("ok")){
             //点赞成功
             String tmp  = ((TextView)findViewById(R.id.good)).getText().toString();
             if(tmp!=null){
                 String good = String.valueOf(1 + Integer.parseInt(tmp));
-                Cache.updateLoadAllUsers(Current.getCurrentActivity().getActivityID());
+                Cache.updateLoadAllUsers(Current.getActivity().getActivityID());
                 Utils.setTextView(this,R.id.good,good);
                 Utils.showMessage(this,str);
             }else{

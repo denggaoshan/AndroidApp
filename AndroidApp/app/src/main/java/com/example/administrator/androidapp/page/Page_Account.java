@@ -27,7 +27,7 @@ public class Page_Account extends BasePage {
     }
 
     private void loadUserInformation() {
-        currentUser = Current.getCurrentUser();
+        currentUser = Current.getUser();
         LoadInformation();
     }
 

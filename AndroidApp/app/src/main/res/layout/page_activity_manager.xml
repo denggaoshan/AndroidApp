@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.androidapp.page.Page_Manage_Activity"
-    android:background="#ffffff"
-    android:onClick="navi_Click">
+    android:background="#ffffff">
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -107,7 +106,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/imageView10"
-                android:src="@drawable/icno_history"
+                android:src="@drawable/icon_history"
                 android:layout_weight="0.5" />
 
             <TextView
@@ -133,7 +132,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/imageView11"
-                android:src="@drawable/icno_applying"
+                android:src="@drawable/icon_applying"
                 android:layout_weight="0.5" />
 
             <TextView

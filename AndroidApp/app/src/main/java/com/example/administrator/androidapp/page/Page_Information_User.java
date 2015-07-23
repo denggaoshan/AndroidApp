@@ -5,8 +5,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
 
 import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
@@ -37,7 +35,7 @@ public class Page_Information_User extends BasePage {
         liveplace = getInfoFromViewById(R.id.LivePlace);
         constellation = getInfoFromViewById(R.id.Constellation);
         phone = getInfoFromViewById(R.id.Phone );
-        mailBox = Current.getCurrentUser().getMailbox();
+        mailBox = Current.getUser().getMailbox();
         description = getInfoFromViewById(R.id.Description);
     }
 
@@ -63,7 +61,7 @@ public class Page_Information_User extends BasePage {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_information);
-        currentUser = Current.getCurrentUser();
+        currentUser = Current.getUser();
         LoadInformation();
     }
 
@@ -96,14 +94,14 @@ public class Page_Information_User extends BasePage {
         try {
             getInput();
 
-            MyMessage msg = ToolClass.updateuserbaseinfo(Current.getCurrentUser().getUserID(),nickName,sex, age, constellation,
+            MyMessage msg = ToolClass.updateuserbaseinfo(Current.getUser().getUserID(),nickName,sex, age, constellation,
                     profession, liveplace, description, phone);
             if(msg!=null){
                 Utils.showMessage(this,msg.getMess());
                 User user = msg.getUser();
                 if(user!=null){
                     currentUser = user;
-                    Current.setCurrentUser(currentUser);
+                    Current.setUser(currentUser);
                     Utils.backPage(this);
                 }
             }

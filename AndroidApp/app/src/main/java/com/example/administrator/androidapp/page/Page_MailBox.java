@@ -1,6 +1,5 @@
 package com.example.administrator.androidapp.page;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,10 +9,7 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
-import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
-
-import java.util.Currency;
 
 public class Page_MailBox extends BasePage {
 
@@ -22,7 +18,12 @@ public class Page_MailBox extends BasePage {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_mail_box);
 
-        Utils.setEditView(this,R.id.Mailbox,Current.getCurrentUser().getMailbox());
+        Utils.setEditView(this,R.id.Mailbox,Current.getUser().getMailbox());
+
+        if(Current.getUser().getIsCheckedMailbox().equals("1")){
+            Utils.setButtonVisible(this,R.id.Ok,View.GONE);
+        }
+
     }
 
     @Override
@@ -50,7 +51,7 @@ public class Page_MailBox extends BasePage {
     public void submit_Click(View v){
         String mailbox = Utils.getValueOfEditText(this, R.id.Mailbox);
         if(mailbox!=null){
-            MyMessage msg = ToolClass.verify(Current.getCurrentUser().getUserID(), mailbox);
+            MyMessage msg = ToolClass.verify(Current.getUser().getUserID(), mailbox);
             if(msg!=null){
                 if(msg.getMess().equals("ok")){
                     Utils.showMessage(this, "验证邮件已发送，请登陆邮箱验证");

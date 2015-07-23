@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.tool.PatternValid;
 import com.example.administrator.androidapp.R;
@@ -33,7 +34,7 @@ public class Page_Login extends ActionBarActivity {
         if (jsonMsg != null && !jsonMsg.equals(""))
         {
             MyMessage tempMsg = MyMessage.createMessage(jsonMsg);
-            Current.setCurrentUser(tempMsg.getUser());
+            Current.setUser(tempMsg.getUser());
             Utils.transPage(this, Page_TotalActivity.class);
             return;
         }
@@ -53,7 +54,7 @@ public class Page_Login extends ActionBarActivity {
         if (checkMess(msg.getMess()))
         {
             Utils.storeLogData(msg.getJsonString());
-            Current.setCurrentUser(msg.getUser());
+            Current.setUser(msg.getUser());
             return "OK";
         }
         else
@@ -80,6 +81,7 @@ public class Page_Login extends ActionBarActivity {
         }else {
             if( "OK".equals(checkUser(username, password))){
                 //登陆成功
+                Cache.updateAllCache();//更新缓存
                 Utils.showMessage(this, "登陆成功");
                 Utils.transPage(this,Page_TotalActivity.class);
             }else{

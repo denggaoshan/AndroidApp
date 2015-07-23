@@ -15,10 +15,8 @@ import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.tool.PicUtil;
 import com.example.administrator.androidapp.tool.Utils;
 
-import java.io.IOException;
-
 /**
- * Created by dengaoshan on 2015/7/20.
+ * Created by dengaoshan
  * 基础页面类
  * 包含所有页面公共的方法
  */
@@ -51,9 +49,11 @@ public abstract class BasePage extends ActionBarActivity {
             try {
                 Uri originalUri = data.getData(); //图片数据存在Uri中
                 ContentResolver resolver = getContentResolver();
+
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
 
                 if(bitmap!=null){
+
                     //设置图片界面
                     ImageView iv =  ((ImageView) findViewById(R.id.img_show));
                     if(iv!=null){
@@ -62,7 +62,7 @@ public abstract class BasePage extends ActionBarActivity {
 
                     String path = PicUtil.getRealFilePath(this, originalUri);
                     if(path!=null){
-                        Current.setCurrentPicture(path);
+                        Current.setPicturePath(path);
                     }
 
                 }else{
@@ -81,7 +81,7 @@ public abstract class BasePage extends ActionBarActivity {
 
     //显示图片选择页面,返回所选择的图片的路径
     public String showPictureSelect() {
-        Current.setCurrentPicture("");
+        Current.setPicturePath("");
         try{
             Intent intent = new Intent();
             intent.setType("image/*");
@@ -90,7 +90,7 @@ public abstract class BasePage extends ActionBarActivity {
         }catch (Exception e){
 
         }
-        String path = Current.getCurrentPicture();
+        String path = Current.getPicturePath();
         if(path!=null){
             return path;
         }else{

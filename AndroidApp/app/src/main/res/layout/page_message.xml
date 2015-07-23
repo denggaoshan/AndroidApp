@@ -16,7 +16,7 @@
             android:layout_width="30dp"
             android:layout_height="fill_parent"
             android:id="@+id/imageView12"
-            android:src="@drawable/icon_close"
+            android:src="@drawable/icon_close2"
             android:layout_marginLeft="10dp"
             android:onClick="back_Click" />
 
@@ -50,11 +50,12 @@
             android:layout_height="match_parent"
             android:layout_weight="0.3"
             android:gravity="center"
-            android:onClick="system_Click">
+            android:onClick="system_Click"
+            android:id="@+id/system">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/imageView16"
                 android:src="@drawable/icon_system_message" />
 
@@ -71,11 +72,12 @@
             android:layout_height="match_parent"
             android:layout_weight="0.3"
             android:gravity="center"
-            android:onClick="activity_Click">
+            android:onClick="activity_Click"
+            android:id="@+id/activity">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/imageView17"
                 android:src="@drawable/icon_activity_message" />
 
@@ -92,11 +94,12 @@
             android:layout_height="match_parent"
             android:layout_weight="0.3"
             android:gravity="center"
-            android:onClick="private_Click">
+            android:onClick="private_Click"
+            android:id="@+id/private_info">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/imageView18"
                 android:src="@drawable/icon_private_message" />
 

@@ -16,18 +16,24 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -330,6 +336,26 @@ public class ToolClass {
     }
 
 
+    public static String convertURL(String str) {
+
+        String url = null;
+        try{
+            url = new String(str.trim().replace(" ", "%20").replace("&", "%26")
+                    .replace(",", "%2c").replace("(", "%28").replace(")", "%29")
+                    .replace("!", "%21").replace("=", "%3D").replace("<", "%3C")
+                    .replace(">", "%3E").replace("#", "%23").replace("$", "%24")
+                    .replace("'", "%27").replace("*", "%2A").replace("-", "%2D")
+                    .replace(".", "%2E").replace("/", "%2F").replace(":", "%3A")
+                    .replace(";", "%3B").replace("?", "%3F").replace("@", "%40")
+                    .replace("[", "%5B").replace("\\", "%5C").replace("]", "%5D")
+                    .replace("_", "%5F").replace("`", "%60").replace("{", "%7B")
+                    .replace("|", "%7C").replace("}", "%7D"));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return url;
+    }
+
     private static String httpGet(String url)
     {
         String resultStr = null;
@@ -354,6 +380,7 @@ public class ToolClass {
         }
         return resultStr;
     }
+
 
     private static String byteArrayToHex(byte[] byteArray) {
         char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',

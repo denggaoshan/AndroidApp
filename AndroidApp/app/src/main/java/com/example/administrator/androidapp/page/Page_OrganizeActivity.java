@@ -3,17 +3,12 @@ package com.example.administrator.androidapp.page;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.example.administrator.androidapp.R;
@@ -23,10 +18,9 @@ import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.tool.Utils;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class Page_OrganizeActivity extends BasePage {
@@ -182,7 +176,7 @@ public class Page_OrganizeActivity extends BasePage {
     }
 
     private void commit(){
-        MyMessage reflect =  ToolClass.launchActivity(Current.getCurrentUser().getUserID(), title, content, startTime, endTime, place, type);
+        MyMessage reflect =  ToolClass.launchActivity(Current.getUser().getUserID(), title, content, startTime, endTime, place, type);
         if(checkMess(reflect.getMess())){
             Utils.showMessage(this,"添加活动成功");
             Utils.transPage(this, Page_TotalActivity.class);
@@ -209,8 +203,10 @@ public class Page_OrganizeActivity extends BasePage {
         if(content==null ||content.equals("")){
             return "请输入活动内容";
         }
+
         startTime = Utils.getTimeBox(this,R.id.startTime,R.id.startHour);
         endTime = Utils.getTimeBox(this,R.id.endTime,R.id.endHour);
+
 
         place = Utils.getValueOfEditText(this, R.id.place);
         if (place== null || place.equals("")){

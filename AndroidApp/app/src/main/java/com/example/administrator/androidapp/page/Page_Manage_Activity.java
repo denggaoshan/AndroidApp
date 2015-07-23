@@ -17,14 +17,11 @@ import com.example.administrator.androidapp.R;
 import com.example.administrator.androidapp.msg.Cache;
 import com.example.administrator.androidapp.msg.Current;
 import com.example.administrator.androidapp.msg.DateFactory;
-import com.example.administrator.androidapp.msg.MyMessage;
 import com.example.administrator.androidapp.msg.MyActivity;
-import com.example.administrator.androidapp.msg.ToolClass;
 import com.example.administrator.androidapp.msg.User;
 import com.example.administrator.androidapp.tool.Utils;
 
 import java.util.Date;
-import java.util.HashMap;
 
 public class Page_Manage_Activity extends BasePage {
 
@@ -40,6 +37,7 @@ public class Page_Manage_Activity extends BasePage {
         setContentView(R.layout.page_activity_manager);
 
         loadUserInformation();
+        Cache.updateAllActivity();
         showActivities(R.id.running);
     }
 
@@ -69,7 +67,7 @@ public class Page_Manage_Activity extends BasePage {
 
     //装载用户名和头像
     private void loadUserInformation(){
-        currentUser = Current.getCurrentUser();
+        currentUser = Current.getUser();
         Utils.setTextView(this, R.id.Account,currentUser.getNickName());//装载用户名
         Cache.loadImg(this,currentUser.getAvatar(),R.id.img_head);
     }
@@ -77,9 +75,9 @@ public class Page_Manage_Activity extends BasePage {
     //重新装载该类型的活动，不管有没有装载过
     private void loadActivities(int id){
         switch (id){
-            case R.id.running: allActivities = Cache.getLaunchedActivity(Current.getCurrentUser().getUserID()); break;
-            case R.id.history:  allActivities = Cache.getParticipatedActivity(Current.getCurrentUser().getUserID());break;
-            case R.id.applying: allActivities = Cache.getApplicatedActivity(Current.getCurrentUser().getUserID());break;
+            case R.id.running: allActivities = Cache.getLaunchedActivity(Current.getUser().getUserID()); break;
+            case R.id.history:  allActivities = Cache.getParticipatedActivity(Current.getUser().getUserID());break;
+            case R.id.applying: allActivities = Cache.getApplicatedActivity(Current.getUser().getUserID());break;
         }
     }
 
@@ -145,7 +143,7 @@ public class Page_Manage_Activity extends BasePage {
             }
 
             //活动图片
-            Cache.loadImg(Page_Manage_Activity.this,activity.getAvatar(),R.id.image);
+            Cache.loadImg(convertView,activity.getAvatar(),R.id.image);
 
             String status = activity.getIsChecked();
             if(status!=null){
@@ -181,7 +179,7 @@ public class Page_Manage_Activity extends BasePage {
                 @Override
                 public void onClick(View v) {
                     if(activity!=null){
-                        Current.setCurrentActivity(activity);
+                        Current.setActivity(activity);
                         Utils.transPage(Page_Manage_Activity.this,Page_Information_Activity.class);
                     }
                 }
